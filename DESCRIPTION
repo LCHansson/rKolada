@@ -12,3 +12,11 @@ LazyData: true
 Suggests: 
     testthat
 RoxygenNote: 7.0.2
+Imports: 
+    tibble
+    dplyr,
+    glue,
+    stringr,
+    httr,
+    jsonlite,
+    magrittr
