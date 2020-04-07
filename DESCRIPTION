@@ -1,0 +1,14 @@
+Package: rKolada
+Type: Package
+Title: Access The Kolada Database In R
+Version: 0.1.0
+Authors@R: person("Love", "Hansson", email =
+ "love.hansson@gmail.com", role = c("aut", "cre"))
+Maintainer: Love Hansson <love.hansson@gmail.com>
+Description: Methods for downloading and processing data and metadata from Kolada (Kommun- och LandstingsDatabasen).
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Suggests: 
+    testthat
+RoxygenNote: 7.0.2

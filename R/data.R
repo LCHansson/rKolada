@@ -1,3 +1,13 @@
+#' Compose a query to fetch metadata from the Kolada API. Its use is mainly
+#'
+#' Mainly used as a supporting function for \code{get_kld_data()} but can also be used to create a working URL to paste in your web browser.
+#'
+#' @param kpi What kpis should be fetched? Can be a single name or a vector of names.
+#' @param municipality For which municipalities should data be fetched? Can be a single name or a vector of names.
+#' @param period For what years should data be fetched? Can be one or more four-digit integers or character strings.
+#' @param ou (Optional) for what Operating Units should data be fetched? Only available for certain KPIs.
+#' @param version Version of the API. Currently only \code{"v2"} is supported.
+#' @export
 compose_data_query <- function(kpi = NULL, municipality = NULL, period = NULL, ou = NULL, version = "v2") {
 
   base_url <- glue::glue("http://api.kolada.se/{version}/data")
@@ -30,6 +40,16 @@ compose_data_query <- function(kpi = NULL, municipality = NULL, period = NULL, o
   return(URLencode(query_url))
 }
 
+#' Get data from the Kolada API
+#'
+#' Get data from the Kolada API.
+#'
+#' @param kpi What kpis should be fetched? Can be a single name or a vector of names.
+#' @param municipality For which municipalities should data be fetched? Can be a single name or a vector of names.
+#' @param period For what years should data be fetched? Can be one or more four-digit integers or character strings.
+#' @param ou (Optional) for what Operating Units should data be fetched? Only available for certain KPIs.
+#' @param version Version of the API. Currently only \code{"v2"} is supported.
+#' @export
 get_kld_data <- function(kpi = NULL, municipality = NULL, period = NULL, ou = NULL, simplify = TRUE) {
   query <- compose_data_query(kpi, municipality, period, ou)
 
