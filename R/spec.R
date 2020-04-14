@@ -5,13 +5,12 @@ desc_glue_spec <- function(entity) {
 
   switch(entity,
          kpi = '
-# KPI
-{id}: {title}
+#### {id}: {title}
 
-## Description
+##### Description
 {description}
 
-## Metadata
+##### Metadata
 - Has OU data: {as.logical(has_ou_data)}
 - Divided by gender: {as.logical(is_divided_by_gender)}
 - Municipality type: {municipality_type}
@@ -21,15 +20,14 @@ desc_glue_spec <- function(entity) {
 - Publication period: {publ_period}
 - OU publication date: {ou_publication_date}
 
-## Keywords
+##### Keywords
 {keywords}
 
 ',
          kpi_group = '
-# KPI GROUP
-{id}: {title}
+#### {id}: {title}
 
-## Group contains {num_members} KPIs:
+#####  Group contains {num_members} KPIs:
 {member_data}
 
 '
