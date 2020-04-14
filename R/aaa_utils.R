@@ -10,21 +10,15 @@ allowed_entities <- function() {
   )
 }
 
-#' NULL-handling OR
-`%||%` <- function(lhs, rhs) {
-  if (!is.null(lhs)) {
-    lhs
-  } else {
-    rhs
-  }
-}
 
 #' Custom stop words for keyword detection
 stopwords <- function() {
-  c("alla", "allt", "än", "är", "åt", "att", "av", "blev", "bli", "blir", "blivit", "då", "där", "de", "dem", "den", "denna", "deras", "dess", "dessa", "det", "detta", "dig", "din", "dina", "ditt", "du", "efter", "ej", "eller", "en", "er", "era", "ert", "ett", "för", "från", "ha", "hade", "han", "hans", "har", "här", "henne", "hennes", "hon", "honom", "hur", "i", "icke", "ingen", "inom", "inte", "jag", "ju", "kan", "kunde", "man", "med", "mellan", "men", "mig", "min", "mina", "mitt", "mot", "mycket", "någon", "något", "några", "när", "ni", "nu", "och", "om", "oss", "över", "på", "så", "sådan", "sådana", "sådant", "samma", "sedan", "sig", "sin", "sina", "sitta", "själv", "skulle", "som", "till", "under", "upp", "ut", "utan", "vad", "var", "vår", "vara", "våra", "varför", "varit", "varje", "vars", "vart", "vårt", "vem", "vi", "vid", "vilka", "vilkas", "vilken", "vilket")
+  stringi::stri_escape_unicode(c("alla", "allt", "än", "är", "åt", "att", "av", "blev", "bli", "blir", "blivit", "då", "där", "de", "dem", "den", "denna", "deras", "dess", "dessa", "det", "detta", "dig", "din", "dina", "ditt", "du", "efter", "ej", "eller", "en", "enl", "er", "era", "ert", "ett", "för", "från", "ha", "hade", "han", "hans", "har", "här", "henne", "hennes", "hon", "honom", "hur", "i", "icke", "ingen", "inom", "inte", "jag", "ju", "kan", "kunde", "man", "med", "mellan", "men", "mig", "min", "mina", "mitt", "mot", "mycket", "någon", "något", "några", "när", "ni", "nu", "och", "om", "oss", "över", "på", "så", "sådan", "sådana", "sådant", "samma", "sedan", "sig", "sin", "sina", "sitta", "själv", "skulle", "som", "till", "under", "upp", "ut", "utan", "vad", "var", "vår", "vara", "våra", "varför", "varit", "varje", "vars", "vart", "vårt", "vem", "vi", "vid", "vilka", "vilkas", "vilken", "vilket"))
 }
 
 #' Cache handler factory
+#' @param entity A keyword describing the data entity handled by the cache handler.
+#' @param cache A parameter containing information on whether, and where, data should be stored.
 cache_handler <- function(entity, cache) {
 
   storage <- switch(
