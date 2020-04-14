@@ -6,3 +6,6 @@ man/
 vignettes/*.html
 vignettes/*.R
 inst/doc
+rKolada.Rcheck/
+rKolada*.tar.gz
+rKolada*.tgz
