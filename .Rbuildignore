@@ -1,2 +1,9 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^rKolada\.Rcheck$
+^rKolada.*\.tar\.gz$
+^rKolada.*\.tgz$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.github$
