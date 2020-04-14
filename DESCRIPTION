@@ -12,7 +12,8 @@ LazyData: true
 Suggests: 
     testthat,
     knitr,
-    rmarkdown
+    rmarkdown,
+    DT
 RoxygenNote: 7.1.0
 Imports: 
     tibble,
