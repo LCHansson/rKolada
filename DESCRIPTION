@@ -12,8 +12,7 @@ LazyData: true
 Suggests: 
     testthat,
     knitr,
-    rmarkdown,
-    DT
+    rmarkdown
 RoxygenNote: 7.1.0
 Imports: 
     tibble,
@@ -25,5 +24,7 @@ Imports:
     magrittr,
     tidyr,
     purrr,
-    stringi
+    stringi,
+    DT,
+    webshot
 VignetteBuilder: knitr
