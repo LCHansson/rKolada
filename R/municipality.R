@@ -6,13 +6,14 @@
 #' @param cache cache (Optional) If you plan on doing multiple concurrent calls to retrieve the same data from the Kolada API (this is usually the case) you can use this option to store downloaded metadata to disk. If you call the function again, data will be read from disk instead of retrieving it over the internet if a cache file can be located. If set to \code{FALSE} or \code{"no"}, don't store any data on disk. If set to \code{TRUE} or \code{"yes"} or \code{"tempfile"}, store data in a \code{tempfile} (this will expire at the end of your R session). If set to \code{"wd"}, data will be stored in \code{.RData} files in your current working directory.
 #'
 #' @examples
-#' municipality_name_to_id(c("Malmö", "Lund", "Stockholm", "Malmö"))
-#' municipality_name_to_filter(c("Malmö", "Lund", "Stockholm", "Malmö"))
+#' munic_df <- municipality_get()
+#' municipality_name_to_id(munic_df, c("Malmö", "Lund", "Stockholm", "Malmö"))
+#' munic_df %>% municipality_name_to_filter(c("Malmö", "Lund", "Stockholm", "Malmö"))
 #'
 #' @export
 municipality_name_to_id <- function(munic_df, municipality, remove_na = FALSE, cache = FALSE) {
   munic_names <- tolower(municipality)
-  munic_df <- municipality_get(cache = cache)
+  # munic_df <- municipality_get(cache = cache)
 
   res <- munic_df$id[match(munic_names, tolower(munic_df$title))]
   names(res) <- munic_df$title[match(munic_names, tolower(munic_df$title))]
@@ -42,7 +43,8 @@ municipality_name_to_filter <- municipality_name_to_id
 #' @param cache cache (Optional) If you plan on doing multiple concurrent calls to retrieve the same data from the Kolada API (this is usually the case) you can use this option to store downloaded metadata to disk. If you call the function again, data will be read from disk instead of retrieving it over the internet if a cache file can be located. If set to \code{FALSE} or \code{"no"}, don't store any data on disk. If set to \code{TRUE} or \code{"yes"} or \code{"tempfile"}, store data in a \code{tempfile} (this will expire at the end of your R session). If set to \code{"wd"}, data will be stored in \code{.RData} files in your current working directory.
 #'
 #' @examples
-#' municipality_id_to_name(c("1280", "1281", "0180", "1280"))
+#' munic_df <- municipality_get()
+#' municipality_id_to_name(munic_df, c("1280", "1281", "0180", "1280"))
 #'
 #' @export
 municipality_id_to_name <- function(munic_df, id, remove_na = FALSE, cache = FALSE) {
