@@ -10,13 +10,19 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Suggests: 
-    testthat
+    testthat,
+    knitr,
+    rmarkdown
 RoxygenNote: 7.0.2
 Imports: 
-    tibble
+    tibble,
     dplyr,
     glue,
     stringr,
     httr,
     jsonlite,
-    magrittr
+    magrittr,
+    tidyr,
+    purrr,
+    stringi
+VignetteBuilder: knitr
