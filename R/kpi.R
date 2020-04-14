@@ -1,5 +1,7 @@
 #' Simplify a KPI table
 #'
+#'
+#'
 #' @param kpi_df A KPI table
 #' @param remove_undocumented_columns Remove columns from the KPI table which are
 #' undocumented in the API?
@@ -22,7 +24,10 @@ kpi_minimize <- function(kpi_df, remove_undocumented_columns = TRUE, remove_mono
   kpi_df
 }
 
+
 #' Add keywords to a Kolada KPI table
+#'
+#'
 #'
 #' @param kpi_df A KPI table
 #' @param n How many keyword columns should be added?
@@ -52,6 +57,7 @@ kpi_add_keywords <- function(kpi_df, n = 2) {
 
   kpi_df
 }
+
 
 #' Search for Kolada KPIs using a Kolada KPI table
 #'
@@ -96,6 +102,8 @@ kpi_search <- function(kpi_df, query, columns = NULL) {
 
 #' Describe the KPIs in a Kolada KPI table
 #'
+#'
+#'
 #' @param kpi_df A KPI table
 #' @param max_n The maximum number of KPIs to describe.
 #'
@@ -114,15 +122,20 @@ kpi_describe <- function(kpi_df, max_n = 5) {
     glue_data_safely(desc_glue_spec("kpi"), .otherwise = "Unknown")
 }
 
+
 #' Create a search filter from a Kolada KPI table
-#' @param kpi_df
+#'
+#'
+#' @param kpi_df XXX
 #' @export
 kpi_query_filter <- function(kpi_df) {
   kpi_df$id
 }
 
 #' Create a search filter from a Kolada KPI group table
-#' @param kpig_df
+#'
+#'
+#' @param kpig_df XXX
 #' @export
 kpi_groups_query_filter <- function(kpig_df) {
   purrr::map(kpig_df$members, purrr::pluck(1)) %>% unlist()
@@ -130,9 +143,10 @@ kpi_groups_query_filter <- function(kpig_df) {
 
 
 #' Describe KPIs in a KPI group
-#' @param kpig_df
-#' @param kpi_df
-#' @param query
+#'
+#' @param kpig_df XXX
+#' @param kpi_df XXX
+#' @param query XXX
 #' @export
 kpi_groups_to_kpi_df <- function(kpig_df, kpi_df = NULL, query = NULL) {
 
@@ -154,7 +168,7 @@ kpi_groups_to_kpi_df <- function(kpig_df, kpi_df = NULL, query = NULL) {
 
 #' Describe the KPIs in a Kolada KPI group table
 #'
-#' @param kpi_df A KPI group table
+#' @param kpig_df A KPI group table
 #' @param max_n The maximum number of KPI groups to describe.
 #'
 #' @export
@@ -175,9 +189,11 @@ kpi_groups_describe <- function(kpig_df, max_n = 5) {
     glue_data_safely(desc_glue_spec("kpi_group"), .otherwise = "Unknown")
 }
 
+
 #' Search a Kolada KPI group table for group names
-#' @param kpig_df
-#' @param query
+#'
+#' @param kpig_df XXX
+#' @param query XXX
 #' @export
 kpi_groups_search <- function(kpig_df, query) {
   kpig_df %>%

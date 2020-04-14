@@ -27,7 +27,6 @@ install.packages("tidyverse")
 This vignette provides a quick-start introduction to the core functionality of the package. To learn more about the specifics of functions and to see a full list of the functions included, please see `??rKolada`.
 
 ```{r setup}
-suppressPackageStartupMessages(library("tidyverse"))
 library("rKolada")
 ```
 
