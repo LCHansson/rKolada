@@ -103,9 +103,6 @@ Setting the `simplify` parameter to `TRUE`, again, makes results more human read
 Finally, time to inspect our data:
 
 ```{r}
-# Inspect results in an interactive table
-DT::datatable(kld_data)
-
 # Visualise results
 library("ggplot2")
 
