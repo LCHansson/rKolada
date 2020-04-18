@@ -44,11 +44,11 @@ Kolada contains five different types of metadata entities:
 To obtain data using `rKolada` it is usually a good idea to start by exploring metadata. `rKolada` comes with convenience functions for each of the five above mentioned entities. These functions are all names `[entity]_get()` and can be called as follows. The `cache` parameter allows you to temporarily store results on disk to avoid repeated calls to the API in case you need to re-run your code:
 
 ```{r}
-kpis <- kpi_get(cache = TRUE)
-munic <- municipality_get(cache = TRUE)
+kpis <- get_kpi()
+munic <- get_municipality()
 ```
 
-If you have already familiarised yourself with the Kolada API (e.g. by reading the [official docs on GitHub](https://github.com/Hypergene/kolada)) you can access the full metadata API using `get_kld_metadata()`.
+If you have already familiarised yourself with the Kolada API (e.g. by reading the [official docs on GitHub](https://github.com/Hypergene/kolada)) you can access the full metadata API using `get_metadata()`.
 
 ### 2. Search metadata
 
@@ -68,17 +68,32 @@ kpi_res <- kpis %>%
 dplyr::glimpse(kpi_res)
 ```
 
+Let's say we are interested in retrieving data for four Swedish municipalities. We thus want to create a table containing metadata about these four municipalities:
+
+```{r}
+munic_res <- munic %>% 
+  municipality_search(c("Stockholm", "Göteborg", "Malmö")) %>% 
+  municipality_search("K", column = "type")
+
+dplyr::glimpse(munic_res)
+
+```
+
+
+
 ### 3. Describe KPIs
 
-In addition to the information provided about every KPI in the `title` and `description` columns of a KPI table, `kpi_add_keywords()` can be used to create a rough summary of every KPI creating a number of _keyword_ columns. The function `kpi_describe()` can be used to print a huamn readable table containing a summary of a table of KPIs.
+In addition to the information provided about every KPI in the `title` and `description` columns of a KPI table, `kpi_add_keywords()` can be used to create a rough summary of every KPI creating a number of _keyword_ columns. The function `kpi_describe()` can be used to print a huamn readable table containing a summary of a table of KPIs. For instance, by setting the `knitr` chunk option `results='asis'`, the following code renders a markdown section that can be directly integrated into a Markdown report:
 
-```{r, results = 'asis'}
-kpi_res %>% kpi_add_keywords(n = 4) %>% kpi_describe(max_n = 5)
+```{r, echo = TRUE, results='asis'}
+kpi_res %>%
+  kpi_bind_keywords(n = 4) %>% 
+  kpi_describe(max_n = 1, format = "md", heading_level = 4, sub_heading_level = 5)
 ```
 
 ### 4. Get data
 
-Once we have settled on what KPIs we are interested in the next step is to download actual data from Kolada. Use `get_kld_data()` to do this. To download data from the Kolada API you need to provide at least two of the following parameters:
+Once we have settled on what KPIs we are interested in the next step is to download actual data from Kolada. Use `get_values()` to do this. To download data from the Kolada API you need to provide at least two of the following parameters:
 
 1. `kpi`: One or a vector of several KPI IDs
 2. `municipality`: One or a vector of several municipality IDs
@@ -87,9 +102,9 @@ Once we have settled on what KPIs we are interested in the next step is to downl
 The ID tags for KPIs and municipalities can be extracted using the convenience functions `kpi_query_filter()` and `municipality_name_to_filter()`:
 
 ```{r}
-kld_data <- get_kld_data(
-  kpi = kpi_query_filter(kpi_res),
-  municipality = municipality_name_to_filter(munic, c("Stockholm", "Göteborg", "Malmö")),
+kld_data <- get_values(
+  kpi = kpi_extract_ids(kpi_res),
+  municipality = municipality_extract_ids(munic_res),
   period = 1990:2019,
   simplify = TRUE
 )
@@ -112,9 +127,10 @@ ggplot(kld_data, aes(x = year, y = value)) +
   scale_y_continuous(labels = scales::comma) +
   labs(
     title = "Gross Regional Product",
-    subtitle = "Yearly development in Sweden's three most populous municipalities",
+    subtitle = "Yearly development in Sweden's three\nmost populous municipalities",
     x = "Year",
-    y = ""
+    y = "",
+    caption = values_legend(kld_data, kpis)
   )
 ```
 
