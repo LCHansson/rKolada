@@ -73,9 +73,7 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to rKolada</h1>
-                        <h4 class="author">Love Hansson</h4>
             
-            <h4 class="date">2020-04-18</h4>
       
       
       <div class="hidden name"><code>introduction-to-rkolada.Rmd</code></div>
@@ -84,9 +82,6 @@
 
     
     
-<div id="introduction-to-rkolada" class="section level1">
-<h1 class="hasAnchor">
-<a href="#introduction-to-rkolada" class="anchor"></a>Introduction to rKolada</h1>
 <p>The Swedish Municipalities and Regions Database (Kolada) is a openly accessible database containing over 4,000 Key Performance Indicators for a vast number of aspects of municipal and regional organisations, politics and economic life. The <code>rKolada</code> R package provides an interface to R users to directly download, explore, and simplify metadata and data from Kolada. The package draws heavily on functionality provided by several packages in the <code>tidyverse</code> family and it is thus recommended that you install the <code>tidyverse</code> package before installing rKolada:</p>
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"tidyverse"</span>)</pre></body></html></div>
 <p>This vignette provides a quick-start introduction to the core functionality of the package. To learn more about the specifics of functions and to see a full list of the functions included, please see <code>??rKolada</code>.</p>
@@ -98,7 +93,7 @@
 <h3 class="hasAnchor">
 <a href="#get-metadata" class="anchor"></a>1. Get metadata</h3>
 <p>Kolada contains five different types of metadata entities: 1. <code>kpi</code>: Key Performance Indicators 2. <code>municipality</code>: Municipalities 3. <code>ou</code>: Operating Unit, a subunit of municipalities 4. <code>kpi_groups</code>: Thematic groupings of KPIs 5. <code>municipality_groups</code>: Thematic groupings of municipalities</p>
-<p>To obtain data using <code>rKolada</code> it is usually a good idea to start by exploring metadata. <code>rKolada</code> comes with convenience functions for each of the five above mentioned entities. These functions are all names <code>[entity]_get()</code> and can be called as follows. The <code>cache</code> parameter allows you to temporarily store results on disk to avoid repeated calls to the API in case you need to re-run your code:</p>
+<p>To obtain data using <code>rKolada</code> it is usually a good idea to start by exploring metadata. <code>rKolada</code> comes with convenience functions for each of the five above mentioned entities. These functions are all names <code>get_[entity]()</code> and can be called as follows. The <code>cache</code> parameter allows you to temporarily store results on disk to avoid repeated calls to the API in case you need to re-run your code:</p>
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">kpis</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_kpi.html">get_kpi</a></span>()
 <span class="no">munic</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_kpi.html">get_municipality</a></span>()</pre></body></html></div>
 <p>If you have already familiarised yourself with the Kolada API (e.g. by reading the <a href="https://github.com/Hypergene/kolada">official docs on GitHub</a>) you can access the full metadata API using <code><a href="../reference/get_metadata.html">get_metadata()</a></code>.</p>
@@ -228,7 +223,6 @@
     <span class="kw">caption</span> <span class="kw">=</span> <span class="fu"><a href="../reference/values_legend.html">values_legend</a></span>(<span class="no">kld_data</span>, <span class="no">kpis</span>)
   )</pre></body></html></div>
 <p><img src="introduction-to-rkolada_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
-</div>
 </div>
 </div>
   </div>
