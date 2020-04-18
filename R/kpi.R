@@ -2,7 +2,7 @@
 #'
 #'
 #'
-#' @param kpi_df A KPI table
+#' @param kpi_df A KPI table, e.g. as created by \code{\link{get_kpi}}.
 #' @param remove_undocumented_columns Remove columns from the KPI table which are
 #' undocumented in the API?
 #' @param remove_monotonous_data Remove columns from the KPI table which contain
@@ -16,7 +16,7 @@ kpi_minimize <- function(kpi_df, remove_undocumented_columns = TRUE, remove_mono
   }
   if (isTRUE(remove_monotonous_data))
     kpi_df <- kpi_df %>%
-      dplyr::select_if(names(.) %in% c("id", "title", "desctiption") | purrr::map(., dplyr::n_distinct) > 1)
+      dplyr::select_if(names(.) %in% c("id", "title", "description") | purrr::map(., dplyr::n_distinct) > 1)
 
   kpi_df <- kpi_df %>%
     dplyr::select(id, title, description, dplyr::everything())
@@ -25,21 +25,21 @@ kpi_minimize <- function(kpi_df, remove_undocumented_columns = TRUE, remove_mono
 }
 
 
-#' Add keywords to a Kolada KPI table
+#' Add keyword columns to a Kolada KPI table
 #'
+#' Identify \code{n} keywords describing the KPI and add them as new columns. Keywords are inferred from the \code{title} field of the \code{kpi_df} argument.
 #'
-#'
-#' @param kpi_df A KPI table
+#' @param kpi_df A KPI table, e.g. as created by \code{\link{get_kpi}}.
 #' @param n How many keyword columns should be added?
 #'
 #' @examples
 #' \dontrun{
-#' kpi_df <- kpi_get() %>%
-#'   kpi_add_keywords(3)
+#' kpi_df <- get_kpi() %>%
+#'   kpi_add_keywords(n = 3)
 #' }
 #'
 #' @export
-kpi_add_keywords <- function(kpi_df, n = 2) {
+kpi_bind_keywords <- function(kpi_df, n = 2) {
   kpi_df <- kpi_df %>%
     dplyr::mutate(
       title_words = stringr::str_extract_all(tolower(title), "\\w+")
@@ -63,28 +63,27 @@ kpi_add_keywords <- function(kpi_df, n = 2) {
 #'
 #'
 #'
-#' @param kpi_df A KPI table
-#' @param query One or a vector of search terms. Can be a string or a number.
-#' Search is case insensitive.
-#' @param columns (Optional) A string och character vector with the names of
-#' columns in which to search for \code{query}
+#' @param kpi_df A KPI table, e.g. as created by \code{\link{get_kpi}}.
+#' @param query A search term or a vector of search terms to filter by. Case insensitive.
+#' @param column (Optional) A string or character vector with the names of
+#' columns in which to search for \code{query}.
 #'
 #' @examples
 #' \dontrun{
 #' # Search for a single search term in a KPI table
-#' kpis <- kpi_get()
+#' kpis <- get_kpi()
 #' kpi_filter <- kpi_search(kpis, "inkomst")
 #'
 #' # Add keywords to a KPI table and search for multiple terms among the keywords
-#' kpi_filter <- kpi_get(cache = TRUE) %>%
-#'   kpi_add_keywords(n = 3) %>%
-#'   kpi_search(c("inkomst", "arbete"), c("keyword_1", "keyword_2", "keyword_3"))
+#' kpi_filter <- get_kpi(cache = TRUE) %>%
+#'   kpi_bind_keywords(n = 3) %>%
+#'   kpi_search(c("inkomst", "arbete"), column = c("keyword_1", "keyword_2", "keyword_3"))
 #' }
 #'
 #' @export
-kpi_search <- function(kpi_df, query, columns = NULL) {
-  if (is.null(columns))
-    columns <- names(kpi_df)
+kpi_search <- function(kpi_df, query, column = NULL) {
+  if (is.null(column))
+    column <- names(kpi_df)
 
   f <- function(obj, query) {
     stringr::str_detect(tolower(obj), tolower(as.character(paste(query, collapse="|"))))
@@ -92,7 +91,7 @@ kpi_search <- function(kpi_df, query, columns = NULL) {
 
   hits <- kpi_df %>%
     dplyr::filter_at(
-      .vars = dplyr::vars(columns),
+      .vars = dplyr::vars(column),
       .vars_predicate = dplyr::any_vars(f(., query))
     )
 
@@ -106,9 +105,21 @@ kpi_search <- function(kpi_df, query, columns = NULL) {
 #'
 #' @param kpi_df A KPI table
 #' @param max_n The maximum number of KPIs to describe.
+#' @param format Output format. Can be one of "inline" or "md" (markdown).
+#' @param heading_level The top heading level output format is "md".
+#' @param sub_heading_level The sub heading level output format is "md".
 #'
 #' @export
-kpi_describe <- function(kpi_df, max_n = 5) {
+kpi_describe <- function(
+  kpi_df,
+  max_n = 5,
+  format = "inline",
+  heading_level = 2,
+  sub_heading_level = 3
+) {
+  if (!format %in% c("inline", "md"))
+    stop("'format' must be one of c(\"inline\", \"md\")")
+
   desc_df <- kpi_df %>%
     dplyr::slice(1:min(max_n, nrow(kpi_df)))
 
@@ -119,83 +130,18 @@ kpi_describe <- function(kpi_df, max_n = 5) {
       dplyr::mutate(keywords = stringr::str_remove(keywords, "(-[\\s]*)+$"))
 
   desc_df %>%
-    glue_data_safely(desc_glue_spec("kpi"), .otherwise = "Unknown")
+    glue_data_safely(desc_glue_spec("nogroup"), .entity = "KPI", .format = format, .heading_length = heading_level, .sub_heading_length = sub_heading_level, .otherwise = "Unknown")
 }
 
 
-#' Create a search filter from a Kolada KPI table
+#' Extract a vector of KPI ID strings from a Kolada KPI table
 #'
 #'
-#' @param kpi_df XXX
+#'
+#' @param kpi_df A KPI table, e.g. as created by \code{\link{get_kpi}}.
 #' @export
-kpi_query_filter <- function(kpi_df) {
+kpi_extract_ids <- function(kpi_df) {
   kpi_df$id
 }
 
-#' Create a search filter from a Kolada KPI group table
-#'
-#'
-#' @param kpig_df XXX
-#' @export
-kpi_groups_query_filter <- function(kpig_df) {
-  purrr::map(kpig_df$members, purrr::pluck(1)) %>% unlist()
-}
 
-
-#' Describe KPIs in a KPI group
-#'
-#' @param kpig_df XXX
-#' @param kpi_df XXX
-#' @param query XXX
-#' @export
-kpi_groups_to_kpi_df <- function(kpig_df, kpi_df = NULL, query = NULL) {
-
-  if (!is.null(query))
-    kpig_df <- kpig_df %>% kpi_groups_search(query)
-
-  if (is.null(kpi_df))
-    kpi_df <- kpi_get()
-
-  kpi_df %>%
-    dplyr::inner_join(
-      kpig_df %>%
-        tidyr::unnest(cols = c(members)) %>%
-        dplyr::select(id = member_id, title = member_title),
-      by = c("id", "title")
-    )
-}
-
-
-#' Describe the KPIs in a Kolada KPI group table
-#'
-#' @param kpig_df A KPI group table
-#' @param max_n The maximum number of KPI groups to describe.
-#'
-#' @export
-kpi_groups_describe <- function(kpig_df, max_n = 5) {
-  desc_df <- kpig_df %>%
-    dplyr::slice(1:min(max_n, nrow(kpig_df)))
-
-  desc_df <- desc_df %>%
-    dplyr::mutate(
-      num_members = purrr::map(members, nrow),
-      m_id = purrr::map(members, purrr::pluck("member_id")),
-      m_t = purrr::map(members, purrr::pluck("member_title")),
-      m_pre = "- ",
-      member_data = purrr::pmap(list(m_pre, m_id, m_t), paste, sep = " ", collapse = "\n")
-    )
-
-  desc_df %>%
-    glue_data_safely(desc_glue_spec("kpi_group"), .otherwise = "Unknown")
-}
-
-
-#' Search a Kolada KPI group table for group names
-#'
-#' @param kpig_df XXX
-#' @param query XXX
-#' @export
-kpi_groups_search <- function(kpig_df, query) {
-  kpig_df %>%
-    dplyr::filter(stringr::str_detect(tolower(title), tolower(query)))
-}
