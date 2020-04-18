@@ -2,7 +2,6 @@
 .Rhistory
 .RData
 .Ruserdata
-man/
 vignettes/*.html
 vignettes/*.R
 inst/doc
