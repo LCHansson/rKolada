@@ -1,9 +1,9 @@
 #' Compose a query to fetch metadata from the Kolada API.
 #'
-#' Mainly used as a supporting function for \code{get_kld_metadata()} but can
+#' Mainly used as a supporting function for \code{\link{get_metadata}} but can
 #' also be used to create a working URL to paste in your web browser.
 #'
-#' @param entity Any allowed metadata entity. Check \code{allowed_entities()} to
+#' @param entity Any allowed metadata entity. Check \code{\link{allowed_entities}} to
 #' see an updated list.
 #' @param title A free-form search term or the exact title of any entry in the
 #' current entity. Case insensitive.
@@ -48,7 +48,7 @@ compose_metadata_query <- function(entity = "kpi", title = NULL, id = NULL, muni
   return(utils::URLencode(query_url))
 }
 
-#' Get metadata from the Kolada API
+#' Download metadata from the Kolada API
 #'
 #' Use this function to take full control of the Kolada metadata API.
 #'
@@ -59,21 +59,16 @@ compose_metadata_query <- function(entity = "kpi", title = NULL, id = NULL, muni
 #' @param id The ID of any entry in the current entity.
 #' @param municipality If entity is \code{"ou"}, the municipality parameter can
 #' be added to narrow the search.
-#' @param cache If you plan on doing multiple concurrent calls to retrieve the
-#' same data from the Kolada API (this is usually the case) you can use this
-#' option to store downloaded metadata to disk. If you call the function again,
-#' data will be read from disk instead of retrieving it over the internet if a
-#' cache file can be located. If set to \code{FALSE} or \code{"no"}, don't store
-#' any data on disk. If set to \code{TRUE} or \code{"yes"} or \code{"tempfile"},
-#' store data in a \code{tempfile} (this will expire at the end of your R
-#' session). If set to \code{"wd"}, data will be stored in \code{.RData} files
-#' in your current working directory.
+#' @param cache Logical. If TRUE, downloaded data are stored to the local disk in the place specified by \code{cache_location}. If data is already present on the local disk, this data is returned instead of downloading data from the API.
+#' @param cache_location Where to store and search for cached data. Can be a path to a directory or the name of any function that returns the path to a directory when called, like \code{link{getwd}}. Defaults to \code{\link{tempdir}}.
 #'
-#' @seealso \code{\link{kpi_get}}, \code{\link{kpi_groups_get}}, \code{\link{municipality_get}}, \code{\link{municipality_groups_get}}, \code{\link{ou_get}}
+#' @return Returns a tibble with metadata for the specified entity.
+#'
+#' @seealso \code{\link{get_kpi}}, \code{\link{get_kpi_groups}}, \code{\link{get_municipality}}, \code{\link{get_municipality_groups}}, \code{\link{get_ou}}
 #'
 #' @export
-get_kld_metadata <- function(entity = "kpi", title = NULL, id = NULL, municipality = NULL, cache = FALSE) {
-  ch <- cache_handler(entity, cache)
+get_metadata <- function(entity = "kpi", title = NULL, id = NULL, municipality = NULL, cache = FALSE, cache_location = tempdir) {
+  ch <- cache_handler(entity, cache, cache_location)
 
   if (ch("discover"))
     return(ch("load"))
@@ -92,61 +87,60 @@ get_kld_metadata <- function(entity = "kpi", title = NULL, id = NULL, municipali
 }
 
 
-#' Get a table of KPIs from the Kolada metadata API
+#' Download metadata from the Kolada API
+#'
+#' There are five different types of metadata entities in the Kolada database: "kpi", "kpi_groups", "municipality", "municipality_groups", and "ou". For every entity there is a corresponding function \code{get_ENTITY} which retrieves a table with the metadata for that entity. The \code{get_ENTITY} functions are thin wrappers around \code{\link{get_metadata}}.
 #'
 #' @param id (Optional) One or several KPI IDs
-#' @param cache If you plan on doing multiple concurrent calls to retrieve the
-#' same data from the Kolada API (this is usually the case) you can use this
-#' option to store downloaded metadata to disk. If you call the function again,
-#' data will be read from disk instead of retrieving it over the internet if a
-#' cache file can be located. If set to \code{FALSE} or \code{"no"}, don't store
-#' any data on disk. If set to \code{TRUE} or \code{"yes"} or \code{"tempfile"},
-#' store data in a \code{tempfile} (this will expire at the end of your R
-#' session). If set to \code{"wd"}, data will be stored in \code{.RData} files
-#' in your current working directory.
+#' @param cache Logical. If TRUE, downloaded data are stored to the local disk in the place specified by \code{cache_location}. If data is already present on the local disk, this data is returned instead of downloading data from the API.
+#' @param cache_location Where to store and search for cached data. Can be a path to a directory or the name of any function that returns the path to a directory when called, like \code{link{getwd}}. Defaults to \code{\link{tempdir}}.
 #' @param municipality (Optional) A string or vector of strings cantaining
 #' municipality codes. If getting OU data, you can use this parameter to narrow
 #' the search.
+#'
+#' @return Returns a tibble with metadata for the specified entity.
 #'
 #' @examples
 #'
 #' \dontrun{
 #' # Download KPI table and store a cache copy of the results in
 #' # your current working directory
-#' kpi_df <- kpi_get(cache = "wd")
+#' kpi_df <- get_kpi(cache = "wd")
 #'
 #' # Download KPI table and store a cache copy of the results in
 #' # a tempfile (will expire when your R session ends)
-#' kpi_df <- kpi_get(cache = TRUE)
+#' kpi_df <- get_kpi(cache = TRUE)
 #' }
 #'
 #' @export
-kpi_get <- function(id = NULL, cache = FALSE) {
-  get_kld_metadata(entity = "kpi", id = id, cache = cache)
+get_kpi <- function(id = NULL, cache = FALSE, cache_location = tempdir) {
+  get_metadata(entity = "kpi", id = id, cache = cache, cache_location = cache_location)
 }
 
 
 #' @export
-#' @rdname kpi_get
-kpi_groups_get <- function(id = NULL, cache = FALSE) {
-  get_kld_metadata(entity = "kpi_groups", id = id, cache = cache)
+#' @rdname get_kpi
+get_kpi_groups <- function(id = NULL, cache = FALSE, cache_location = tempdir) {
+  get_metadata(entity = "kpi_groups", id = id, cache = cache, cache_location = cache_location)
 }
 
 #' @export
-#' @rdname kpi_get
-ou_get <- function(id = NULL, municipality = NULL, cache = FALSE) {
-  get_kld_metadata(entity = "kpi_groups", id = id, municipality = municipality, cache = cache)
+#' @rdname get_kpi
+get_ou <- function(id = NULL, municipality = NULL, cache = FALSE, cache_location = tempdir) {
+  get_metadata(entity = "ou", id = id, municipality = municipality, cache = cache, cache_location = cache_location) %>%
+    dplyr::mutate(municipality_id = municipality, municipality = municipality_id_to_name(get_municipality(cache = cache, cache_location = cache_location), municipality_id)) %>%
+    dplyr::select(id, title, municipality, municipality_id)
 }
 
 
 #' @export
-#' @rdname kpi_get
-municipality_get <- function(id = NULL, cache = FALSE) {
-  get_kld_metadata(entity = "municipality", id = id, cache = cache)
+#' @rdname get_kpi
+get_municipality <- function(id = NULL, cache = FALSE, cache_location = tempdir) {
+  get_metadata(entity = "municipality", id = id, cache = cache, cache_location = cache_location)
 }
 
 #' @export
-#' @rdname kpi_get
-municipality_groups_get <- function(id = NULL, cache = FALSE) {
-  get_kld_metadata(entity = "municipality_groups", id = id, cache = cache)
+#' @rdname get_kpi
+get_municipality_groups <- function(id = NULL, cache = FALSE, cache_location = tempdir) {
+  get_metadata(entity = "municipality_groups", id = id, cache = cache, cache_location = cache_location)
 }
