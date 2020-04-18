@@ -19,19 +19,16 @@ stopwords <- function() {
 #' Cache handler factory
 #' @param entity A keyword describing the data entity handled by the cache handler.
 #' @param cache A parameter containing information on whether, and where, data should be stored.
-cache_handler <- function(entity, cache) {
+cache_handler <- function(entity, cache, cache_location) {
+
+  if(is.function(cache_location))
+    cache_location <- cache_location()
 
   storage <- switch(
     as.character(cache),
-    no =, "FALSE" = "",
-    tempfile =, "TRUE" =, yes = paste0(tempdir(), "/rkolada_", entity, "_cache_", Sys.Date(), ".RData"),
-    wd = paste0(getwd(), "/rkolada_", entity, "_cache_", Sys.Date(), ".RData"),
-    ""
+    "FALSE" = "",
+    "TRUE" = paste0(cache_location, "/rkolada_", entity, "_cache_", Sys.Date(), ".RData")
   )
-
-  # Special case: path to a folder
-  if (is.character(cache) && dir.exists(cache))
-    storage <- paste0(cache, "/rkolada_", entity, "_cache_", Sys.Date(), ".RData")
 
   if (storage == "")
     return(function(method, df) {
