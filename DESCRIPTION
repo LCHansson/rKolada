@@ -25,6 +25,5 @@ Imports:
     tidyr,
     purrr,
     stringi,
-    ggplot2,
-    webshot
+    ggplot2
 VignetteBuilder: knitr
