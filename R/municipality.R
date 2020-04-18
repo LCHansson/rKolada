@@ -1,19 +1,19 @@
 #' Convert municipality names to municipality ids
 #'
-#' @param munic_df A Kolada Municipality metadata table, e.g. created by \code{municipality_get}.
+#'
+#'
+#' @param munic_df A Kolada Municipality metadata table, as created by e.g. \code{get_municipality}.
 #' @param municipality Name of one or several municipalities. Case insensitive. Allows repeats.
 #' @param remove_na Should NA return values be removed?
-#' @param cache cache (Optional) If you plan on doing multiple concurrent calls to retrieve the same data from the Kolada API (this is usually the case) you can use this option to store downloaded metadata to disk. If you call the function again, data will be read from disk instead of retrieving it over the internet if a cache file can be located. If set to \code{FALSE} or \code{"no"}, don't store any data on disk. If set to \code{TRUE} or \code{"yes"} or \code{"tempfile"}, store data in a \code{tempfile} (this will expire at the end of your R session). If set to \code{"wd"}, data will be stored in \code{.RData} files in your current working directory.
 #'
 #' @examples
-#' munic_df <- municipality_get()
+#' munic_df <- get_municipality()
 #' municipality_name_to_id(munic_df, c("Malmö", "Lund", "Stockholm", "Malmö"))
-#' munic_df %>% municipality_name_to_filter(c("Malmö", "Lund", "Stockholm", "Malmö"))
+#' munic_df %>% municipality_name_to_id(c("Malmö", "Lund", "Stockholm", "Malmö"))
 #'
 #' @export
-municipality_name_to_id <- function(munic_df, municipality, remove_na = FALSE, cache = FALSE) {
+municipality_name_to_id <- function(munic_df, municipality, remove_na = FALSE) {
   munic_names <- tolower(municipality)
-  # munic_df <- municipality_get(cache = cache)
 
   res <- munic_df$id[match(munic_names, tolower(munic_df$title))]
   names(res) <- munic_df$title[match(munic_names, tolower(munic_df$title))]
@@ -29,25 +29,20 @@ municipality_name_to_id <- function(munic_df, municipality, remove_na = FALSE, c
   res
 }
 
-
-#' @rdname municipality_name_to_id
-#' @export
-municipality_name_to_filter <- municipality_name_to_id
-
-
 #' Convert municipality ids to municipality names
 #'
-#' @param munic_df A Kolada Municipality metadata table, e.g. created by \code{municipality_get}.
+#'
+#'
+#' @param munic_df A Kolada Municipality metadata table, as created by e.g. \code{get_municipality}.
 #' @param id ID ids of one or several municipalities. Allows repeats.
 #' @param remove_na Should NA return values be removed?
-#' @param cache cache (Optional) If you plan on doing multiple concurrent calls to retrieve the same data from the Kolada API (this is usually the case) you can use this option to store downloaded metadata to disk. If you call the function again, data will be read from disk instead of retrieving it over the internet if a cache file can be located. If set to \code{FALSE} or \code{"no"}, don't store any data on disk. If set to \code{TRUE} or \code{"yes"} or \code{"tempfile"}, store data in a \code{tempfile} (this will expire at the end of your R session). If set to \code{"wd"}, data will be stored in \code{.RData} files in your current working directory.
 #'
 #' @examples
 #' munic_df <- municipality_get()
 #' municipality_id_to_name(munic_df, c("1280", "1281", "0180", "1280"))
 #'
 #' @export
-municipality_id_to_name <- function(munic_df, id, remove_na = FALSE, cache = FALSE) {
+municipality_id_to_name <- function(munic_df, id, remove_na = FALSE) {
 
   res <- munic_df$title[match(id, tolower(munic_df$id))]
   names(res) <- munic_df$id[match(id, tolower(munic_df$id))]
@@ -61,4 +56,55 @@ municipality_id_to_name <- function(munic_df, id, remove_na = FALSE, cache = FAL
     res <- res[!is.na(res)]
 
   res
+}
+
+
+#' Extract a vector of municipality ID strings from a Kolada municipality table
+#'
+#'
+#'
+#' @param munic_df A Kolada Municipality metadata table, as created by e.g. \code{get_municipality}.
+#'
+#' @export
+municipality_extract_ids <- function(munic_df) {
+  munic_df$id
+}
+
+
+#' Search a Kolada municipality table
+#'
+#'
+#'
+#' @param munic_df A Kolada Municipality metadata table, as created by e.g. \code{get_municipality}.
+#' @param query A search term or a vector of search terms to filter by. Case insensitive.
+#' @param columns (Optional) A string or character vector with the names of
+#' columns in which to search for \code{query}.
+#'
+#' @examples
+#' \dontrun{
+#' # Search for a single search term in a municipality table
+#' munic_df <- get_municipality()
+#' municipality_search(munic_df, "Malmö")
+#'
+#' # Only keep columns with type == "K" (keep municipalities, drop regions)
+#' munic_filter <- get_municipality(cache = TRUE) %>%
+#'   municipality_search("K", column = "type")
+#' }
+#'
+#' @export
+municipality_search <- function(munic_df, query, column = NULL) {
+  if (is.null(column))
+    column <- names(munic_df)
+
+  f <- function(obj, query) {
+    stringr::str_detect(tolower(obj), tolower(as.character(paste(query, collapse = "|"))))
+  }
+
+  hits <- munic_df %>%
+    dplyr::filter_at(
+      .vars = dplyr::vars(column),
+      .vars_predicate = dplyr::any_vars(f(., query))
+    )
+
+  hits
 }
