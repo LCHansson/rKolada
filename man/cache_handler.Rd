@@ -9,7 +9,9 @@ cache_handler(entity, cache, cache_location)
 \arguments{
 \item{entity}{A keyword describing the data entity handled by the cache handler.}
 
-\item{cache}{A parameter containing information on whether, and where, data should be stored.}
+\item{cache}{Whether data should be stored.}
+
+\item{cache_location}{Where data should be stored (a path to a directory or a function that returns a path to a directory).}
 }
 \description{
 Cache handler factory

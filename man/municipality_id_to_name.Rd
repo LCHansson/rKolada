@@ -17,7 +17,7 @@ municipality_id_to_name(munic_df, id, remove_na = FALSE)
 Convert municipality ids to municipality names
 }
 \examples{
-munic_df <- municipality_get()
+munic_df <- get_municipality()
 municipality_id_to_name(munic_df, c("1280", "1281", "0180", "1280"))
 
 }

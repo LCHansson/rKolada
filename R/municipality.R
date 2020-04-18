@@ -38,7 +38,7 @@ municipality_name_to_id <- function(munic_df, municipality, remove_na = FALSE) {
 #' @param remove_na Should NA return values be removed?
 #'
 #' @examples
-#' munic_df <- municipality_get()
+#' munic_df <- get_municipality()
 #' municipality_id_to_name(munic_df, c("1280", "1281", "0180", "1280"))
 #'
 #' @export
@@ -77,7 +77,7 @@ municipality_extract_ids <- function(munic_df) {
 #'
 #' @param munic_df A Kolada Municipality metadata table, as created by e.g. \code{get_municipality}.
 #' @param query A search term or a vector of search terms to filter by. Case insensitive.
-#' @param columns (Optional) A string or character vector with the names of
+#' @param column (Optional) A string or character vector with the names of
 #' columns in which to search for \code{query}.
 #'
 #' @examples

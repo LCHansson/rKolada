@@ -1,7 +1,5 @@
 ---
 title: "Introduction to rKolada"
-author: "Love Hansson"
-date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Introduction to rKolada}
@@ -16,7 +14,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Introduction to rKolada
 
 The Swedish Municipalities and Regions Database (Kolada) is a openly accessible database containing over 4,000 Key Performance Indicators for a vast number of aspects of municipal and regional organisations, politics and economic life. The `rKolada` R package provides an interface to R users to directly download, explore, and simplify metadata and data from Kolada. The package draws heavily on functionality provided by several packages in the `tidyverse` family and it is thus recommended that you install the `tidyverse` package before installing rKolada:
 
@@ -41,7 +38,7 @@ Kolada contains five different types of metadata entities:
 4. `kpi_groups`: Thematic groupings of KPIs
 5. `municipality_groups`: Thematic groupings of municipalities
 
-To obtain data using `rKolada` it is usually a good idea to start by exploring metadata. `rKolada` comes with convenience functions for each of the five above mentioned entities. These functions are all names `[entity]_get()` and can be called as follows. The `cache` parameter allows you to temporarily store results on disk to avoid repeated calls to the API in case you need to re-run your code:
+To obtain data using `rKolada` it is usually a good idea to start by exploring metadata. `rKolada` comes with convenience functions for each of the five above mentioned entities. These functions are all names `get_[entity]()` and can be called as follows. The `cache` parameter allows you to temporarily store results on disk to avoid repeated calls to the API in case you need to re-run your code:
 
 ```{r}
 kpis <- get_kpi()

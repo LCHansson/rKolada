@@ -7,7 +7,7 @@
 desc_glue_spec(type)
 }
 \arguments{
-\item{entity}{The metadata entity to be described.}
+\item{type}{The metadata entity to be described.}
 }
 \description{
 Description specifications in {glue} format

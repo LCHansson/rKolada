@@ -4,7 +4,7 @@
 #'
 #' @param ou_df A Kolada Municipality metadata table, as created by e.g. \code{get_municipality}.
 #' @param query A search term or a vector of search terms to filter by. Case insensitive.
-#' @param columns (Optional) A string or character vector with the names of
+#' @param column (Optional) A string or character vector with the names of
 #' columns in which to search for \code{query}.
 #'
 #' @examples

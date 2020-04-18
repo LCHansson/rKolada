@@ -11,7 +11,7 @@ municipality_search(munic_df, query, column = NULL)
 
 \item{query}{A search term or a vector of search terms to filter by. Case insensitive.}
 
-\item{columns}{(Optional) A string or character vector with the names of
+\item{column}{(Optional) A string or character vector with the names of
 columns in which to search for \code{query}.}
 }
 \description{
