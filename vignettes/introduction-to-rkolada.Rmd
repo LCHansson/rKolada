@@ -14,122 +14,90 @@ knitr::opts_chunk$set(
 )
 ```
 
+`rKolada` is an R package for *downloading*, *inspecting* and *processing* data from [Kolada](https://kolada.se/), a Key Performance Indicator database for Swedish municipalities and regions. This vignette provides an overview of the methods included in the `rKolada` package and the design principles of the package API. To learn more about the specifics of functions and to see a full list of the functions included, please see `??rKolada`. For a quick introduction to the package see the vignette [A quick start guide to rKolada](quickstart-rkolada.html).
 
-The Swedish Municipalities and Regions Database (Kolada) is a openly accessible database containing over 4,000 Key Performance Indicators for a vast number of aspects of municipal and regional organisations, politics and economic life. The `rKolada` R package provides an interface to R users to directly download, explore, and simplify metadata and data from Kolada. The package draws heavily on functionality provided by several packages in the `tidyverse` family and it is thus recommended that you install the `tidyverse` package before installing rKolada:
+NOTE: All metadata and data labels in Kolada are written in Swedish only.
+
+The design of `rKolada` functions is inspired by, and are supported by, the design and functionality provided by several packages in the `tidyverse` family. It is thus recommended that you install the `tidyverse` package before installing rKolada:
 
 ```{r, eval = FALSE}
 install.packages("tidyverse")
+install.packages("rKolada")
 ```
 
-This vignette provides a quick-start introduction to the core functionality of the package. To learn more about the specifics of functions and to see a full list of the functions included, please see `??rKolada`.
+## Kolada, a Key Performance Indicator database for Swedish municipalities and regions
+
+The Swedish Municipalities and Regions Database [Kolada](https://kolada.se/) is a openly accessible, comprehensive database containing over 4,000 Key Performance Indicators (KPIs) for a vast number of aspects of municipal and regional organisations, politics and economic life. The `rKolada` R package provides an interface to R users to directly download, explore, and simplify metadata and data from Kolada.
+
+To get started with Kolada you might want to visit its homepage (Swedish-only) or read through the [REST API documentation on Github](https://github.com/Hypergene/kolada). However, you can also use the `rKolada` package to explore data without prior knowledge of the database.
 
 ```{r setup}
 library("rKolada")
 ```
 
-## Getting started with rKolada in five quick steps
+### The data model
 
-### 1. Get metadata
+Data in Kolada are stored along three basic _dimensions_:
 
-Kolada contains five different types of metadata entities: 
-1. `kpi`: Key Performance Indicators
-2. `municipality`: Municipalities
-3. `ou`: Operating Unit, a subunit of municipalities
-4. `kpi_groups`: Thematic groupings of KPIs
-5. `municipality_groups`: Thematic groupings of municipalities
+- A KPI ID
+- A point in time (year)
+- A municipality/region/ ID
 
-To obtain data using `rKolada` it is usually a good idea to start by exploring metadata. `rKolada` comes with convenience functions for each of the five above mentioned entities. These functions are all names `get_[entity]()` and can be called as follows. The `cache` parameter allows you to temporarily store results on disk to avoid repeated calls to the API in case you need to re-run your code:
+When downloading data, the user needs to specify search parameters for at least two of these three basic dimensions. (The Kolada API documentation also specifies a fourth basic dimension: _gender_. However, data for all genders is always automatically downloaded when available.) The parameters can be a single, atomic value or a vector of values.
 
-```{r}
-kpis <- get_kpi()
-munic <- get_municipality()
-```
+Also, the Kolada database proves useful groupings of municipalities and KPIs that can be used for further exploration, or to create unweighted averages. Lastly, some KPIs are also available for _Organizational units_ (OUs) within municipalities, e.g. a school, an administrative subdivision or an elderly home.
 
-If you have already familiarised yourself with the Kolada API (e.g. by reading the [official docs on GitHub](https://github.com/Hypergene/kolada)) you can access the full metadata API using `get_metadata()`.
 
-### 2. Search metadata
+### Downloading data
 
-Metadata tables are stored as regular `tibble`s so you can start inspecting them by simply viewing them in RStudio. For example, the KPI metadata we downloaded looks like this:
+If the user already has knowledge of the IDs of the KPIs and/or municipalities they want to download, this can be done using the function `get_values()`. For instance, if you want to download all values for the KPI `N00945` ("Tillfälliga föräldrapenningdagar (VAB) som tas ut av män, andel av antal dagar (%)") for Sweden's three most populous cities; Stockholm (id `"0180"`), Gothenburg (Swedish: _Göteborg_; `"1480"`) and Malmö (`"1280"`):
 
 ```{r}
-dplyr::glimpse(kpis)
-```
-
-But `rKolada` also comes with a set of convenience functions to simplify the task of exploring KPI metadata. `kpi_search()` filters down a list of KPIs using a search term, and `kpi_minimize()` can be used to clean the KPI metadata table from columns that don't contain any information that distinguish KPIs from each other:
-
-```{r}
-kpi_res <- kpis %>%
-  kpi_search("BRP") %>%
-  kpi_minimize(remove_undocumented_columns = TRUE, remove_monotonous_data = TRUE)
-
-dplyr::glimpse(kpi_res)
-```
-
-Let's say we are interested in retrieving data for four Swedish municipalities. We thus want to create a table containing metadata about these four municipalities:
-
-```{r}
-munic_res <- munic %>% 
-  municipality_search(c("Stockholm", "Göteborg", "Malmö")) %>% 
-  municipality_search("K", column = "type")
-
-dplyr::glimpse(munic_res)
-
-```
-
-
-
-### 3. Describe KPIs
-
-In addition to the information provided about every KPI in the `title` and `description` columns of a KPI table, `kpi_add_keywords()` can be used to create a rough summary of every KPI creating a number of _keyword_ columns. The function `kpi_describe()` can be used to print a huamn readable table containing a summary of a table of KPIs. For instance, by setting the `knitr` chunk option `results='asis'`, the following code renders a markdown section that can be directly integrated into a Markdown report:
-
-```{r, echo = TRUE, results='asis'}
-kpi_res %>%
-  kpi_bind_keywords(n = 4) %>% 
-  kpi_describe(max_n = 1, format = "md", heading_level = 4, sub_heading_level = 5)
-```
-
-### 4. Get data
-
-Once we have settled on what KPIs we are interested in the next step is to download actual data from Kolada. Use `get_values()` to do this. To download data from the Kolada API you need to provide at least two of the following parameters:
-
-1. `kpi`: One or a vector of several KPI IDs
-2. `municipality`: One or a vector of several municipality IDs
-3. `period`: The years for which data should be downloaded.
-
-The ID tags for KPIs and municipalities can be extracted using the convenience functions `kpi_query_filter()` and `municipality_name_to_filter()`:
-
-```{r}
-kld_data <- get_values(
-  kpi = kpi_extract_ids(kpi_res),
-  municipality = municipality_extract_ids(munic_res),
-  period = 1990:2019,
-  simplify = TRUE
+n00945 <- get_values(
+  kpi = "N00945",
+  municipality = "G123833",
+  period = 1970:2020
 )
+
+n00945
 ```
 
-Setting the `simplify` parameter to `TRUE`, again, makes results more human readable, by removing undocumented columns and relabeling data with human-friendly labels.
+In many cases, however, you will not know in advance exactly what KPIs to be looking for, or you might not know the IDs of Sweden's municipalities.
 
+### Downloading metadata: `get` functions
 
-### 5. Inspect and visualise results
+Kolada has five different kinds of metadata entities Each one of these can be downloaded by using `rKolada`'s `get` functions. Each function returns a `tibble` with all available data for the specified metadata entity:
 
-Finally, time to inspect our data:
+- KPIs: `get_kpi()`
+- KPI groups: `get_kpi_groups()`
+- Municipalities: `get_municipality()`
+- Municipality groups: `get_municipality_groups()`
+- Organizational Unit: : `get_ou()`
+
+Each function returns a `tibble` with all available data for the specified metadata entity.
 
 ```{r}
-# Visualise results
-library("ggplot2")
+# Download all KPI metadata as a tibble (kpi_df)
+kpi_df <- get_kpi()
 
-ggplot(kld_data, aes(x = year, y = value)) +
-  geom_line(aes(color = municipality)) +
-  facet_grid(kpi ~ .) +
-  scale_y_continuous(labels = scales::comma) +
-  labs(
-    title = "Gross Regional Product",
-    subtitle = "Yearly development in Sweden's three\nmost populous municipalities",
-    x = "Year",
-    y = "",
-    caption = values_legend(kld_data, kpis)
-  )
+kpi_df
 ```
 
+All `get` functions are thin wrappers around the more general function `get_metadata()`. If you are familiar with the terminology used in the Kolada API for accessing metadata you might want to use this function instead.
+
+### Exploring metadata
+
+For each metadata type mentioned in the previous sections, `rKolada` offers several convenience functions to help exploring and narrowing down metadata tables. (If you are familiar with `dplyr` semantics, most of these functions are basically wrappers around `dplyr`/`tidyr` code.)
+
+Since each `get()` function above returns a table for the selected entity, a metadata table can be one of five different types. All metadata convenience functions are prefixed to reflect which kind of metadata table they operate on: `kpi`, `kpi_grp`, `municipality`, `municipality_grp`, and `ou`.
+
+All metadata convenience functions have been designed with functional piping in mind, so their first argument is always a metadata tibble. Most of them also return a tibble of the same type
+
+The most important family of metadata convenience functions is the `search()` family. Much like `dplyr::filter()` they can be used to search for one or several search terms in the entire table or in a subset of named columns:
+
+```{r}
+# Search for KPIs with the term "BRP" in their description or title
+kpi_filter <- kpi_df %>% kpi_search("BRP", column = c("description", "title"))
+```
 
 
