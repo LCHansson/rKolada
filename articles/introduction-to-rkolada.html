@@ -56,6 +56,9 @@
 <li>
       <a href="../articles/introduction-to-rkolada.html">Introduction to rKolada</a>
     </li>
+    <li>
+      <a href="../articles/quickstart-rkolada.html">A quick start guide to rKolada</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -82,147 +85,106 @@
 
     
     
-<p>The Swedish Municipalities and Regions Database (Kolada) is a openly accessible database containing over 4,000 Key Performance Indicators for a vast number of aspects of municipal and regional organisations, politics and economic life. The <code>rKolada</code> R package provides an interface to R users to directly download, explore, and simplify metadata and data from Kolada. The package draws heavily on functionality provided by several packages in the <code>tidyverse</code> family and it is thus recommended that you install the <code>tidyverse</code> package before installing rKolada:</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"tidyverse"</span>)</pre></body></html></div>
-<p>This vignette provides a quick-start introduction to the core functionality of the package. To learn more about the specifics of functions and to see a full list of the functions included, please see <code>??rKolada</code>.</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"rKolada"</span>)</pre></body></html></div>
-<div id="getting-started-with-rkolada-in-five-quick-steps" class="section level2">
+<p><code>rKolada</code> is an R package for <em>downloading</em>, <em>inspecting</em> and <em>processing</em> data from <a href="https://kolada.se/">Kolada</a>, a Key Performance Indicator database for Swedish municipalities and regions. This vignette provides an overview of the methods included in the <code>rKolada</code> package and the design principles of the package API. To learn more about the specifics of functions and to see a full list of the functions included, please see <code>??rKolada</code>. For a quick introduction to the package see the vignette <a href="quickstart-rkolada.html">A quick start guide to rKolada</a>.</p>
+<p>NOTE: All metadata and data labels in Kolada are written in Swedish only.</p>
+<p>The design of <code>rKolada</code> functions is inspired by, and are supported by, the design and functionality provided by several packages in the <code>tidyverse</code> family. It is thus recommended that you install the <code>tidyverse</code> package before installing rKolada:</p>
+<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"tidyverse"</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"rKolada"</span>)</pre></body></html></div>
+<div id="kolada-a-key-performance-indicator-database-for-swedish-municipalities-and-regions" class="section level2">
 <h2 class="hasAnchor">
-<a href="#getting-started-with-rkolada-in-five-quick-steps" class="anchor"></a>Getting started with rKolada in five quick steps</h2>
-<div id="get-metadata" class="section level3">
+<a href="#kolada-a-key-performance-indicator-database-for-swedish-municipalities-and-regions" class="anchor"></a>Kolada, a Key Performance Indicator database for Swedish municipalities and regions</h2>
+<p>The Swedish Municipalities and Regions Database <a href="https://kolada.se/">Kolada</a> is a openly accessible, comprehensive database containing over 4,000 Key Performance Indicators (KPIs) for a vast number of aspects of municipal and regional organisations, politics and economic life. The <code>rKolada</code> R package provides an interface to R users to directly download, explore, and simplify metadata and data from Kolada.</p>
+<p>To get started with Kolada you might want to visit its homepage (Swedish-only) or read through the <a href="https://github.com/Hypergene/kolada">REST API documentation on Github</a>. However, you can also use the <code>rKolada</code> package to explore data without prior knowledge of the database.</p>
+<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"rKolada"</span>)</pre></body></html></div>
+<div id="the-data-model" class="section level3">
 <h3 class="hasAnchor">
-<a href="#get-metadata" class="anchor"></a>1. Get metadata</h3>
-<p>Kolada contains five different types of metadata entities: 1. <code>kpi</code>: Key Performance Indicators 2. <code>municipality</code>: Municipalities 3. <code>ou</code>: Operating Unit, a subunit of municipalities 4. <code>kpi_groups</code>: Thematic groupings of KPIs 5. <code>municipality_groups</code>: Thematic groupings of municipalities</p>
-<p>To obtain data using <code>rKolada</code> it is usually a good idea to start by exploring metadata. <code>rKolada</code> comes with convenience functions for each of the five above mentioned entities. These functions are all names <code>get_[entity]()</code> and can be called as follows. The <code>cache</code> parameter allows you to temporarily store results on disk to avoid repeated calls to the API in case you need to re-run your code:</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">kpis</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_kpi.html">get_kpi</a></span>()
-<span class="no">munic</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_kpi.html">get_municipality</a></span>()</pre></body></html></div>
-<p>If you have already familiarised yourself with the Kolada API (e.g. by reading the <a href="https://github.com/Hypergene/kolada">official docs on GitHub</a>) you can access the full metadata API using <code><a href="../reference/get_metadata.html">get_metadata()</a></code>.</p>
-</div>
-<div id="search-metadata" class="section level3">
-<h3 class="hasAnchor">
-<a href="#search-metadata" class="anchor"></a>2. Search metadata</h3>
-<p>Metadata tables are stored as regular <code>tibble</code>s so you can start inspecting them by simply viewing them in RStudio. For example, the KPI metadata we downloaded looks like this:</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/reexports.html">glimpse</a></span>(<span class="no">kpis</span>)
-<span class="co">#&gt; Rows: 4,636</span>
-<span class="co">#&gt; Columns: 13</span>
-<span class="co">#&gt; $ auspices              &lt;chr&gt; "E", "E", "X", NA, NA, NA, "X", NA, "X", "X", N…</span>
-<span class="co">#&gt; $ description           &lt;chr&gt; "Personalkostnader kommunen totalt, dividerat m…</span>
-<span class="co">#&gt; $ has_ou_data           &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE…</span>
-<span class="co">#&gt; $ id                    &lt;chr&gt; "N00002", "N00003", "N00005", "N00009", "N00011…</span>
-<span class="co">#&gt; $ is_divided_by_gender  &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…</span>
-<span class="co">#&gt; $ municipality_type     &lt;chr&gt; "K", "K", "K", "K", "K", "K", "K", "K", "K", "K…</span>
-<span class="co">#&gt; $ operating_area        &lt;chr&gt; "Kommunen, övergripande", "Kommunen, övergripan…</span>
-<span class="co">#&gt; $ ou_publication_date   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…</span>
-<span class="co">#&gt; $ perspective           &lt;chr&gt; "Resurser", "Resurser", "Resurser", "Resurser",…</span>
-<span class="co">#&gt; $ prel_publication_date &lt;chr&gt; "2020-04-08", "2020-04-08", "2020-04-08", NA, N…</span>
-<span class="co">#&gt; $ publ_period           &lt;chr&gt; "2019", "2019", "2019", "2019", NA, NA, NA, NA,…</span>
-<span class="co">#&gt; $ publication_date      &lt;chr&gt; "2020-08-31", "2020-08-31", "2020-08-31", "2020…</span>
-<span class="co">#&gt; $ title                 &lt;chr&gt; "Personalkostnader som andel av verksamhetens k…</span></pre></body></html></div>
-<p>But <code>rKolada</code> also comes with a set of convenience functions to simplify the task of exploring KPI metadata. <code><a href="../reference/kpi_search.html">kpi_search()</a></code> filters down a list of KPIs using a search term, and <code><a href="../reference/kpi_minimize.html">kpi_minimize()</a></code> can be used to clean the KPI metadata table from columns that don’t contain any information that distinguish KPIs from each other:</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">kpi_res</span> <span class="kw">&lt;-</span> <span class="no">kpis</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/kpi_search.html">kpi_search</a></span>(<span class="st">"BRP"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/kpi_minimize.html">kpi_minimize</a></span>(<span class="kw">remove_undocumented_columns</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">remove_monotonous_data</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
-
-<span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/reexports.html">glimpse</a></span>(<span class="no">kpi_res</span>)
-<span class="co">#&gt; Rows: 2</span>
-<span class="co">#&gt; Columns: 5</span>
-<span class="co">#&gt; $ id               &lt;chr&gt; "N03700", "N03701"</span>
-<span class="co">#&gt; $ title            &lt;chr&gt; "Bruttoregionalprodukt (BRP), kr/inv", "Bruttoregion…</span>
-<span class="co">#&gt; $ description      &lt;chr&gt; "BRP dividerat med antal invånare i det geografiska …</span>
-<span class="co">#&gt; $ publ_period      &lt;chr&gt; "2019", "2018"</span>
-<span class="co">#&gt; $ publication_date &lt;chr&gt; "2020-02-25", "2019-12-13"</span></pre></body></html></div>
-<p>Let’s say we are interested in retrieving data for four Swedish municipalities. We thus want to create a table containing metadata about these four municipalities:</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">munic_res</span> <span class="kw">&lt;-</span> <span class="no">munic</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/municipality_search.html">municipality_search</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Stockholm"</span>, <span class="st">"Göteborg"</span>, <span class="st">"Malmö"</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/municipality_search.html">municipality_search</a></span>(<span class="st">"K"</span>, <span class="kw">column</span> <span class="kw">=</span> <span class="st">"type"</span>)
-
-<span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/reexports.html">glimpse</a></span>(<span class="no">munic_res</span>)
-<span class="co">#&gt; Rows: 3</span>
-<span class="co">#&gt; Columns: 3</span>
-<span class="co">#&gt; $ id    &lt;chr&gt; "1480", "1280", "0180"</span>
-<span class="co">#&gt; $ title &lt;chr&gt; "Göteborg", "Malmö", "Stockholm"</span>
-<span class="co">#&gt; $ type  &lt;chr&gt; "K", "K", "K"</span></pre></body></html></div>
-</div>
-<div id="describe-kpis" class="section level3">
-<h3 class="hasAnchor">
-<a href="#describe-kpis" class="anchor"></a>3. Describe KPIs</h3>
-<p>In addition to the information provided about every KPI in the <code>title</code> and <code>description</code> columns of a KPI table, <code>kpi_add_keywords()</code> can be used to create a rough summary of every KPI creating a number of <em>keyword</em> columns. The function <code><a href="../reference/kpi_describe.html">kpi_describe()</a></code> can be used to print a huamn readable table containing a summary of a table of KPIs. For instance, by setting the <code>knitr</code> chunk option <code>results='asis'</code>, the following code renders a markdown section that can be directly integrated into a Markdown report:</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">kpi_res</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/kpi_bind_keywords.html">kpi_bind_keywords</a></span>(<span class="kw">n</span> <span class="kw">=</span> <span class="fl">4</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/kpi_describe.html">kpi_describe</a></span>(<span class="kw">max_n</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">format</span> <span class="kw">=</span> <span class="st">"md"</span>, <span class="kw">heading_level</span> <span class="kw">=</span> <span class="fl">4</span>, <span class="kw">sub_heading_level</span> <span class="kw">=</span> <span class="fl">5</span>)</pre></body></html></div>
-<div id="n03700-bruttoregionalprodukt-brp-krinv" class="section level4">
-<h4 class="hasAnchor">
-<a href="#n03700-bruttoregionalprodukt-brp-krinv" class="anchor"></a>N03700: Bruttoregionalprodukt (BRP), kr/inv</h4>
-<div id="description" class="section level5">
-<h5 class="hasAnchor">
-<a href="#description" class="anchor"></a>Description</h5>
-<p>BRP dividerat med antal invånare i det geografiska området. Bruttoregionprodukt (BRP) är den regionala motsvarigheten till bruttonationalprodukt (BNP) mätt från produktsidan: värden av all produktion av varor och tjänster i en region. Nyckeltalet visar den ekonomiska utvecklingen inom det geografiska området. Källa: SCB</p>
-</div>
-<div id="metadata" class="section level5">
-<h5 class="hasAnchor">
-<a href="#metadata" class="anchor"></a>Metadata</h5>
+<a href="#the-data-model" class="anchor"></a>The data model</h3>
+<p>Data in Kolada are stored along three basic <em>dimensions</em>:</p>
 <ul>
-<li><p>Has OU data: Unknown</p></li>
-<li><p>Divided by gender: Unknown</p></li>
-<li><p>Municipality type: Unknown</p></li>
-<li><p>Operating area: Unknown</p></li>
-<li><p>Publication date: 2020-02-25</p></li>
-<li><p>Publication period: 2019</p></li>
-<li><p>OU publication date: Unknown</p></li>
+<li>A KPI ID</li>
+<li>A point in time (year)</li>
+<li>A municipality/region/ ID</li>
 </ul>
+<p>When downloading data, the user needs to specify search parameters for at least two of these three basic dimensions. (The Kolada API documentation also specifies a fourth basic dimension: <em>gender</em>. However, data for all genders is always automatically downloaded when available.) The parameters can be a single, atomic value or a vector of values.</p>
+<p>Also, the Kolada database proves useful groupings of municipalities and KPIs that can be used for further exploration, or to create unweighted averages. Lastly, some KPIs are also available for <em>Organizational units</em> (OUs) within municipalities, e.g. a school, an administrative subdivision or an elderly home.</p>
 </div>
-<div id="keywords" class="section level5">
-<h5 class="hasAnchor">
-<a href="#keywords" class="anchor"></a>Keywords</h5>
-<ul>
-<li>bruttoregionalprodukt</li>
-<li>brp</li>
-<li>kr</li>
-<li>inv</li>
-</ul>
-</div>
-</div>
-</div>
-<div id="get-data" class="section level3">
+<div id="downloading-data" class="section level3">
 <h3 class="hasAnchor">
-<a href="#get-data" class="anchor"></a>4. Get data</h3>
-<p>Once we have settled on what KPIs we are interested in the next step is to download actual data from Kolada. Use <code><a href="../reference/get_values.html">get_values()</a></code> to do this. To download data from the Kolada API you need to provide at least two of the following parameters:</p>
-<ol style="list-style-type: decimal">
-<li>
-<code>kpi</code>: One or a vector of several KPI IDs</li>
-<li>
-<code>municipality</code>: One or a vector of several municipality IDs</li>
-<li>
-<code>period</code>: The years for which data should be downloaded.</li>
-</ol>
-<p>The ID tags for KPIs and municipalities can be extracted using the convenience functions <code>kpi_query_filter()</code> and <code>municipality_name_to_filter()</code>:</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">kld_data</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_values.html">get_values</a></span>(
-  <span class="kw">kpi</span> <span class="kw">=</span> <span class="fu"><a href="../reference/kpi_extract_ids.html">kpi_extract_ids</a></span>(<span class="no">kpi_res</span>),
-  <span class="kw">municipality</span> <span class="kw">=</span> <span class="fu"><a href="../reference/municipality_extract_ids.html">municipality_extract_ids</a></span>(<span class="no">munic_res</span>),
-  <span class="kw">period</span> <span class="kw">=</span> <span class="fl">1990</span>:<span class="fl">2019</span>,
-  <span class="kw">simplify</span> <span class="kw">=</span> <span class="fl">TRUE</span>
-)</pre></body></html></div>
-<p>Setting the <code>simplify</code> parameter to <code>TRUE</code>, again, makes results more human readable, by removing undocumented columns and relabeling data with human-friendly labels.</p>
-</div>
-<div id="inspect-and-visualise-results" class="section level3">
-<h3 class="hasAnchor">
-<a href="#inspect-and-visualise-results" class="anchor"></a>5. Inspect and visualise results</h3>
-<p>Finally, time to inspect our data:</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="co"># Visualise results</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"ggplot2"</span>)
+<a href="#downloading-data" class="anchor"></a>Downloading data</h3>
+<p>If the user already has knowledge of the IDs of the KPIs and/or municipalities they want to download, this can be done using the function <code><a href="../reference/get_values.html">get_values()</a></code>. For instance, if you want to download all values for the KPI <code>N00945</code> (“Tillfälliga föräldrapenningdagar (VAB) som tas ut av män, andel av antal dagar (%)”) for Sweden’s three most populous cities; Stockholm (id <code>"0180"</code>), Gothenburg (Swedish: <em>Göteborg</em>; <code>"1480"</code>) and Malmö (<code>"1280"</code>):</p>
+<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">n00945</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_values.html">get_values</a></span>(
+  <span class="kw">kpi</span> <span class="kw">=</span> <span class="st">"N00945"</span>,
+  <span class="kw">municipality</span> <span class="kw">=</span> <span class="st">"G123833"</span>,
+  <span class="kw">period</span> <span class="kw">=</span> <span class="fl">1970</span>:<span class="fl">2020</span>
+)
+<span class="co">#&gt; Warning in municipality_id_to_name(get_municipality(), municipality): The following ids were not found in municipality data:</span>
+<span class="co">#&gt; - G123833</span>
 
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">kld_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">year</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">value</span>)) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">color</span> <span class="kw">=</span> <span class="no">municipality</span>)) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span>(<span class="no">kpi</span> ~ <span class="no">.</span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span>(<span class="kw">labels</span> <span class="kw">=</span> <span class="kw pkg">scales</span><span class="kw ns">::</span><span class="no"><a href="https://scales.r-lib.org//reference/label_number.html">comma</a></span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(
-    <span class="kw">title</span> <span class="kw">=</span> <span class="st">"Gross Regional Product"</span>,
-    <span class="kw">subtitle</span> <span class="kw">=</span> <span class="st">"Yearly development in Sweden's three\nmost populous municipalities"</span>,
-    <span class="kw">x</span> <span class="kw">=</span> <span class="st">"Year"</span>,
-    <span class="kw">y</span> <span class="kw">=</span> <span class="st">""</span>,
-    <span class="kw">caption</span> <span class="kw">=</span> <span class="fu"><a href="../reference/values_legend.html">values_legend</a></span>(<span class="no">kld_data</span>, <span class="no">kpis</span>)
-  )</pre></body></html></div>
-<p><img src="introduction-to-rkolada_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
+<span class="no">n00945</span>
+<span class="co">#&gt; # A tibble: 24 x 7</span>
+<span class="co">#&gt;    kpi    municipality  year count gender value municipality_id</span>
+<span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;        &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;          </span>
+<span class="co">#&gt;  1 N00945 &lt;NA&gt;          1996     0 T       NA   G123833        </span>
+<span class="co">#&gt;  2 N00945 &lt;NA&gt;          1997     0 T       NA   G123833        </span>
+<span class="co">#&gt;  3 N00945 &lt;NA&gt;          1998     7 T       31.5 G123833        </span>
+<span class="co">#&gt;  4 N00945 &lt;NA&gt;          1999     7 T       33.9 G123833        </span>
+<span class="co">#&gt;  5 N00945 &lt;NA&gt;          2000     7 T       33.7 G123833        </span>
+<span class="co">#&gt;  6 N00945 &lt;NA&gt;          2001     7 T       36.6 G123833        </span>
+<span class="co">#&gt;  7 N00945 &lt;NA&gt;          2002     7 T       35.9 G123833        </span>
+<span class="co">#&gt;  8 N00945 &lt;NA&gt;          2003     7 T       34.8 G123833        </span>
+<span class="co">#&gt;  9 N00945 &lt;NA&gt;          2004     7 T       36.2 G123833        </span>
+<span class="co">#&gt; 10 N00945 &lt;NA&gt;          2005     7 T       34.6 G123833        </span>
+<span class="co">#&gt; # … with 14 more rows</span></pre></body></html></div>
+<p>In many cases, however, you will not know in advance exactly what KPIs to be looking for, or you might not know the IDs of Sweden’s municipalities.</p>
+</div>
+<div id="downloading-metadata-get-functions" class="section level3">
+<h3 class="hasAnchor">
+<a href="#downloading-metadata-get-functions" class="anchor"></a>Downloading metadata: <code>get</code> functions</h3>
+<p>Kolada has five different kinds of metadata entities Each one of these can be downloaded by using <code>rKolada</code>’s <code>get</code> functions. Each function returns a <code>tibble</code> with all available data for the specified metadata entity:</p>
+<ul>
+<li>KPIs: <code><a href="../reference/get_kpi.html">get_kpi()</a></code>
+</li>
+<li>KPI groups: <code><a href="../reference/get_kpi.html">get_kpi_groups()</a></code>
+</li>
+<li>Municipalities: <code><a href="../reference/get_kpi.html">get_municipality()</a></code>
+</li>
+<li>Municipality groups: <code><a href="../reference/get_kpi.html">get_municipality_groups()</a></code>
+</li>
+<li>Organizational Unit: : <code><a href="../reference/get_kpi.html">get_ou()</a></code>
+</li>
+</ul>
+<p>Each function returns a <code>tibble</code> with all available data for the specified metadata entity.</p>
+<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="co"># Download all KPI metadata as a tibble (kpi_df)</span>
+<span class="no">kpi_df</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_kpi.html">get_kpi</a></span>()
+
+<span class="no">kpi_df</span>
+<span class="co">#&gt; # A tibble: 4,636 x 13</span>
+<span class="co">#&gt;    auspices description has_ou_data id    is_divided_by_g… municipality_ty…</span>
+<span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt;       &lt;lgl&gt;       &lt;chr&gt;            &lt;int&gt; &lt;chr&gt;           </span>
+<span class="co">#&gt;  1 E        Personalko… FALSE       N000…                0 K               </span>
+<span class="co">#&gt;  2 E        Personalko… FALSE       N000…                0 K               </span>
+<span class="co">#&gt;  3 X        Kommunalek… FALSE       N000…                0 K               </span>
+<span class="co">#&gt;  4 &lt;NA&gt;     Externa in… FALSE       N000…                0 K               </span>
+<span class="co">#&gt;  5 &lt;NA&gt;     Inkomstutj… FALSE       N000…                0 K               </span>
+<span class="co">#&gt;  6 &lt;NA&gt;     Kostnadsut… FALSE       N000…                0 K               </span>
+<span class="co">#&gt;  7 X        Reglerings… FALSE       N000…                0 K               </span>
+<span class="co">#&gt;  8 &lt;NA&gt;     Utjämnings… FALSE       N000…                0 K               </span>
+<span class="co">#&gt;  9 X        Införandeb… FALSE       N000…                0 K               </span>
+<span class="co">#&gt; 10 X        Strukturbi… FALSE       N000…                0 K               </span>
+<span class="co">#&gt; # … with 4,626 more rows, and 7 more variables: operating_area &lt;chr&gt;,</span>
+<span class="co">#&gt; #   ou_publication_date &lt;chr&gt;, perspective &lt;chr&gt;, prel_publication_date &lt;chr&gt;,</span>
+<span class="co">#&gt; #   publ_period &lt;chr&gt;, publication_date &lt;chr&gt;, title &lt;chr&gt;</span></pre></body></html></div>
+<p>All <code>get</code> functions are thin wrappers around the more general function <code><a href="../reference/get_metadata.html">get_metadata()</a></code>. If you are familiar with the terminology used in the Kolada API for accessing metadata you might want to use this function instead.</p>
+</div>
+<div id="exploring-metadata" class="section level3">
+<h3 class="hasAnchor">
+<a href="#exploring-metadata" class="anchor"></a>Exploring metadata</h3>
+<p>For each metadata type mentioned in the previous sections, <code>rKolada</code> offers several convenience functions to help exploring and narrowing down metadata tables. (If you are familiar with <code>dplyr</code> semantics, most of these functions are basically wrappers around <code>dplyr</code>/<code>tidyr</code> code.)</p>
+<p>Since each <code><a href="https://rdrr.io/r/base/get.html">get()</a></code> function above returns a table for the selected entity, a metadata table can be one of five different types. All metadata convenience functions are prefixed to reflect which kind of metadata table they operate on: <code>kpi</code>, <code>kpi_grp</code>, <code>municipality</code>, <code>municipality_grp</code>, and <code>ou</code>.</p>
+<p>All metadata convenience functions have been designed with functional piping in mind, so their first argument is always a metadata tibble. Most of them also return a tibble of the same type</p>
+<p>The most important family of metadata convenience functions is the <code><a href="https://rdrr.io/r/base/search.html">search()</a></code> family. Much like <code><a href="https://dplyr.tidyverse.org/reference/filter.html">dplyr::filter()</a></code> they can be used to search for one or several search terms in the entire table or in a subset of named columns:</p>
+<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="co"># Search for KPIs with the term "BRP" in their description or title</span>
+<span class="no">kpi_filter</span> <span class="kw">&lt;-</span> <span class="no">kpi_df</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="../reference/kpi_search.html">kpi_search</a></span>(<span class="st">"BRP"</span>, <span class="kw">column</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"description"</span>, <span class="st">"title"</span>))</pre></body></html></div>
 </div>
 </div>
   </div>
