@@ -59,11 +59,20 @@ compose_metadata_query <- function(entity = "kpi", title = NULL, id = NULL, muni
 #' @param id The ID of any entry in the current entity.
 #' @param municipality If entity is \code{"ou"}, the municipality parameter can
 #' be added to narrow the search.
-#' @param cache Logical. If TRUE, downloaded data are stored to the local disk in the place specified by \code{cache_location}. If data is already present on the local disk, this data is returned instead of downloading data from the API.
-#' @param cache_location Where to store and search for cached data. Can be a path to a directory or the name of any function that returns the path to a directory when called, like \code{link{getwd}}. Defaults to \code{\link{tempdir}}.
+#' @param cache Logical. If TRUE, downloaded data are stored to the local disk
+#' in the place specified by \code{cache_location}. If data is already present
+#' on the local disk, this data is returned instead of downloading data from the
+#' API.
+#' @param cache_location Where to store and search for cached data. Can be a
+#' path to a directory or the name of any function that returns the path to a
+#' directory when called, like \code{link{getwd}}. Defaults to
+#' \code{\link{tempdir}}.
 #'
-#' @return Returns a tibble with metadata for the specified entity.
-#'
+#' @return Returns a tibble with metadata for the specified entity. In rKolada
+#' terminology, a table returned by e.g. \code{entity = "kpi"} is referred to
+#' as a \code{kpi_df} and can be passed to functions starting with "kpi" such
+#' as \code{\link{kpi_bind_keywords}}.
+#'#'
 #' @seealso \code{\link{get_kpi}}, \code{\link{get_kpi_groups}}, \code{\link{get_municipality}}, \code{\link{get_municipality_groups}}, \code{\link{get_ou}}
 #'
 #' @export
@@ -87,18 +96,31 @@ get_metadata <- function(entity = "kpi", title = NULL, id = NULL, municipality =
 }
 
 
-#' Download metadata from the Kolada API
+#' Download metadata for a specific entity from the Kolada API
 #'
-#' There are five different types of metadata entities in the Kolada database: "kpi", "kpi_groups", "municipality", "municipality_groups", and "ou". For every entity there is a corresponding function \code{get_ENTITY} which retrieves a table with the metadata for that entity. The \code{get_ENTITY} functions are thin wrappers around \code{\link{get_metadata}}.
+#' There are five different types of metadata entities in the Kolada database:
+#' "kpi", "kpi_groups", "municipality", "municipality_groups", and "ou". For
+#' every entity there is a corresponding function \code{get_ENTITY} which
+#' retrieves a table with the metadata for that entity. The \code{get_ENTITY}
+#' functions are thin wrappers around \code{\link{get_metadata}}.
 #'
 #' @param id (Optional) One or several KPI IDs
-#' @param cache Logical. If TRUE, downloaded data are stored to the local disk in the place specified by \code{cache_location}. If data is already present on the local disk, this data is returned instead of downloading data from the API.
-#' @param cache_location Where to store and search for cached data. Can be a path to a directory or the name of any function that returns the path to a directory when called, like \code{link{getwd}}. Defaults to \code{\link{tempdir}}.
+#' @param cache Logical. If TRUE, downloaded data are stored to the local disk
+#'  in the place specified by \code{cache_location}. If data is already present
+#'  on the local disk, this data is returned instead of downloading data from the
+#'   API.
+#' @param cache_location Where to store and search for cached data. Can be a path
+#'  to a directory or the name of any function that returns the path to a
+#'  directory when called, like \code{link{getwd}}. Defaults to
+#'  \code{\link{tempdir}}.
 #' @param municipality (Optional) A string or vector of strings cantaining
 #' municipality codes. If getting OU data, you can use this parameter to narrow
 #' the search.
 #'
-#' @return Returns a tibble with metadata for the specified entity.
+#' @return Returns a tibble with metadata for the specified entity. In rKolada
+#' terminology, a table returned by e.g. \code{\link{get_kpi}} is referred to
+#' as a \code{kpi_df} and can be passed to functions starting with "kpi" such
+#' as \code{\link{kpi_bind_keywords}}.
 #'
 #' @examples
 #'

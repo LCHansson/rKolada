@@ -12,7 +12,6 @@
 #' @param ou (Optional) for what Operating Units should data be fetched? Only
 #' available for certain KPIs.
 #' @param version Version of the API. Currently only \code{"v2"} is supported.
-#' @export
 compose_data_query <- function(kpi = NULL, municipality = NULL, period = NULL, ou = NULL, version = "v2") {
 
   base_url <- glue::glue("http://api.kolada.se/{version}/data")

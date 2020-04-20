@@ -2,7 +2,6 @@
 
 export("%>%")
 export(allowed_entities)
-export(compose_data_query)
 export(compose_metadata_query)
 export(get_kpi)
 export(get_kpi_groups)

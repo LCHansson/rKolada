@@ -10,53 +10,62 @@ reference:
     help construct a search query for Kolada values.
 
   contents:
-  - get_metadata
   - get_kpi
   - get_kpi_groups
   - get_municipality
   - get_municipality_groups
   - get_ou
+  - get_metadata
+  - allowed_entities
 
 - subtitle: KPIs
   desc: >
-    Lorem ipsum
+    Functions to inspect and wrangle Key Performance Indicator metadata tables.
 
   contents:
   - starts_with("kpi_[^g]")
 
 - subtitle: KPI groups
   desc: >
-    Lorem ipsum
+    Functions to inspect and wrangle Key Performance Indicator Group metadata tables.
 
   contents:
-  - starts_with("kpi_g]")
+  - starts_with("kpi_g")
 
 - subtitle: Municipalities
   desc: >
-    Lorem ipsum
+    Functions to inspect and wrangle Municipality metadata tables.
 
   contents:
   - starts_with("municipality_[^g]")
 
 - subtitle: Municipalitiy groups
   desc: >
-    Lorem ipsum
+    Functions to inspect and wrangle Municipality group metadata tables.
 
   contents:
   - starts_with("municipality_g")
 
 - subtitle: Organizational units
   desc: >
-    Lorem ipsum
+    Functions to inspect and wrangle OU metadata tables.
 
   contents:
   - starts_with("ou")
 
 - title: Values
   desc: >
-    Lorem ipsum
+    Functions to download and handle data proper from Kolada.
 
   contents:
   - get_values
   - starts_with("values")
 
+
+- title: URL composition functions
+  desc: >
+    Functions to compose URLs to use to `GET` data from the Kolada REST API. These
+    functions primarily serve package-internal purposes but can be used to
+    produce reproducible results.
+  contents:
+    - starts_with("compose")
