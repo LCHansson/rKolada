@@ -1,1 +1,62 @@
 destination: docs
+
+reference:
+
+- title: Kolada metadata
+
+- subtitle: Download metadata
+  desc: >
+    You typically want to begin by downloading metadata to search through or to
+    help construct a search query for Kolada values.
+
+  contents:
+  - get_metadata
+  - get_kpi
+  - get_kpi_groups
+  - get_municipality
+  - get_municipality_groups
+  - get_ou
+
+- subtitle: KPIs
+  desc: >
+    Lorem ipsum
+
+  contents:
+  - starts_with("kpi_[^g]")
+
+- subtitle: KPI groups
+  desc: >
+    Lorem ipsum
+
+  contents:
+  - starts_with("kpi_g]")
+
+- subtitle: Municipalities
+  desc: >
+    Lorem ipsum
+
+  contents:
+  - starts_with("municipality_[^g]")
+
+- subtitle: Municipalitiy groups
+  desc: >
+    Lorem ipsum
+
+  contents:
+  - starts_with("municipality_g")
+
+- subtitle: Organizational units
+  desc: >
+    Lorem ipsum
+
+  contents:
+  - starts_with("ou")
+
+- title: Values
+  desc: >
+    Lorem ipsum
+
+  contents:
+  - get_values
+  - starts_with("values")
+
