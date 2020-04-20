@@ -1,8 +1,8 @@
-#' Extract KPI ID strings from a Kolada KPI group table
+#' Extract KPI ID strings from a Kolada KPI Group metadata table
 #'
 #'
 #'
-#' @param kpi_grp_df A Kolada KPI group table, as created by e.g. \code{get_kpi_groups}.
+#' @param kpi_grp_df A Kolada KPI Group metadata table, as created by e.g. \code{get_kpi_groups}.
 #'
 #' @export
 kpi_grp_extract_ids <- function(kpi_grp_df) {
@@ -10,11 +10,14 @@ kpi_grp_extract_ids <- function(kpi_grp_df) {
 }
 
 
-#' Create a KPI table from a KPI group table
+#' Create a KPI table from a Kolada KPI Group metadata table
 #'
 #'
 #'
-#' @param kpi_grp_df A Kolada KPI group table, as created by e.g. \code{get_kpi_groups}.
+#' @param kpi_grp_df A Kolada KPI Group metadata table, as created by e.g. \code{get_kpi_groups}.
+#'
+#' @return A Kolada KPI metadata table
+#'
 #' @export
 kpi_grp_unnest_kpis <- function(kpi_grp_df) {
   kpi_grp_df %>%
@@ -24,11 +27,11 @@ kpi_grp_unnest_kpis <- function(kpi_grp_df) {
 }
 
 
-#' Describe the KPIs in a Kolada KPI group table
+#' Describe the KPIs in a Kolada KPI Group metadata table
 #'
 #'
 #'
-#' @param kpi_grp_df A Kolada KPI group table, as created by e.g. \code{get_kpi_groups}.
+#' @param kpi_grp_df A Kolada KPI Group metadata table, as created by e.g. \code{get_kpi_groups}.
 #' @param max_n The maximum number of KPI groups to describe.
 #' @param format Output format. Can be one of "inline" or "md" (markdown).
 #' @param heading_level The top heading level output format is "md".
@@ -62,12 +65,15 @@ kpi_grp_describe <- function(
 }
 
 
-#' Search a Kolada KPI group table for group names
+#' Search a Kolada KPI Group metadata table for group names
 #'
 #'
 #'
-#' @param kpi_grp_df A Kolada KPI group table, as created by e.g. \code{get_kpi_groups}.
+#' @param kpi_grp_df A Kolada KPI Group metadata table, as created by e.g. \code{get_kpi_groups}.
 #' @param query A search term or a vector of search terms to filter by. Case insensitive.
+#'
+#' @return A Kolada KPI Group metadata table
+#'
 #' @export
 kpi_grp_search <- function(kpi_grp_df, query) {
   kpi_grp_df %>%

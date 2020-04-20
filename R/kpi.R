@@ -2,11 +2,13 @@
 #'
 #'
 #'
-#' @param kpi_df A KPI table, e.g. as created by \code{\link{get_kpi}}.
+#' @param kpi_df A Kolada KPI metadata table, e.g. as created by \code{\link{get_kpi}}.
 #' @param remove_undocumented_columns Remove columns from the KPI table which are
 #' undocumented in the API?
 #' @param remove_monotonous_data Remove columns from the KPI table which contain
 #' exactly the same information for all entries in the table?
+#'
+#' @return A Kolada KPI metadata table
 #'
 #' @export
 kpi_minimize <- function(kpi_df, remove_undocumented_columns = TRUE, remove_monotonous_data = FALSE) {
@@ -29,8 +31,10 @@ kpi_minimize <- function(kpi_df, remove_undocumented_columns = TRUE, remove_mono
 #'
 #' Identify \code{n} keywords describing the KPI and add them as new columns. Keywords are inferred from the \code{title} field of the \code{kpi_df} argument.
 #'
-#' @param kpi_df A KPI table, e.g. as created by \code{\link{get_kpi}}.
+#' @param kpi_df A Kolada KPI metadata table, e.g. as created by \code{\link{get_kpi}}.
 #' @param n How many keyword columns should be added?
+#'
+#' @return A Kolada KPI metadata table
 #'
 #' @examples
 #' \dontrun{
@@ -63,10 +67,12 @@ kpi_bind_keywords <- function(kpi_df, n = 2) {
 #'
 #'
 #'
-#' @param kpi_df A KPI table, e.g. as created by \code{\link{get_kpi}}.
+#' @param kpi_df A Kolada KPI metadata table, e.g. as created by \code{\link{get_kpi}}.
 #' @param query A search term or a vector of search terms to filter by. Case insensitive.
 #' @param column (Optional) A string or character vector with the names of
 #' columns in which to search for \code{query}.
+#'
+#' @return A Kolada KPI metadata table
 #'
 #' @examples
 #' \dontrun{
@@ -99,11 +105,11 @@ kpi_search <- function(kpi_df, query, column = NULL) {
 }
 
 
-#' Describe the KPIs in a Kolada KPI table
+#' Describe the KPIs in a Kolada KPI metadata table
 #'
 #'
 #'
-#' @param kpi_df A KPI table
+#' @param kpi_df A Kolada KPI metadata table
 #' @param max_n The maximum number of KPIs to describe.
 #' @param format Output format. Can be one of "inline" or "md" (markdown).
 #' @param heading_level The top heading level output format is "md".
@@ -134,11 +140,11 @@ kpi_describe <- function(
 }
 
 
-#' Extract a vector of KPI ID strings from a Kolada KPI table
+#' Extract a vector of KPI ID strings from a Kolada KPI metadata table
 #'
 #'
 #'
-#' @param kpi_df A KPI table, e.g. as created by \code{\link{get_kpi}}.
+#' @param kpi_df A Kolada KPI metadata table, e.g. as created by \code{\link{get_kpi}}.
 #' @export
 kpi_extract_ids <- function(kpi_df) {
   kpi_df$id

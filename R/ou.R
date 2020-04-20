@@ -1,15 +1,17 @@
-#' Search a Kolada Operating unit table
+#' Search a Kolada Organizational Unit metadata table
 #'
 #'
 #'
-#' @param ou_df A Kolada Municipality metadata table, as created by e.g. \code{get_municipality}.
+#' @param ou_df A Kolada Organizational Unit metadata table, as created by e.g. \code{get_municipality}.
 #' @param query A search term or a vector of search terms to filter by. Case insensitive.
 #' @param column (Optional) A string or character vector with the names of
 #' columns in which to search for \code{query}.
 #'
+#' @return A Kolada Organizational Unit metadata table
+#'
 #' @examples
 #' \dontrun{
-#' # Search for a single search term in a municipality table
+#' # Search for a single search term in a OU table
 #' ou_df <- get_ou()
 #' ou_search(ou_df, "skola")
 #'

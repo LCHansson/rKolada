@@ -80,6 +80,8 @@ municipality_extract_ids <- function(munic_df) {
 #' @param column (Optional) A string or character vector with the names of
 #' columns in which to search for \code{query}.
 #'
+#' @return A Kolada Municipality metadata table
+#'
 #' @examples
 #' \dontrun{
 #' # Search for a single search term in a municipality table

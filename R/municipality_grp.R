@@ -10,11 +10,15 @@ municipality_grp_extract_ids <- function(munic_grp_df) {
 }
 
 
-#' Create a municipality table from a Kolada municipality group table
+#' Create a municipality table from a Kolada Municipality Group metadata table
 #'
 #'
 #'
-#' @param munic_grp_df A Kolada municipality group table, as created by e.g. \code{get_municipality_groups}.
+#' @param munic_grp_df A Kolada Municipality Group metadata table, as created by e.g.
+#' \code{get_municipality_groups}.
+#'
+#' @return A Kolada Municipality metadata table
+#'
 #'
 #' @export
 municipality_grp_unnest_municipalities <- function(munic_grp_df) {
@@ -25,11 +29,11 @@ municipality_grp_unnest_municipalities <- function(munic_grp_df) {
 }
 
 
-#' Describe the KPIs in a Kolada KPI group table
+#' Describe the KPIs in a Kolada Municipality Group metadata table
 #'
 #'
 #'
-#' @param munic_grp_df A Kolada municipality group table, as created by e.g. \code{get_municipality_groups}.
+#' @param munic_grp_df A Kolada Municipality Group metadata table, as created by e.g. \code{get_municipality_groups}.
 #' @param max_n The maximum number of KPI groups to describe.
 #' @param format Output format. Can be one of "inline" or "md" (markdown).
 #' @param heading_level The top heading level output format is "md".
@@ -64,12 +68,15 @@ municipality_grp_describe <- function(
 }
 
 
-#' Search a Kolada KPI group table for group names
+#' Search a Kolada Municipality Group metadata table for group names
 #'
 #'
 #'
-#' @param munic_grp_df A Kolada municipality group table, as created by e.g. \code{get_municipality_groups}.
+#' @param munic_grp_df A Kolada Municipality Group metadata table, as created by e.g. \code{get_municipality_groups}.
 #' @param query A search term or a vector of search terms to filter by. Case insensitive.
+#'
+#' @return A Kolada Municipality Group metadata table
+#'
 #' @export
 municipality_grp_search <- function(munic_grp_df, query) {
   munic_grp_df %>%
