@@ -18,9 +18,9 @@ stopwords <- function() {
 
 # Cache handler factory
 #
-# @param entity A keyword describing the data entity handled by the cache handler.
-# @param cache Whether data should be stored.
-# @param cache_location Where data should be stored (a path to a directory or a function that returns a path to a directory).
+# @param entity String; a keyword describing the data entity handled by the cache handler.
+# @param cache Logical; whether data should be stored.
+# @param cache_location String; where data should be stored (a path to a directory or a function that returns a path to a directory).
 cache_handler <- function(entity, cache, cache_location) {
 
   if(is.function(cache_location))
