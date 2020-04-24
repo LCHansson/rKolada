@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-`rKolada` is an R package for *downloading*, *inspecting* and *processing* data from [Kolada](https://kolada.se/), a Key Performance Indicator database for Swedish municipalities and regions. This vignette provides an overview of the methods included in the `rKolada` package and the design principles of the package API. To learn more about the specifics of functions and to see a full list of the functions included, please see `??rKolada`. For a quick introduction to the package see the vignette [A quick start guide to rKolada](quickstart-rkolada.html).
+`rKolada` is an R package for *downloading*, *inspecting* and *processing* data from [Kolada](https://kolada.se/), a Key Performance Indicator database for Swedish municipalities and regions. This vignette provides an overview of the methods included in the `rKolada` package and the design principles of the package API. To learn more about the specifics of functions and to see a full list of the functions included, please see the [Reference section of the package homepage](https://lchansson.github.io/rKolada/reference/index.html) or run `??rKolada`. For a quick introduction to the package see the vignette [A quick start guide to rKolada](quickstart-rkolada.html).
 
 NOTE: All metadata and data labels in Kolada are written in Swedish only.
 
@@ -89,15 +89,58 @@ All `get` functions are thin wrappers around the more general function `get_meta
 
 For each metadata type mentioned in the previous sections, `rKolada` offers several convenience functions to help exploring and narrowing down metadata tables. (If you are familiar with `dplyr` semantics, most of these functions are basically wrappers around `dplyr`/`tidyr` code.)
 
-Since each `get()` function above returns a table for the selected entity, a metadata table can be one of five different types. All metadata convenience functions are prefixed to reflect which kind of metadata table they operate on: `kpi`, `kpi_grp`, `municipality`, `municipality_grp`, and `ou`.
+Since each `get` function above returns a table for the selected entity, a metadata table can be one of five different types. All metadata convenience functions are prefixed to reflect which kind of metadata table they operate on: `kpi`, `kpi_grp`, `municipality`, `municipality_grp`, and `ou`.
 
 All metadata convenience functions have been designed with functional piping in mind, so their first argument is always a metadata tibble. Most of them also return a tibble of the same type
 
-The most important family of metadata convenience functions is the `search()` family. Much like `dplyr::filter()` they can be used to search for one or several search terms in the entire table or in a subset of named columns:
+The most important family of metadata convenience functions is the `search` family. Much like `dplyr::filter()` they can be used to search for one or several search terms in the entire table or in a subset of named columns:
 
 ```{r}
 # Search for KPIs with the term "BRP" in their description or title
-kpi_filter <- kpi_df %>% kpi_search("BRP", column = c("description", "title"))
+kpi_filter <- kpi_df %>% kpi_search("skola", column = c("description", "title"))
+kpi_filter
+
+# Search for municipality groups containing the name "Arboga"
+munic_g <- get_municipality_groups()
+arboga_groups <- munic_g %>% municipality_grp_search("Arboga")
+arboga_groups
 ```
 
+Another important family of exploration functions is the `describe` family of functions. These functions take a metadata table and print a human-readable summary of the most important facts about each row in the table (up to a limit, specified by `max_n`). By default, output is printed directly to the R console. But by specifying `format = "md"` you can make the `describe` functions create markdown-ready output which can be added directly to a R markdown file by setting the chunk option `results='asis'`. The output then looks as follows:
+
+```{r, results='asis'}
+kpi_filter %>% kpi_describe(max_n = 2, format = "md", heading_level = 4)
+```
+
+### Extra functions for exploring KPI metadata
+
+KPI metadata is considerably more complex than other types of metadata. To further assist in exploring KPI metadata the function `kpi_bind_keywords()` can be used to tag data with keywords (these are inferred from the KPI title) to classify KPIs and make them more searchable.
+
+```{r}
+# Add keywords to a KPI table
+kpis_with_keywords <- kpi_filter %>% kpi_bind_keywords(n = 4)
+
+# count keywords
+kpis_with_keywords %>%
+  tidyr::pivot_longer(dplyr::starts_with("keyword"), values_to = "keyword") %>%
+  dplyr::count(keyword, sort = TRUE)
+```
+
+Some KPIs can be very similar-looking and it can sometimes be hard to discern which of the KPIs to use. To make sifting through data easier, `kpi_minimize()` can be used to remove all redundant columns from a KPI table. (In this case, "redundant" means "containing no information that helps in differentiating KPIs from one another, i.e. columns containing only one single value for all observations in the table):
+
+```{r}
+# Top 10 rows of the table
+kpi_filter %>% dplyr::slice(1:10)
+
+# Top 10 rows of the table, with non-distinct data removed
+kpi_filter %>% dplyr::slice(1:10) %>% kpi_minimize()
+```
+
+
+### Metadata groups
+
+- What are they?
+- Extracting KPIs/municipalities
+
+## Downloading data with helper functions
 
