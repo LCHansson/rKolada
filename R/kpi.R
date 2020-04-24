@@ -1,6 +1,8 @@
 #' Simplify a KPI table
 #'
-#'
+#' Remove all columns from a Kolada KPI metadata table that are monotonous across
+#' the table, i.e. columns that contain only one single value. Also remove undocumented
+#' columns, i.e. columns that contain unintelligible and undocumented information.
 #'
 #' @param kpi_df A Kolada KPI metadata table, e.g. as created by \code{\link{get_kpi}}.
 #' @param remove_undocumented_columns Remove columns from the KPI table which are
@@ -29,7 +31,7 @@ kpi_minimize <- function(kpi_df, remove_undocumented_columns = TRUE, remove_mono
 
 #' Add keyword columns to a Kolada KPI table
 #'
-#' Identify \code{n} keywords describing the KPI and add them as new columns. Keywords are inferred from the \code{title} field of the \code{kpi_df} argument.
+#' Identify \code{n} keywords describing the KPI and add them as new columns. Keywords are inferred from the \code{title} field of the table.
 #'
 #' @param kpi_df A Kolada KPI metadata table, e.g. as created by \code{\link{get_kpi}}.
 #' @param n How many keyword columns should be added?
@@ -73,7 +75,7 @@ kpi_bind_keywords <- function(kpi_df, n = 2, form = c("wide", "long")) {
 
 #' Search for Kolada KPIs using a Kolada KPI table
 #'
-#'
+#' Search a Kolada KPI metadata table. Only keep rows that contain the search query.
 #'
 #' @param kpi_df A Kolada KPI metadata table, e.g. as created by \code{\link{get_kpi}}.
 #' @param query A search term or a vector of search terms to filter by. Case insensitive.
@@ -115,11 +117,14 @@ kpi_search <- function(kpi_df, query, column = NULL) {
 
 #' Describe the KPIs in a Kolada KPI metadata table
 #'
-#'
+#' Print a human-readable description of each entity of a KPI metadata table (up
+#' to a maximum number of rows). Can be printed either directly to the R console
+#' or used to populate a R markdown document, which can be useful for documentation
+#' purposes.
 #'
 #' @param kpi_df A Kolada KPI metadata table
 #' @param max_n The maximum number of KPIs to describe.
-#' @param format Output format. Can be one of "inline" or "md" (markdown).
+#' @param format Output format. Can be one of "inline" (default) or "md", i.e. markdown.
 #' @param heading_level The top heading level output format is "md".
 #' @param sub_heading_level The sub heading level output format is "md".
 #'
