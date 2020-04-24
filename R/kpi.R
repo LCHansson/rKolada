@@ -11,7 +11,7 @@
 #' @return A Kolada KPI metadata table
 #'
 #' @export
-kpi_minimize <- function(kpi_df, remove_undocumented_columns = TRUE, remove_monotonous_data = FALSE) {
+kpi_minimize <- function(kpi_df, remove_undocumented_columns = TRUE, remove_monotonous_data = TRUE) {
   if (isTRUE(remove_undocumented_columns) & "auspices" %in% names(kpi_df)) {
     kpi_df <- kpi_df %>%
       dplyr::select(-auspices)
@@ -33,6 +33,8 @@ kpi_minimize <- function(kpi_df, remove_undocumented_columns = TRUE, remove_mono
 #'
 #' @param kpi_df A Kolada KPI metadata table, e.g. as created by \code{\link{get_kpi}}.
 #' @param n How many keyword columns should be added?
+#' @param form Can be either "wide" (default) or "long". Whether to return keywords as separate columns ("wide") or as
+#' separate rows, duplicating all other data ("long").
 #'
 #' @return A Kolada KPI metadata table
 #'
@@ -43,7 +45,9 @@ kpi_minimize <- function(kpi_df, remove_undocumented_columns = TRUE, remove_mono
 #' }
 #'
 #' @export
-kpi_bind_keywords <- function(kpi_df, n = 2) {
+kpi_bind_keywords <- function(kpi_df, n = 2, form = c("wide", "long")) {
+  form <- form[[1]]
+
   kpi_df <- kpi_df %>%
     dplyr::mutate(
       title_words = stringr::str_extract_all(tolower(title), "\\w+")
@@ -52,12 +56,16 @@ kpi_bind_keywords <- function(kpi_df, n = 2) {
     dplyr::filter(!title_words %in% stopwords()) %>%
     dplyr::group_by(id) %>%
     dplyr::slice(1:n) %>%
-    dplyr::mutate(nm_col = dplyr::row_number()) %>%
-    dplyr::ungroup() %>%
-    tidyr::pivot_wider(
-      names_from = nm_col, names_prefix = "keyword_",
-      values_from = title_words, values_fill = list(title_words = "")
-    )
+    dplyr::ungroup()
+
+  if (form == "wide") {
+    kpi_df <- kpi_df %>%
+      dplyr::mutate(nm_col = dplyr::row_number()) %>%
+      tidyr::pivot_wider(
+        names_from = nm_col, names_prefix = "keyword_",
+        values_from = title_words, values_fill = list(title_words = "")
+      )
+  }
 
   kpi_df
 }
@@ -121,7 +129,7 @@ kpi_describe <- function(
   max_n = 5,
   format = "inline",
   heading_level = 2,
-  sub_heading_level = 3
+  sub_heading_level = heading_level + 1
 ) {
   if (!format %in% c("inline", "md"))
     stop("'format' must be one of c(\"inline\", \"md\")")
