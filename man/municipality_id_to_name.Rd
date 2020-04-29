@@ -7,7 +7,8 @@
 municipality_id_to_name(munic_df, id, remove_na = FALSE)
 }
 \arguments{
-\item{munic_df}{A Kolada Municipality metadata table, as created by e.g. \code{get_municipality}.}
+\item{munic_df}{A Kolada Municipality metadata table, as created by e.g.
+\code{get_municipality}.}
 
 \item{id}{ID ids of one or several municipalities. Allows repeats.}
 
@@ -15,16 +16,20 @@ municipality_id_to_name(munic_df, id, remove_na = FALSE)
 }
 \description{
 Given a vector of municipality IDs/codes, return a named vector
-of names of municipalities or regions. Codes of municipalities and regions follow
+of names of municipalities or regions. Codes of municipalities and regions
+follow
 the Swedish standard for municipality codes. The codes extracted can be used
-e.g. to pass as a parameter to \code{\link{get_values}}. This function is the inverse
-to \code{\link{municipality_name_to_id}}.
+e.g. to pass as a parameter to \code{\link{get_values}}. This function is the
+inverse to \code{\link{municipality_name_to_id}}.
 }
 \examples{
+\dontrun{
 munic_df <- get_municipality()
 municipality_id_to_name(munic_df, c("1280", "1281", "0180", "1280"))
+}
 
 }
 \seealso{
-\code{\link{municipality_extract_ids}}, \code{\link{municipality_name_to_id}}
+\code{\link{municipality_extract_ids}},
+\code{\link{municipality_name_to_id}}
 }

@@ -7,9 +7,11 @@
 municipality_name_to_id(munic_df, municipality, remove_na = FALSE)
 }
 \arguments{
-\item{munic_df}{A Kolada Municipality metadata table, as created by e.g. \code{get_municipality}.}
+\item{munic_df}{A Kolada Municipality metadata table, as created by e.g.
+\code{get_municipality}.}
 
-\item{municipality}{Name of one or several municipalities. Case insensitive. Allows repeats.}
+\item{municipality}{Name of one or several municipalities. Case insensitive.
+Allows repeats.}
 
 \item{remove_na}{Should NA return values be removed?}
 }
@@ -17,15 +19,19 @@ municipality_name_to_id(munic_df, municipality, remove_na = FALSE)
 Given a vector of names of municipalities or regions, return a named vector
 of municipality IDs/codes. Codes of municipalities and regions follow
 the Swedish standard for municipality codes. The codes extracted can be used
-e.g. to pass as a parameter to \code{\link{get_values}}. This function is the inverse
-to \code{\link{municipality_id_to_name}}.
+e.g. to pass as a parameter to \code{\link{get_values}}. This function is the
+inverse to \code{\link{municipality_id_to_name}}.
 }
 \examples{
+\dontrun{
 munic_df <- get_municipality()
-municipality_name_to_id(munic_df, c("Malmö", "Lund", "Stockholm", "Malmö"))
-munic_df \%>\% municipality_name_to_id(c("Malmö", "Lund", "Stockholm", "Malmö"))
+municipality_name_to_id(munic_df, c("Arboga", "Lund", "Stockholm", "Arboga"))
+munic_df \%>\%
+  municipality_name_to_id(c("Arboga", "Lund", "Stockholm", "Arboga"))
+}
 
 }
 \seealso{
-\code{\link{municipality_extract_ids}}, \code{\link{municipality_id_to_name}}
+\code{\link{municipality_extract_ids}},
+\code{\link{municipality_id_to_name}}
 }

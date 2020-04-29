@@ -7,9 +7,11 @@
 kpi_grp_search(kpi_grp_df, query)
 }
 \arguments{
-\item{kpi_grp_df}{A Kolada KPI Group metadata table, as created by e.g. \code{get_kpi_groups}.}
+\item{kpi_grp_df}{A Kolada KPI Group metadata table, as created by e.g.
+\code{get_kpi_groups}.}
 
-\item{query}{A search term or a vector of search terms to filter by. Case insensitive.}
+\item{query}{A search term or a vector of search terms to filter by. Case
+insensitive.}
 }
 \value{
 A Kolada KPI Group metadata table

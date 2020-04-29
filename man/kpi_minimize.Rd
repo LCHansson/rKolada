@@ -11,10 +11,11 @@ kpi_minimize(
 )
 }
 \arguments{
-\item{kpi_df}{A Kolada KPI metadata table, e.g. as created by \code{\link{get_kpi}}.}
+\item{kpi_df}{A Kolada KPI metadata table, e.g. as created by
+\code{\link{get_kpi}}.}
 
-\item{remove_undocumented_columns}{Remove columns from the KPI table which are
-undocumented in the API?}
+\item{remove_undocumented_columns}{Remove columns from the KPI table which
+are undocumented in the API?}
 
 \item{remove_monotonous_data}{Remove columns from the KPI table which contain
 exactly the same information for all entries in the table?}
@@ -23,7 +24,8 @@ exactly the same information for all entries in the table?}
 A Kolada KPI metadata table
 }
 \description{
-Remove all columns from a Kolada KPI metadata table that are monotonous across
-the table, i.e. columns that contain only one single value. Also remove undocumented
-columns, i.e. columns that contain unintelligible and undocumented information.
+Remove all columns from a Kolada KPI metadata table that are monotonous
+across the table, i.e. columns that contain only one single value. Also
+remove undocumented columns, i.e. columns that contain unintelligible and
+undocumented information.
 }

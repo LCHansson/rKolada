@@ -7,9 +7,11 @@
 municipality_grp_search(munic_grp_df, query)
 }
 \arguments{
-\item{munic_grp_df}{A Kolada Municipality Group metadata table, as created by e.g. \code{get_municipality_groups}.}
+\item{munic_grp_df}{A Kolada Municipality Group metadata table, as created by
+e.g. \code{get_municipality_groups}.}
 
-\item{query}{A search term or a vector of search terms to filter by. Case insensitive.}
+\item{query}{A search term or a vector of search terms to filter by. Case
+insensitive.}
 }
 \value{
 A Kolada Municipality Group metadata table
@@ -18,6 +20,6 @@ A Kolada Municipality Group metadata table
 Search a Kolada Municipality Group metadata table. Only keep rows that
 contain the search query. Searches group titles and group IDs. Note that this
 function does not search for individual municipalities contained within
-municipality groups! To search for KPIs within a KPI group, see examples below for an example
-using \code{municipality_grp_unnest}.
+municipality groups! To search for KPIs within a KPI group, see examples
+below for an example using \code{municipality_grp_unnest}.
 }

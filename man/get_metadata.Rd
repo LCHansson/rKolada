@@ -48,10 +48,13 @@ as \code{\link{kpi_bind_keywords}}.
 }
 \description{
 This is a generalized function for downloading metadata from the Kolada API.
-The function parameters closely mask the names specified in the original API. For
-further information about the Kolada API specification, please see the
+The function parameters closely mask the names specified in the original API.
+For further information about the Kolada API specification, please see the
 \url{https://github.com/Hypergene/kolada}{official documentation on GitHub}.
 }
 \seealso{
-\code{\link{get_kpi}}, \code{\link{get_kpi_groups}}, \code{\link{get_municipality}}, \code{\link{get_municipality_groups}}, \code{\link{get_ou}}
+\code{\link{get_kpi}}, \code{\link{get_kpi_groups}},
+ \code{\link{get_municipality}},
+ \code{\link{get_municipality_groups}},
+ \code{\link{get_ou}}
 }

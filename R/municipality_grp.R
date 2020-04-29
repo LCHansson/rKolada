@@ -1,8 +1,11 @@
 #' Extract municipality ID strings from a Kolada municipality group table
 #'
-#' This function is primarily intended as a convenient way to pass a (filtered) Kolada municipality group metadata table to \code{\link{get_data}}. All IDs of the municipalities contained in each group in the table are extracted.
+#' This function is primarily intended as a convenient way to pass a (filtered)
+#' Kolada municipality group metadata table to \code{\link{get_values}}. All IDs
+#' of the municipalities contained in each group in the table are extracted.
 #'
-#' @param munic_grp_df A Kolada municipality group table, as created by e.g. \code{get_municipality_groups}.
+#' @param munic_grp_df A Kolada municipality group table, as created by e.g.
+#' \code{get_municipality_groups}.
 #'
 #' @export
 municipality_grp_extract_ids <- function(munic_grp_df) {
@@ -16,13 +19,14 @@ municipality_grp_extract_ids <- function(munic_grp_df) {
 #' municipalities. A practical workflow for discovering
 #' such sets can be to search through Municipality Group metadata using
 #' \code{\link{municipality_grp_search}} to search for keywords and
-#' \code{\link{municipality_grp_describe}} to inspect contents of KPI groups. Once you have
-#' created a Municipality Group metadata table that has been narrowed down to the group/s you
-#' are looking for, \code{\link{municipality_grp_unnest}} is used to create a municipality metadata
-#' table for further processing.
+#' \code{\link{municipality_grp_describe}} to inspect contents of KPI groups.
+#' Once you have created a Municipality Group metadata table that has been
+#' narrowed down to the group/s you are looking for,
+#' \code{\link{municipality_grp_unnest}} is used to create a municipality
+#' metadata table for further processing.
 #'
-#' @param munic_grp_df A Kolada Municipality Group metadata table, as created by e.g.
-#' \code{get_municipality_groups}.
+#' @param munic_grp_df A Kolada Municipality Group metadata table, as created by
+#' e.g. \code{get_municipality_groups}.
 #'
 #' @return A Kolada Municipality metadata table
 #'
@@ -31,8 +35,8 @@ municipality_grp_extract_ids <- function(munic_grp_df) {
 #' # Download Municipality Group metadata
 #' munic_grp_df <- get_municipality_groups()
 #'
-#' # Create a Municipality metadata table from municipality groups matching the term
-#' # "Arboga"
+#' # Create a Municipality metadata table from municipality groups matching the
+#' # term "Arboga"
 #' munic_grp_df %>%
 #'   municipality_grp_search("arboga") %>%
 #'   municipality_grp_unnest()
@@ -42,19 +46,24 @@ municipality_grp_extract_ids <- function(munic_grp_df) {
 municipality_grp_unnest <- function(munic_grp_df) {
   munic_grp_df %>%
     tidyr::unnest(cols = c(members)) %>%
-    dplyr::select(group_id = id, id = member_id, group_title = title, title = member_title) %>%
+    dplyr::select(
+      group_id = id, id = member_id,
+      group_title = title, title = member_title
+    ) %>%
     dplyr::select(id, title, group_id, group_title)
 }
 
 
 #' Describe the municipalitie in a Kolada Municipality Group metadata table
 #'
-#' Print a human-readable description of each row of a Municipality Group metadata table, including member municipalities (up
-#' to a maximum number of rows). Can be printed either directly to the R console
-#' or used to populate a R markdown document, which can be useful for documentation
-#' purposes.
+#' Print a human-readable description of each row of a Municipality Group
+#' metadata table, including member municipalities (up to a maximum number of
+#' rows). Can be printed either directly to the R console
+#' or used to populate a R markdown document, which can be useful for
+#' documentation purposes.
 #'
-#' @param munic_grp_df A Kolada Municipality Group metadata table, as created by e.g. \code{get_municipality_groups}.
+#' @param munic_grp_df A Kolada Municipality Group metadata table, as created
+#' by e.g. \code{get_municipality_groups}.
 #' @param max_n The maximum number of KPI groups to describe.
 #' @param format Output format. Can be one of "inline" or "md" (markdown).
 #' @param heading_level The top heading level output format is "md".
@@ -96,11 +105,15 @@ municipality_grp_describe <- function(
       m_id = purrr::map(members, purrr::pluck("member_id")),
       m_t = purrr::map(members, purrr::pluck("member_title")),
       m_pre = "-",
-      member_data = purrr::pmap(list(m_pre, m_id, m_t), paste, sep = " ", collapse = "\n")
+      member_data = purrr::pmap(list(m_pre, m_id, m_t),
+                                paste, sep = " ", collapse = "\n")
     )
 
   desc_df %>%
-    glue_data_safely(desc_glue_spec("group"), .entity = "Municipality", .format = format, .heading_length = heading_level, .sub_heading_length = sub_heading_level, .otherwise = "Unknown")
+    glue_data_safely(desc_glue_spec("group"), .entity = "Municipality",
+                     .format = format, .heading_length = heading_level,
+                     .sub_heading_length = sub_heading_level,
+                     .otherwise = "Unknown")
 
 }
 
@@ -110,11 +123,13 @@ municipality_grp_describe <- function(
 #' Search a Kolada Municipality Group metadata table. Only keep rows that
 #' contain the search query. Searches group titles and group IDs. Note that this
 #' function does not search for individual municipalities contained within
-#' municipality groups! To search for KPIs within a KPI group, see examples below for an example
-#' using \code{municipality_grp_unnest}.
+#' municipality groups! To search for KPIs within a KPI group, see examples
+#' below for an example using \code{municipality_grp_unnest}.
 #'
-#' @param munic_grp_df A Kolada Municipality Group metadata table, as created by e.g. \code{get_municipality_groups}.
-#' @param query A search term or a vector of search terms to filter by. Case insensitive.
+#' @param munic_grp_df A Kolada Municipality Group metadata table, as created by
+#' e.g. \code{get_municipality_groups}.
+#' @param query A search term or a vector of search terms to filter by. Case
+#' insensitive.
 #'
 #' @return A Kolada Municipality Group metadata table
 #'

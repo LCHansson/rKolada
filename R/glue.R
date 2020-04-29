@@ -38,11 +38,16 @@ safely_transformer <- function(otherwise = NA) {
   function(text, envir) {
     tryCatch(
       eval(parse(text = text, keep.source = FALSE), envir),
-      error = function(e) if (is.language(otherwise)) eval(otherwise) else otherwise)
+      error = function(e)
+        if (is.language(otherwise)) eval(otherwise) else otherwise
+    )
   }
 }
 
-glue_data_safely <- function(.x, spec, .entity, .format, .heading_length = 2, .sub_heading_length = 3, .otherwise = NA, .envir = parent.frame()) {
+glue_data_safely <- function(
+  .x, spec, .entity, .format, .heading_length = 2, .sub_heading_length = 3,
+  .otherwise = NA, .envir = parent.frame()
+) {
   .x$heading_prefix <- switch(
     .format,
     inline = paste(c(rep("#", options("width")), "\n"), collapse = ""),
@@ -51,6 +56,9 @@ glue_data_safely <- function(.x, spec, .entity, .format, .heading_length = 2, .s
   .x$sub_heading_prefix <- paste(rep("#", .sub_heading_length), collapse = "")
   .x$entity <- .entity
 
-  print(glue::glue_data(.x, spec, .transformer = safely_transformer(.otherwise), .envir = .envir))
+  print(glue::glue_data(
+    .x, spec,
+    .transformer = safely_transformer(.otherwise), .envir = .envir
+  ))
   return(invisible(.x))
 }

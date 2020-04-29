@@ -7,15 +7,16 @@
 values_minimize(values_df)
 }
 \arguments{
-\item{values_df}{A Kolada value table, as created by \code{\link{get_values}}.}
+\item{values_df}{A Kolada value table, as created by
+\code{\link{get_values}}.}
 }
 \value{
 A Kolada values table
 }
 \description{
-Simplify a Kolada values table, i.e as created by \code{\link{get_valus}}, by
-removing columns that contain monotonous data, i.e. that contain only one value
-for all observations.
+Simplify a Kolada values table, i.e as created by \code{\link{get_values}},
+by removing columns that contain monotonous data, i.e. that contain only one
+value for all observations.
 }
 \examples{
 \dontrun{

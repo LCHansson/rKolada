@@ -35,10 +35,10 @@ the R console.}
 A tibble containing Kolada values and metadata.
 }
 \description{
-Download a table of data from Kolada. Data is selected based on three metadata
-dimensions: KPI (ID), municipality (ID) and period (years). You must supply
-arguments for at least two of these three dimensions. If a dimension is omitted,
-all available data for that dimension will be downloaded.
+Download a table of data from Kolada. Data is selected based on three
+metadata dimensions: KPI (ID), municipality (ID) and period (years). You must
+supply arguments for at least two of these three dimensions. If a dimension
+is omitted, all available data for that dimension will be downloaded.
 }
 \examples{
 \dontrun{
@@ -47,7 +47,7 @@ all available data for that dimension will be downloaded.
 grp_kpi <- get_kpi() \%>\% kpi_search("BRP") \%>\% kpi_extract_ids()
 
 largest_munic <- get_municipality() \%>\%
-  municipality_name_to_id(c("Stockholm", "Göteborg", "Malmö"))
+  municipality_name_to_id(c("Stockholm", "Arboga", "Lund"))
 
 grp_data <- get_values(
   kpi = grp_kpi,

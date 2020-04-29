@@ -3,8 +3,8 @@
 #' Mainly used as a supporting function for \code{\link{get_metadata}} but can
 #' also be used to create a working URL to paste in your web browser.
 #'
-#' @param entity Any allowed metadata entity. Check \code{\link{allowed_entities}} to
-#' see an updated list.
+#' @param entity Any allowed metadata entity. Check
+#' \code{\link{allowed_entities}} to see an updated list.
 #' @param title A free-form search term or the exact title of any entry in the
 #' current entity. Case insensitive.
 #' @param id The ID of any entry in the current entity.
@@ -12,7 +12,9 @@
 #' be added to narrow the search.
 #' @param version Version of the API. Currently only \code{"v2"} is supported.
 #' @export
-compose_metadata_query <- function(entity = "kpi", title = NULL, id = NULL, municipality = NULL, version = "v2") {
+compose_metadata_query <- function(
+  entity = "kpi", title = NULL, id = NULL, municipality = NULL, version = "v2"
+) {
   if (!is.null(entity))
     entity <- tolower(entity)
   else
@@ -51,8 +53,8 @@ compose_metadata_query <- function(entity = "kpi", title = NULL, id = NULL, muni
 #' Download metadata from the Kolada API
 #'
 #' This is a generalized function for downloading metadata from the Kolada API.
-#' The function parameters closely mask the names specified in the original API. For
-#' further information about the Kolada API specification, please see the
+#' The function parameters closely mask the names specified in the original API.
+#' For further information about the Kolada API specification, please see the
 #' \url{https://github.com/Hypergene/kolada}{official documentation on GitHub}.
 #'
 #' @param entity Any allowed metadata entity. Check \code{allowed_entities()} to
@@ -78,10 +80,21 @@ compose_metadata_query <- function(entity = "kpi", title = NULL, id = NULL, muni
 #' as a \code{kpi_df} and can be passed to functions starting with "kpi" such
 #' as \code{\link{kpi_bind_keywords}}.
 #'#'
-#' @seealso \code{\link{get_kpi}}, \code{\link{get_kpi_groups}}, \code{\link{get_municipality}}, \code{\link{get_municipality_groups}}, \code{\link{get_ou}}
+#' @seealso \code{\link{get_kpi}}, \code{\link{get_kpi_groups}},
+#'  \code{\link{get_municipality}},
+#'  \code{\link{get_municipality_groups}},
+#'  \code{\link{get_ou}}
 #'
 #' @export
-get_metadata <- function(entity = "kpi", title = NULL, id = NULL, municipality = NULL, cache = FALSE, cache_location = tempdir, verbose = FALSE) {
+get_metadata <- function(
+  entity = "kpi",
+  title = NULL,
+  id = NULL,
+  municipality = NULL,
+  cache = FALSE,
+  cache_location = tempdir,
+  verbose = FALSE
+) {
   ch <- cache_handler(entity, cache, cache_location)
 
   if (ch("discover"))
@@ -115,10 +128,10 @@ get_metadata <- function(entity = "kpi", title = NULL, id = NULL, municipality =
 #' @param id (Optional) One or several KPI IDs
 #' @param cache Logical. If TRUE, downloaded data are stored to the local disk
 #'  in the place specified by \code{cache_location}. If data is already present
-#'  on the local disk, this data is returned instead of downloading data from the
-#'   API.
-#' @param cache_location Where to store and search for cached data. Can be a path
-#'  to a directory or the name of any function that returns the path to a
+#'  on the local disk, this data is returned instead of downloading data from
+#'  the API.
+#' @param cache_location Where to store and search for cached data. Can be a
+#'  path to a directory or the name of any function that returns the path to a
 #'  directory when called, like \code{link{getwd}}. Defaults to
 #'  \code{\link{tempdir}}.
 #' @param municipality (Optional) A string or vector of strings containing
@@ -146,34 +159,68 @@ get_metadata <- function(entity = "kpi", title = NULL, id = NULL, municipality =
 #' }
 #'
 #' @export
-get_kpi <- function(id = NULL, cache = FALSE, cache_location = tempdir, verbose = FALSE) {
-  get_metadata(entity = "kpi", id = id, cache = cache, cache_location = cache_location, verbose = verbose)
+get_kpi <- function(
+  id = NULL, cache = FALSE,
+  cache_location = tempdir, verbose = FALSE
+) {
+  get_metadata(
+    entity = "kpi", id = id, cache = cache,
+    cache_location = cache_location, verbose = verbose
+  )
 }
-
 
 #' @export
 #' @rdname get_kpi
-get_kpi_groups <- function(id = NULL, cache = FALSE, cache_location = tempdir, verbose = FALSE) {
-  get_metadata(entity = "kpi_groups", id = id, cache = cache, cache_location = cache_location, verbose = verbose)
+get_kpi_groups <- function(
+  id = NULL, cache = FALSE,
+  cache_location = tempdir, verbose = FALSE
+) {
+  get_metadata(
+    entity = "kpi_groups", id = id, cache = cache,
+    cache_location = cache_location, verbose = verbose
+  )
 }
 
 #' @export
 #' @rdname get_kpi
-get_ou <- function(id = NULL, municipality = NULL, cache = FALSE, cache_location = tempdir, verbose = FALSE) {
-  get_metadata(entity = "ou", id = id, municipality = municipality, cache = cache, cache_location = cache_location, verbose = verbose) %>%
-    dplyr::mutate(municipality_id = municipality, municipality = municipality_id_to_name(get_municipality(cache = cache, cache_location = cache_location), municipality_id)) %>%
+get_ou <- function(
+  id = NULL, municipality = NULL, cache = FALSE,
+  cache_location = tempdir, verbose = FALSE
+) {
+  munic_df <- get_municipality(cache = cache, cache_location = cache_location)
+
+  get_metadata(
+    entity = "ou", id = id, municipality = municipality,
+    cache = cache, cache_location = cache_location, verbose = verbose
+  ) %>%
+    dplyr::mutate(
+      municipality_id = municipality,
+      municipality = municipality_id_to_name(munic_df, municipality_id)
+    ) %>%
     dplyr::select(id, title, municipality, municipality_id)
 }
 
 
 #' @export
 #' @rdname get_kpi
-get_municipality <- function(id = NULL, cache = FALSE, cache_location = tempdir, verbose = FALSE) {
-  get_metadata(entity = "municipality", id = id, cache = cache, cache_location = cache_location, verbose = verbose)
+get_municipality <- function(
+  id = NULL, cache = FALSE,
+  cache_location = tempdir, verbose = FALSE
+) {
+  get_metadata(
+    entity = "municipality", id = id, cache = cache,
+    cache_location = cache_location, verbose = verbose
+  )
 }
 
 #' @export
 #' @rdname get_kpi
-get_municipality_groups <- function(id = NULL, cache = FALSE, cache_location = tempdir, verbose = FALSE) {
-  get_metadata(entity = "municipality_groups", id = id, cache = cache, cache_location = cache_location, verbose = verbose)
+get_municipality_groups <- function(
+  id = NULL, cache = FALSE,
+  cache_location = tempdir, verbose = FALSE
+) {
+  get_metadata(
+    entity = "municipality_groups", id = id, cache = cache,
+    cache_location = cache_location, verbose = verbose
+  )
 }

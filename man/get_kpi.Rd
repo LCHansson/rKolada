@@ -44,11 +44,11 @@ get_municipality_groups(
 
 \item{cache}{Logical. If TRUE, downloaded data are stored to the local disk
 in the place specified by \code{cache_location}. If data is already present
-on the local disk, this data is returned instead of downloading data from the
- API.}
+on the local disk, this data is returned instead of downloading data from
+the API.}
 
-\item{cache_location}{Where to store and search for cached data. Can be a path
-to a directory or the name of any function that returns the path to a
+\item{cache_location}{Where to store and search for cached data. Can be a
+path to a directory or the name of any function that returns the path to a
 directory when called, like \code{link{getwd}}. Defaults to
 \code{\link{tempdir}}.}
 

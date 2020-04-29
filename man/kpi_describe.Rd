@@ -17,7 +17,8 @@ kpi_describe(
 
 \item{max_n}{The maximum number of KPIs to describe.}
 
-\item{format}{Output format. Can be one of "inline" (default) or "md", i.e. markdown.}
+\item{format}{Output format. Can be one of "inline" (default) or "md", i.e.
+markdown.}
 
 \item{heading_level}{The top heading level output format is "md".}
 
@@ -26,6 +27,6 @@ kpi_describe(
 \description{
 Print a human-readable description of each entity of a KPI metadata table (up
 to a maximum number of rows). Can be printed either directly to the R console
-or used to populate a R markdown document, which can be useful for documentation
-purposes.
+or used to populate a R markdown document, which can be useful for
+documentation purposes.
 }

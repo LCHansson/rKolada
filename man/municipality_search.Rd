@@ -7,9 +7,11 @@
 municipality_search(munic_df, query, column = NULL)
 }
 \arguments{
-\item{munic_df}{A Kolada Municipality metadata table, as created by e.g. \code{get_municipality}.}
+\item{munic_df}{A Kolada Municipality metadata table, as created by e.g.
+\code{get_municipality}.}
 
-\item{query}{A search term or a vector of search terms to filter by. Case insensitive.}
+\item{query}{A search term or a vector of search terms to filter by. Case
+insensitive.}
 
 \item{column}{(Optional) A string or character vector with the names of
 columns in which to search for \code{query}.}
@@ -19,18 +21,19 @@ A Kolada Municipality metadata table
 }
 \description{
 Search a Kolada municipality metadata table. Only keep rows that contain the
-search query. Note that some names (e.g. "Stockholm") are both the name of a
-municipality and part of the name of a region ("Stockholms län") so a search
+search query. Note that some a quer might be both the name, or part of a
+name, of a municipality and part of the name of a region. Thus, a search
 might return rows for both municipalities and regions. To avoid this you can
-use \code{\link{dplyr::filter}} to filter the \code{type} column to keep only
-"K" (municipalities) or "L" (regions) rows. See also examples below for an
-alternative approach avoiding any direct calls to \code{filter}.
+use \code{\link[dplyr:filter]{dplyr::filter}} to filter the \code{type}
+column to keep only "K" (municipalities) or "L" (regions) rows. See also
+examples below for an alternative approach avoiding any direct calls to
+\code{filter}.
 }
 \examples{
 \dontrun{
 # Search for a single search term in a municipality table
 munic_df <- get_municipality()
-municipality_search(munic_df, "Malmö")
+municipality_search(munic_df, "Arboga")
 
 # Only keep columns with type == "K" (keep municipalities, drop regions)
 munic_filter <- get_municipality(cache = TRUE) \%>\%

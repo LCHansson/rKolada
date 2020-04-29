@@ -4,10 +4,11 @@
 \alias{values_legend}
 \title{Create KPI long-form descriptions to add to a plot}
 \usage{
-values_legend(values_df, kpi_df, width = 60)
+values_legend(values_df, kpi_df)
 }
 \arguments{
-\item{values_df}{A Kolada value table, as created by \code{\link{get_values}}.}
+\item{values_df}{A Kolada value table, as created by
+\code{\link{get_values}}.}
 
 \item{kpi_df}{A KPI table, e.g. as created by \code{\link{get_kpi}}.}
 }
@@ -15,11 +16,6 @@ values_legend(values_df, kpi_df, width = 60)
 In a Kolada values table, only KPI ID names are preserved. But in plots you
 often want to add a legend to explain what each KPI ID represents. But since
 KPI explanations are mostly relatively wordy, ggplot2 legends are
-under-dimensioned for this task. \code{values_legend} returns a string which can
-conveniently be used as caption to a plot instead.
-}
-\examples{
-\dontrun{
-}
-
+under-dimensioned for this task. \code{values_legend} returns a string which
+can conveniently be used as caption to a plot instead.
 }

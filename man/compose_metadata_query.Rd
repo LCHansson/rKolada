@@ -13,8 +13,8 @@ compose_metadata_query(
 )
 }
 \arguments{
-\item{entity}{Any allowed metadata entity. Check \code{\link{allowed_entities}} to
-see an updated list.}
+\item{entity}{Any allowed metadata entity. Check
+\code{\link{allowed_entities}} to see an updated list.}
 
 \item{title}{A free-form search term or the exact title of any entry in the
 current entity. Case insensitive.}

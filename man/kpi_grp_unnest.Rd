@@ -7,20 +7,21 @@
 kpi_grp_unnest(kpi_grp_df)
 }
 \arguments{
-\item{kpi_grp_df}{A Kolada KPI Group metadata table, as created by e.g. \code{get_kpi_groups}.}
+\item{kpi_grp_df}{A Kolada KPI Group metadata table, as created by e.g.
+\code{get_kpi_groups}.}
 }
 \value{
 A Kolada KPI metadata table
 }
 \description{
 KPI groups are a convenient way to discover sets of KPIs that can be used to
-highlight different aspects of a policy area. A practical workflow for discovering
-such sets can be to search through KPI Group metadata using
+highlight different aspects of a policy area. A practical workflow for
+discovering such sets can be to search through KPI Group metadata using
 \code{\link{kpi_grp_search}} to search for keywords and
-\code{\link{kpi_grp_describe}} to inspect contents of KPI groups. Once you have
-created a KPI group table that has been narrowed down to the group/s you
-are looking for, \code{\link{kpi_grp_unnest}} is used to create a KPI metadata
-table for further processing.
+\code{\link{kpi_grp_describe}} to inspect contents of KPI groups. Once you
+have created a KPI group table that has been narrowed down to the group/s you
+are looking for, \code{\link{kpi_grp_unnest}} is used to create a KPI
+metadata table for further processing.
 }
 \examples{
 \dontrun{

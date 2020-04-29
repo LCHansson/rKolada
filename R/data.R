@@ -1,7 +1,7 @@
 #' Compose a query to fetch metadata from the Kolada API. Its use is mainly
 #'
-#' Mainly used as a supporting function for \code{link{get_values}} but can also be
-#' used to create a working URL to paste in your web browser.
+#' Mainly used as a supporting function for \code{link{get_values}} but can also
+#' be used to create a working URL to paste in your web browser.
 #'
 #' @param kpi What kpis should be fetched? Can be a single name or a vector of
 #'  names.
@@ -12,8 +12,13 @@
 #' @param ou (Optional) for what Operating Units should data be fetched? Only
 #' available for certain KPIs.
 #' @param version Version of the API. Currently only \code{"v2"} is supported.
-compose_data_query <- function(kpi = NULL, municipality = NULL, period = NULL, ou = NULL, version = "v2") {
-
+compose_data_query <- function(
+  kpi = NULL,
+  municipality = NULL,
+  period = NULL,
+  ou = NULL,
+  version = "v2"
+) {
   base_url <- glue::glue("http://api.kolada.se/{version}/data")
 
   if (is.null(kpi))
@@ -27,7 +32,10 @@ compose_data_query <- function(kpi = NULL, municipality = NULL, period = NULL, o
   if (is.null(municipality) & is.null(ou))
       municipality <- ""
   else if(!is.null(municipality))
-    municipality <- paste0("/municipality/", paste(municipality, collapse = ","))
+    municipality <- paste0(
+      "/municipality/",
+      paste(municipality, collapse = ",")
+    )
   else
     municipality <- paste0("/ou/", paste(ou, collapse = ","))
 
@@ -46,10 +54,10 @@ compose_data_query <- function(kpi = NULL, municipality = NULL, period = NULL, o
 
 #' Get data from Kolada
 #'
-#' Download a table of data from Kolada. Data is selected based on three metadata
-#' dimensions: KPI (ID), municipality (ID) and period (years). You must supply
-#' arguments for at least two of these three dimensions. If a dimension is omitted,
-#' all available data for that dimension will be downloaded.
+#' Download a table of data from Kolada. Data is selected based on three
+#' metadata dimensions: KPI (ID), municipality (ID) and period (years). You must
+#' supply arguments for at least two of these three dimensions. If a dimension
+#' is omitted, all available data for that dimension will be downloaded.
 #'
 #' @param kpi What kpis should be fetched? Can be a single name or a vector of
 #' names.
@@ -72,7 +80,7 @@ compose_data_query <- function(kpi = NULL, municipality = NULL, period = NULL, o
 #' grp_kpi <- get_kpi() %>% kpi_search("BRP") %>% kpi_extract_ids()
 #'
 #' largest_munic <- get_municipality() %>%
-#'   municipality_name_to_id(c("Stockholm", "Göteborg", "Malmö"))
+#'   municipality_name_to_id(c("Stockholm", "Arboga", "Lund"))
 #'
 #' grp_data <- get_values(
 #'   kpi = grp_kpi,
@@ -115,7 +123,7 @@ get_values <- function(
 
     if (ret_has_groups)
       munic_tbl <- munic_tbl %>%
-      bind_rows(
+      dplyr::bind_rows(
         get_municipality_groups() %>%
           dplyr::select(id, title) %>%
           dplyr::mutate(type = "G")
@@ -144,11 +152,12 @@ get_values <- function(
 
 #' Simplify a Kolada values table
 #'
-#' Simplify a Kolada values table, i.e as created by \code{\link{get_valus}}, by
-#' removing columns that contain monotonous data, i.e. that contain only one value
-#' for all observations.
+#' Simplify a Kolada values table, i.e as created by \code{\link{get_values}},
+#' by removing columns that contain monotonous data, i.e. that contain only one
+#' value for all observations.
 #'
-#' @param values_df A Kolada value table, as created by \code{\link{get_values}}.
+#' @param values_df A Kolada value table, as created by
+#' \code{\link{get_values}}.
 #'
 #' @return A Kolada values table
 #'
@@ -167,7 +176,8 @@ get_values <- function(
 
 values_minimize <- function(values_df) {
   values_df %>%
-    dplyr::select_if(names(.) %in% c("kpi", "municipality", "value") | purrr::map(., dplyr::n_distinct) > 1)
+    dplyr::select_if(names(.) %in% c("kpi", "municipality", "value") |
+                       purrr::map(., dplyr::n_distinct) > 1)
 }
 
 #' Create KPI long-form descriptions to add to a plot
@@ -175,18 +185,15 @@ values_minimize <- function(values_df) {
 #' In a Kolada values table, only KPI ID names are preserved. But in plots you
 #' often want to add a legend to explain what each KPI ID represents. But since
 #' KPI explanations are mostly relatively wordy, ggplot2 legends are
-#' under-dimensioned for this task. \code{values_legend} returns a string which can
-#' conveniently be used as caption to a plot instead.
+#' under-dimensioned for this task. \code{values_legend} returns a string which
+#' can conveniently be used as caption to a plot instead.
 #'
-#' @param values_df A Kolada value table, as created by \code{\link{get_values}}.
+#' @param values_df A Kolada value table, as created by
+#' \code{\link{get_values}}.
 #' @param kpi_df A KPI table, e.g. as created by \code{\link{get_kpi}}.
 #'
-#' @examples
-#' \dontrun{
-#' }
-#'
 #' @export
-values_legend <- function(values_df, kpi_df, width = 60) {
+values_legend <- function(values_df, kpi_df) {
   kpis <- unique(values_df$kpi)
   desc <- kpi_df %>%
     dplyr::select(id, title) %>%

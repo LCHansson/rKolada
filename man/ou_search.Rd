@@ -7,9 +7,11 @@
 ou_search(ou_df, query, column = NULL)
 }
 \arguments{
-\item{ou_df}{A Kolada Organizational Unit metadata table, as created by e.g. \code{get_municipality}.}
+\item{ou_df}{A Kolada Organizational Unit metadata table, as created by e.g.
+\code{get_municipality}.}
 
-\item{query}{A search term or a vector of search terms to filter by. Case insensitive.}
+\item{query}{A search term or a vector of search terms to filter by. Case
+insensitive.}
 
 \item{column}{(Optional) A string or character vector with the names of
 columns in which to search for \code{query}.}
@@ -21,7 +23,7 @@ A Kolada Organizational Unit metadata table
 Search a Kolada Organizational Unit metadata table. Only keep rows that
 contain the search query. Matches against all columns or columns named
 with the \code{column} parameter. For more precise matching, please use
-\code{\link{dplyr::filter}}.
+\code{\link[dplyr:filter]{dplyr::filter}}.
 }
 \examples{
 \dontrun{

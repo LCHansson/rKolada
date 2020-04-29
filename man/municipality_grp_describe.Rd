@@ -13,7 +13,8 @@ municipality_grp_describe(
 )
 }
 \arguments{
-\item{munic_grp_df}{A Kolada Municipality Group metadata table, as created by e.g. \code{get_municipality_groups}.}
+\item{munic_grp_df}{A Kolada Municipality Group metadata table, as created
+by e.g. \code{get_municipality_groups}.}
 
 \item{max_n}{The maximum number of KPI groups to describe.}
 
@@ -24,10 +25,11 @@ municipality_grp_describe(
 \item{sub_heading_level}{The sub heading level output format is "md".}
 }
 \description{
-Print a human-readable description of each row of a Municipality Group metadata table, including member municipalities (up
-to a maximum number of rows). Can be printed either directly to the R console
-or used to populate a R markdown document, which can be useful for documentation
-purposes.
+Print a human-readable description of each row of a Municipality Group
+metadata table, including member municipalities (up to a maximum number of
+rows). Can be printed either directly to the R console
+or used to populate a R markdown document, which can be useful for
+documentation purposes.
 }
 \examples{
 \dontrun{

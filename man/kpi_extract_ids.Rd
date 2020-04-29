@@ -7,10 +7,12 @@
 kpi_extract_ids(kpi_df)
 }
 \arguments{
-\item{kpi_df}{A Kolada KPI metadata table, e.g. as created by \code{\link{get_kpi}}.}
+\item{kpi_df}{A Kolada KPI metadata table, e.g. as created by
+\code{\link{get_kpi}}.}
 }
 \description{
-This function is primarily intended as a convenient way to pass a (filtered) Kolada KPI metadata table to \code{\link{get_data}}.
+This function is primarily intended as a convenient way to pass a (filtered)
+Kolada KPI metadata table to \code{\link{get_values}}.
 }
 \examples{
 \dontrun{

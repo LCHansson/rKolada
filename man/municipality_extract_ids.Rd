@@ -7,10 +7,12 @@
 municipality_extract_ids(munic_df)
 }
 \arguments{
-\item{munic_df}{A Kolada Municipality metadata table, as created by e.g. \code{get_municipality}.}
+\item{munic_df}{A Kolada Municipality metadata table, as created by e.g.
+\code{get_municipality}.}
 }
 \description{
-This function is primarily intended as a convenient way to pass a (filtered) Kolada municipality metadata table to \code{\link{get_data}}.
+This function is primarily intended as a convenient way to pass a (filtered)
+Kolada municipality metadata table to \code{\link{get_values}}.
 }
 \examples{
 \dontrun{
