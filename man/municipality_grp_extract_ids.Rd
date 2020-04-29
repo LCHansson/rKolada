@@ -10,5 +10,5 @@ municipality_grp_extract_ids(munic_grp_df)
 \item{munic_grp_df}{A Kolada municipality group table, as created by e.g. \code{get_municipality_groups}.}
 }
 \description{
-Extract municipality ID strings from a Kolada municipality group table
+This function is primarily intended as a convenient way to pass a (filtered) Kolada municipality group metadata table to \code{\link{get_data}}. All IDs of the municipalities contained in each group in the table are extracted.
 }

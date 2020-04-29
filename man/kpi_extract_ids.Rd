@@ -2,13 +2,24 @@
 % Please edit documentation in R/kpi.R
 \name{kpi_extract_ids}
 \alias{kpi_extract_ids}
-\title{Extract a vector of KPI ID strings from a Kolada KPI table}
+\title{Extract a vector of KPI ID strings from a Kolada KPI metadata table}
 \usage{
 kpi_extract_ids(kpi_df)
 }
 \arguments{
-\item{kpi_df}{A KPI table, e.g. as created by \code{\link{get_kpi}}.}
+\item{kpi_df}{A Kolada KPI metadata table, e.g. as created by \code{\link{get_kpi}}.}
 }
 \description{
-Extract a vector of KPI ID strings from a Kolada KPI table
+This function is primarily intended as a convenient way to pass a (filtered) Kolada KPI metadata table to \code{\link{get_data}}.
+}
+\examples{
+\dontrun{
+# Download Kolada data for all KPIs matching the term "BRP" (gross regional
+# product) for the years 2010-2019
+kpi_filter <- get_kpi() \%>\%
+  kpi_search("BRP")
+
+kld_data <- get_values(kpi = kpi_extract_ids(kpi_filter), period = 2010:2019)
+}
+
 }

@@ -6,34 +6,71 @@
 \alias{get_ou}
 \alias{get_municipality}
 \alias{get_municipality_groups}
-\title{Download metadata from the Kolada API}
+\title{Download metadata for a specific entity from the Kolada API}
 \usage{
-get_kpi(id = NULL, cache = FALSE, cache_location = tempdir)
+get_kpi(id = NULL, cache = FALSE, cache_location = tempdir, verbose = FALSE)
 
-get_kpi_groups(id = NULL, cache = FALSE, cache_location = tempdir)
+get_kpi_groups(
+  id = NULL,
+  cache = FALSE,
+  cache_location = tempdir,
+  verbose = FALSE
+)
 
-get_ou(id = NULL, municipality = NULL, cache = FALSE, cache_location = tempdir)
+get_ou(
+  id = NULL,
+  municipality = NULL,
+  cache = FALSE,
+  cache_location = tempdir,
+  verbose = FALSE
+)
 
-get_municipality(id = NULL, cache = FALSE, cache_location = tempdir)
+get_municipality(
+  id = NULL,
+  cache = FALSE,
+  cache_location = tempdir,
+  verbose = FALSE
+)
 
-get_municipality_groups(id = NULL, cache = FALSE, cache_location = tempdir)
+get_municipality_groups(
+  id = NULL,
+  cache = FALSE,
+  cache_location = tempdir,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{id}{(Optional) One or several KPI IDs}
 
-\item{cache}{Logical. If TRUE, downloaded data are stored to the local disk in the place specified by \code{cache_location}. If data is already present on the local disk, this data is returned instead of downloading data from the API.}
+\item{cache}{Logical. If TRUE, downloaded data are stored to the local disk
+in the place specified by \code{cache_location}. If data is already present
+on the local disk, this data is returned instead of downloading data from the
+ API.}
 
-\item{cache_location}{Where to store and search for cached data. Can be a path to a directory or the name of any function that returns the path to a directory when called, like \code{link{getwd}}. Defaults to \code{\link{tempdir}}.}
+\item{cache_location}{Where to store and search for cached data. Can be a path
+to a directory or the name of any function that returns the path to a
+directory when called, like \code{link{getwd}}. Defaults to
+\code{\link{tempdir}}.}
 
-\item{municipality}{(Optional) A string or vector of strings cantaining
+\item{verbose}{Whether to print the call to the Kolada API as a message to
+the R console.}
+
+\item{municipality}{(Optional) A string or vector of strings containing
 municipality codes. If getting OU data, you can use this parameter to narrow
 the search.}
 }
 \value{
-Returns a tibble with metadata for the specified entity.
+Returns a tibble with metadata for the specified entity. In rKolada
+terminology, a table returned by e.g. \code{\link{get_kpi}} is referred to
+as a \code{kpi_df} and can be passed to functions starting with "kpi" such
+as \code{\link{kpi_bind_keywords}}.
 }
 \description{
-There are five different types of metadata entities in the Kolada database: "kpi", "kpi_groups", "municipality", "municipality_groups", and "ou". For every entity there is a corresponding function \code{get_ENTITY} which retrieves a table with the metadata for that entity. The \code{get_ENTITY} functions are thin wrappers around \code{\link{get_metadata}}.
+There are five different types of metadata entities in the Kolada database:
+"kpi", "kpi_groups", "municipality", "municipality_groups", and "ou". For
+every entity there is a corresponding function \code{get_ENTITY} which
+retrieves a table with the metadata for that entity. The \code{get_ENTITY}
+functions are thin wrappers around \code{\link{get_metadata}}.
 }
 \examples{
 
@@ -44,7 +81,8 @@ kpi_df <- get_kpi(cache = "wd")
 
 # Download KPI table and store a cache copy of the results in
 # a tempfile (will expire when your R session ends)
-kpi_df <- get_kpi(cache = TRUE)
+kpi_df <- get_kpi(cache = TRUE, verbose = TRUE)
+# (prints URL to API as a message in the R console)
 }
 
 }

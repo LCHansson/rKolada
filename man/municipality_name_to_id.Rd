@@ -2,7 +2,7 @@
 % Please edit documentation in R/municipality.R
 \name{municipality_name_to_id}
 \alias{municipality_name_to_id}
-\title{Convert municipality names to municipality ids}
+\title{Convert a vector of municipality names to municipality ids}
 \usage{
 municipality_name_to_id(munic_df, municipality, remove_na = FALSE)
 }
@@ -14,11 +14,18 @@ municipality_name_to_id(munic_df, municipality, remove_na = FALSE)
 \item{remove_na}{Should NA return values be removed?}
 }
 \description{
-Convert municipality names to municipality ids
+Given a vector of names of municipalities or regions, return a named vector
+of municipality IDs/codes. Codes of municipalities and regions follow
+the Swedish standard for municipality codes. The codes extracted can be used
+e.g. to pass as a parameter to \code{\link{get_values}}. This function is the inverse
+to \code{\link{municipality_id_to_name}}.
 }
 \examples{
 munic_df <- get_municipality()
 municipality_name_to_id(munic_df, c("Malmö", "Lund", "Stockholm", "Malmö"))
 munic_df \%>\% municipality_name_to_id(c("Malmö", "Lund", "Stockholm", "Malmö"))
 
+}
+\seealso{
+\code{\link{municipality_extract_ids}}, \code{\link{municipality_id_to_name}}
 }

@@ -7,15 +7,21 @@
 kpi_search(kpi_df, query, column = NULL)
 }
 \arguments{
-\item{kpi_df}{A KPI table, e.g. as created by \code{\link{get_kpi}}.}
+\item{kpi_df}{A Kolada KPI metadata table, e.g. as created by \code{\link{get_kpi}}.}
 
 \item{query}{A search term or a vector of search terms to filter by. Case insensitive.}
 
 \item{column}{(Optional) A string or character vector with the names of
 columns in which to search for \code{query}.}
 }
+\value{
+A Kolada KPI metadata table
+}
 \description{
-Search for Kolada KPIs using a Kolada KPI table
+Search a Kolada KPI metadata table. Only keep rows that
+contain the search query. Matches against all columns or columns named
+with the \code{column} parameter. For more precise
+matching, please use \code{\link{dplyr::filter}}.
 }
 \examples{
 \dontrun{

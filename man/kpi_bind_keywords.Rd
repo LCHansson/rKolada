@@ -4,15 +4,21 @@
 \alias{kpi_bind_keywords}
 \title{Add keyword columns to a Kolada KPI table}
 \usage{
-kpi_bind_keywords(kpi_df, n = 2)
+kpi_bind_keywords(kpi_df, n = 2, form = c("wide", "long"))
 }
 \arguments{
-\item{kpi_df}{A KPI table, e.g. as created by \code{\link{get_kpi}}.}
+\item{kpi_df}{A Kolada KPI metadata table, e.g. as created by \code{\link{get_kpi}}.}
 
 \item{n}{How many keyword columns should be added?}
+
+\item{form}{Can be either "wide" (default) or "long". Whether to return keywords as separate columns ("wide") or as
+separate rows, duplicating all other data ("long").}
+}
+\value{
+A Kolada KPI metadata table
 }
 \description{
-Identify \code{n} keywords describing the KPI and add them as new columns. Keywords are inferred from the \code{title} field of the \code{kpi_df} argument.
+Identify \code{n} keywords describing the KPI and add them as new columns. Keywords are inferred from the \code{title} field of the table.
 }
 \examples{
 \dontrun{

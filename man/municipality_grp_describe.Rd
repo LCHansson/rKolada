@@ -2,18 +2,18 @@
 % Please edit documentation in R/municipality_grp.R
 \name{municipality_grp_describe}
 \alias{municipality_grp_describe}
-\title{Describe the KPIs in a Kolada KPI group table}
+\title{Describe the municipalitie in a Kolada Municipality Group metadata table}
 \usage{
 municipality_grp_describe(
   munic_grp_df,
   max_n = 5,
   format = "inline",
   heading_level = 2,
-  sub_heading_level = 3
+  sub_heading_level = heading_level + 1
 )
 }
 \arguments{
-\item{munic_grp_df}{A Kolada municipality group table, as created by e.g. \code{get_municipality_groups}.}
+\item{munic_grp_df}{A Kolada Municipality Group metadata table, as created by e.g. \code{get_municipality_groups}.}
 
 \item{max_n}{The maximum number of KPI groups to describe.}
 
@@ -24,5 +24,25 @@ municipality_grp_describe(
 \item{sub_heading_level}{The sub heading level output format is "md".}
 }
 \description{
-Describe the KPIs in a Kolada KPI group table
+Print a human-readable description of each row of a Municipality Group metadata table, including member municipalities (up
+to a maximum number of rows). Can be printed either directly to the R console
+or used to populate a R markdown document, which can be useful for documentation
+purposes.
+}
+\examples{
+\dontrun{
+munic_grp_df <- get_municipality_groups()
+
+# Which municipality groups match the keyword "Arboga"?
+munic_grp_df \%>\% municipality_grp_search("Arboga")
+# 11 groups
+
+# Which KPI groups contain the municipality "Arboga"?
+munic_grp_df \%>\%
+  municipality_grp_unnest() \%>\%
+  municipality_search("arboga") \%>\%
+  count(group_title, sort = TRUE)
+# 92 groups
+}
+
 }

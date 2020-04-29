@@ -2,13 +2,30 @@
 % Please edit documentation in R/data.R
 \name{values_minimize}
 \alias{values_minimize}
-\title{Simplify a Kolada value table}
+\title{Simplify a Kolada values table}
 \usage{
 values_minimize(values_df)
 }
 \arguments{
 \item{values_df}{A Kolada value table, as created by \code{\link{get_values}}.}
 }
+\value{
+A Kolada values table
+}
 \description{
-Simplify a Kolada value table
+Simplify a Kolada values table, i.e as created by \code{\link{get_valus}}, by
+removing columns that contain monotonous data, i.e. that contain only one value
+for all observations.
+}
+\examples{
+\dontrun{
+# Download values for a KPI for the year 2010
+vals <- get_values(kpi = "N00002", period = 2010, simplify = TRUE) \%>\%
+  dplyr::filter(municipality_type == "K")
+# (Returns a table with 29 rows and 8 columns)
+
+# Remove columns with no information to differentiate between rows
+values_minimize(vals)
+# (Returns a table with 29 rows and 4 columns)
+}
 }

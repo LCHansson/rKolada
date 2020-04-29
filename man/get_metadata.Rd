@@ -10,7 +10,8 @@ get_metadata(
   id = NULL,
   municipality = NULL,
   cache = FALSE,
-  cache_location = tempdir
+  cache_location = tempdir,
+  verbose = FALSE
 )
 }
 \arguments{
@@ -25,15 +26,31 @@ current entity. Case insensitive.}
 \item{municipality}{If entity is \code{"ou"}, the municipality parameter can
 be added to narrow the search.}
 
-\item{cache}{Logical. If TRUE, downloaded data are stored to the local disk in the place specified by \code{cache_location}. If data is already present on the local disk, this data is returned instead of downloading data from the API.}
+\item{cache}{Logical. If TRUE, downloaded data are stored to the local disk
+in the place specified by \code{cache_location}. If data is already present
+on the local disk, this data is returned instead of downloading data from the
+API.}
 
-\item{cache_location}{Where to store and search for cached data. Can be a path to a directory or the name of any function that returns the path to a directory when called, like \code{link{getwd}}. Defaults to \code{\link{tempdir}}.}
+\item{cache_location}{Where to store and search for cached data. Can be a
+path to a directory or the name of any function that returns the path to a
+directory when called, like \code{link{getwd}}. Defaults to
+\code{\link{tempdir}}.}
+
+\item{verbose}{Whether to print the call to the Kolada API as a message to
+the R console.}
 }
 \value{
-Returns a tibble with metadata for the specified entity.
+Returns a tibble with metadata for the specified entity. In rKolada
+terminology, a table returned by e.g. \code{entity = "kpi"} is referred to
+as a \code{kpi_df} and can be passed to functions starting with "kpi" such
+as \code{\link{kpi_bind_keywords}}.
+#'
 }
 \description{
-Use this function to take full control of the Kolada metadata API.
+This is a generalized function for downloading metadata from the Kolada API.
+The function parameters closely mask the names specified in the original API. For
+further information about the Kolada API specification, please see the
+\url{https://github.com/Hypergene/kolada}{official documentation on GitHub}.
 }
 \seealso{
 \code{\link{get_kpi}}, \code{\link{get_kpi_groups}}, \code{\link{get_municipality}}, \code{\link{get_municipality_groups}}, \code{\link{get_ou}}

@@ -2,7 +2,7 @@
 % Please edit documentation in R/municipality.R
 \name{municipality_search}
 \alias{municipality_search}
-\title{Search a Kolada municipality table}
+\title{Search a Kolada municipality metadata table}
 \usage{
 municipality_search(munic_df, query, column = NULL)
 }
@@ -14,8 +14,17 @@ municipality_search(munic_df, query, column = NULL)
 \item{column}{(Optional) A string or character vector with the names of
 columns in which to search for \code{query}.}
 }
+\value{
+A Kolada Municipality metadata table
+}
 \description{
-Search a Kolada municipality table
+Search a Kolada municipality metadata table. Only keep rows that contain the
+search query. Note that some names (e.g. "Stockholm") are both the name of a
+municipality and part of the name of a region ("Stockholms län") so a search
+might return rows for both municipalities and regions. To avoid this you can
+use \code{\link{dplyr::filter}} to filter the \code{type} column to keep only
+"K" (municipalities) or "L" (regions) rows. See also examples below for an
+alternative approach avoiding any direct calls to \code{filter}.
 }
 \examples{
 \dontrun{

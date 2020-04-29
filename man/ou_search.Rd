@@ -2,30 +2,37 @@
 % Please edit documentation in R/ou.R
 \name{ou_search}
 \alias{ou_search}
-\title{Search a Kolada Operating unit table}
+\title{Search a Kolada Organizational Unit metadata table}
 \usage{
 ou_search(ou_df, query, column = NULL)
 }
 \arguments{
-\item{ou_df}{A Kolada Municipality metadata table, as created by e.g. \code{get_municipality}.}
+\item{ou_df}{A Kolada Organizational Unit metadata table, as created by e.g. \code{get_municipality}.}
 
 \item{query}{A search term or a vector of search terms to filter by. Case insensitive.}
 
 \item{column}{(Optional) A string or character vector with the names of
 columns in which to search for \code{query}.}
 }
+\value{
+A Kolada Organizational Unit metadata table
+}
 \description{
-Search a Kolada Operating unit table
+Search a Kolada Organizational Unit metadata table. Only keep rows that
+contain the search query. Matches against all columns or columns named
+with the \code{column} parameter. For more precise matching, please use
+\code{\link{dplyr::filter}}.
 }
 \examples{
 \dontrun{
-# Search for a single search term in a municipality table
+# Search for all OUs matching the search term "skola" (school)
 ou_df <- get_ou()
 ou_search(ou_df, "skola")
 
-# Only keep OU entities located in Stockholm municipality
+# Only keep OU entities matching "skola" located in Stockholm municipality
 ou_filter <- get_ou() \%>\%
-  ou_search("Stockholm", column = "municipality")
+  ou_search("Stockholm", column = "municipality") \%>\%
+  ou_search("skola")
 }
 
 }

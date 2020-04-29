@@ -2,14 +2,15 @@
 % Please edit documentation in R/data.R
 \name{get_values}
 \alias{get_values}
-\title{Get data from the Kolada API}
+\title{Get data from Kolada}
 \usage{
 get_values(
   kpi = NULL,
   municipality = NULL,
   period = NULL,
   ou = NULL,
-  simplify = TRUE
+  simplify = TRUE,
+  verbose = FALSE
 )
 }
 \arguments{
@@ -26,7 +27,39 @@ four-digit integers or character strings.}
 available for certain KPIs.}
 
 \item{simplify}{Whether to make results more human readable.}
+
+\item{verbose}{Whether to print the call to the Kolada API as a message to
+the R console.}
+}
+\value{
+A tibble containing Kolada values and metadata.
 }
 \description{
-Get data from the Kolada API.
+Download a table of data from Kolada. Data is selected based on three metadata
+dimensions: KPI (ID), municipality (ID) and period (years). You must supply
+arguments for at least two of these three dimensions. If a dimension is omitted,
+all available data for that dimension will be downloaded.
+}
+\examples{
+\dontrun{
+# Download data for KPIs for Gross Regional Product ("BRP" in Swedish)
+# for three municipalities
+grp_kpi <- get_kpi() \%>\% kpi_search("BRP") \%>\% kpi_extract_ids()
+
+largest_munic <- get_municipality() \%>\%
+  municipality_name_to_id(c("Stockholm", "Göteborg", "Malmö"))
+
+grp_data <- get_values(
+  kpi = grp_kpi,
+  municipality = largest_munic
+)
+
+# If you already know the ID numbers you are looking for,
+# you can use these directly as argments.
+grp_data <- get_values(
+  kpi = c("N03700", "N03701"),
+  municipality = c("0180", "1480", "1280")
+)
+}
+
 }
