@@ -115,7 +115,7 @@ get_values <- function(
 
     if (ret_has_groups)
       munic_tbl <- munic_tbl %>%
-      bind_rows(
+      dplyr::bind_rows(
         get_municipality_groups() %>%
           dplyr::select(id, title) %>%
           dplyr::mutate(type = "G")
