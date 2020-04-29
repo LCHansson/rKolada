@@ -60,6 +60,8 @@ compose_data_query <- function(kpi = NULL, municipality = NULL, period = NULL, o
 #' @param ou (Optional) for what Operating Units should data be fetched? Only
 #' available for certain KPIs.
 #' @param simplify Whether to make results more human readable.
+#' @param verbose Whether to print the call to the Kolada API as a message to
+#' the R console.
 #'
 #' @return A tibble containing Kolada values and metadata.
 #'
@@ -86,10 +88,20 @@ compose_data_query <- function(kpi = NULL, municipality = NULL, period = NULL, o
 #' }
 #'
 #' @export
-get_values <- function(kpi = NULL, municipality = NULL, period = NULL, ou = NULL, simplify = TRUE) {
+get_values <- function(
+  kpi = NULL,
+  municipality = NULL,
+  period = NULL,
+  ou = NULL,
+  simplify = TRUE,
+  verbose = FALSE
+) {
   query <- compose_data_query(kpi, municipality, period, ou)
 
-  res <- httr::GET(query)
+  if (isTRUE(verbose))
+    message("Downloading Kolada data using URL\n", query)
+
+  res <- httr::RETRY("GET", query)
 
   contents_raw <- httr::content(res, as = "text")
   contents <- jsonlite::fromJSON(contents_raw)[["values"]]
@@ -97,13 +109,32 @@ get_values <- function(kpi = NULL, municipality = NULL, period = NULL, ou = NULL
     tidyr::unnest(cols = c(values))
 
   if (isTRUE(simplify)) {
+    ret_has_groups <- any(stringr::str_detect(ret$municipality, "^G"))
+
+    munic_tbl <- get_municipality(verbose = FALSE)
+
+    if (ret_has_groups)
+      munic_tbl <- munic_tbl %>%
+      bind_rows(
+        get_municipality_groups() %>%
+          dplyr::select(id, title) %>%
+          dplyr::mutate(type = "G")
+      )
+
     ret <- ret %>%
       # Remove "status" column (does it ever contain anything?)
       dplyr::select(-status) %>%
       # Convert codes to names
-      dplyr::mutate(
-        municipality_id = municipality,
-        municipality = municipality_id_to_name(get_municipality(), municipality)
+      dplyr::rename(
+        municipality_id = municipality
+      ) %>%
+      dplyr::inner_join(
+        dplyr::select(
+          munic_tbl,
+          municipality_id = id,
+          municipality = title,
+          municipality_type = type),
+        by = "municipality_id"
       ) %>%
       dplyr::rename(year = period)
   }
@@ -123,7 +154,14 @@ get_values <- function(kpi = NULL, municipality = NULL, period = NULL, ou = NULL
 #'
 #' @examples
 #' \dontrun{
-#' vals <- get_values(kpi = "N0002", period = 2010)
+#' # Download values for a KPI for the year 2010
+#' vals <- get_values(kpi = "N00002", period = 2010, simplify = TRUE) %>%
+#'   dplyr::filter(municipality_type == "K")
+#' # (Returns a table with 29 rows and 8 columns)
+#'
+#' # Remove columns with no information to differentiate between rows
+#' values_minimize(vals)
+#' # (Returns a table with 29 rows and 4 columns)
 #' }
 #' @export
 
