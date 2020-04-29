@@ -1,5 +1,5 @@
-#' Description specifications in {glue} format
-#' @param type The metadata entity to be described.
+# Description specifications in {glue} format
+# @param type The metadata entity to be described.
 desc_glue_spec <- function(type) {
 
   switch(type,

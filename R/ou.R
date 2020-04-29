@@ -1,6 +1,9 @@
 #' Search a Kolada Organizational Unit metadata table
 #'
-#'
+#' Search a Kolada Organizational Unit metadata table. Only keep rows that
+#' contain the search query. Matches against all columns or columns named
+#' with the \code{column} parameter. For more precise matching, please use
+#' \code{\link{dplyr::filter}}.
 #'
 #' @param ou_df A Kolada Organizational Unit metadata table, as created by e.g. \code{get_municipality}.
 #' @param query A search term or a vector of search terms to filter by. Case insensitive.
@@ -11,13 +14,14 @@
 #'
 #' @examples
 #' \dontrun{
-#' # Search for a single search term in a OU table
+#' # Search for all OUs matching the search term "skola" (school)
 #' ou_df <- get_ou()
 #' ou_search(ou_df, "skola")
 #'
-#' # Only keep OU entities located in Stockholm municipality
+#' # Only keep OU entities matching "skola" located in Stockholm municipality
 #' ou_filter <- get_ou() %>%
-#'   ou_search("Stockholm", column = "municipality")
+#'   ou_search("Stockholm", column = "municipality") %>%
+#'   ou_search("skola")
 #' }
 #'
 #' @export

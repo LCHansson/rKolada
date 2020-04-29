@@ -1,10 +1,16 @@
-#' Convert municipality names to municipality ids
+#' Convert a vector of municipality names to municipality ids
 #'
-#'
+#' Given a vector of names of municipalities or regions, return a named vector
+#' of municipality IDs/codes. Codes of municipalities and regions follow
+#' the Swedish standard for municipality codes. The codes extracted can be used
+#' e.g. to pass as a parameter to \code{\link{get_values}}. This function is the inverse
+#' to \code{\link{municipality_id_to_name}}.
 #'
 #' @param munic_df A Kolada Municipality metadata table, as created by e.g. \code{get_municipality}.
 #' @param municipality Name of one or several municipalities. Case insensitive. Allows repeats.
 #' @param remove_na Should NA return values be removed?
+#'
+#' @seealso \code{\link{municipality_extract_ids}}, \code{\link{municipality_id_to_name}}
 #'
 #' @examples
 #' munic_df <- get_municipality()
@@ -29,13 +35,19 @@ municipality_name_to_id <- function(munic_df, municipality, remove_na = FALSE) {
   res
 }
 
-#' Convert municipality ids to municipality names
+#' Convert a vector of municipality ids to municipality names
 #'
-#'
+#' Given a vector of municipality IDs/codes, return a named vector
+#' of names of municipalities or regions. Codes of municipalities and regions follow
+#' the Swedish standard for municipality codes. The codes extracted can be used
+#' e.g. to pass as a parameter to \code{\link{get_values}}. This function is the inverse
+#' to \code{\link{municipality_name_to_id}}.
 #'
 #' @param munic_df A Kolada Municipality metadata table, as created by e.g. \code{get_municipality}.
 #' @param id ID ids of one or several municipalities. Allows repeats.
 #' @param remove_na Should NA return values be removed?
+#'
+#' @seealso \code{\link{municipality_extract_ids}}, \code{\link{municipality_name_to_id}}
 #'
 #' @examples
 #' munic_df <- get_municipality()
@@ -61,9 +73,22 @@ municipality_id_to_name <- function(munic_df, id, remove_na = FALSE) {
 
 #' Extract a vector of municipality ID strings from a Kolada municipality table
 #'
-#'
+#' This function is primarily intended as a convenient way to pass a (filtered) Kolada municipality metadata table to \code{\link{get_data}}.
 #'
 #' @param munic_df A Kolada Municipality metadata table, as created by e.g. \code{get_municipality}.
+#'
+#' @examples
+#' \dontrun{
+#' # Download Kolada data for all municipalities of type "L"
+#' # (regions and national total) for KPI "N00002" and all available years
+#' munic_filter <- get_municipality() %>%
+#'   municipality_search("L", column = "type")
+#'
+#' kld_data <- get_values(
+#'   kpi = "N00002",
+#'   municipality = municipality_extract_ids(munic_filter)
+#' )
+#' }
 #'
 #' @export
 municipality_extract_ids <- function(munic_df) {
@@ -71,9 +96,15 @@ municipality_extract_ids <- function(munic_df) {
 }
 
 
-#' Search a Kolada municipality table
+#' Search a Kolada municipality metadata table
 #'
-#'
+#' Search a Kolada municipality metadata table. Only keep rows that contain the
+#' search query. Note that some names (e.g. "Stockholm") are both the name of a
+#' municipality and part of the name of a region ("Stockholms län") so a search
+#' might return rows for both municipalities and regions. To avoid this you can
+#' use \code{\link{dplyr::filter}} to filter the \code{type} column to keep only
+#' "K" (municipalities) or "L" (regions) rows. See also examples below for an
+#' alternative approach avoiding any direct calls to \code{filter}.
 #'
 #' @param munic_df A Kolada Municipality metadata table, as created by e.g. \code{get_municipality}.
 #' @param query A search term or a vector of search terms to filter by. Case insensitive.

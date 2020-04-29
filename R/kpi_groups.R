@@ -1,6 +1,6 @@
 #' Extract KPI ID strings from a Kolada KPI Group metadata table
 #'
-#'
+#' This function is primarily intended as a convenient way to pass a (filtered) Kolada KPI Group metadata table to \code{\link{get_data}}. All IDs of the KPIs contained in each group in the table are extracted.
 #'
 #' @param kpi_grp_df A Kolada KPI Group metadata table, as created by e.g. \code{get_kpi_groups}.
 #'
@@ -12,14 +12,33 @@ kpi_grp_extract_ids <- function(kpi_grp_df) {
 
 #' Create a KPI table from a Kolada KPI Group metadata table
 #'
-#'
+#' KPI groups are a convenient way to discover sets of KPIs that can be used to
+#' highlight different aspects of a policy area. A practical workflow for discovering
+#' such sets can be to search through KPI Group metadata using
+#' \code{\link{kpi_grp_search}} to search for keywords and
+#' \code{\link{kpi_grp_describe}} to inspect contents of KPI groups. Once you have
+#' created a KPI group table that has been narrowed down to the group/s you
+#' are looking for, \code{\link{kpi_grp_unnest}} is used to create a KPI metadata
+#' table for further processing.
 #'
 #' @param kpi_grp_df A Kolada KPI Group metadata table, as created by e.g. \code{get_kpi_groups}.
 #'
 #' @return A Kolada KPI metadata table
 #'
+#' @examples
+#' \dontrun{
+#' # Download KPI Group metadata
+#' kpi_grp_df <- get_kpi_groups()
+#'
+#' # Create a KPI metadata table from KPI groups matching the term
+#' # "utbidning" (education)
+#' kpi_grp_df %>%
+#'   kpi_grp_search("utbildning") %>%
+#'   kpi_grp_unnest()
+#' }
+#'
 #' @export
-kpi_grp_unnest_kpis <- function(kpi_grp_df) {
+kpi_grp_unnest <- function(kpi_grp_df) {
   kpi_grp_df %>%
     tidyr::unnest(cols = c(members)) %>%
     dplyr::select(group_id = id, id = member_id, group_title = title, title = member_title) %>%
@@ -29,7 +48,10 @@ kpi_grp_unnest_kpis <- function(kpi_grp_df) {
 
 #' Describe the KPIs in a Kolada KPI Group metadata table
 #'
-#'
+#' Print a human-readable description of each row of a KPI Group metadata table, including member KPIs (up
+#' to a maximum number of rows). Can be printed either directly to the R console
+#' or used to populate a R markdown document, which can be useful for documentation
+#' purposes.
 #'
 #' @param kpi_grp_df A Kolada KPI Group metadata table, as created by e.g. \code{get_kpi_groups}.
 #' @param max_n The maximum number of KPI groups to describe.
@@ -43,7 +65,7 @@ kpi_grp_describe <- function(
   max_n = 5,
   format = "inline",
   heading_level = 2,
-  sub_heading_level = heading_level + 1
+  sub_heading_level = 3
 ) {
   if (!format %in% c("inline", "md"))
     stop("'format' must be one of c(\"inline\", \"md\")")
@@ -67,12 +89,30 @@ kpi_grp_describe <- function(
 
 #' Search a Kolada KPI Group metadata table for group names
 #'
-#'
+#' Search a Kolada KPI Group metadata table. Only keep rows that
+#' contain the search query. Searches group titles and group IDs. Note that this
+#' function does not search for individual KPIs contained within KPI groups!
+#' To search for KPIs within a KPI group, see examples below for an example
+#' using \code{kpi_grp_unnest}.
 #'
 #' @param kpi_grp_df A Kolada KPI Group metadata table, as created by e.g. \code{get_kpi_groups}.
 #' @param query A search term or a vector of search terms to filter by. Case insensitive.
 #'
 #' @return A Kolada KPI Group metadata table
+#'
+#' @examples
+#' \dontrun{
+#' kpi_grp_df <- get_kpi_groups()
+#'
+#' # Which KPI groups match the keyword "ekonomi" (economy)?
+#' kpi_grp_df %>% kpi_grp_search("ekonomi")
+#'
+#' # Which KPI groups contain KPIs matching the keyword "arbete" (work/labour)?
+#' kpi_grp_df %>%
+#'   kpi_grp_unnest() %>%
+#'   kpi_search("arbete") %>%
+#'   count(group_title, sort = TRUE)
+#' }
 #'
 #' @export
 kpi_grp_search <- function(kpi_grp_df, query) {

@@ -75,7 +75,10 @@ kpi_bind_keywords <- function(kpi_df, n = 2, form = c("wide", "long")) {
 
 #' Search for Kolada KPIs using a Kolada KPI table
 #'
-#' Search a Kolada KPI metadata table. Only keep rows that contain the search query.
+#' Search a Kolada KPI metadata table. Only keep rows that
+#' contain the search query. Matches against all columns or columns named
+#' with the \code{column} parameter. For more precise
+#' matching, please use \code{\link{dplyr::filter}}.
 #'
 #' @param kpi_df A Kolada KPI metadata table, e.g. as created by \code{\link{get_kpi}}.
 #' @param query A search term or a vector of search terms to filter by. Case insensitive.
@@ -155,9 +158,20 @@ kpi_describe <- function(
 
 #' Extract a vector of KPI ID strings from a Kolada KPI metadata table
 #'
-#'
+#' This function is primarily intended as a convenient way to pass a (filtered) Kolada KPI metadata table to \code{\link{get_data}}.
 #'
 #' @param kpi_df A Kolada KPI metadata table, e.g. as created by \code{\link{get_kpi}}.
+#'
+#' @examples
+#' \dontrun{
+#' # Download Kolada data for all KPIs matching the term "BRP" (gross regional
+#' # product) for the years 2010-2019
+#' kpi_filter <- get_kpi() %>%
+#'   kpi_search("BRP")
+#'
+#' kld_data <- get_values(kpi = kpi_extract_ids(kpi_filter), period = 2010:2019)
+#' }
+#'
 #' @export
 kpi_extract_ids <- function(kpi_df) {
   kpi_df$id
