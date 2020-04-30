@@ -3,8 +3,10 @@ title: "Introduction to rKolada"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Introduction to rKolada}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r, include = FALSE}
@@ -139,8 +141,53 @@ kpi_filter %>% dplyr::slice(1:10) %>% kpi_minimize()
 
 ### Metadata groups
 
-- What are they?
-- Extracting KPIs/municipalities
+Kolada provides pre-defined _groups_ of KPIs and municipalities/regions. Exploring an using thse groups can facilitate meaningful comparisons between different entities or help paint a broader picture of developments in a certain field or area.
 
-## Downloading data with helper functions
+To `get`, `search` or `describe` group metadata, use the same techniques as described above for regular metadata (relevant prefixesare `kpi_grp_` and `municipality_grp_`).
+
+A crucial difference between group metadata and other metadata tables, however, is that group metadata comes in the form of a [nested](https://tidyr.tidyverse.org/articles/nest.html) table. Typically you might want to _unnest_ the groups in a group metadata table once yo hae found the relevant group(s) for your query. To do this, use the `unnest` functions to create a table containing unnested entities, e.g. running `kpi_grp_unnest(kpi_grp_df)` using a KPI group metadata table as argument creates a `kpi_df` that can be further processed using the `kpi_` functios described in previous sections of this vignette.
+
+
+## Downloading data using metadata
+
+An alternative approach to downloading data using known IDs is to use metadata tables to construct arguments to `get_values()`. `rKolada` provides a `extract_ids` family of functions for passing a metadata table as an argument to `get_values`. A typical workflow would be to download metadata for (groups of) KPIs and/or municipalities, use functions like `kpi_search()` to filter down the tables to a few rows, and then call `get_values()` to fetch data.
+
+As an example, let's say we want to download all KPIs describing Gross Regional Product for all municipalities that are socioeconomically similar to Arboga, a small municipality in central Sweden:
+
+```{r}
+# Get KPIs describing Gross Regional Product of municipalities
+kpi_filter <- get_kpi() %>% 
+  kpi_search("BRP")
+# Creates a table with two rows
+
+munic_grp_filter <- get_municipality_groups() %>% 
+  municipality_grp_search("Liknande kommuner socioekonomi, Arboga")
+# Creates a table with one group of 7 municipalities
+
+arboga_filter <- get_municipality() %>% municipality_search("Arboga")
+
+# Get values
+grp_data <- get_values(
+  kpi = kpi_extract_ids(kpi_filter),
+  municipality = c(
+    municipality_grp_extract_ids(munic_grp_filter),
+    municipality_extract_ids(arboga_filter)
+  )
+)
+
+# Visualize results
+library("ggplot2")
+ggplot(grp_data, aes(year, value, color = municipality)) +
+  geom_line() +
+  facet_grid(kpi ~ ., scales = "free") +
+  labs(
+    title = "Gross Regional Product 2012-2017",
+    subtitle = "Swedish municipalities similar to Arboga",
+    caption = values_legend(grp_data, kpi_filter)
+  ) +
+  scale_color_viridis_d(option = "B") +
+  scale_y_continuous(labels = scales::comma)
+```
+
+
 
