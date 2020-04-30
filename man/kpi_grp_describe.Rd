@@ -9,7 +9,7 @@ kpi_grp_describe(
   max_n = 5,
   format = "inline",
   heading_level = 2,
-  sub_heading_level = 3
+  sub_heading_level = heading_level + 1
 )
 }
 \arguments{
