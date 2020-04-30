@@ -1,6 +1,6 @@
 Package: rKolada
 Type: Package
-Title: Access The Kolada Database In R
+Title: Access Data From The Kolada Database In R
 Version: 0.1.0
 Authors@R: person("Love", "Hansson", email =
  "love.hansson@gmail.com", role = c("aut", "cre"))
@@ -12,7 +12,8 @@ LazyData: true
 Suggests: 
     testthat,
     knitr,
-    rmarkdown
+    rmarkdown,
+    scales
 RoxygenNote: 7.1.0
 Imports: 
     R6,
