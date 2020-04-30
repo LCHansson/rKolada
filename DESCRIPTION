@@ -6,7 +6,7 @@ Authors@R: person("Love", "Hansson", email =
  "love.hansson@gmail.com", role = c("aut", "cre"))
 Maintainer: Love Hansson <love.hansson@gmail.com>
 Description: Methods for downloading and processing data and metadata from Kolada (Kommun- och LandstingsDatabasen).
-License: LGPL (>= 2.1)
+License: AGPL-3
 Encoding: UTF-8
 LazyData: true
 Suggests: 
