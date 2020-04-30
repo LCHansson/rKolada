@@ -9,11 +9,12 @@ rKolada is open source licensed under the Affero Gnu Public License version 3. T
 
 ## Installation
 
-rKolada is on CRAN. To install it, run the following code in R/RStudio:
+<!-- rKolada is on CRAN. To install it, run the following code in R/RStudio:
 
 ```r
 install.packages("rKolada")
 ```
+--->
 
 To install the development version, use the `remotes` package:
 
