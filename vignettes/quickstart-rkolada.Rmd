@@ -25,17 +25,18 @@ In this guide we walk you through five steps to download, inspect and search thr
 ### 1. Get metadata
 
 Kolada contains five different types of metadata entities: 
+
 1. `kpi`: Key Performance Indicators
-2. `municipality`: Municipalities
-3. `ou`: Operating Unit, a subunit of municipalities
-4. `kpi_groups`: Thematic groupings of KPIs
-5. `municipality_groups`: Thematic groupings of municipalities
+1. `municipality`: Municipalities
+1. `ou`: Operating Unit, a subunit of municipalities
+1. `kpi_groups`: Thematic groupings of KPIs
+1. `municipality_groups`: Thematic groupings of municipalities
 
 To obtain data using `rKolada` it is usually a good idea to start by exploring metadata. `rKolada` comes with convenience functions for each of the five above mentioned entities. These functions are all names `get_[entity]()` and can be called as follows. The `cache` parameter allows you to temporarily store results on disk to avoid repeated calls to the API in case you need to re-run your code:
 
 ```{r}
 kpis <- get_kpi(cache = FALSE)
-munic <- get_municipality(cache = TRUE)
+munic <- get_municipality(cache = FALSE)
 ```
 
 If you have already familiarised yourself with the Kolada API (e.g. by reading the [official docs on GitHub](https://github.com/Hypergene/kolada)) you can access the full metadata API using `get_metadata()`.
@@ -87,8 +88,8 @@ kpi_res %>%
 Once we have settled on what KPIs we are interested in the next step is to download actual data from Kolada. Use `get_values()` to do this. To download data from the Kolada API you need to provide at least two of the following parameters:
 
 1. `kpi`: One or a vector of several KPI IDs
-2. `municipality`: One or a vector of several municipality IDs or municipality group IDs
-3. `period`: The years for which data should be downloaded.
+1. `municipality`: One or a vector of several municipality IDs or municipality group IDs
+1. `period`: The years for which data should be downloaded.
 
 The ID tags for KPIs and municipalities can be extracted using the convenience functions `kpi_extract_ids()` and `municipality_extract_ids()`:
 

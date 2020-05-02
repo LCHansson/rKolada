@@ -2,9 +2,18 @@
 
 [![R build status](https://github.com/LCHansson/rKolada/workflows/R-CMD-check/badge.svg)](https://github.com/LCHansson/rKolada/actions)
 
-[`rKolada`](https://lchansson.github.io/rKolada/index.html) is an R package for *downloading*, *inspecting* and *processing* data from [Kolada](https://kolada.se/), a Key Performance Indicator database for Swedish municipalities and regions. This vignette provides an overview of the methods included in the `rKolada` package and the design principles of the package API. To learn more about the specifics of functions and to see a full list of the functions included, please see the [Reference section of the package homepage](https://lchansson.github.io/rKolada/reference/index.html) or run `??rKolada`.
+[`rKolada`](https://lchansson.github.io/rKolada/index.html) is an R package for *downloading*, *inspecting* and *processing* data from [Kolada](https://kolada.se/), an open database containing over 4,000 Key Performance Indicators for Swedish municipalities and regions.
 
-rKolada is open source licensed under the Affero Gnu Public License version 3. This means you are free to download the source, modify and redistribute it as you please, but any copies or modifications must retain the original license. Please see the file LICENSE.md for further information.
+To learn more about using `rKolada`, it is recommended you use the following resources in order:
+
+
+## Getting started with rKolada
+
+1. To get up and running quickly with rKolada, please see the vignette [A quick start guide to rKolada](https://lchansson.github.io/rKolada/articles/quickstart-rkolada.html).
+1. For an introduction to rKolada and the design principles of functions included, please see [Introduction to rKolada](https://lchansson.github.io/rKolada/articles/introduction-to-rkolada.html).
+1. See the [Reference section of the package homepage](https://lchansson.github.io/rKolada/reference/index.html) to learn about the full set of functionality included with the package.
+
+`rKolada` is open source licensed under the Affero Gnu Public License version 3. This means you are free to download the source, modify and redistribute it as you please, but any copies or modifications must retain the original license. Please see the file LICENSE.md for further information.
 
 
 ## Installation
@@ -22,12 +31,6 @@ To install the development version, use the `remotes` package:
 library("remotes")
 remotes::install_github("LCHansson/rKolada")
 ```
-
-## Getting started with rKolada
-
-To get up and running quickly with rKolada, please see the vignette [A quick start guide to rKolada](https://lchansson.github.io/rKolada/articles/quickstart-rkolada.html).
-
-For an introduction to rKolada and the design principles of functions included, please see [Introduction to rKolada](https://lchansson.github.io/rKolada/articles/introduction-to-rkolada.html).
 
 ## Contributing
 
