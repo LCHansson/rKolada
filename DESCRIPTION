@@ -16,7 +16,6 @@ Suggests:
     scales
 RoxygenNote: 7.1.0
 Imports: 
-    R6,
     tibble,
     dplyr,
     glue,
