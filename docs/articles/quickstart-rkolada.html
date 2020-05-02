@@ -61,6 +61,9 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right"></ul>
 </div>
@@ -91,10 +94,22 @@
 <div id="get-metadata" class="section level3">
 <h3 class="hasAnchor">
 <a href="#get-metadata" class="anchor"></a>1. Get metadata</h3>
-<p>Kolada contains five different types of metadata entities: 1. <code>kpi</code>: Key Performance Indicators 2. <code>municipality</code>: Municipalities 3. <code>ou</code>: Operating Unit, a subunit of municipalities 4. <code>kpi_groups</code>: Thematic groupings of KPIs 5. <code>municipality_groups</code>: Thematic groupings of municipalities</p>
+<p>Kolada contains five different types of metadata entities:</p>
+<ol style="list-style-type: decimal">
+<li>
+<code>kpi</code>: Key Performance Indicators</li>
+<li>
+<code>municipality</code>: Municipalities</li>
+<li>
+<code>ou</code>: Operating Unit, a subunit of municipalities</li>
+<li>
+<code>kpi_groups</code>: Thematic groupings of KPIs</li>
+<li>
+<code>municipality_groups</code>: Thematic groupings of municipalities</li>
+</ol>
 <p>To obtain data using <code>rKolada</code> it is usually a good idea to start by exploring metadata. <code>rKolada</code> comes with convenience functions for each of the five above mentioned entities. These functions are all names <code>get_[entity]()</code> and can be called as follows. The <code>cache</code> parameter allows you to temporarily store results on disk to avoid repeated calls to the API in case you need to re-run your code:</p>
 <div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">kpis</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_kpi.html">get_kpi</a></span>(<span class="kw">cache</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
-<span class="no">munic</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_kpi.html">get_municipality</a></span>(<span class="kw">cache</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<span class="no">munic</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_kpi.html">get_municipality</a></span>(<span class="kw">cache</span> <span class="kw">=</span> <span class="fl">FALSE</span>)</pre></body></html></div>
 <p>If you have already familiarised yourself with the Kolada API (e.g. by reading the <a href="https://github.com/Hypergene/kolada">official docs on GitHub</a>) you can access the full metadata API using <code><a href="../reference/get_metadata.html">get_metadata()</a></code>.</p>
 </div>
 <div id="search-metadata" class="section level3">
