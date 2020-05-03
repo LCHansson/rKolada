@@ -44,12 +44,12 @@ kpi_grp_extract_ids <- function(kpi_grp_df) {
 #' @export
 kpi_grp_unnest <- function(kpi_grp_df) {
   kpi_grp_df %>%
-    tidyr::unnest(cols = c(members)) %>%
+    tidyr::unnest(cols = c(.data$members)) %>%
     dplyr::select(
-      group_id = id, id = member_id,
-      group_title = title, title = member_title
+      group_id = .data$id, id = .data$member_id,
+      group_title = .data$title, title = .data$member_title
     ) %>%
-    dplyr::select(id, title, group_id, group_title)
+    dplyr::select(.data$id, .data$title, .data$group_id, .data$group_title)
 }
 
 
@@ -83,12 +83,12 @@ kpi_grp_describe <- function(
 
   desc_df <- desc_df %>%
     dplyr::mutate(
-      num_members = purrr::map(members, nrow),
-      m_id = purrr::map(members, purrr::pluck("member_id")),
-      m_t = purrr::map(members, purrr::pluck("member_title")),
+      num_members = purrr::map(.data$members, nrow),
+      m_id = purrr::map(.data$members, purrr::pluck("member_id")),
+      m_t = purrr::map(.data$members, purrr::pluck("member_title")),
       m_pre = "- ",
       member_data = purrr::pmap(
-        list(m_pre, m_id, m_t),
+        list(.data$m_pre, .data$m_id, .data$m_t),
         paste, sep = " ", collapse = "\n"
       )
     )
@@ -134,5 +134,5 @@ kpi_grp_describe <- function(
 #' @export
 kpi_grp_search <- function(kpi_grp_df, query) {
   kpi_grp_df %>%
-    dplyr::filter(stringr::str_detect(tolower(title), tolower(query)))
+    dplyr::filter(stringr::str_detect(tolower(.data$title), tolower(query)))
 }

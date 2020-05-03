@@ -1,11 +1,11 @@
 Package: rKolada
 Type: Package
-Title: Access Data From The Kolada Database In R
+Title: Access Data from the Swedish Regions and Municipalities Database in R
 Version: 0.1.0
 Authors@R: person("Love", "Hansson", email =
  "love.hansson@gmail.com", role = c("aut", "cre"))
 Maintainer: Love Hansson <love.hansson@gmail.com>
-Description: Methods for downloading and processing data and metadata from Kolada (Kommun- och LandstingsDatabasen).
+Description: Methods for downloading and processing data and metadata from Kolada, the Swedish regions and municipalities database.
 License: AGPL-3
 Encoding: UTF-8
 LazyData: true
@@ -26,5 +26,6 @@ Imports:
     tidyr,
     purrr,
     stringi,
-    ggplot2
+    ggplot2,
+    rlang
 VignetteBuilder: knitr

@@ -143,7 +143,7 @@ kpi_filter %>% dplyr::slice(1:10) %>% kpi_minimize()
 
 Kolada provides pre-defined _groups_ of KPIs and municipalities/regions. Exploring an using thse groups can facilitate meaningful comparisons between different entities or help paint a broader picture of developments in a certain field or area.
 
-To `get`, `search` or `describe` group metadata, use the same techniques as described above for regular metadata (relevant prefixesare `kpi_grp_` and `municipality_grp_`).
+To `get`, `search` or `describe` group metadata, use the same techniques as described above for regular metadata (relevant prefixes are `kpi_grp_` and `municipality_grp_`).
 
 A crucial difference between group metadata and other metadata tables, however, is that group metadata comes in the form of a [nested](https://tidyr.tidyverse.org/articles/nest.html) table. Typically you might want to _unnest_ the groups in a group metadata table once yo hae found the relevant group(s) for your query. To do this, use the `unnest` functions to create a table containing unnested entities, e.g. running `kpi_grp_unnest(kpi_grp_df)` using a KPI group metadata table as argument creates a `kpi_df` that can be further processed using the `kpi_` functios described in previous sections of this vignette.
 

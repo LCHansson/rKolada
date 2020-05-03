@@ -1,3 +1,6 @@
+# Global variables
+utils::globalVariables(c("."))
+
 #' Allowed entities: Kolada metadata classes
 #' @export
 allowed_entities <- function() {

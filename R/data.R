@@ -114,7 +114,7 @@ get_values <- function(
   contents_raw <- httr::content(res, as = "text")
   contents <- jsonlite::fromJSON(contents_raw)[["values"]]
   ret <- tibble::as_tibble(contents) %>%
-    tidyr::unnest(cols = c(values))
+    tidyr::unnest(cols = c(.data$values))
 
   if (isTRUE(simplify)) {
     ret_has_groups <- any(stringr::str_detect(ret$municipality, "^G"))
@@ -125,26 +125,26 @@ get_values <- function(
       munic_tbl <- munic_tbl %>%
       dplyr::bind_rows(
         get_municipality_groups() %>%
-          dplyr::select(id, title) %>%
+          dplyr::select(.data$id, .data$title) %>%
           dplyr::mutate(type = "G")
       )
 
     ret <- ret %>%
       # Remove "status" column (does it ever contain anything?)
-      dplyr::select(-status) %>%
+      dplyr::select(-.data$status) %>%
       # Convert codes to names
       dplyr::rename(
-        municipality_id = municipality
+        municipality_id = .data$municipality
       ) %>%
       dplyr::inner_join(
         dplyr::select(
           munic_tbl,
-          municipality_id = id,
-          municipality = title,
-          municipality_type = type),
+          municipality_id = .data$id,
+          municipality = .data$title,
+          municipality_type = .data$type),
         by = "municipality_id"
       ) %>%
-      dplyr::rename(year = period)
+      dplyr::rename(year = .data$period)
   }
 
   ret
@@ -196,8 +196,8 @@ values_minimize <- function(values_df) {
 values_legend <- function(values_df, kpi_df) {
   kpis <- unique(values_df$kpi)
   desc <- kpi_df %>%
-    dplyr::select(id, title) %>%
-    dplyr::filter(id %in% kpis)
+    dplyr::select(.data$id, .data$title) %>%
+    dplyr::filter(.data$id %in% .env$kpis)
 
   paste(glue::glue_data(desc, "{id}: {title}"), collapse = "\n")
 }

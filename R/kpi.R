@@ -22,7 +22,7 @@ kpi_minimize <- function(
 ) {
   if (isTRUE(remove_undocumented_columns) & "auspices" %in% names(kpi_df)) {
     kpi_df <- kpi_df %>%
-      dplyr::select(-auspices)
+      dplyr::select(-.data$auspices)
   }
   if (isTRUE(remove_monotonous_data))
     kpi_df <- kpi_df %>%
@@ -30,7 +30,7 @@ kpi_minimize <- function(
                          purrr::map(., dplyr::n_distinct) > 1)
 
   kpi_df <- kpi_df %>%
-    dplyr::select(id, title, description, dplyr::everything())
+    dplyr::select(.data$id, .data$title, .data$description, dplyr::everything())
 
   kpi_df
 }
@@ -62,11 +62,11 @@ kpi_bind_keywords <- function(kpi_df, n = 2, form = c("wide", "long")) {
 
   kpi_df <- kpi_df %>%
     dplyr::mutate(
-      title_words = stringr::str_extract_all(tolower(title), "\\w+")
+      title_words = stringr::str_extract_all(tolower(.data$title), "\\w+")
     ) %>%
-    tidyr::unnest(cols = c(title_words)) %>%
-    dplyr::filter(!title_words %in% stopwords()) %>%
-    dplyr::group_by(id) %>%
+    tidyr::unnest(cols = c(.data$title_words)) %>%
+    dplyr::filter(!.data$title_words %in% stopwords()) %>%
+    dplyr::group_by(.data$id) %>%
     dplyr::slice(1:n) %>%
     dplyr::ungroup()
 
@@ -74,8 +74,8 @@ kpi_bind_keywords <- function(kpi_df, n = 2, form = c("wide", "long")) {
     kpi_df <- kpi_df %>%
       dplyr::mutate(nm_col = dplyr::row_number()) %>%
       tidyr::pivot_wider(
-        names_from = nm_col, names_prefix = "keyword_",
-        values_from = title_words, values_fill = list(title_words = "")
+        names_from = .data$nm_col, names_prefix = "keyword_",
+        values_from = .data$title_words, values_fill = list(title_words = "")
       )
   }
 
@@ -167,9 +167,9 @@ kpi_describe <- function(
 
   if (any(stringr::str_detect(names(desc_df), "keyword")))
     desc_df <- desc_df %>%
-    dplyr::mutate(keyword_1 = paste("- ", keyword_1, sep = "")) %>%
-    tidyr::unite(keywords, dplyr::starts_with("keyword"), sep = "\n- ") %>%
-    dplyr::mutate(keywords = stringr::str_remove(keywords, "(-[\\s]*)+$"))
+    dplyr::mutate(keyword_1 = paste("- ", .data$keyword_1, sep = "")) %>%
+    tidyr::unite("keywords", dplyr::starts_with("keyword"), sep = "\n- ") %>%
+    dplyr::mutate(keywords = stringr::str_remove(.data$keywords, "(-[\\s]*)+$"))
 
   desc_df %>%
     glue_data_safely(

@@ -194,10 +194,10 @@ get_ou <- function(
     cache = cache, cache_location = cache_location, verbose = verbose
   ) %>%
     dplyr::mutate(
-      municipality_id = municipality,
-      municipality = municipality_id_to_name(munic_df, municipality_id)
+      municipality_id = .data$municipality,
+      municipality = municipality_id_to_name(.env$munic_df, .data$municipality_id)
     ) %>%
-    dplyr::select(id, title, municipality, municipality_id)
+    dplyr::select(.data$id, .data$title, .data$municipality, .data$municipality_id)
 }
 
 
