@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rKolada</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -345,7 +345,7 @@
 <h3 class="hasAnchor">
 <a href="#metadata-groups" class="anchor"></a>Metadata groups</h3>
 <p>Kolada provides pre-defined <em>groups</em> of KPIs and municipalities/regions. Exploring an using thse groups can facilitate meaningful comparisons between different entities or help paint a broader picture of developments in a certain field or area.</p>
-<p>To <code>get</code>, <code>search</code> or <code>describe</code> group metadata, use the same techniques as described above for regular metadata (relevant prefixesare <code>kpi_grp_</code> and <code>municipality_grp_</code>).</p>
+<p>To <code>get</code>, <code>search</code> or <code>describe</code> group metadata, use the same techniques as described above for regular metadata (relevant prefixes are <code>kpi_grp_</code> and <code>municipality_grp_</code>).</p>
 <p>A crucial difference between group metadata and other metadata tables, however, is that group metadata comes in the form of a <a href="https://tidyr.tidyverse.org/articles/nest.html">nested</a> table. Typically you might want to <em>unnest</em> the groups in a group metadata table once yo hae found the relevant group(s) for your query. To do this, use the <code>unnest</code> functions to create a table containing unnested entities, e.g. running <code><a href="../reference/kpi_grp_unnest.html">kpi_grp_unnest(kpi_grp_df)</a></code> using a KPI group metadata table as argument creates a <code>kpi_df</code> that can be further processed using the <code>kpi_</code> functios described in previous sections of this vignette.</p>
 </div>
 </div>
