@@ -15,6 +15,9 @@ Allows repeats.}
 
 \item{remove_na}{Should NA return values be removed?}
 }
+\value{
+A vector of Municipality IDs.
+}
 \description{
 Given a vector of names of municipalities or regions, return a named vector
 of municipality IDs/codes. Codes of municipalities and regions follow
@@ -23,12 +26,10 @@ e.g. to pass as a parameter to \code{\link{get_values}}. This function is the
 inverse to \code{\link{municipality_id_to_name}}.
 }
 \examples{
-\dontrun{
 munic_df <- get_municipality()
 municipality_name_to_id(munic_df, c("Arboga", "Lund", "Stockholm", "Arboga"))
 munic_df \%>\%
   municipality_name_to_id(c("Arboga", "Lund", "Stockholm", "Arboga"))
-}
 
 }
 \seealso{

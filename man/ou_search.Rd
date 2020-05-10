@@ -26,7 +26,6 @@ with the \code{column} parameter. For more precise matching, please use
 \code{\link[dplyr:filter]{dplyr::filter}}.
 }
 \examples{
-\dontrun{
 # Search for all OUs matching the search term "skola" (school)
 ou_df <- get_ou()
 ou_search(ou_df, "skola")
@@ -35,6 +34,5 @@ ou_search(ou_df, "skola")
 ou_filter <- get_ou() \%>\%
   ou_search("Stockholm", column = "municipality") \%>\%
   ou_search("skola")
-}
 
 }

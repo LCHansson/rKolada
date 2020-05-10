@@ -24,27 +24,14 @@ by e.g. \code{get_municipality_groups}.}
 
 \item{sub_heading_level}{The sub heading level output format is "md".}
 }
+\value{
+Returns the object passed to the function, invisibly, to be re-used
+in a pipe.
+}
 \description{
 Print a human-readable description of each row of a Municipality Group
 metadata table, including member municipalities (up to a maximum number of
 rows). Can be printed either directly to the R console
 or used to populate a R markdown document, which can be useful for
 documentation purposes.
-}
-\examples{
-\dontrun{
-munic_grp_df <- get_municipality_groups()
-
-# Which municipality groups match the keyword "Arboga"?
-munic_grp_df \%>\% municipality_grp_search("Arboga")
-# 11 groups
-
-# Which KPI groups contain the municipality "Arboga"?
-munic_grp_df \%>\%
-  municipality_grp_unnest() \%>\%
-  municipality_search("arboga") \%>\%
-  count(group_title, sort = TRUE)
-# 92 groups
-}
-
 }

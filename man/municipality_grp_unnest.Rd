@@ -25,7 +25,6 @@ narrowed down to the group/s you are looking for,
 metadata table for further processing.
 }
 \examples{
-\dontrun{
 # Download Municipality Group metadata
 munic_grp_df <- get_municipality_groups()
 
@@ -34,6 +33,5 @@ munic_grp_df <- get_municipality_groups()
 munic_grp_df \%>\%
   municipality_grp_search("arboga") \%>\%
   municipality_grp_unnest()
-}
 
 }

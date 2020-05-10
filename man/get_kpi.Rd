@@ -74,15 +74,8 @@ functions are thin wrappers around \code{\link{get_metadata}}.
 }
 \examples{
 
-\dontrun{
 # Download KPI table and store a cache copy of the results in
 # your current working directory
-kpi_df <- get_kpi(cache = "wd")
-
-# Download KPI table and store a cache copy of the results in
-# a tempfile (will expire when your R session ends)
-kpi_df <- get_kpi(cache = TRUE, verbose = TRUE)
-# (prints URL to API as a message in the R console)
-}
+kpi_df <- get_kpi(cache = TRUE)
 
 }

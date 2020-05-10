@@ -24,7 +24,6 @@ To search for KPIs within a KPI group, see examples below for an example
 using \code{kpi_grp_unnest}.
 }
 \examples{
-\dontrun{
 kpi_grp_df <- get_kpi_groups()
 
 # Which KPI groups match the keyword "ekonomi" (economy)?
@@ -34,7 +33,6 @@ kpi_grp_df \%>\% kpi_grp_search("ekonomi")
 kpi_grp_df \%>\%
   kpi_grp_unnest() \%>\%
   kpi_search("arbete") \%>\%
-  count(group_title, sort = TRUE)
-}
+  dplyr::count(group_title, sort = TRUE)
 
 }

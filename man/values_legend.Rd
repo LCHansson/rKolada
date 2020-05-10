@@ -12,6 +12,9 @@ values_legend(values_df, kpi_df)
 
 \item{kpi_df}{A KPI table, e.g. as created by \code{\link{get_kpi}}.}
 }
+\value{
+A string which should be used as caption in a plot.
+}
 \description{
 In a Kolada values table, only KPI ID names are preserved. But in plots you
 often want to add a legend to explain what each KPI ID represents. But since

@@ -10,18 +10,19 @@ kpi_extract_ids(kpi_df)
 \item{kpi_df}{A Kolada KPI metadata table, e.g. as created by
 \code{\link{get_kpi}}.}
 }
+\value{
+A vector of KPI IDs.
+}
 \description{
 This function is primarily intended as a convenient way to pass a (filtered)
 Kolada KPI metadata table to \code{\link{get_values}}.
 }
 \examples{
-\dontrun{
 # Download Kolada data for all KPIs matching the term "BRP" (gross regional
 # product) for the years 2010-2019
-kpi_filter <- get_kpi() \%>\%
+kpi_filter <- get_kpi(id = c("N03068", "N03069", "N03070", "N03700", "N03701")) \%>\%
   kpi_search("BRP")
 
 kld_data <- get_values(kpi = kpi_extract_ids(kpi_filter), period = 2010:2019)
-}
 
 }

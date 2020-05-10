@@ -27,6 +27,9 @@ available for certain KPIs.}
 
 \item{version}{Version of the API. Currently only \code{"v2"} is supported.}
 }
+\value{
+A string containing a URL to the Kolada REST API.
+}
 \description{
 Mainly used as a supporting function for \code{link{get_values}} but can also
 be used to create a working URL to paste in your web browser.

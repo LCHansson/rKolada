@@ -3,6 +3,11 @@
 \name{\%>\%}
 \alias{\%>\%}
 \title{re-export magrittr pipe operator}
+\arguments{
+\item{lhs}{A value or the magrittr placeholder.}
+
+\item{rhs}{A function call using the magrittr semantics.}
+}
 \description{
 re-export magrittr pipe operator
 }

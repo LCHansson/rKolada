@@ -24,6 +24,10 @@ kpi_grp_describe(
 
 \item{sub_heading_level}{The sub heading level output format is "md".}
 }
+\value{
+Returns the object passed to the function, invisibly, to be re-used
+in a pipe.
+}
 \description{
 Print a human-readable description of each row of a KPI Group metadata table,
 including member KPIs (up to a maximum number of rows). Can be printed either

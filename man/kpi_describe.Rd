@@ -24,6 +24,10 @@ markdown.}
 
 \item{sub_heading_level}{The sub heading level output format is "md".}
 }
+\value{
+Returns the object passed to the function, invisibly, to be re-used
+in a pipe.
+}
 \description{
 Print a human-readable description of each entity of a KPI metadata table (up
 to a maximum number of rows). Can be printed either directly to the R console

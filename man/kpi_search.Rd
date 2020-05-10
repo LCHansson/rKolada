@@ -26,19 +26,17 @@ the \code{column} parameter. For more precise matching, please use
 \code{\link[dplyr:filter]{dplyr::filter}}.
 }
 \examples{
-\dontrun{
 # Search for a single search term in a KPI table
-kpis <- get_kpi()
-kpi_filter <- kpi_search(kpis, "inkomst")
+kpis <- get_kpi(id = c("N11002", "N11003", "N11004", "N11005"))
+kpi_filter <- kpi_search(kpis, "kostnad")
 
 # Add keywords to a KPI table and search for multiple terms among
 # the keywords
-kpi_filter <- get_kpi(cache = TRUE) \%>\%
+kpi_filter <- get_kpi(id = c("N11002", "N11003", "N11004", "N11005")) \%>\%
   kpi_bind_keywords(n = 3) \%>\%
   kpi_search(
-    query = c("inkomst", "arbete"),
+    query = c("nettokostnad"),
     column = c("keyword_1", "keyword_2", "keyword_3")
   )
-}
 
 }

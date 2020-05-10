@@ -10,6 +10,9 @@ kpi_grp_extract_ids(kpi_grp_df)
 \item{kpi_grp_df}{A Kolada KPI Group metadata table, as created by e.g.
 \code{get_kpi_groups}.}
 }
+\value{
+A vector of KPI IDs.
+}
 \description{
 This function is primarily intended as a convenient way to pass a (filtered)
 Kolada KPI Group metadata table to \code{\link{get_values}}. All IDs of the

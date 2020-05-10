@@ -19,7 +19,6 @@ by removing columns that contain monotonous data, i.e. that contain only one
 value for all observations.
 }
 \examples{
-\dontrun{
 # Download values for a KPI for the year 2010
 vals <- get_values(kpi = "N00002", period = 2010, simplify = TRUE) \%>\%
   dplyr::filter(municipality_type == "K")
@@ -28,5 +27,4 @@ vals <- get_values(kpi = "N00002", period = 2010, simplify = TRUE) \%>\%
 # Remove columns with no information to differentiate between rows
 values_minimize(vals)
 # (Returns a table with 29 rows and 4 columns)
-}
 }

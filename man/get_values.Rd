@@ -41,17 +41,20 @@ supply arguments for at least two of these three dimensions. If a dimension
 is omitted, all available data for that dimension will be downloaded.
 }
 \examples{
-\dontrun{
 # Download data for KPIs for Gross Regional Product ("BRP" in Swedish)
 # for three municipalities
-grp_kpi <- get_kpi() \%>\% kpi_search("BRP") \%>\% kpi_extract_ids()
+grp_kpi <- get_kpi(
+  id = c("N03068", "N03069", "N03070", "N03700", "N03701")
+) \%>\%
+ kpi_search("BRP") \%>\%
+ kpi_extract_ids()
 
-largest_munic <- get_municipality() \%>\%
+munic_sample <- get_municipality() \%>\%
   municipality_name_to_id(c("Stockholm", "Arboga", "Lund"))
 
 grp_data <- get_values(
   kpi = grp_kpi,
-  municipality = largest_munic
+  municipality = munic_sample
 )
 
 # If you already know the ID numbers you are looking for,
@@ -60,6 +63,5 @@ grp_data <- get_values(
   kpi = c("N03700", "N03701"),
   municipality = c("0180", "1480", "1280")
 )
-}
 
 }

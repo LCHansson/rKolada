@@ -15,7 +15,6 @@ This function is primarily intended as a convenient way to pass a (filtered)
 Kolada municipality metadata table to \code{\link{get_values}}.
 }
 \examples{
-\dontrun{
 # Download Kolada data for all municipalities of type "L"
 # (regions and national total) for KPI "N00002" and all available years
 munic_filter <- get_municipality() \%>\%
@@ -25,6 +24,5 @@ kld_data <- get_values(
   kpi = "N00002",
   municipality = municipality_extract_ids(munic_filter)
 )
-}
 
 }
