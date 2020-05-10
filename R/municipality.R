@@ -16,12 +16,12 @@
 #' \code{\link{municipality_id_to_name}}
 #'
 #' @examples
-#' \dontrun{
 #' munic_df <- get_municipality()
 #' municipality_name_to_id(munic_df, c("Arboga", "Lund", "Stockholm", "Arboga"))
 #' munic_df %>%
 #'   municipality_name_to_id(c("Arboga", "Lund", "Stockholm", "Arboga"))
-#' }
+#'
+#' @return A vector of Municipality IDs.
 #'
 #' @export
 municipality_name_to_id <- function(munic_df, municipality, remove_na = FALSE) {
@@ -62,10 +62,10 @@ municipality_name_to_id <- function(munic_df, municipality, remove_na = FALSE) {
 #' \code{\link{municipality_name_to_id}}
 #'
 #' @examples
-#' \dontrun{
 #' munic_df <- get_municipality()
 #' municipality_id_to_name(munic_df, c("1280", "1281", "0180", "1280"))
-#' }
+#'
+#' @return A vector of Municipality names.
 #'
 #' @export
 municipality_id_to_name <- function(munic_df, id, remove_na = FALSE) {
@@ -95,7 +95,6 @@ municipality_id_to_name <- function(munic_df, id, remove_na = FALSE) {
 #' \code{get_municipality}.
 #'
 #' @examples
-#' \dontrun{
 #' # Download Kolada data for all municipalities of type "L"
 #' # (regions and national total) for KPI "N00002" and all available years
 #' munic_filter <- get_municipality() %>%
@@ -105,7 +104,6 @@ municipality_id_to_name <- function(munic_df, id, remove_na = FALSE) {
 #'   kpi = "N00002",
 #'   municipality = municipality_extract_ids(munic_filter)
 #' )
-#' }
 #'
 #' @export
 municipality_extract_ids <- function(munic_df) {
@@ -134,7 +132,6 @@ municipality_extract_ids <- function(munic_df) {
 #' @return A Kolada Municipality metadata table
 #'
 #' @examples
-#' \dontrun{
 #' # Search for a single search term in a municipality table
 #' munic_df <- get_municipality()
 #' municipality_search(munic_df, "Arboga")
@@ -142,7 +139,6 @@ municipality_extract_ids <- function(munic_df) {
 #' # Only keep columns with type == "K" (keep municipalities, drop regions)
 #' munic_filter <- get_municipality(cache = TRUE) %>%
 #'   municipality_search("K", column = "type")
-#' }
 #'
 #' @export
 municipality_search <- function(munic_df, query, column = NULL) {

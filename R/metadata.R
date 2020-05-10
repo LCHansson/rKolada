@@ -11,6 +11,9 @@
 #' @param municipality If entity is \code{"ou"}, the municipality parameter can
 #' be added to narrow the search.
 #' @param version Version of the API. Currently only \code{"v2"} is supported.
+#'
+#' @return A string containing a URL to the Kolada REST API.
+#'
 #' @export
 compose_metadata_query <- function(
   entity = "kpi", title = NULL, id = NULL, municipality = NULL, version = "v2"
@@ -147,16 +150,9 @@ get_metadata <- function(
 #'
 #' @examples
 #'
-#' \dontrun{
 #' # Download KPI table and store a cache copy of the results in
 #' # your current working directory
-#' kpi_df <- get_kpi(cache = "wd")
-#'
-#' # Download KPI table and store a cache copy of the results in
-#' # a tempfile (will expire when your R session ends)
-#' kpi_df <- get_kpi(cache = TRUE, verbose = TRUE)
-#' # (prints URL to API as a message in the R console)
-#' }
+#' kpi_df <- get_kpi(cache = TRUE)
 #'
 #' @export
 get_kpi <- function(

@@ -7,6 +7,8 @@
 #' @param munic_grp_df A Kolada municipality group table, as created by e.g.
 #' \code{get_municipality_groups}.
 #'
+#' @return A vector of Municipality IDs.
+#'
 #' @export
 municipality_grp_extract_ids <- function(munic_grp_df) {
   purrr::map(munic_grp_df$members, purrr::pluck(1)) %>% unlist()
@@ -31,7 +33,6 @@ municipality_grp_extract_ids <- function(munic_grp_df) {
 #' @return A Kolada Municipality metadata table
 #'
 #' @examples
-#' \dontrun{
 #' # Download Municipality Group metadata
 #' munic_grp_df <- get_municipality_groups()
 #'
@@ -40,7 +41,6 @@ municipality_grp_extract_ids <- function(munic_grp_df) {
 #' munic_grp_df %>%
 #'   municipality_grp_search("arboga") %>%
 #'   municipality_grp_unnest()
-#' }
 #'
 #' @export
 municipality_grp_unnest <- function(munic_grp_df) {
@@ -69,21 +69,8 @@ municipality_grp_unnest <- function(munic_grp_df) {
 #' @param heading_level The top heading level output format is "md".
 #' @param sub_heading_level The sub heading level output format is "md".
 #'
-#' @examples
-#' \dontrun{
-#' munic_grp_df <- get_municipality_groups()
-#'
-#' # Which municipality groups match the keyword "Arboga"?
-#' munic_grp_df %>% municipality_grp_search("Arboga")
-#' # 11 groups
-#'
-#' # Which KPI groups contain the municipality "Arboga"?
-#' munic_grp_df %>%
-#'   municipality_grp_unnest() %>%
-#'   municipality_search("arboga") %>%
-#'   count(group_title, sort = TRUE)
-#' # 92 groups
-#' }
+#' @return Returns the object passed to the function, invisibly, to be re-used
+#' in a pipe.
 #'
 #' @export
 municipality_grp_describe <- function(
@@ -115,6 +102,7 @@ municipality_grp_describe <- function(
                      .sub_heading_length = sub_heading_level,
                      .otherwise = "Unknown")
 
+  invisible(munic_grp_df)
 }
 
 

@@ -12,6 +12,8 @@
 #' @param ou (Optional) for what Operating Units should data be fetched? Only
 #' available for certain KPIs.
 #' @param version Version of the API. Currently only \code{"v2"} is supported.
+#'
+#' @return A string containing a URL to the Kolada REST API.
 compose_data_query <- function(
   kpi = NULL,
   municipality = NULL,
@@ -74,17 +76,20 @@ compose_data_query <- function(
 #' @return A tibble containing Kolada values and metadata.
 #'
 #' @examples
-#' \dontrun{
 #' # Download data for KPIs for Gross Regional Product ("BRP" in Swedish)
 #' # for three municipalities
-#' grp_kpi <- get_kpi() %>% kpi_search("BRP") %>% kpi_extract_ids()
+#' grp_kpi <- get_kpi(
+#'   id = c("N03068", "N03069", "N03070", "N03700", "N03701")
+#' ) %>%
+#'  kpi_search("BRP") %>%
+#'  kpi_extract_ids()
 #'
-#' largest_munic <- get_municipality() %>%
+#' munic_sample <- get_municipality() %>%
 #'   municipality_name_to_id(c("Stockholm", "Arboga", "Lund"))
 #'
 #' grp_data <- get_values(
 #'   kpi = grp_kpi,
-#'   municipality = largest_munic
+#'   municipality = munic_sample
 #' )
 #'
 #' # If you already know the ID numbers you are looking for,
@@ -93,7 +98,6 @@ compose_data_query <- function(
 #'   kpi = c("N03700", "N03701"),
 #'   municipality = c("0180", "1480", "1280")
 #')
-#' }
 #'
 #' @export
 get_values <- function(
@@ -162,7 +166,6 @@ get_values <- function(
 #' @return A Kolada values table
 #'
 #' @examples
-#' \dontrun{
 #' # Download values for a KPI for the year 2010
 #' vals <- get_values(kpi = "N00002", period = 2010, simplify = TRUE) %>%
 #'   dplyr::filter(municipality_type == "K")
@@ -171,7 +174,6 @@ get_values <- function(
 #' # Remove columns with no information to differentiate between rows
 #' values_minimize(vals)
 #' # (Returns a table with 29 rows and 4 columns)
-#' }
 #' @export
 
 values_minimize <- function(values_df) {
@@ -191,6 +193,8 @@ values_minimize <- function(values_df) {
 #' @param values_df A Kolada value table, as created by
 #' \code{\link{get_values}}.
 #' @param kpi_df A KPI table, e.g. as created by \code{\link{get_kpi}}.
+#'
+#' @return A string which should be used as caption in a plot.
 #'
 #' @export
 values_legend <- function(values_df, kpi_df) {

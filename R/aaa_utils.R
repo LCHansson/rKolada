@@ -2,6 +2,10 @@
 utils::globalVariables(c("."))
 
 #' Allowed entities: Kolada metadata classes
+#'
+#' @return A vector of names of allowed metadata entities, i.e. the correct
+#' spelling of all allowed values of the \code{entity} parameter in \code{\link{get_metadata}}.
+#'
 #' @export
 allowed_entities <- function() {
   c(

@@ -51,10 +51,8 @@ kpi_minimize <- function(
 #' @return A Kolada KPI metadata table
 #'
 #' @examples
-#' \dontrun{
-#' kpi_df <- get_kpi() %>%
-#'   kpi_add_keywords(n = 3)
-#' }
+#' kpi_df <- get_kpi(id = c("N00002", "N00003")) %>%
+#'   kpi_bind_keywords(n = 3)
 #'
 #' @export
 kpi_bind_keywords <- function(kpi_df, n = 2, form = c("wide", "long")) {
@@ -67,8 +65,7 @@ kpi_bind_keywords <- function(kpi_df, n = 2, form = c("wide", "long")) {
     tidyr::unnest(cols = c(.data$title_words)) %>%
     dplyr::filter(!.data$title_words %in% stopwords()) %>%
     dplyr::group_by(.data$id) %>%
-    dplyr::slice(1:n) %>%
-    dplyr::ungroup()
+    dplyr::slice(1:n)
 
   if (form == "wide") {
     kpi_df <- kpi_df %>%
@@ -79,7 +76,7 @@ kpi_bind_keywords <- function(kpi_df, n = 2, form = c("wide", "long")) {
       )
   }
 
-  kpi_df
+  dplyr::ungroup(kpi_df)
 }
 
 
@@ -100,20 +97,18 @@ kpi_bind_keywords <- function(kpi_df, n = 2, form = c("wide", "long")) {
 #' @return A Kolada KPI metadata table
 #'
 #' @examples
-#' \dontrun{
 #' # Search for a single search term in a KPI table
-#' kpis <- get_kpi()
-#' kpi_filter <- kpi_search(kpis, "inkomst")
+#' kpis <- get_kpi(id = c("N11002", "N11003", "N11004", "N11005"))
+#' kpi_filter <- kpi_search(kpis, "kostnad")
 #'
 #' # Add keywords to a KPI table and search for multiple terms among
 #' # the keywords
-#' kpi_filter <- get_kpi(cache = TRUE) %>%
+#' kpi_filter <- get_kpi(id = c("N11002", "N11003", "N11004", "N11005")) %>%
 #'   kpi_bind_keywords(n = 3) %>%
 #'   kpi_search(
-#'     query = c("inkomst", "arbete"),
+#'     query = c("nettokostnad"),
 #'     column = c("keyword_1", "keyword_2", "keyword_3")
 #'   )
-#' }
 #'
 #' @export
 kpi_search <- function(kpi_df, query, column = NULL) {
@@ -151,6 +146,9 @@ kpi_search <- function(kpi_df, query, column = NULL) {
 #' @param heading_level The top heading level output format is "md".
 #' @param sub_heading_level The sub heading level output format is "md".
 #'
+#' @return Returns the object passed to the function, invisibly, to be re-used
+#' in a pipe.
+#'
 #' @export
 kpi_describe <- function(
   kpi_df,
@@ -177,6 +175,8 @@ kpi_describe <- function(
       .heading_length = heading_level,
       .sub_heading_length = sub_heading_level, .otherwise = "Unknown"
     )
+
+  invisible(kpi_df)
 }
 
 
@@ -189,14 +189,14 @@ kpi_describe <- function(
 #' \code{\link{get_kpi}}.
 #'
 #' @examples
-#' \dontrun{
 #' # Download Kolada data for all KPIs matching the term "BRP" (gross regional
 #' # product) for the years 2010-2019
-#' kpi_filter <- get_kpi() %>%
+#' kpi_filter <- get_kpi(id = c("N03068", "N03069", "N03070", "N03700", "N03701")) %>%
 #'   kpi_search("BRP")
 #'
 #' kld_data <- get_values(kpi = kpi_extract_ids(kpi_filter), period = 2010:2019)
-#' }
+#'
+#' @return A vector of KPI IDs.
 #'
 #' @export
 kpi_extract_ids <- function(kpi_df) {

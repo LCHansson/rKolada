@@ -7,6 +7,8 @@
 #' @param kpi_grp_df A Kolada KPI Group metadata table, as created by e.g.
 #' \code{get_kpi_groups}.
 #'
+#' @return A vector of KPI IDs.
+#'
 #' @export
 kpi_grp_extract_ids <- function(kpi_grp_df) {
   purrr::map(kpi_grp_df$members, purrr::pluck(1)) %>% unlist()
@@ -30,7 +32,6 @@ kpi_grp_extract_ids <- function(kpi_grp_df) {
 #' @return A Kolada KPI metadata table
 #'
 #' @examples
-#' \dontrun{
 #' # Download KPI Group metadata
 #' kpi_grp_df <- get_kpi_groups()
 #'
@@ -39,7 +40,6 @@ kpi_grp_extract_ids <- function(kpi_grp_df) {
 #' kpi_grp_df %>%
 #'   kpi_grp_search("utbildning") %>%
 #'   kpi_grp_unnest()
-#' }
 #'
 #' @export
 kpi_grp_unnest <- function(kpi_grp_df) {
@@ -66,6 +66,9 @@ kpi_grp_unnest <- function(kpi_grp_df) {
 #' @param format Output format. Can be one of "inline" or "md" (markdown).
 #' @param heading_level The top heading level output format is "md".
 #' @param sub_heading_level The sub heading level output format is "md".
+#'
+#' @return Returns the object passed to the function, invisibly, to be re-used
+#' in a pipe.
 #'
 #' @export
 kpi_grp_describe <- function(
@@ -99,6 +102,8 @@ kpi_grp_describe <- function(
       .heading_length = heading_level,
       .sub_heading_length = sub_heading_level, .otherwise = "Unknown"
     )
+
+  invisible(kpi_grp_df)
 }
 
 
@@ -118,7 +123,6 @@ kpi_grp_describe <- function(
 #' @return A Kolada KPI Group metadata table
 #'
 #' @examples
-#' \dontrun{
 #' kpi_grp_df <- get_kpi_groups()
 #'
 #' # Which KPI groups match the keyword "ekonomi" (economy)?
@@ -128,8 +132,7 @@ kpi_grp_describe <- function(
 #' kpi_grp_df %>%
 #'   kpi_grp_unnest() %>%
 #'   kpi_search("arbete") %>%
-#'   count(group_title, sort = TRUE)
-#' }
+#'   dplyr::count(group_title, sort = TRUE)
 #'
 #' @export
 kpi_grp_search <- function(kpi_grp_df, query) {
