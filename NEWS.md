@@ -1,6 +1,10 @@
-# rKOlada 0.1.1
+# rKolada 0.1.2
 
-- Fix CRAN comments
+- Fixes for CRAN comments
+
+# rKolada 0.1.1
+
+- Fixes for CRAN comments
 
 # rKolada 0.1.0
 
