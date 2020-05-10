@@ -75,7 +75,7 @@ dplyr::filter." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rKolada</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -163,20 +163,18 @@ columns in which to search for <code>query</code>.</p></td>
     <p>A Kolada KPI metadata table</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='co'># Search for a single search term in a KPI table</span>
-<span class='no'>kpis</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_kpi.html'>get_kpi</a></span>()
-<span class='no'>kpi_filter</span> <span class='kw'>&lt;-</span> <span class='fu'>kpi_search</span>(<span class='no'>kpis</span>, <span class='st'>"inkomst"</span>)
+    <pre class="examples"><div class='input'><span class='co'># Search for a single search term in a KPI table</span>
+<span class='no'>kpis</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_kpi.html'>get_kpi</a></span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"N11002"</span>, <span class='st'>"N11003"</span>, <span class='st'>"N11004"</span>, <span class='st'>"N11005"</span>))
+<span class='no'>kpi_filter</span> <span class='kw'>&lt;-</span> <span class='fu'>kpi_search</span>(<span class='no'>kpis</span>, <span class='st'>"kostnad"</span>)
 
 <span class='co'># Add keywords to a KPI table and search for multiple terms among</span>
 <span class='co'># the keywords</span>
-<span class='no'>kpi_filter</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_kpi.html'>get_kpi</a></span>(<span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
+<span class='no'>kpi_filter</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_kpi.html'>get_kpi</a></span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"N11002"</span>, <span class='st'>"N11003"</span>, <span class='st'>"N11004"</span>, <span class='st'>"N11005"</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='kpi_bind_keywords.html'>kpi_bind_keywords</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>3</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>kpi_search</span>(
-    <span class='kw'>query</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"inkomst"</span>, <span class='st'>"arbete"</span>),
+    <span class='kw'>query</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"nettokostnad"</span>),
     <span class='kw'>column</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"keyword_1"</span>, <span class='st'>"keyword_2"</span>, <span class='st'>"keyword_3"</span>)
-  )
-}</div></pre>
+  )</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

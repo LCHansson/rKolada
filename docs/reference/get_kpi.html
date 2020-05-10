@@ -76,7 +76,7 @@ functions are thin wrappers around get_metadata." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rKolada</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -212,16 +212,9 @@ as <code><a href='kpi_bind_keywords.html'>kpi_bind_keywords</a></code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># Download KPI table and store a cache copy of the results in</span>
 <span class='co'># your current working directory</span>
-<span class='no'>kpi_df</span> <span class='kw'>&lt;-</span> <span class='fu'>get_kpi</span>(<span class='kw'>cache</span> <span class='kw'>=</span> <span class='st'>"wd"</span>)
-
-<span class='co'># Download KPI table and store a cache copy of the results in</span>
-<span class='co'># a tempfile (will expire when your R session ends)</span>
-<span class='no'>kpi_df</span> <span class='kw'>&lt;-</span> <span class='fu'>get_kpi</span>(<span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='co'># (prints URL to API as a message in the R console)</span>
-}</div></pre>
+<span class='no'>kpi_df</span> <span class='kw'>&lt;-</span> <span class='fu'>get_kpi</span>(<span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

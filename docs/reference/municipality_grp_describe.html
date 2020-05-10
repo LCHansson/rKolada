@@ -76,7 +76,7 @@ documentation purposes." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rKolada</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -172,22 +172,11 @@ by e.g. <code>get_municipality_groups</code>.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>munic_grp_df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_kpi.html'>get_municipality_groups</a></span>()
+    <p>Returns the object passed to the function, invisibly, to be re-used
+in a pipe.</p>
 
-<span class='co'># Which municipality groups match the keyword "Arboga"?</span>
-<span class='no'>munic_grp_df</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='municipality_grp_search.html'>municipality_grp_search</a></span>(<span class='st'>"Arboga"</span>)
-<span class='co'># 11 groups</span>
-
-<span class='co'># Which KPI groups contain the municipality "Arboga"?</span>
-<span class='no'>munic_grp_df</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='municipality_grp_unnest.html'>municipality_grp_unnest</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='municipality_search.html'>municipality_search</a></span>(<span class='st'>"arboga"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>count</span>(<span class='no'>group_title</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='co'># 92 groups</span>
-}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

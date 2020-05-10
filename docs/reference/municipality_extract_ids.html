@@ -73,7 +73,7 @@ Kolada municipality metadata table to get_values." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rKolada</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -146,8 +146,7 @@ Kolada municipality metadata table to <code><a href='get_values.html'>get_values
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='co'># Download Kolada data for all municipalities of type "L"</span>
+    <pre class="examples"><div class='input'><span class='co'># Download Kolada data for all municipalities of type "L"</span>
 <span class='co'># (regions and national total) for KPI "N00002" and all available years</span>
 <span class='no'>munic_filter</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_kpi.html'>get_municipality</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='municipality_search.html'>municipality_search</a></span>(<span class='st'>"L"</span>, <span class='kw'>column</span> <span class='kw'>=</span> <span class='st'>"type"</span>)
@@ -155,8 +154,7 @@ Kolada municipality metadata table to <code><a href='get_values.html'>get_values
 <span class='no'>kld_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_values.html'>get_values</a></span>(
   <span class='kw'>kpi</span> <span class='kw'>=</span> <span class='st'>"N00002"</span>,
   <span class='kw'>municipality</span> <span class='kw'>=</span> <span class='fu'>municipality_extract_ids</span>(<span class='no'>munic_filter</span>)
-)
-}</div></pre>
+)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -75,7 +75,7 @@ is omitted, all available data for that dimension will be downloaded." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rKolada</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -184,17 +184,20 @@ the R console.</p></td>
     <p>A tibble containing Kolada values and metadata.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='co'># Download data for KPIs for Gross Regional Product ("BRP" in Swedish)</span>
+    <pre class="examples"><div class='input'><span class='co'># Download data for KPIs for Gross Regional Product ("BRP" in Swedish)</span>
 <span class='co'># for three municipalities</span>
-<span class='no'>grp_kpi</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_kpi.html'>get_kpi</a></span>() <span class='kw'>%&gt;%</span> <span class='fu'><a href='kpi_search.html'>kpi_search</a></span>(<span class='st'>"BRP"</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='kpi_extract_ids.html'>kpi_extract_ids</a></span>()
+<span class='no'>grp_kpi</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_kpi.html'>get_kpi</a></span>(
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"N03068"</span>, <span class='st'>"N03069"</span>, <span class='st'>"N03070"</span>, <span class='st'>"N03700"</span>, <span class='st'>"N03701"</span>)
+) <span class='kw'>%&gt;%</span>
+ <span class='fu'><a href='kpi_search.html'>kpi_search</a></span>(<span class='st'>"BRP"</span>) <span class='kw'>%&gt;%</span>
+ <span class='fu'><a href='kpi_extract_ids.html'>kpi_extract_ids</a></span>()
 
-<span class='no'>largest_munic</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_kpi.html'>get_municipality</a></span>() <span class='kw'>%&gt;%</span>
+<span class='no'>munic_sample</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_kpi.html'>get_municipality</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='municipality_name_to_id.html'>municipality_name_to_id</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Stockholm"</span>, <span class='st'>"Arboga"</span>, <span class='st'>"Lund"</span>))
 
 <span class='no'>grp_data</span> <span class='kw'>&lt;-</span> <span class='fu'>get_values</span>(
   <span class='kw'>kpi</span> <span class='kw'>=</span> <span class='no'>grp_kpi</span>,
-  <span class='kw'>municipality</span> <span class='kw'>=</span> <span class='no'>largest_munic</span>
+  <span class='kw'>municipality</span> <span class='kw'>=</span> <span class='no'>munic_sample</span>
 )
 
 <span class='co'># If you already know the ID numbers you are looking for,</span>
@@ -202,8 +205,7 @@ the R console.</p></td>
 <span class='no'>grp_data</span> <span class='kw'>&lt;-</span> <span class='fu'>get_values</span>(
   <span class='kw'>kpi</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"N03700"</span>, <span class='st'>"N03701"</span>),
   <span class='kw'>municipality</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"0180"</span>, <span class='st'>"1480"</span>, <span class='st'>"1280"</span>)
-)
-}</div></pre>
+)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

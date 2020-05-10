@@ -75,7 +75,7 @@ dplyr::filter." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rKolada</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -163,16 +163,26 @@ columns in which to search for <code>query</code>.</p></td>
     <p>A Kolada Organizational Unit metadata table</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='co'># Search for all OUs matching the search term "skola" (school)</span>
+    <pre class="examples"><div class='input'><span class='co'># Search for all OUs matching the search term "skola" (school)</span>
 <span class='no'>ou_df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_kpi.html'>get_ou</a></span>()
-<span class='fu'>ou_search</span>(<span class='no'>ou_df</span>, <span class='st'>"skola"</span>)
-
+<span class='fu'>ou_search</span>(<span class='no'>ou_df</span>, <span class='st'>"skola"</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 4,633 x 4</span><span>
+#&gt;    id            title                 municipality   municipality_id
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                 </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          
+#&gt; </span><span style='color: #555555;'> 1</span><span> V15E011400101 Runby skola           Upplands Väsby 0114           
+#&gt; </span><span style='color: #555555;'> 2</span><span> V15E011400201 Väsby skola           Upplands Väsby 0114           
+#&gt; </span><span style='color: #555555;'> 3</span><span> V15E011400805 Grimsta skola         Upplands Väsby 0114           
+#&gt; </span><span style='color: #555555;'> 4</span><span> V15E011401201 Bollstanäs skola      Upplands Väsby 0114           
+#&gt; </span><span style='color: #555555;'> 5</span><span> V15E011401601 Breddenskolan         Upplands Väsby 0114           
+#&gt; </span><span style='color: #555555;'> 6</span><span> V15E011402801 Södervikskolan        Upplands Väsby 0114           
+#&gt; </span><span style='color: #555555;'> 7</span><span> V15E011402901 Odenskolan            Upplands Väsby 0114           
+#&gt; </span><span style='color: #555555;'> 8</span><span> V15E011403001 Frestaskolan          Upplands Väsby 0114           
+#&gt; </span><span style='color: #555555;'> 9</span><span> V15E011403101 Vikskolan             Upplands Väsby 0114           
+#&gt; </span><span style='color: #555555;'>10</span><span> V15E011403501 Resursskolan Magneten Upplands Väsby 0114           
+#&gt; </span><span style='color: #555555;'># … with 4,623 more rows</span><span></div><div class='input'>
 <span class='co'># Only keep OU entities matching "skola" located in Stockholm municipality</span>
 <span class='no'>ou_filter</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_kpi.html'>get_ou</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'>ou_search</span>(<span class='st'>"Stockholm"</span>, <span class='kw'>column</span> <span class='kw'>=</span> <span class='st'>"municipality"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>ou_search</span>(<span class='st'>"skola"</span>)
-}</div></pre>
+  <span class='fu'>ou_search</span>(<span class='st'>"skola"</span>)</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

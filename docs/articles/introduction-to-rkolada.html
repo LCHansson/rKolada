@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rKolada</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -159,7 +159,7 @@
 <span class="no">kpi_df</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_kpi.html">get_kpi</a></span>()
 
 <span class="no">kpi_df</span>
-<span class="co">#&gt; # A tibble: 4,678 x 13</span>
+<span class="co">#&gt; # A tibble: 4,679 x 13</span>
 <span class="co">#&gt;    auspices description has_ou_data id    is_divided_by_g… municipality_ty…</span>
 <span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt;       &lt;lgl&gt;       &lt;chr&gt;            &lt;int&gt; &lt;chr&gt;           </span>
 <span class="co">#&gt;  1 E        Personalko… FALSE       N000…                0 K               </span>
@@ -172,7 +172,7 @@
 <span class="co">#&gt;  8 &lt;NA&gt;     Utjämnings… FALSE       N000…                0 K               </span>
 <span class="co">#&gt;  9 X        Införandeb… FALSE       N000…                0 K               </span>
 <span class="co">#&gt; 10 X        Strukturbi… FALSE       N000…                0 K               </span>
-<span class="co">#&gt; # … with 4,668 more rows, and 7 more variables: operating_area &lt;chr&gt;,</span>
+<span class="co">#&gt; # … with 4,669 more rows, and 7 more variables: operating_area &lt;chr&gt;,</span>
 <span class="co">#&gt; #   ou_publication_date &lt;chr&gt;, perspective &lt;chr&gt;, prel_publication_date &lt;chr&gt;,</span>
 <span class="co">#&gt; #   publ_period &lt;chr&gt;, publication_date &lt;chr&gt;, title &lt;chr&gt;</span></pre></body></html></div>
 <p>All <code>get</code> functions are thin wrappers around the more general function <code><a href="../reference/get_metadata.html">get_metadata()</a></code>. If you are familiar with the terminology used in the Kolada API for accessing metadata you might want to use this function instead.</p>
@@ -291,18 +291,18 @@
   <span class="kw pkg">tidyr</span><span class="kw ns">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span>(<span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/reexports.html">starts_with</a></span>(<span class="st">"keyword"</span>), <span class="kw">values_to</span> <span class="kw">=</span> <span class="st">"keyword"</span>) <span class="kw">%&gt;%</span>
   <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/tally.html">count</a></span>(<span class="no">keyword</span>, <span class="kw">sort</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
 <span class="co">#&gt; # A tibble: 304 x 2</span>
-<span class="co">#&gt;    keyword                n</span>
-<span class="co">#&gt;    &lt;chr&gt;              &lt;int&gt;</span>
-<span class="co">#&gt;  1 ""               1535740</span>
-<span class="co">#&gt;  2 "elever"             126</span>
-<span class="co">#&gt;  3 "gymnasieelever"      92</span>
-<span class="co">#&gt;  4 "grundskola"          80</span>
-<span class="co">#&gt;  5 "gymnasieskola"       68</span>
-<span class="co">#&gt;  6 "åk"                  67</span>
-<span class="co">#&gt;  7 "ungdomar"            63</span>
-<span class="co">#&gt;  8 "studerar"            58</span>
-<span class="co">#&gt;  9 "förskola"            57</span>
-<span class="co">#&gt; 10 "kostnad"             57</span>
+<span class="co">#&gt;    keyword            n</span>
+<span class="co">#&gt;    &lt;chr&gt;          &lt;int&gt;</span>
+<span class="co">#&gt;  1 elever           126</span>
+<span class="co">#&gt;  2 gymnasieelever    92</span>
+<span class="co">#&gt;  3 grundskola        80</span>
+<span class="co">#&gt;  4 gymnasieskola     68</span>
+<span class="co">#&gt;  5 åk                67</span>
+<span class="co">#&gt;  6 ungdomar          63</span>
+<span class="co">#&gt;  7 studerar          58</span>
+<span class="co">#&gt;  8 förskola          57</span>
+<span class="co">#&gt;  9 kostnad           57</span>
+<span class="co">#&gt; 10 år                55</span>
 <span class="co">#&gt; # … with 294 more rows</span></pre></body></html></div>
 <p>Some KPIs can be very similar-looking and it can sometimes be hard to discern which of the KPIs to use. To make sifting through data easier, <code><a href="../reference/kpi_minimize.html">kpi_minimize()</a></code> can be used to remove all redundant columns from a KPI table. (In this case, “redundant” means "containing no information that helps in differentiating KPIs from one another, i.e. columns containing only one single value for all observations in the table):</p>
 <div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="co"># Top 10 rows of the table</span>

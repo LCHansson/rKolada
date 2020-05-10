@@ -76,7 +76,7 @@ using kpi_grp_unnest." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rKolada</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -160,18 +160,34 @@ insensitive.</p></td>
     <p>A Kolada KPI Group metadata table</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>kpi_grp_df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_kpi.html'>get_kpi_groups</a></span>()
+    <pre class="examples"><div class='input'><span class='no'>kpi_grp_df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_kpi.html'>get_kpi_groups</a></span>()
 
 <span class='co'># Which KPI groups match the keyword "ekonomi" (economy)?</span>
-<span class='no'>kpi_grp_df</span> <span class='kw'>%&gt;%</span> <span class='fu'>kpi_grp_search</span>(<span class='st'>"ekonomi"</span>)
-
+<span class='no'>kpi_grp_df</span> <span class='kw'>%&gt;%</span> <span class='fu'>kpi_grp_search</span>(<span class='st'>"ekonomi"</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 3</span><span>
+#&gt;   id         members           title                                 
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                 
+#&gt; </span><span style='color: #555555;'>1</span><span> G2KPI95042 </span><span style='color: #555555;'>&lt;df[,2] [28 × 2]&gt;</span><span> Ekonomi, demografi och folkhälsa      
+#&gt; </span><span style='color: #555555;'>2</span><span> GKPI251    </span><span style='color: #555555;'>&lt;df[,2] [54 × 2]&gt;</span><span> Öppna jämförelser - Ekonomiskt bistånd</div><div class='input'>
 <span class='co'># Which KPI groups contain KPIs matching the keyword "arbete" (work/labour)?</span>
 <span class='no'>kpi_grp_df</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='kpi_grp_unnest.html'>kpi_grp_unnest</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='kpi_search.html'>kpi_search</a></span>(<span class='st'>"arbete"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>count</span>(<span class='no'>group_title</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-}</div></pre>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/tally.html'>count</a></span>(<span class='no'>group_title</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 12 x 2</span><span>
+#&gt;    group_title                                                                 n
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                                                   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> Personalnyckeltal                                                          19
+#&gt; </span><span style='color: #555555;'> 2</span><span> Öppna jämförelser - Grundskola Kommunala skolor                             6
+#&gt; </span><span style='color: #555555;'> 3</span><span> Öppna jämförelser - Miljöarbete                                             6
+#&gt; </span><span style='color: #555555;'> 4</span><span> Öppna jämförelser Grundskola Fristående skolor                              6
+#&gt; </span><span style='color: #555555;'> 5</span><span> Funktionsnedsättning LSS och SoL                                            5
+#&gt; </span><span style='color: #555555;'> 6</span><span> Kommunal arbetsmarknadsstatistik (KAS)                                      3
+#&gt; </span><span style='color: #555555;'> 7</span><span> Öppna Jämförelser - Gymnasieskola Kommunala                                 3
+#&gt; </span><span style='color: #555555;'> 8</span><span> Öppna jämförelser - Stöd till personer med funktionsnedsättning enligt…     3
+#&gt; </span><span style='color: #555555;'> 9</span><span> Heltidsresan                                                                2
+#&gt; </span><span style='color: #555555;'>10</span><span> Öppna jämförelser - Stöd till personer med psykisk funktionsnedsättnin…     2
+#&gt; </span><span style='color: #555555;'>11</span><span> Strategi för hälsa                                                          2
+#&gt; </span><span style='color: #555555;'>12</span><span> Ekonomi, demografi och folkhälsa                                            1</div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
