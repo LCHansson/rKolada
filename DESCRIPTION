@@ -7,6 +7,9 @@ Authors@R: person("Love", "Hansson", email =
 Maintainer: Love Hansson <love.hansson@gmail.com>
 Description: Methods for downloading and processing data and metadata from 'Kolada', the official Swedish regions and municipalities database.
 License: AGPL-3
+URL: https://lchansson.github.io/rKolada,
+    https://github.com/lchansson/rKolada
+BugReports: https://github.com/lchansson/rKolada/issues
 Encoding: UTF-8
 LazyData: true
 Suggests: 
