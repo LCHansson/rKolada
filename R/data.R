@@ -10,7 +10,10 @@
 #' @param period For what years should data be fetched? Can be one or more
 #' four-digit integers or character strings.
 #' @param ou (Optional) for what Operating Units should data be fetched? Only
-#' available for certain KPIs.
+#' available for certain KPIs. Only used if \code{unit_type} is set to \code{"ou"}.
+#' @param unit_type One of \code{"municipality"} or \code{"ou"}. Whether to
+#' fetch data for Municipalities or Organizational Units.
+#' Units. Defaults to \code{"municipality"}.
 #' @param version Version of the API. Currently only \code{"v2"} is supported.
 #'
 #' @return A string containing a URL to the Kolada REST API.
@@ -19,9 +22,17 @@ compose_data_query <- function(
   municipality = NULL,
   period = NULL,
   ou = NULL,
+  unit_type = "municipality",
   version = "v2"
 ) {
-  base_url <- glue::glue("http://api.kolada.se/{version}/data")
+  unit_type <- tolower(unit_type)
+  if (!unit_type %in% c("municipality", "ou"))
+    stop("argument to 'unit_type' must be one of 'municipality' or 'ou'.")
+
+  if (unit_type == "municipality")
+    base_url <- glue::glue("http://api.kolada.se/{version}/data")
+  else if (unit_type == "ou")
+    base_url <- glue::glue("http://api.kolada.se/{version}/oudata")
 
   if (is.null(kpi))
     kpi <- ""
@@ -29,27 +40,37 @@ compose_data_query <- function(
     kpi <- paste0("/kpi/", paste(kpi, collapse = ","))
 
   if (!is.null(municipality) & !is.null(ou))
-    warning("RAISE MUNICIPALITY AND OU GIVEN WARNING HERE")
+    warning("Both 'municipality' and 'ou' are specified. Only using ", unit_type, ".")
 
-  if (is.null(municipality) & is.null(ou))
-      municipality <- ""
-  else if(!is.null(municipality))
-    municipality <- paste0(
-      "/municipality/",
-      paste(municipality, collapse = ",")
-    )
-  else
-    municipality <- paste0("/ou/", paste(ou, collapse = ","))
+  if(unit_type == "municipality") {
+    if (is.null(municipality))
+      unit <- ""
+    else
+      unit <- paste0(
+        "/municipality/",
+        paste(municipality, collapse = ",")
+      )
+  }
+
+  if(unit_type == "ou") {
+    if (is.null(ou))
+      unit <- ""
+    else
+      unit <- paste0(
+        "/ou/",
+        paste(ou, collapse = ",")
+      )
+  }
 
   if (is.null(period))
     period <- ""
   else
     period <- paste0("/year/", paste(period, collapse = ","))
 
-  if (sum(stringr::str_length(c(kpi, municipality, period)) > 0) < 2)
-    stop("RAISE TOO FEW PARAMETERS IN DATA QUERY ERROR HERE")
+  if (sum(stringr::str_length(c(kpi, unit, period)) > 0) < 2)
+    stop("Too few parameters specified! At least two of the following parameters must have non-empty values: kpi, period, (municipality OR ou).")
 
-  query_url <- glue::glue("{base_url}{kpi}{municipality}{period}")
+  query_url <- glue::glue("{base_url}{kpi}{unit}{period}")
 
   return(utils::URLencode(query_url))
 }
@@ -69,6 +90,8 @@ compose_data_query <- function(
 #' four-digit integers or character strings.
 #' @param ou (Optional) for what Operating Units should data be fetched? Only
 #' available for certain KPIs.
+#' @param unit_type One of \code{"municipality"} or \code{"ou"}. Whether to
+#' fetch data for Municipalities or Organizational Units.
 #' @param simplify Whether to make results more human readable.
 #' @param verbose Whether to print the call to the Kolada API as a message to
 #' the R console.
@@ -99,16 +122,25 @@ compose_data_query <- function(
 #'   municipality = c("0180", "1480", "1280")
 #')
 #'
+#' # To download OU data instead of Municipality data, set the parameter
+#' # "unit_type" to "ou".
+#' ou_data <- get_values(
+#'  kpi = "N15033",
+#'  ou = "V15E144001101",
+#'  unit_type = "ou"
+#' )
+#'
 #' @export
 get_values <- function(
   kpi = NULL,
   municipality = NULL,
   period = NULL,
   ou = NULL,
+  unit_type = "municipality",
   simplify = TRUE,
   verbose = FALSE
 ) {
-  query <- compose_data_query(kpi, municipality, period, ou)
+  query <- compose_data_query(kpi = kpi, municipality = municipality, period = period, ou = ou, unit_type = unit_type)
 
   if (isTRUE(verbose))
     message("Downloading Kolada data using URL\n", query)
@@ -120,7 +152,7 @@ get_values <- function(
   ret <- tibble::as_tibble(contents) %>%
     tidyr::unnest(cols = c(.data$values))
 
-  if (isTRUE(simplify)) {
+  if (isTRUE(simplify) & unit_type == "municipality") {
     ret_has_groups <- any(stringr::str_detect(ret$municipality, "^G"))
 
     munic_tbl <- get_municipality(verbose = FALSE)
@@ -149,6 +181,27 @@ get_values <- function(
         by = "municipality_id"
       ) %>%
       dplyr::rename(year = .data$period)
+  }
+
+  if (isTRUE(simplify) & unit_type == "ou") {
+    ou_tbl <- get_ou(id = unique(ret$ou), verbose = FALSE)
+
+    ret <- ret %>%
+      # Remove "status" column (does it ever contain anything?)
+      dplyr::select(-.data$status) %>%
+      # Convert codes to names
+      dplyr::rename(
+        ou_id = .data$ou
+      ) %>%
+      dplyr::inner_join(
+        dplyr::select(
+          ou_tbl,
+          ou_id = .data$id,
+          ou = .data$title),
+        by = "ou_id"
+      ) %>%
+      dplyr::rename(year = .data$period)
+
   }
 
   ret
