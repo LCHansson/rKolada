@@ -9,6 +9,7 @@ get_values(
   municipality = NULL,
   period = NULL,
   ou = NULL,
+  unit_type = "municipality",
   simplify = TRUE,
   verbose = FALSE
 )
@@ -25,6 +26,9 @@ four-digit integers or character strings.}
 
 \item{ou}{(Optional) for what Operating Units should data be fetched? Only
 available for certain KPIs.}
+
+\item{unit_type}{One of \code{"municipality"} or \code{"ou"}. Whether to
+fetch data for Municipalities or Organizational Units.}
 
 \item{simplify}{Whether to make results more human readable.}
 
@@ -62,6 +66,14 @@ grp_data <- get_values(
 grp_data <- get_values(
   kpi = c("N03700", "N03701"),
   municipality = c("0180", "1480", "1280")
+)
+
+# To download OU data instead of Municipality data, set the parameter
+# "unit_type" to "ou".
+ou_data <- get_values(
+ kpi = "N15033",
+ ou = "V15E144001101",
+ unit_type = "ou"
 )
 
 }

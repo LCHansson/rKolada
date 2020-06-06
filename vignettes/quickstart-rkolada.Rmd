@@ -2,7 +2,7 @@
 title: "A quick start guide to rKolada"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Quick start guide to rKoada}
+  %\VignetteIndexEntry{A quick start guide to rKolada}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

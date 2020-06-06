@@ -9,6 +9,7 @@ compose_data_query(
   municipality = NULL,
   period = NULL,
   ou = NULL,
+  unit_type = "municipality",
   version = "v2"
 )
 }
@@ -23,7 +24,11 @@ single name or a vector of names.}
 four-digit integers or character strings.}
 
 \item{ou}{(Optional) for what Operating Units should data be fetched? Only
-available for certain KPIs.}
+available for certain KPIs. Only used if \code{unit_type} is set to \code{"ou"}.}
+
+\item{unit_type}{One of \code{"municipality"} or \code{"ou"}. Whether to
+fetch data for Municipalities or Organizational Units.
+Units. Defaults to \code{"municipality"}.}
 
 \item{version}{Version of the API. Currently only \code{"v2"} is supported.}
 }
