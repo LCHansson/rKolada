@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rKolada</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
       </span>
     </div>
 
@@ -101,9 +101,17 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/lchansson/rKolada/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -154,7 +162,7 @@
         <td>
           <p><code><a href="get_kpi.html">get_kpi()</a></code> <code><a href="get_kpi.html">get_kpi_groups()</a></code> <code><a href="get_kpi.html">get_ou()</a></code> <code><a href="get_kpi.html">get_municipality()</a></code> <code><a href="get_kpi.html">get_municipality_groups()</a></code> </p>
         </td>
-        <td><p>Download metadata from the Kolada API</p></td>
+        <td><p>Download metadata for a specific entity from the Kolada API</p></td>
       </tr><tr>
         
         <td>
@@ -191,13 +199,13 @@
         <td>
           <p><code><a href="kpi_describe.html">kpi_describe()</a></code> </p>
         </td>
-        <td><p>Describe the KPIs in a Kolada KPI table</p></td>
+        <td><p>Describe the KPIs in a Kolada KPI metadata table</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="kpi_extract_ids.html">kpi_extract_ids()</a></code> </p>
         </td>
-        <td><p>Extract a vector of KPI ID strings from a Kolada KPI table</p></td>
+        <td><p>Extract a vector of KPI ID strings from a Kolada KPI metadata table</p></td>
       </tr><tr>
         
         <td>
@@ -228,25 +236,25 @@
         <td>
           <p><code><a href="kpi_grp_describe.html">kpi_grp_describe()</a></code> </p>
         </td>
-        <td><p>Describe the KPIs in a Kolada KPI group table</p></td>
+        <td><p>Describe the KPIs in a Kolada KPI Group metadata table</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="kpi_grp_extract_ids.html">kpi_grp_extract_ids()</a></code> </p>
         </td>
-        <td><p>Extract KPI ID strings from a Kolada KPI group table</p></td>
+        <td><p>Extract KPI ID strings from a Kolada KPI Group metadata table</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="kpi_grp_search.html">kpi_grp_search()</a></code> </p>
         </td>
-        <td><p>Search a Kolada KPI group table for group names</p></td>
+        <td><p>Search a Kolada KPI Group metadata table for group names</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="kpi_grp_unnest_kpis.html">kpi_grp_unnest_kpis()</a></code> </p>
+          <p><code><a href="kpi_grp_unnest.html">kpi_grp_unnest()</a></code> </p>
         </td>
-        <td><p>Create a KPI table from a KPI group table</p></td>
+        <td><p>Create a KPI table from a Kolada KPI Group metadata table</p></td>
       </tr>
     </tbody><tbody>
       
@@ -271,19 +279,19 @@
         <td>
           <p><code><a href="municipality_id_to_name.html">municipality_id_to_name()</a></code> </p>
         </td>
-        <td><p>Convert municipality ids to municipality names</p></td>
+        <td><p>Convert a vector of municipality ids to municipality names</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="municipality_name_to_id.html">municipality_name_to_id()</a></code> </p>
         </td>
-        <td><p>Convert municipality names to municipality ids</p></td>
+        <td><p>Convert a vector of municipality names to municipality ids</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="municipality_search.html">municipality_search()</a></code> </p>
         </td>
-        <td><p>Search a Kolada municipality table</p></td>
+        <td><p>Search a Kolada municipality metadata table</p></td>
       </tr>
     </tbody><tbody>
       
@@ -302,7 +310,7 @@
         <td>
           <p><code><a href="municipality_grp_describe.html">municipality_grp_describe()</a></code> </p>
         </td>
-        <td><p>Describe the KPIs in a Kolada KPI group table</p></td>
+        <td><p>Describe the municipalitie in a Kolada Municipality Group metadata table</p></td>
       </tr><tr>
         
         <td>
@@ -314,13 +322,13 @@
         <td>
           <p><code><a href="municipality_grp_search.html">municipality_grp_search()</a></code> </p>
         </td>
-        <td><p>Search a Kolada KPI group table for group names</p></td>
+        <td><p>Search a Kolada Municipality Group metadata table for group names</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="municipality_grp_unnest_municipalities.html">municipality_grp_unnest_municipalities()</a></code> </p>
+          <p><code><a href="municipality_grp_unnest.html">municipality_grp_unnest()</a></code> </p>
         </td>
-        <td><p>Create a municipality table from a Kolada municipality group table</p></td>
+        <td><p>Create a municipality table from a Kolada Municipality Group metadata table</p></td>
       </tr>
     </tbody><tbody>
       
@@ -339,7 +347,7 @@
         <td>
           <p><code><a href="ou_search.html">ou_search()</a></code> </p>
         </td>
-        <td><p>Search a Kolada Operating unit table</p></td>
+        <td><p>Search a Kolada Organizational Unit metadata table</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -358,7 +366,7 @@
         <td>
           <p><code><a href="get_values.html">get_values()</a></code> </p>
         </td>
-        <td><p>Get data from the Kolada API</p></td>
+        <td><p>Get data from Kolada</p></td>
       </tr><tr>
         
         <td>
@@ -370,7 +378,7 @@
         <td>
           <p><code><a href="values_minimize.html">values_minimize()</a></code> </p>
         </td>
-        <td><p>Simplify a Kolada value table</p></td>
+        <td><p>Simplify a Kolada values table</p></td>
       </tr>
     </tbody><tbody>
       <tr>

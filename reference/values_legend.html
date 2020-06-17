@@ -40,7 +40,11 @@
 
 
 <meta property="og:title" content="Create KPI long-form descriptions to add to a plot — values_legend" />
-<meta property="og:description" content="Create KPI long-form descriptions to add to a plot" />
+<meta property="og:description" content="In a Kolada values table, only KPI ID names are preserved. But in plots you
+often want to add a legend to explain what each KPI ID represents. But since
+KPI explanations are mostly relatively wordy, ggplot2 legends are
+under-dimensioned for this task. values_legend returns a string which
+can conveniently be used as caption to a plot instead." />
 
 
 
@@ -72,7 +76,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rKolada</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
       </span>
     </div>
 
@@ -102,9 +106,17 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/lchansson/rKolada/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -119,29 +131,37 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Create KPI long-form descriptions to add to a plot</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/lchansson/rKolada/blob/master/R/data.R'><code>R/data.R</code></a></small>
     <div class="hidden name"><code>values_legend.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Create KPI long-form descriptions to add to a plot</p>
+    <p>In a Kolada values table, only KPI ID names are preserved. But in plots you
+often want to add a legend to explain what each KPI ID represents. But since
+KPI explanations are mostly relatively wordy, ggplot2 legends are
+under-dimensioned for this task. <code>values_legend</code> returns a string which
+can conveniently be used as caption to a plot instead.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>values_legend</span>(<span class='no'>values_df</span>, <span class='no'>kpi_df</span>)</pre>
+    <pre class="usage"><span class='fu'>values_legend</span>(<span class='kw'>values_df</span>, <span class='kw'>kpi_df</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>values_df</th>
-      <td><p>A Kolada value table, as created by <code><a href='get_values.html'>get_values</a></code>.</p></td>
+      <td><p>A Kolada value table, as created by
+<code>get_values</code>.</p></td>
     </tr>
     <tr>
       <th>kpi_df</th>
-      <td><p>A KPI table, e.g. as created by <code><a href='get_kpi.html'>get_kpi</a></code>.</p></td>
+      <td><p>A KPI table, e.g. as created by <code>get_kpi</code>.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A string which should be used as caption in a plot.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

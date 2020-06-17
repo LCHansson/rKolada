@@ -40,7 +40,8 @@
 
 
 <meta property="og:title" content="Add keyword columns to a Kolada KPI table — kpi_bind_keywords" />
-<meta property="og:description" content="Identify n keywords describing the KPI and add them as new columns. Keywords are inferred from the title field of the kpi_df argument." />
+<meta property="og:description" content="Identify n keywords describing the KPI and add them as new columns.
+Keywords are inferred from the title field of the table." />
 
 
 
@@ -72,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rKolada</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
       </span>
     </div>
 
@@ -102,9 +103,17 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/lchansson/rKolada/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -119,35 +128,45 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Add keyword columns to a Kolada KPI table</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/lchansson/rKolada/blob/master/R/kpi.R'><code>R/kpi.R</code></a></small>
     <div class="hidden name"><code>kpi_bind_keywords.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Identify <code>n</code> keywords describing the KPI and add them as new columns. Keywords are inferred from the <code>title</code> field of the <code>kpi_df</code> argument.</p>
+    <p>Identify <code>n</code> keywords describing the KPI and add them as new columns.
+Keywords are inferred from the <code>title</code> field of the table.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>kpi_bind_keywords</span>(<span class='no'>kpi_df</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre>
+    <pre class="usage"><span class='fu'>kpi_bind_keywords</span>(<span class='kw'>kpi_df</span>, n = <span class='fl'>2</span>, form = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"wide"</span>, <span class='st'>"long"</span>))</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>kpi_df</th>
-      <td><p>A KPI table, e.g. as created by <code><a href='get_kpi.html'>get_kpi</a></code>.</p></td>
+      <td><p>A Kolada KPI metadata table, e.g. as created by
+<code>get_kpi</code>.</p></td>
     </tr>
     <tr>
       <th>n</th>
       <td><p>How many keyword columns should be added?</p></td>
     </tr>
+    <tr>
+      <th>form</th>
+      <td><p>Can be either "wide" (default) or "long". Whether to return
+keywords as separate columns ("wide") or as separate rows, duplicating all
+other data ("long").</p></td>
+    </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A Kolada KPI metadata table</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>kpi_df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_kpi.html'>get_kpi</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'>kpi_add_keywords</span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>3</span>)
-}</div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>kpi_df</span> <span class='op'>&lt;-</span> <span class='fu'>get_kpi</span>(id = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"N00002"</span>, <span class='st'>"N00003"</span>)) <span class='op'>%&gt;%</span>
+  <span class='fu'>kpi_bind_keywords</span>(n = <span class='fl'>3</span>)
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Search a Kolada Municipality Group metadata table for group names — municipality_grp_search • rKolada</title>
+<title>Create a KPI table from a Kolada KPI Group metadata table — kpi_grp_unnest • rKolada</title>
 
 
 <!-- jquery -->
@@ -39,12 +39,15 @@
 
 
 
-<meta property="og:title" content="Search a Kolada Municipality Group metadata table for group names — municipality_grp_search" />
-<meta property="og:description" content="Search a Kolada Municipality Group metadata table. Only keep rows that
-contain the search query. Searches group titles and group IDs. Note that this
-function does not search for individual municipalities contained within
-municipality groups! To search for KPIs within a KPI group, see examples
-below for an example using municipality_grp_unnest." />
+<meta property="og:title" content="Create a KPI table from a Kolada KPI Group metadata table — kpi_grp_unnest" />
+<meta property="og:description" content="KPI groups are a convenient way to discover sets of KPIs that can be used to
+highlight different aspects of a policy area. A practical workflow for
+discovering such sets can be to search through KPI Group metadata using
+kpi_grp_search to search for keywords and
+kpi_grp_describe to inspect contents of KPI groups. Once you
+have created a KPI group table that has been narrowed down to the group/s you
+are looking for, kpi_grp_unnest is used to create a KPI
+metadata table for further processing." />
 
 
 
@@ -130,40 +133,60 @@ below for an example using municipality_grp_unnest." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Search a Kolada Municipality Group metadata table for group names</h1>
-    <small class="dont-index">Source: <a href='https://github.com/lchansson/rKolada/blob/master/R/municipality_grp.R'><code>R/municipality_grp.R</code></a></small>
-    <div class="hidden name"><code>municipality_grp_search.Rd</code></div>
+    <h1>Create a KPI table from a Kolada KPI Group metadata table</h1>
+    <small class="dont-index">Source: <a href='https://github.com/lchansson/rKolada/blob/master/R/kpi_groups.R'><code>R/kpi_groups.R</code></a></small>
+    <div class="hidden name"><code>kpi_grp_unnest.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Search a Kolada Municipality Group metadata table. Only keep rows that
-contain the search query. Searches group titles and group IDs. Note that this
-function does not search for individual municipalities contained within
-municipality groups! To search for KPIs within a KPI group, see examples
-below for an example using <code>municipality_grp_unnest</code>.</p>
+    <p>KPI groups are a convenient way to discover sets of KPIs that can be used to
+highlight different aspects of a policy area. A practical workflow for
+discovering such sets can be to search through KPI Group metadata using
+<code>kpi_grp_search</code> to search for keywords and
+<code>kpi_grp_describe</code> to inspect contents of KPI groups. Once you
+have created a KPI group table that has been narrowed down to the group/s you
+are looking for, <code>kpi_grp_unnest</code> is used to create a KPI
+metadata table for further processing.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>municipality_grp_search</span>(<span class='kw'>munic_grp_df</span>, <span class='kw'>query</span>)</pre>
+    <pre class="usage"><span class='fu'>kpi_grp_unnest</span>(<span class='kw'>kpi_grp_df</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>munic_grp_df</th>
-      <td><p>A Kolada Municipality Group metadata table, as created by
-e.g. <code>get_municipality_groups</code>.</p></td>
-    </tr>
-    <tr>
-      <th>query</th>
-      <td><p>A search term or a vector of search terms to filter by. Case
-insensitive.</p></td>
+      <th>kpi_grp_df</th>
+      <td><p>A Kolada KPI Group metadata table, as created by e.g.
+<code>get_kpi_groups</code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A Kolada Municipality Group metadata table</p>
+    <p>A Kolada KPI metadata table</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># Download KPI Group metadata</span>
+<span class='kw'>kpi_grp_df</span> <span class='op'>&lt;-</span> <span class='fu'>get_kpi_groups</span>()
+
+<span class='co'># Create a KPI metadata table from KPI groups matching the term</span>
+<span class='co'># "utbidning" (education)</span>
+<span class='kw'>kpi_grp_df</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>kpi_grp_search</span>(<span class='st'>"utbildning"</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'>kpi_grp_unnest</span>()</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 24 x 4</span><span>
+#&gt;    id     title                                      group_id  group_title      
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                      </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            
+#&gt; </span><span style='color: #555555;'> 1</span><span> N60802 Elever i år 9 som är behöriga till yrkesp… G2KPI113… Utbildning och a…
+#&gt; </span><span style='color: #555555;'> 2</span><span> N00941 Nyregistrerade företag, antal/1000 invåna… G2KPI113… Utbildning och a…
+#&gt; </span><span style='color: #555555;'> 3</span><span> N60807 Invånare som någon gång under året erhåll… G2KPI113… Utbildning och a…
+#&gt; </span><span style='color: #555555;'> 4</span><span> N01982 Invånare 25-64 år med eftergymnasial utbi… G2KPI113… Utbildning och a…
+#&gt; </span><span style='color: #555555;'> 5</span><span> N01984 Invånare 25-64 år med förgymnasial utbild… G2KPI113… Utbildning och a…
+#&gt; </span><span style='color: #555555;'> 6</span><span> N60960 Gymnasieelever med examen eller studiebev… G2KPI113… Utbildning och a…
+#&gt; </span><span style='color: #555555;'> 7</span><span> N60961 Inpendling till länet, andel (%) (-2018)   G2KPI113… Utbildning och a…
+#&gt; </span><span style='color: #555555;'> 8</span><span> N60962 Utpendling från länet, andel (%) (-2018)   G2KPI113… Utbildning och a…
+#&gt; </span><span style='color: #555555;'> 9</span><span> U60524 Invånare 16-25 år som varken studerar ell… G2KPI113… Utbildning och a…
+#&gt; </span><span style='color: #555555;'>10</span><span> N00905 Mediannettoinkomst, kr/inv 20+             G2KPI113… Utbildning och a…
+#&gt; </span><span style='color: #555555;'># … with 14 more rows</span><span></div><div class='input'></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

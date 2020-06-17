@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Convert municipality ids to municipality names — municipality_id_to_name • rKolada</title>
+<title>Convert a vector of municipality ids to municipality names — municipality_id_to_name • rKolada</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,13 @@
 
 
 
-<meta property="og:title" content="Convert municipality ids to municipality names — municipality_id_to_name" />
-<meta property="og:description" content="Convert municipality ids to municipality names" />
+<meta property="og:title" content="Convert a vector of municipality ids to municipality names — municipality_id_to_name" />
+<meta property="og:description" content="Given a vector of municipality IDs/codes, return a named vector
+of names of municipalities or regions. Codes of municipalities and regions
+follow
+the Swedish standard for municipality codes. The codes extracted can be used
+e.g. to pass as a parameter to get_values. This function is the
+inverse to municipality_name_to_id." />
 
 
 
@@ -72,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rKolada</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
       </span>
     </div>
 
@@ -102,9 +107,17 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/lchansson/rKolada/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -118,23 +131,29 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Convert municipality ids to municipality names</h1>
-    
+    <h1>Convert a vector of municipality ids to municipality names</h1>
+    <small class="dont-index">Source: <a href='https://github.com/lchansson/rKolada/blob/master/R/municipality.R'><code>R/municipality.R</code></a></small>
     <div class="hidden name"><code>municipality_id_to_name.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Convert municipality ids to municipality names</p>
+    <p>Given a vector of municipality IDs/codes, return a named vector
+of names of municipalities or regions. Codes of municipalities and regions
+follow
+the Swedish standard for municipality codes. The codes extracted can be used
+e.g. to pass as a parameter to <code>get_values</code>. This function is the
+inverse to <code>municipality_name_to_id</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>municipality_id_to_name</span>(<span class='no'>munic_df</span>, <span class='no'>id</span>, <span class='kw'>remove_na</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>municipality_id_to_name</span>(<span class='kw'>munic_df</span>, <span class='kw'>id</span>, remove_na = <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>munic_df</th>
-      <td><p>A Kolada Municipality metadata table, as created by e.g. <code>get_municipality</code>.</p></td>
+      <td><p>A Kolada Municipality metadata table, as created by e.g.
+<code>get_municipality</code>.</p></td>
     </tr>
     <tr>
       <th>id</th>
@@ -146,12 +165,18 @@
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A vector of Municipality names.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code>municipality_extract_ids</code>,
+<code>municipality_name_to_id</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>munic_df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_kpi.html'>get_municipality</a></span>()
-<span class='fu'>municipality_id_to_name</span>(<span class='no'>munic_df</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"1280"</span>, <span class='st'>"1281"</span>, <span class='st'>"0180"</span>, <span class='st'>"1280"</span>))</div><div class='output co'>#&gt;        1280        1281        0180        1280 
-#&gt;     "Malmö"      "Lund" "Stockholm"     "Malmö" </div><div class='input'>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>munic_df</span> <span class='op'>&lt;-</span> <span class='fu'>get_municipality</span>()
+<span class='fu'>municipality_id_to_name</span>(<span class='kw'>munic_df</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"1280"</span>, <span class='st'>"1281"</span>, <span class='st'>"0180"</span>, <span class='st'>"1280"</span>))</div><div class='output co'>#&gt;        1280        1281        0180        1280 
+#&gt;     "Malmö"      "Lund" "Stockholm"     "Malmö" </div><div class='input'></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract a vector of KPI ID strings from a Kolada KPI table — kpi_extract_ids • rKolada</title>
+<title>Extract a vector of KPI ID strings from a Kolada KPI metadata table — kpi_extract_ids • rKolada</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,9 @@
 
 
 
-<meta property="og:title" content="Extract a vector of KPI ID strings from a Kolada KPI table — kpi_extract_ids" />
-<meta property="og:description" content="Extract a vector of KPI ID strings from a Kolada KPI table" />
+<meta property="og:title" content="Extract a vector of KPI ID strings from a Kolada KPI metadata table — kpi_extract_ids" />
+<meta property="og:description" content="This function is primarily intended as a convenient way to pass a (filtered)
+Kolada KPI metadata table to get_values." />
 
 
 
@@ -72,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rKolada</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
       </span>
     </div>
 
@@ -102,9 +103,17 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/lchansson/rKolada/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -118,27 +127,40 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extract a vector of KPI ID strings from a Kolada KPI table</h1>
-    
+    <h1>Extract a vector of KPI ID strings from a Kolada KPI metadata table</h1>
+    <small class="dont-index">Source: <a href='https://github.com/lchansson/rKolada/blob/master/R/kpi.R'><code>R/kpi.R</code></a></small>
     <div class="hidden name"><code>kpi_extract_ids.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Extract a vector of KPI ID strings from a Kolada KPI table</p>
+    <p>This function is primarily intended as a convenient way to pass a (filtered)
+Kolada KPI metadata table to <code>get_values</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>kpi_extract_ids</span>(<span class='no'>kpi_df</span>)</pre>
+    <pre class="usage"><span class='fu'>kpi_extract_ids</span>(<span class='kw'>kpi_df</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>kpi_df</th>
-      <td><p>A KPI table, e.g. as created by <code><a href='get_kpi.html'>get_kpi</a></code>.</p></td>
+      <td><p>A Kolada KPI metadata table, e.g. as created by
+<code>get_kpi</code>.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
+    <p>A vector of KPI IDs.</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># Download Kolada data for all KPIs matching the term "BRP" (gross regional</span>
+<span class='co'># product) for the years 2010-2019</span>
+<span class='kw'>kpi_filter</span> <span class='op'>&lt;-</span> <span class='fu'>get_kpi</span>(id = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"N03068"</span>, <span class='st'>"N03069"</span>, <span class='st'>"N03070"</span>, <span class='st'>"N03700"</span>, <span class='st'>"N03701"</span>)) <span class='op'>%&gt;%</span>
+  <span class='fu'>kpi_search</span>(<span class='st'>"BRP"</span>)
+
+<span class='kw'>kld_data</span> <span class='op'>&lt;-</span> <span class='fu'>get_values</span>(kpi = <span class='fu'>kpi_extract_ids</span>(<span class='kw'>kpi_filter</span>), period = <span class='fl'>2010</span><span class='op'>:</span><span class='fl'>2019</span>)
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

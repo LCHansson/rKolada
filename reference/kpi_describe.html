@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Describe the KPIs in a Kolada KPI table — kpi_describe • rKolada</title>
+<title>Describe the KPIs in a Kolada KPI metadata table — kpi_describe • rKolada</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,11 @@
 
 
 
-<meta property="og:title" content="Describe the KPIs in a Kolada KPI table — kpi_describe" />
-<meta property="og:description" content="Describe the KPIs in a Kolada KPI table" />
+<meta property="og:title" content="Describe the KPIs in a Kolada KPI metadata table — kpi_describe" />
+<meta property="og:description" content="Print a human-readable description of each entity of a KPI metadata table (up
+to a maximum number of rows). Can be printed either directly to the R console
+or used to populate a R markdown document, which can be useful for
+documentation purposes." />
 
 
 
@@ -72,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rKolada</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
       </span>
     </div>
 
@@ -102,9 +105,17 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/lchansson/rKolada/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -118,21 +129,24 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Describe the KPIs in a Kolada KPI table</h1>
-    
+    <h1>Describe the KPIs in a Kolada KPI metadata table</h1>
+    <small class="dont-index">Source: <a href='https://github.com/lchansson/rKolada/blob/master/R/kpi.R'><code>R/kpi.R</code></a></small>
     <div class="hidden name"><code>kpi_describe.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Describe the KPIs in a Kolada KPI table</p>
+    <p>Print a human-readable description of each entity of a KPI metadata table (up
+to a maximum number of rows). Can be printed either directly to the R console
+or used to populate a R markdown document, which can be useful for
+documentation purposes.</p>
     </div>
 
     <pre class="usage"><span class='fu'>kpi_describe</span>(
-  <span class='no'>kpi_df</span>,
-  <span class='kw'>max_n</span> <span class='kw'>=</span> <span class='fl'>5</span>,
-  <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"inline"</span>,
-  <span class='kw'>heading_level</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='kw'>sub_heading_level</span> <span class='kw'>=</span> <span class='fl'>3</span>
+  <span class='kw'>kpi_df</span>,
+  max_n = <span class='fl'>5</span>,
+  format = <span class='st'>"inline"</span>,
+  heading_level = <span class='fl'>2</span>,
+  sub_heading_level = <span class='kw'>heading_level</span> <span class='op'>+</span> <span class='fl'>1</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -140,7 +154,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>kpi_df</th>
-      <td><p>A KPI table</p></td>
+      <td><p>A Kolada KPI metadata table</p></td>
     </tr>
     <tr>
       <th>max_n</th>
@@ -148,7 +162,8 @@
     </tr>
     <tr>
       <th>format</th>
-      <td><p>Output format. Can be one of "inline" or "md" (markdown).</p></td>
+      <td><p>Output format. Can be one of "inline" (default) or "md", i.e.
+markdown.</p></td>
     </tr>
     <tr>
       <th>heading_level</th>
@@ -160,6 +175,10 @@
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>Returns the object passed to the function, invisibly, to be re-used
+in a pipe.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

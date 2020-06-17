@@ -73,7 +73,7 @@ also be used to create a working URL to paste in your web browser." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rKolada</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
       </span>
     </div>
 
@@ -103,9 +103,17 @@ also be used to create a working URL to paste in your web browser." />
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/lchansson/rKolada/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -120,21 +128,21 @@ also be used to create a working URL to paste in your web browser." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Compose a query to fetch metadata from the Kolada API.</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/lchansson/rKolada/blob/master/R/metadata.R'><code>R/metadata.R</code></a></small>
     <div class="hidden name"><code>compose_metadata_query.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Mainly used as a supporting function for <code><a href='get_metadata.html'>get_metadata</a></code> but can
+    <p>Mainly used as a supporting function for <code>get_metadata</code> but can
 also be used to create a working URL to paste in your web browser.</p>
     </div>
 
     <pre class="usage"><span class='fu'>compose_metadata_query</span>(
-  <span class='kw'>entity</span> <span class='kw'>=</span> <span class='st'>"kpi"</span>,
-  <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>municipality</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>version</span> <span class='kw'>=</span> <span class='st'>"v2"</span>
+  entity = <span class='st'>"kpi"</span>,
+  title = <span class='kw'>NULL</span>,
+  id = <span class='kw'>NULL</span>,
+  municipality = <span class='kw'>NULL</span>,
+  version = <span class='st'>"v2"</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -142,8 +150,8 @@ also be used to create a working URL to paste in your web browser.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>entity</th>
-      <td><p>Any allowed metadata entity. Check <code><a href='allowed_entities.html'>allowed_entities</a></code> to
-see an updated list.</p></td>
+      <td><p>Any allowed metadata entity. Check
+<code>allowed_entities</code> to see an updated list.</p></td>
     </tr>
     <tr>
       <th>title</th>
@@ -165,6 +173,9 @@ be added to narrow the search.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A string containing a URL to the Kolada REST API.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

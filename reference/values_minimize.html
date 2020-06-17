@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Simplify a Kolada value table — values_minimize • rKolada</title>
+<title>Simplify a Kolada values table — values_minimize • rKolada</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,10 @@
 
 
 
-<meta property="og:title" content="Simplify a Kolada value table — values_minimize" />
-<meta property="og:description" content="Simplify a Kolada value table" />
+<meta property="og:title" content="Simplify a Kolada values table — values_minimize" />
+<meta property="og:description" content="Simplify a Kolada values table, i.e as created by get_values,
+by removing columns that contain monotonous data, i.e. that contain only one
+value for all observations." />
 
 
 
@@ -72,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rKolada</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
       </span>
     </div>
 
@@ -102,9 +104,17 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/lchansson/rKolada/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -118,27 +128,54 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Simplify a Kolada value table</h1>
-    
+    <h1>Simplify a Kolada values table</h1>
+    <small class="dont-index">Source: <a href='https://github.com/lchansson/rKolada/blob/master/R/data.R'><code>R/data.R</code></a></small>
     <div class="hidden name"><code>values_minimize.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Simplify a Kolada value table</p>
+    <p>Simplify a Kolada values table, i.e as created by <code>get_values</code>,
+by removing columns that contain monotonous data, i.e. that contain only one
+value for all observations.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>values_minimize</span>(<span class='no'>values_df</span>)</pre>
+    <pre class="usage"><span class='fu'>values_minimize</span>(<span class='kw'>values_df</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>values_df</th>
-      <td><p>A Kolada value table, as created by <code><a href='get_values.html'>get_values</a></code>.</p></td>
+      <td><p>A Kolada value table, as created by
+<code>get_values</code>.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
+    <p>A Kolada values table</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># Download values for a KPI for the year 2010</span>
+<span class='kw'>vals</span> <span class='op'>&lt;-</span> <span class='fu'>get_values</span>(kpi = <span class='st'>"N00002"</span>, period = <span class='fl'>2010</span>, simplify = <span class='fl'>TRUE</span>) <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='kw'>municipality_type</span> <span class='op'>==</span> <span class='st'>"K"</span>)
+<span class='co'># (Returns a table with 29 rows and 8 columns)</span>
+
+<span class='co'># Remove columns with no information to differentiate between rows</span>
+<span class='fu'>values_minimize</span>(<span class='kw'>vals</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 290 x 4</span><span>
+#&gt;    kpi    municipality_id value municipality  
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         
+#&gt; </span><span style='color: #555555;'> 1</span><span> N00002 0114             31.5 Upplands Väsby
+#&gt; </span><span style='color: #555555;'> 2</span><span> N00002 0115             44.2 Vallentuna    
+#&gt; </span><span style='color: #555555;'> 3</span><span> N00002 0117             43.8 Österåker     
+#&gt; </span><span style='color: #555555;'> 4</span><span> N00002 0120             46.9 Värmdö        
+#&gt; </span><span style='color: #555555;'> 5</span><span> N00002 0123             46.3 Järfälla      
+#&gt; </span><span style='color: #555555;'> 6</span><span> N00002 0125             45.0 Ekerö         
+#&gt; </span><span style='color: #555555;'> 7</span><span> N00002 0126             51.1 Huddinge      
+#&gt; </span><span style='color: #555555;'> 8</span><span> N00002 0127             57.2 Botkyrka      
+#&gt; </span><span style='color: #555555;'> 9</span><span> N00002 0128             46.8 Salem         
+#&gt; </span><span style='color: #555555;'>10</span><span> N00002 0136             51.4 Haninge       
+#&gt; </span><span style='color: #555555;'># … with 280 more rows</span><span></div><div class='input'><span class='co'># (Returns a table with 29 rows and 4 columns)</span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

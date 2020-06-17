@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Search a Kolada KPI group table for group names — kpi_grp_search • rKolada</title>
+<title>Search a Kolada KPI Group metadata table for group names — kpi_grp_search • rKolada</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,12 @@
 
 
 
-<meta property="og:title" content="Search a Kolada KPI group table for group names — kpi_grp_search" />
-<meta property="og:description" content="Search a Kolada KPI group table for group names" />
+<meta property="og:title" content="Search a Kolada KPI Group metadata table for group names — kpi_grp_search" />
+<meta property="og:description" content="Search a Kolada KPI Group metadata table. Only keep rows that
+contain the search query. Searches group titles and group IDs. Note that this
+function does not search for individual KPIs contained within KPI groups!
+To search for KPIs within a KPI group, see examples below for an example
+using kpi_grp_unnest." />
 
 
 
@@ -72,7 +76,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rKolada</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
       </span>
     </div>
 
@@ -102,9 +106,17 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/lchansson/rKolada/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -118,31 +130,68 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Search a Kolada KPI group table for group names</h1>
-    
+    <h1>Search a Kolada KPI Group metadata table for group names</h1>
+    <small class="dont-index">Source: <a href='https://github.com/lchansson/rKolada/blob/master/R/kpi_groups.R'><code>R/kpi_groups.R</code></a></small>
     <div class="hidden name"><code>kpi_grp_search.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Search a Kolada KPI group table for group names</p>
+    <p>Search a Kolada KPI Group metadata table. Only keep rows that
+contain the search query. Searches group titles and group IDs. Note that this
+function does not search for individual KPIs contained within KPI groups!
+To search for KPIs within a KPI group, see examples below for an example
+using <code>kpi_grp_unnest</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>kpi_grp_search</span>(<span class='no'>kpi_grp_df</span>, <span class='no'>query</span>)</pre>
+    <pre class="usage"><span class='fu'>kpi_grp_search</span>(<span class='kw'>kpi_grp_df</span>, <span class='kw'>query</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>kpi_grp_df</th>
-      <td><p>A Kolada KPI group table, as created by e.g. <code>get_kpi_groups</code>.</p></td>
+      <td><p>A Kolada KPI Group metadata table, as created by e.g.
+<code>get_kpi_groups</code>.</p></td>
     </tr>
     <tr>
       <th>query</th>
-      <td><p>A search term or a vector of search terms to filter by. Case insensitive.</p></td>
+      <td><p>A search term or a vector of search terms to filter by. Case
+insensitive.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
+    <p>A Kolada KPI Group metadata table</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>kpi_grp_df</span> <span class='op'>&lt;-</span> <span class='fu'>get_kpi_groups</span>()
+
+<span class='co'># Which KPI groups match the keyword "ekonomi" (economy)?</span>
+<span class='kw'>kpi_grp_df</span> <span class='op'>%&gt;%</span> <span class='fu'>kpi_grp_search</span>(<span class='st'>"ekonomi"</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 3</span><span>
+#&gt;   id         members           title                                 
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                 
+#&gt; </span><span style='color: #555555;'>1</span><span> G2KPI95042 </span><span style='color: #555555;'>&lt;df[,2] [28 × 2]&gt;</span><span> Ekonomi, demografi och folkhälsa      
+#&gt; </span><span style='color: #555555;'>2</span><span> GKPI251    </span><span style='color: #555555;'>&lt;df[,2] [54 × 2]&gt;</span><span> Öppna jämförelser - Ekonomiskt bistånd</div><div class='input'>
+<span class='co'># Which KPI groups contain KPIs matching the keyword "arbete" (work/labour)?</span>
+<span class='kw'>kpi_grp_df</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>kpi_grp_unnest</span>() <span class='op'>%&gt;%</span>
+  <span class='fu'>kpi_search</span>(<span class='st'>"arbete"</span>) <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/count.html'>count</a></span>(<span class='kw'>group_title</span>, sort = <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 12 x 2</span><span>
+#&gt;    group_title                                                                 n
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                                                   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> Personalnyckeltal                                                          19
+#&gt; </span><span style='color: #555555;'> 2</span><span> Öppna jämförelser - Grundskola Kommunala skolor                             6
+#&gt; </span><span style='color: #555555;'> 3</span><span> Öppna jämförelser - Miljöarbete                                             6
+#&gt; </span><span style='color: #555555;'> 4</span><span> Öppna jämförelser Grundskola Fristående skolor                              6
+#&gt; </span><span style='color: #555555;'> 5</span><span> Funktionsnedsättning LSS och SoL                                            5
+#&gt; </span><span style='color: #555555;'> 6</span><span> Kommunal arbetsmarknadsstatistik (KAS)                                      3
+#&gt; </span><span style='color: #555555;'> 7</span><span> Öppna Jämförelser - Gymnasieskola Kommunala                                 3
+#&gt; </span><span style='color: #555555;'> 8</span><span> Öppna jämförelser - Stöd till personer med funktionsnedsättning enligt…     3
+#&gt; </span><span style='color: #555555;'> 9</span><span> Heltidsresan                                                                2
+#&gt; </span><span style='color: #555555;'>10</span><span> Öppna jämförelser - Stöd till personer med psykisk funktionsnedsättnin…     2
+#&gt; </span><span style='color: #555555;'>11</span><span> Strategi för hälsa                                                          2
+#&gt; </span><span style='color: #555555;'>12</span><span> Ekonomi, demografi och folkhälsa                                            1</div><div class='input'></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

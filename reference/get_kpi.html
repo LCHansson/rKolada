@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Download metadata from the Kolada API — get_kpi • rKolada</title>
+<title>Download metadata for a specific entity from the Kolada API — get_kpi • rKolada</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,12 @@
 
 
 
-<meta property="og:title" content="Download metadata from the Kolada API — get_kpi" />
-<meta property="og:description" content="There are five different types of metadata entities in the Kolada database: &quot;kpi&quot;, &quot;kpi_groups&quot;, &quot;municipality&quot;, &quot;municipality_groups&quot;, and &quot;ou&quot;. For every entity there is a corresponding function get_ENTITY which retrieves a table with the metadata for that entity. The get_ENTITY functions are thin wrappers around get_metadata." />
+<meta property="og:title" content="Download metadata for a specific entity from the Kolada API — get_kpi" />
+<meta property="og:description" content="There are five different types of metadata entities in the Kolada database:
+&quot;kpi&quot;, &quot;kpi_groups&quot;, &quot;municipality&quot;, &quot;municipality_groups&quot;, and &quot;ou&quot;. For
+every entity there is a corresponding function get_ENTITY which
+retrieves a table with the metadata for that entity. The get_ENTITY
+functions are thin wrappers around get_metadata." />
 
 
 
@@ -72,7 +76,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rKolada</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
       </span>
     </div>
 
@@ -102,9 +106,17 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/lchansson/rKolada/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -118,24 +130,49 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Download metadata from the Kolada API</h1>
-    
+    <h1>Download metadata for a specific entity from the Kolada API</h1>
+    <small class="dont-index">Source: <a href='https://github.com/lchansson/rKolada/blob/master/R/metadata.R'><code>R/metadata.R</code></a></small>
     <div class="hidden name"><code>get_kpi.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>There are five different types of metadata entities in the Kolada database: "kpi", "kpi_groups", "municipality", "municipality_groups", and "ou". For every entity there is a corresponding function <code>get_ENTITY</code> which retrieves a table with the metadata for that entity. The <code>get_ENTITY</code> functions are thin wrappers around <code><a href='get_metadata.html'>get_metadata</a></code>.</p>
+    <p>There are five different types of metadata entities in the Kolada database:
+"kpi", "kpi_groups", "municipality", "municipality_groups", and "ou". For
+every entity there is a corresponding function <code>get_ENTITY</code> which
+retrieves a table with the metadata for that entity. The <code>get_ENTITY</code>
+functions are thin wrappers around <code>get_metadata</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_kpi</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>cache_location</span> <span class='kw'>=</span> <span class='no'>tempdir</span>)
+    <pre class="usage"><span class='fu'>get_kpi</span>(id = <span class='kw'>NULL</span>, cache = <span class='fl'>FALSE</span>, cache_location = <span class='kw'>tempdir</span>, verbose = <span class='fl'>FALSE</span>)
 
-<span class='fu'>get_kpi_groups</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>cache_location</span> <span class='kw'>=</span> <span class='no'>tempdir</span>)
+<span class='fu'>get_kpi_groups</span>(
+  id = <span class='kw'>NULL</span>,
+  cache = <span class='fl'>FALSE</span>,
+  cache_location = <span class='kw'>tempdir</span>,
+  verbose = <span class='fl'>FALSE</span>
+)
 
-<span class='fu'>get_ou</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>municipality</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>cache_location</span> <span class='kw'>=</span> <span class='no'>tempdir</span>)
+<span class='fu'>get_ou</span>(
+  id = <span class='kw'>NULL</span>,
+  municipality = <span class='kw'>NULL</span>,
+  cache = <span class='fl'>FALSE</span>,
+  cache_location = <span class='kw'>tempdir</span>,
+  verbose = <span class='fl'>FALSE</span>
+)
 
-<span class='fu'>get_municipality</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>cache_location</span> <span class='kw'>=</span> <span class='no'>tempdir</span>)
+<span class='fu'>get_municipality</span>(
+  id = <span class='kw'>NULL</span>,
+  cache = <span class='fl'>FALSE</span>,
+  cache_location = <span class='kw'>tempdir</span>,
+  verbose = <span class='fl'>FALSE</span>
+)
 
-<span class='fu'>get_municipality_groups</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>cache_location</span> <span class='kw'>=</span> <span class='no'>tempdir</span>)</pre>
+<span class='fu'>get_municipality_groups</span>(
+  id = <span class='kw'>NULL</span>,
+  cache = <span class='fl'>FALSE</span>,
+  cache_location = <span class='kw'>tempdir</span>,
+  verbose = <span class='fl'>FALSE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -146,15 +183,26 @@
     </tr>
     <tr>
       <th>cache</th>
-      <td><p>Logical. If TRUE, downloaded data are stored to the local disk in the place specified by <code>cache_location</code>. If data is already present on the local disk, this data is returned instead of downloading data from the API.</p></td>
+      <td><p>Logical. If TRUE, downloaded data are stored to the local disk
+in the place specified by <code>cache_location</code>. If data is already present
+on the local disk, this data is returned instead of downloading data from
+the API.</p></td>
     </tr>
     <tr>
       <th>cache_location</th>
-      <td><p>Where to store and search for cached data. Can be a path to a directory or the name of any function that returns the path to a directory when called, like <code>link{getwd}</code>. Defaults to <code><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></code>.</p></td>
+      <td><p>Where to store and search for cached data. Can be a
+path to a directory or the name of any function that returns the path to a
+directory when called, like <code>link{getwd}</code>. Defaults to
+<code><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Whether to print the call to the Kolada API as a message to
+the R console.</p></td>
     </tr>
     <tr>
       <th>municipality</th>
-      <td><p>(Optional) A string or vector of strings cantaining
+      <td><p>(Optional) A string or vector of strings containing
 municipality codes. If getting OU data, you can use this parameter to narrow
 the search.</p></td>
     </tr>
@@ -162,19 +210,17 @@ the search.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns a tibble with metadata for the specified entity.</p>
+    <p>Returns a tibble with metadata for the specified entity. In rKolada
+terminology, a table returned by e.g. <code>get_kpi</code> is referred to
+as a <code>kpi_df</code> and can be passed to functions starting with "kpi" such
+as <code>kpi_bind_keywords</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># Download KPI table and store a cache copy of the results in</span>
 <span class='co'># your current working directory</span>
-<span class='no'>kpi_df</span> <span class='kw'>&lt;-</span> <span class='fu'>get_kpi</span>(<span class='kw'>cache</span> <span class='kw'>=</span> <span class='st'>"wd"</span>)
-
-<span class='co'># Download KPI table and store a cache copy of the results in</span>
-<span class='co'># a tempfile (will expire when your R session ends)</span>
-<span class='no'>kpi_df</span> <span class='kw'>&lt;-</span> <span class='fu'>get_kpi</span>(<span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-}</div></pre>
+<span class='kw'>kpi_df</span> <span class='op'>&lt;-</span> <span class='fu'>get_kpi</span>(cache = <span class='fl'>TRUE</span>)
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
