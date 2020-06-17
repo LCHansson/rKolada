@@ -18,14 +18,13 @@ To learn more about using `rKolada`, it is recommended you use the following res
 
 ## Installation
 
-<!-- rKolada is on CRAN. To install it, run the following code in R/RStudio:
+rKolada is on CRAN. To install it, run the following code in R:
 
 ```r
 install.packages("rKolada")
 ```
---->
 
-To install the development version, use the `remotes` package:
+To install the development version from GitHub, use the `remotes` package:
 
 ```r
 library("remotes")
@@ -38,6 +37,7 @@ You are welcome to contribute to the further development of the rKolada package 
 
 - Open an [issue](https://github.com/LCHansson/rKolada/issues)
 - Clone this repo, make modifications and create a pull request
+- Spread the word!
 
 ### Code of Conduct
   
