@@ -57,7 +57,7 @@ If the user already has knowledge of the IDs of the KPIs and/or municipalities t
 ```{r}
 n00945 <- get_values(
   kpi = "N00945",
-  municipality = "G123833",
+  municipality = c("0180", "1480", "1280"),
   period = 1970:2020
 )
 
@@ -164,24 +164,24 @@ munic_grp_filter <- get_municipality_groups() %>%
   municipality_grp_search("Liknande kommuner socioekonomi, Arboga")
 # Creates a table with one group of 7 municipalities
 
-arboga_filter <- get_municipality() %>% municipality_search("Arboga")
+arboga <- get_municipality() %>% municipality_search("Arboga")
 
 # Get values
 grp_data <- get_values(
   kpi = kpi_extract_ids(kpi_filter),
   municipality = c(
     municipality_grp_extract_ids(munic_grp_filter),
-    municipality_extract_ids(arboga_filter)
+    municipality_extract_ids(arboga)
   )
 )
 
 # Visualize results
 library("ggplot2")
 ggplot(grp_data, aes(year, value, color = municipality)) +
-  geom_line() +
+  geom_line(aes(linetype = municipality)) +
   facet_grid(kpi ~ ., scales = "free") +
   labs(
-    title = "Gross Regional Product 2012-2017",
+    title = "Gross Regional Product per capita 2012-2018",
     subtitle = "Swedish municipalities similar to Arboga",
     caption = values_legend(grp_data, kpi_filter)
   ) +
