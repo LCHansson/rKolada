@@ -23,6 +23,8 @@ compose_data_query <- function(
   period = NULL,
   ou = NULL,
   unit_type = "municipality",
+  page = NA,
+  per_page = NA,
   version = "v2"
 ) {
   unit_type <- tolower(unit_type)
@@ -70,7 +72,9 @@ compose_data_query <- function(
   if (sum(stringr::str_length(c(kpi, unit, period)) > 0) < 2)
     stop("Too few parameters specified! At least two of the following parameters must have non-empty values: kpi, period, (municipality OR ou).")
 
-  query_url <- glue::glue("{base_url}{kpi}{unit}{period}")
+  query_url <- glue::glue("{base_url}{kpi}{unit}{period}") %>%
+    urltools::param_set("page", page) %>%
+    urltools::param_set("per_page", per_page)
 
   return(utils::URLencode(query_url))
 }
@@ -140,16 +144,43 @@ get_values <- function(
   simplify = TRUE,
   verbose = FALSE
 ) {
-  query <- compose_data_query(kpi = kpi, municipality = municipality, period = period, ou = ou, unit_type = unit_type)
 
   if (isTRUE(verbose))
-    message("Downloading Kolada data using URL\n", query)
+    message("Downloading Kolada data using URL")
 
   res <- httr::RETRY("GET", query)
 
   contents_raw <- httr::content(res, as = "text")
-  contents <- jsonlite::fromJSON(contents_raw)[["values"]]
-  ret <- tibble::as_tibble(contents) %>%
+  contents <- jsonlite::fromJSON(contents_raw)
+
+  next_page <- TRUE
+  page <- 1
+
+  while(isTRUE(next_page)) {
+
+    query <- compose_data_query(kpi = kpi, municipality = municipality, period = period, ou = ou, unit_type = unit_type, page = page, per_page = 2000)
+
+    if (isTRUE(verbose))
+      message(query)
+
+    res <- httr::RETRY("GET", query, quiet = FALSE)
+
+    contents_raw <- httr::content(res, as = "text")
+    contents <- jsonlite::fromJSON(contents_raw)
+
+    if(page == 1)
+      vals <- tibble::as_tibble(contents$values)
+    else
+      vals <- dplyr::bind_rows(vals, tibble::as_tibble(contents$values))
+
+
+    if(is.null(contents$next_page))
+      next_page <- FALSE
+    else
+      page <- page + 1
+  }
+
+  ret <- vals %>%
     tidyr::unnest(cols = c(.data$values))
 
   if (isTRUE(simplify) & unit_type == "municipality") {
@@ -160,7 +191,7 @@ get_values <- function(
     if (ret_has_groups)
       munic_tbl <- munic_tbl %>%
       dplyr::bind_rows(
-        get_municipality_groups() %>%
+        get_municipality_groups(verbose = FALSE) %>%
           dplyr::select(.data$id, .data$title) %>%
           dplyr::mutate(type = "G")
       )
@@ -201,7 +232,6 @@ get_values <- function(
         by = "ou_id"
       ) %>%
       dplyr::rename(year = .data$period)
-
   }
 
   ret

@@ -16,7 +16,13 @@
 #'
 #' @export
 compose_metadata_query <- function(
-  entity = "kpi", title = NULL, id = NULL, municipality = NULL, version = "v2"
+  entity = "kpi",
+  title = NULL,
+  id = NULL,
+  municipality = NULL,
+  page = NA,
+  per_page = NA,
+  version = "v2"
 ) {
   if (!is.null(entity))
     entity <- tolower(entity)
@@ -49,6 +55,10 @@ compose_metadata_query <- function(
     municipality <- paste(municipality, collapse = ",")
     query_url <- glue::glue("{query_url}{separator}municipality={municipality}")
   }
+
+  query_url <- query_url %>%
+    urltools::param_set("page", page) %>%
+    urltools::param_set("per_page", per_page)
 
   return(utils::URLencode(query_url))
 }
@@ -103,17 +113,36 @@ get_metadata <- function(
   if (ch("discover"))
     return(ch("load"))
 
-  query <- compose_metadata_query(entity, title, id, municipality)
-
   if (isTRUE(verbose))
-    message("Downloading Kolada metadata using URL\n", query)
+    message("Downloading Kolada metadata using URL")
 
-  res <- httr::RETRY("GET", query, quiet = FALSE)
+  next_page <- TRUE
+  page <- 1
 
-  contents_raw <- httr::content(res, as = "text")
-  contents <- jsonlite::fromJSON(contents_raw)[["values"]]
+  while(isTRUE(next_page)) {
 
-  vals <- tibble::as_tibble(contents)
+    query <- compose_metadata_query(entity, title, id, municipality, page = page, per_page = 2000)
+
+    if (isTRUE(verbose))
+      message(query)
+
+    res <- httr::RETRY("GET", query, quiet = FALSE)
+
+    contents_raw <- httr::content(res, as = "text")
+    contents <- jsonlite::fromJSON(contents_raw)
+
+    if(page == 1)
+      vals <- tibble::as_tibble(contents$values)
+    else
+      vals <- dplyr::bind_rows(vals, tibble::as_tibble(contents$values))
+
+
+    if(is.null(contents$next_page))
+      next_page <- FALSE
+    else
+      page <- page + 1
+  }
+
   vals <- ch("store", vals)
 
   vals
