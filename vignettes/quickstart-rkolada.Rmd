@@ -52,6 +52,7 @@ dplyr::glimpse(kpis)
 But `rKolada` also comes with a set of convenience functions to simplify the task of exploring KPI metadata. `kpi_search()` filters down a list of KPIs using a search term, and `kpi_minimize()` can be used to clean the KPI metadata table from columns that don't contain any information that distinguish KPIs from each other:
 
 ```{r}
+# Get a list KPIs matching a search for "BRP" (Gross regional product)
 kpi_res <- kpis %>%
   kpi_search("BRP") %>%
   kpi_minimize(remove_undocumented_columns = TRUE, remove_monotonous_data = TRUE)
@@ -75,7 +76,7 @@ dplyr::glimpse(munic_res)
 
 ### 3. Describe KPIs
 
-In addition to the information provided about every KPI in the `title` and `description` columns of a KPI table, `kpi_bind_keywords()` can be used to create a rough summary of every KPI creating a number of _keyword_ columns. The function `kpi_describe()` can be used to print a huamn readable table containing a summary of a table of KPIs. For instance, by setting the `knitr` chunk option `results='asis'`, the following code renders a markdown section that can be directly integrated into a Markdown report:
+In addition to the information provided about every KPI in the `title` and `description` columns of a KPI table, `kpi_bind_keywords()` can be used to create a rough summary of every KPI creating a number of _keyword_ columns. The function `kpi_describe()` can be used to print a huamn readable table containing a summary of a table of KPIs. For instance, by setting the `knitr` chunk option `results='asis'`, the following code renders a Markdown section that is automatically inluded as a part of the HTML that renders this web page:
 
 ```{r, echo = TRUE, results='asis'}
 kpi_res %>%

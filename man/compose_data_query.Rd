@@ -10,6 +10,8 @@ compose_data_query(
   period = NULL,
   ou = NULL,
   unit_type = "municipality",
+  page = NA,
+  per_page = NA,
   version = "v2"
 )
 }
@@ -29,6 +31,10 @@ available for certain KPIs. Only used if \code{unit_type} is set to \code{"ou"}.
 \item{unit_type}{One of \code{"municipality"} or \code{"ou"}. Whether to
 fetch data for Municipalities or Organizational Units.
 Units. Defaults to \code{"municipality"}.}
+
+\item{page}{What page to fetch. Used mainly in large queries. Fetches a page using the value of \code{"per_page"} as pagination delimiter.}
+
+\item{per_page}{Number of results per page.}
 
 \item{version}{Version of the API. Currently only \code{"v2"} is supported.}
 }

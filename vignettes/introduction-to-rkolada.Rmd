@@ -128,7 +128,7 @@ kpis_with_keywords %>%
   dplyr::count(keyword, sort = TRUE)
 ```
 
-Some KPIs can be very similar-looking and it can sometimes be hard to discern which of the KPIs to use. To make sifting through data easier, `kpi_minimize()` can be used to remove all redundant columns from a KPI table. (In this case, "redundant" means "containing no information that helps in differentiating KPIs from one another, i.e. columns containing only one single value for all observations in the table):
+Some KPIs can be very similar-looking and it can sometimes be hard to discern which of the KPIs to use. To make sifting through data easier, `kpi_minimize()` can be used to remove all redundant columns from a KPI table. (In this case, "redundant" means "containing no information that helps in differentiating KPIs from one another", i.e. columns containing only one single value for all observations in the table):
 
 ```{r}
 # Top 10 rows of the table
@@ -138,6 +138,7 @@ kpi_filter %>% dplyr::slice(1:10)
 kpi_filter %>% dplyr::slice(1:10) %>% kpi_minimize()
 ```
 
+Note that `kpi_minimize()` operates on the _current table_. This means that results may vary depending on the data you're operating on.
 
 ### Metadata groups
 
@@ -160,13 +161,15 @@ kpi_filter <- get_kpi() %>%
   kpi_search("BRP")
 # Creates a table with two rows
 
+# Get a suitable group of municipalities
 munic_grp_filter <- get_municipality_groups() %>% 
   municipality_grp_search("Liknande kommuner socioekonomi, Arboga")
 # Creates a table with one group of 7 municipalities
 
+# Also include Arboga itself
 arboga <- get_municipality() %>% municipality_search("Arboga")
 
-# Get values
+# Get data
 grp_data <- get_values(
   kpi = kpi_extract_ids(kpi_filter),
   municipality = c(
