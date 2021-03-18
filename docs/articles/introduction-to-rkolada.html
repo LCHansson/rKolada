@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rKolada</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -39,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -68,7 +68,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/lchansson/rKolada/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -82,7 +82,7 @@
 
       
 
-      </header><div class="row">
+      </header><script src="introduction-to-rkolada_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to rKolada</h1>
@@ -98,14 +98,16 @@
 <p><code>rKolada</code> is an R package for <em>downloading</em>, <em>inspecting</em> and <em>processing</em> data from <a href="https://kolada.se/">Kolada</a>, a Key Performance Indicator database for Swedish municipalities and regions. This vignette provides an overview of the methods included in the <code>rKolada</code> package and the design principles of the package API. To learn more about the specifics of functions and to see a full list of the functions included, please see the <a href="https://lchansson.github.io/rKolada/reference/index.html">Reference section of the package homepage</a> or run <code>??rKolada</code>. For a quick introduction to the package see the vignette <a href="quickstart-rkolada.html">A quick start guide to rKolada</a>.</p>
 <p>NOTE: All metadata and data labels in Kolada are written in Swedish only.</p>
 <p>The design of <code>rKolada</code> functions is inspired by, and are supported by, the design and functionality provided by several packages in the <code>tidyverse</code> family. It is thus recommended that you install the <code>tidyverse</code> package before installing rKolada:</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"tidyverse"</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"rKolada"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"tidyverse"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"rKolada"</span><span class="op">)</span></code></pre></div>
 <div id="kolada-a-key-performance-indicator-database-for-swedish-municipalities-and-regions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#kolada-a-key-performance-indicator-database-for-swedish-municipalities-and-regions" class="anchor"></a>Kolada, a Key Performance Indicator database for Swedish municipalities and regions</h2>
 <p>The Swedish Municipalities and Regions Database <a href="https://kolada.se/">Kolada</a> is a openly accessible, comprehensive database containing over 4,000 Key Performance Indicators (KPIs) for a vast number of aspects of municipal and regional organisations, politics and economic life. The <code>rKolada</code> R package provides an interface to R users to directly download, explore, and simplify metadata and data from Kolada.</p>
 <p>To get started with Kolada you might want to visit its homepage (Swedish-only) or read through the <a href="https://github.com/Hypergene/kolada">REST API documentation on Github</a>. However, you can also use the <code>rKolada</code> package to explore data without prior knowledge of the database.</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"rKolada"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://lchansson.github.io/rKolada">"rKolada"</a></span><span class="op">)</span></code></pre></div>
 <div id="the-data-model" class="section level3">
 <h3 class="hasAnchor">
 <a href="#the-data-model" class="anchor"></a>The data model</h3>
@@ -122,27 +124,28 @@
 <h3 class="hasAnchor">
 <a href="#downloading-data" class="anchor"></a>Downloading data</h3>
 <p>If the user already has knowledge of the IDs of the KPIs and/or municipalities they want to download, this can be done using the function <code><a href="../reference/get_values.html">get_values()</a></code>. For instance, if you want to download all values for the KPI <code>N00945</code> (“Tillfälliga föräldrapenningdagar (VAB) som tas ut av män, andel av antal dagar (%)”) for Sweden’s three most populous cities; Stockholm (id <code>"0180"</code>), Gothenburg (Swedish: <em>Göteborg</em>; <code>"1480"</code>) and Malmö (<code>"1280"</code>):</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">n00945</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_values.html">get_values</a></span>(
-  <span class="kw">kpi</span> <span class="kw">=</span> <span class="st">"N00945"</span>,
-  <span class="kw">municipality</span> <span class="kw">=</span> <span class="st">"G123833"</span>,
-  <span class="kw">period</span> <span class="kw">=</span> <span class="fl">1970</span>:<span class="fl">2020</span>
-)
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">n00945</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_values.html">get_values</a></span><span class="op">(</span>
+  kpi <span class="op">=</span> <span class="st">"N00945"</span>,
+  municipality <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"0180"</span>, <span class="st">"1480"</span>, <span class="st">"1280"</span><span class="op">)</span>,
+  period <span class="op">=</span> <span class="fl">1970</span><span class="op">:</span><span class="fl">2020</span>
+<span class="op">)</span>
 
-<span class="no">n00945</span>
-<span class="co">#&gt; # A tibble: 24 x 8</span>
+<span class="va">n00945</span>
+<span class="co">#&gt; # A tibble: 75 x 8</span>
 <span class="co">#&gt;    kpi    municipality_id  year count gender value municipality municipality_ty…</span>
 <span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;           &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;           </span>
-<span class="co">#&gt;  1 N00945 G123833          1996     0 T       NA   Liknande ko… G               </span>
-<span class="co">#&gt;  2 N00945 G123833          1997     0 T       NA   Liknande ko… G               </span>
-<span class="co">#&gt;  3 N00945 G123833          1998     7 T       31.5 Liknande ko… G               </span>
-<span class="co">#&gt;  4 N00945 G123833          1999     7 T       33.9 Liknande ko… G               </span>
-<span class="co">#&gt;  5 N00945 G123833          2000     7 T       33.7 Liknande ko… G               </span>
-<span class="co">#&gt;  6 N00945 G123833          2001     7 T       36.6 Liknande ko… G               </span>
-<span class="co">#&gt;  7 N00945 G123833          2002     7 T       35.9 Liknande ko… G               </span>
-<span class="co">#&gt;  8 N00945 G123833          2003     7 T       34.8 Liknande ko… G               </span>
-<span class="co">#&gt;  9 N00945 G123833          2004     7 T       36.2 Liknande ko… G               </span>
-<span class="co">#&gt; 10 N00945 G123833          2005     7 T       34.6 Liknande ko… G               </span>
-<span class="co">#&gt; # … with 14 more rows</span></pre></body></html></div>
+<span class="co">#&gt;  1 N00945 0180             1996     1 T       NA   Stockholm    K               </span>
+<span class="co">#&gt;  2 N00945 1280             1996     1 T       NA   Malmö        K               </span>
+<span class="co">#&gt;  3 N00945 1480             1996     1 T       NA   Göteborg     K               </span>
+<span class="co">#&gt;  4 N00945 0180             1997     1 T       NA   Stockholm    K               </span>
+<span class="co">#&gt;  5 N00945 1280             1997     1 T       NA   Malmö        K               </span>
+<span class="co">#&gt;  6 N00945 1480             1997     1 T       NA   Göteborg     K               </span>
+<span class="co">#&gt;  7 N00945 0180             1998     1 T       30.4 Stockholm    K               </span>
+<span class="co">#&gt;  8 N00945 1280             1998     1 T       26.7 Malmö        K               </span>
+<span class="co">#&gt;  9 N00945 1480             1998     1 T       30.5 Göteborg     K               </span>
+<span class="co">#&gt; 10 N00945 0180             1999     1 T       30.6 Stockholm    K               </span>
+<span class="co">#&gt; # … with 65 more rows</span></code></pre></div>
 <p>In many cases, however, you will not know in advance exactly what KPIs to be looking for, or you might not know the IDs of Sweden’s municipalities.</p>
 </div>
 <div id="downloading-metadata-get-functions" class="section level3">
@@ -162,26 +165,27 @@
 </li>
 </ul>
 <p>Each function returns a <code>tibble</code> with all available data for the specified metadata entity.</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="co"># Download all KPI metadata as a tibble (kpi_df)</span>
-<span class="no">kpi_df</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_kpi.html">get_kpi</a></span>()
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Download all KPI metadata as a tibble (kpi_df)</span>
+<span class="va">kpi_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_kpi.html">get_kpi</a></span><span class="op">(</span><span class="op">)</span>
 
-<span class="no">kpi_df</span>
-<span class="co">#&gt; # A tibble: 4,694 x 13</span>
-<span class="co">#&gt;    auspices description has_ou_data id    is_divided_by_g… municipality_ty…</span>
-<span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt;       &lt;lgl&gt;       &lt;chr&gt;            &lt;int&gt; &lt;chr&gt;           </span>
-<span class="co">#&gt;  1 E        Personalko… FALSE       N000…                0 K               </span>
-<span class="co">#&gt;  2 E        Personalko… FALSE       N000…                0 K               </span>
-<span class="co">#&gt;  3 X        Kommunalek… FALSE       N000…                0 K               </span>
-<span class="co">#&gt;  4 &lt;NA&gt;     Externa in… FALSE       N000…                0 K               </span>
-<span class="co">#&gt;  5 &lt;NA&gt;     Inkomstutj… FALSE       N000…                0 K               </span>
-<span class="co">#&gt;  6 &lt;NA&gt;     Kostnadsut… FALSE       N000…                0 K               </span>
-<span class="co">#&gt;  7 X        Reglerings… FALSE       N000…                0 K               </span>
-<span class="co">#&gt;  8 &lt;NA&gt;     Utjämnings… FALSE       N000…                0 K               </span>
-<span class="co">#&gt;  9 X        Införandeb… FALSE       N000…                0 K               </span>
-<span class="co">#&gt; 10 X        Strukturbi… FALSE       N000…                0 K               </span>
-<span class="co">#&gt; # … with 4,684 more rows, and 7 more variables: operating_area &lt;chr&gt;,</span>
+<span class="va">kpi_df</span>
+<span class="co">#&gt; # A tibble: 5,083 x 13</span>
+<span class="co">#&gt;    auspices description      has_ou_data id    is_divided_by_g… municipality_ty…</span>
+<span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt;            &lt;lgl&gt;       &lt;chr&gt;            &lt;int&gt; &lt;chr&gt;           </span>
+<span class="co">#&gt;  1 E        Personalkostnad… FALSE       N000…                0 K               </span>
+<span class="co">#&gt;  2 E        Personalkostnad… FALSE       N000…                0 K               </span>
+<span class="co">#&gt;  3 X        Kommunalekonomi… FALSE       N000…                0 K               </span>
+<span class="co">#&gt;  4 &lt;NA&gt;     Externa intäkte… FALSE       N000…                0 K               </span>
+<span class="co">#&gt;  5 &lt;NA&gt;     Inkomstutjämnin… FALSE       N000…                0 K               </span>
+<span class="co">#&gt;  6 &lt;NA&gt;     Kostnadsutjämni… FALSE       N000…                0 K               </span>
+<span class="co">#&gt;  7 X        Regleringsbidra… FALSE       N000…                0 K               </span>
+<span class="co">#&gt;  8 &lt;NA&gt;     Utjämningssyste… FALSE       N000…                0 K               </span>
+<span class="co">#&gt;  9 X        Införandebidrag… FALSE       N000…                0 K               </span>
+<span class="co">#&gt; 10 X        Strukturbidrag,… FALSE       N000…                0 K               </span>
+<span class="co">#&gt; # … with 5,073 more rows, and 7 more variables: operating_area &lt;chr&gt;,</span>
 <span class="co">#&gt; #   ou_publication_date &lt;chr&gt;, perspective &lt;chr&gt;, prel_publication_date &lt;chr&gt;,</span>
-<span class="co">#&gt; #   publ_period &lt;chr&gt;, publication_date &lt;chr&gt;, title &lt;chr&gt;</span></pre></body></html></div>
+<span class="co">#&gt; #   publ_period &lt;chr&gt;, publication_date &lt;chr&gt;, title &lt;chr&gt;</span></code></pre></div>
 <p>All <code>get</code> functions are thin wrappers around the more general function <code><a href="../reference/get_metadata.html">get_metadata()</a></code>. If you are familiar with the terminology used in the Kolada API for accessing metadata you might want to use this function instead.</p>
 </div>
 <div id="exploring-metadata" class="section level3">
@@ -191,46 +195,47 @@
 <p>Since each <code>get</code> function above returns a table for the selected entity, a metadata table can be one of five different types. All metadata convenience functions are prefixed to reflect which kind of metadata table they operate on: <code>kpi</code>, <code>kpi_grp</code>, <code>municipality</code>, <code>municipality_grp</code>, and <code>ou</code>.</p>
 <p>All metadata convenience functions have been designed with functional piping in mind, so their first argument is always a metadata tibble. Most of them also return a tibble of the same type</p>
 <p>The most important family of metadata convenience functions is the <code>search</code> family. Much like <code><a href="https://dplyr.tidyverse.org/reference/filter.html">dplyr::filter()</a></code> they can be used to search for one or several search terms in the entire table or in a subset of named columns:</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="co"># Search for KPIs with the term "BRP" in their description or title</span>
-<span class="no">kpi_filter</span> <span class="kw">&lt;-</span> <span class="no">kpi_df</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="../reference/kpi_search.html">kpi_search</a></span>(<span class="st">"skola"</span>, <span class="kw">column</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"description"</span>, <span class="st">"title"</span>))
-<span class="no">kpi_filter</span>
-<span class="co">#&gt; # A tibble: 622 x 13</span>
-<span class="co">#&gt;    auspices description has_ou_data id    is_divided_by_g… municipality_ty…</span>
-<span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt;       &lt;lgl&gt;       &lt;chr&gt;            &lt;int&gt; &lt;chr&gt;           </span>
-<span class="co">#&gt;  1 &lt;NA&gt;     Kostnadsut… FALSE       N000…                0 K               </span>
-<span class="co">#&gt;  2 &lt;NA&gt;     Kostnadsut… FALSE       N000…                0 K               </span>
-<span class="co">#&gt;  3 &lt;NA&gt;     Kostnadsut… FALSE       N000…                0 K               </span>
-<span class="co">#&gt;  4 T        Avvikelse … FALSE       N000…                0 K               </span>
-<span class="co">#&gt;  5 T        Strukturko… FALSE       N001…                0 K               </span>
-<span class="co">#&gt;  6 E        Månadsavlö… FALSE       N001…                0 K               </span>
-<span class="co">#&gt;  7 E        Årsarbetar… FALSE       N001…                0 K               </span>
-<span class="co">#&gt;  8 X        Antal invå… FALSE       N017…                0 K               </span>
-<span class="co">#&gt;  9 X        Investerin… FALSE       N031…                0 K               </span>
-<span class="co">#&gt; 10 X        Investerin… FALSE       N031…                0 K               </span>
-<span class="co">#&gt; # … with 612 more rows, and 7 more variables: operating_area &lt;chr&gt;,</span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Search for KPIs with the term "BRP" in their description or title</span>
+<span class="va">kpi_filter</span> <span class="op">&lt;-</span> <span class="va">kpi_df</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/kpi_search.html">kpi_search</a></span><span class="op">(</span><span class="st">"skola"</span>, column <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"description"</span>, <span class="st">"title"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">kpi_filter</span>
+<span class="co">#&gt; # A tibble: 675 x 13</span>
+<span class="co">#&gt;    auspices description      has_ou_data id    is_divided_by_g… municipality_ty…</span>
+<span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt;            &lt;lgl&gt;       &lt;chr&gt;            &lt;int&gt; &lt;chr&gt;           </span>
+<span class="co">#&gt;  1 &lt;NA&gt;     Kostnadsutj.net… FALSE       N000…                0 K               </span>
+<span class="co">#&gt;  2 &lt;NA&gt;     Kostnadsutj.net… FALSE       N000…                0 K               </span>
+<span class="co">#&gt;  3 &lt;NA&gt;     Kostnadsutj.net… FALSE       N000…                0 K               </span>
+<span class="co">#&gt;  4 T        Avvikelse i pro… FALSE       N000…                0 K               </span>
+<span class="co">#&gt;  5 T        Strukturkostnad… FALSE       N001…                0 K               </span>
+<span class="co">#&gt;  6 E        Månadsavlönad p… FALSE       N001…                0 K               </span>
+<span class="co">#&gt;  7 E        Årsarbetare, ko… FALSE       N001…                0 K               </span>
+<span class="co">#&gt;  8 X        Antal invånare,… FALSE       N017…                0 K               </span>
+<span class="co">#&gt;  9 X        Investeringsutg… FALSE       N031…                0 K               </span>
+<span class="co">#&gt; 10 X        Antal barn 0-16… NA          N075…                0 A               </span>
+<span class="co">#&gt; # … with 665 more rows, and 7 more variables: operating_area &lt;chr&gt;,</span>
 <span class="co">#&gt; #   ou_publication_date &lt;chr&gt;, perspective &lt;chr&gt;, prel_publication_date &lt;chr&gt;,</span>
 <span class="co">#&gt; #   publ_period &lt;chr&gt;, publication_date &lt;chr&gt;, title &lt;chr&gt;</span>
 
 <span class="co"># Search for municipality groups containing the name "Arboga"</span>
-<span class="no">munic_g</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_kpi.html">get_municipality_groups</a></span>()
-<span class="no">arboga_groups</span> <span class="kw">&lt;-</span> <span class="no">munic_g</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="../reference/municipality_grp_search.html">municipality_grp_search</a></span>(<span class="st">"Arboga"</span>)
-<span class="no">arboga_groups</span>
-<span class="co">#&gt; # A tibble: 11 x 3</span>
+<span class="va">munic_g</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_kpi.html">get_municipality_groups</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">arboga_groups</span> <span class="op">&lt;-</span> <span class="va">munic_g</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/municipality_grp_search.html">municipality_grp_search</a></span><span class="op">(</span><span class="st">"Arboga"</span><span class="op">)</span>
+<span class="va">arboga_groups</span>
+<span class="co">#&gt; # A tibble: 10 x 3</span>
 <span class="co">#&gt;    id      members          title                                        </span>
 <span class="co">#&gt;    &lt;chr&gt;   &lt;list&gt;           &lt;chr&gt;                                        </span>
-<span class="co">#&gt;  1 G123832 &lt;df[,2] [7 × 2]&gt; Liknande kommuner socioekonomi, Arboga, 2018 </span>
-<span class="co">#&gt;  2 G145970 &lt;df[,2] [7 × 2]&gt; Liknande regioner socioekonomi, Arboga, 2018 </span>
-<span class="co">#&gt;  3 G35869  &lt;df[,2] [7 × 2]&gt; Liknande kommuner grundskola, Arboga, 2018   </span>
-<span class="co">#&gt;  4 G36161  &lt;df[,2] [7 × 2]&gt; Liknande kommuner gymnasieskola, Arboga, 2018</span>
-<span class="co">#&gt;  5 G36453  &lt;df[,2] [7 × 2]&gt; Liknande kommuner IFO, Arboga, 2018          </span>
-<span class="co">#&gt;  6 G36745  &lt;df[,2] [7 × 2]&gt; Liknande kommuner äldreomsorg, Arboga, 2018  </span>
-<span class="co">#&gt;  7 G37329  &lt;df[,2] [7 × 2]&gt; Liknande kommuner, övergripande, Arboga, 2018</span>
-<span class="co">#&gt;  8 G39502  &lt;df[,2] [7 × 2]&gt; Liknande kommuner LSS, Arboga, 2018          </span>
-<span class="co">#&gt;  9 G85463  &lt;df[,2] [7 × 2]&gt; Liknande kommuner fritidshem, Arboga, 2018   </span>
-<span class="co">#&gt; 10 G85755  &lt;df[,2] [7 × 2]&gt; Liknande kommuner förskola, Arboga, 2018     </span>
-<span class="co">#&gt; 11 G87629  &lt;df[,2] [7 × 2]&gt; Liknande kommuner integration, Arboga, 2018</span></pre></body></html></div>
+<span class="co">#&gt;  1 G148914 &lt;df[,2] [7 × 2]&gt; Liknande kommuner äldreomsorg, Arboga, 2019  </span>
+<span class="co">#&gt;  2 G149319 &lt;df[,2] [7 × 2]&gt; Liknande kommuner socioekonomi, Arboga, 2019 </span>
+<span class="co">#&gt;  3 G35869  &lt;df[,2] [7 × 2]&gt; Liknande kommuner grundskola, Arboga, 2019   </span>
+<span class="co">#&gt;  4 G36161  &lt;df[,2] [7 × 2]&gt; Liknande kommuner gymnasieskola, Arboga, 2019</span>
+<span class="co">#&gt;  5 G36453  &lt;df[,2] [7 × 2]&gt; Liknande kommuner IFO, Arboga, 2019          </span>
+<span class="co">#&gt;  6 G37329  &lt;df[,2] [7 × 2]&gt; Liknande kommuner, övergripande, Arboga, 2019</span>
+<span class="co">#&gt;  7 G39502  &lt;df[,2] [7 × 2]&gt; Liknande kommuner LSS, Arboga, 2019          </span>
+<span class="co">#&gt;  8 G85463  &lt;df[,2] [7 × 2]&gt; Liknande kommuner fritidshem, Arboga, 2019   </span>
+<span class="co">#&gt;  9 G85755  &lt;df[,2] [7 × 2]&gt; Liknande kommuner förskola, Arboga, 2019     </span>
+<span class="co">#&gt; 10 G87629  &lt;df[,2] [7 × 2]&gt; Liknande kommuner integration, Arboga, 2019</span></code></pre></div>
 <p>Another important family of exploration functions is the <code>describe</code> family of functions. These functions take a metadata table and print a human-readable summary of the most important facts about each row in the table (up to a limit, specified by <code>max_n</code>). By default, output is printed directly to the R console. But by specifying <code>format = "md"</code> you can make the <code>describe</code> functions create markdown-ready output which can be added directly to a R markdown file by setting the chunk option <code>results='asis'</code>. The output then looks as follows:</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">kpi_filter</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="../reference/kpi_describe.html">kpi_describe</a></span>(<span class="kw">max_n</span> <span class="kw">=</span> <span class="fl">2</span>, <span class="kw">format</span> <span class="kw">=</span> <span class="st">"md"</span>, <span class="kw">heading_level</span> <span class="kw">=</span> <span class="fl">4</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">kpi_filter</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/kpi_describe.html">kpi_describe</a></span><span class="op">(</span>max_n <span class="op">=</span> <span class="fl">2</span>, format <span class="op">=</span> <span class="st">"md"</span>, heading_level <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></code></pre></div>
 <div id="n00022-kostnadsutj-netto-förskola-och-skolbarnsomsorg-krinv-1-nov-fg-år" class="section level4">
 <h4 class="hasAnchor">
 <a href="#n00022-kostnadsutj-netto-f%C3%B6rskola-och-skolbarnsomsorg-krinv-1-nov-fg-%C3%A5r" class="anchor"></a>N00022: Kostnadsutj.netto: förskola och skolbarnsomsorg, kr/inv 1 nov fg år</h4>
@@ -290,63 +295,67 @@
 <h3 class="hasAnchor">
 <a href="#extra-functions-for-exploring-kpi-metadata" class="anchor"></a>Extra functions for exploring KPI metadata</h3>
 <p>KPI metadata is considerably more complex than other types of metadata. To further assist in exploring KPI metadata the function <code><a href="../reference/kpi_bind_keywords.html">kpi_bind_keywords()</a></code> can be used to tag data with keywords (these are inferred from the KPI title) to classify KPIs and make them more searchable.</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="co"># Add keywords to a KPI table</span>
-<span class="no">kpis_with_keywords</span> <span class="kw">&lt;-</span> <span class="no">kpi_filter</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="../reference/kpi_bind_keywords.html">kpi_bind_keywords</a></span>(<span class="kw">n</span> <span class="kw">=</span> <span class="fl">4</span>)
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Add keywords to a KPI table</span>
+<span class="va">kpis_with_keywords</span> <span class="op">&lt;-</span> <span class="va">kpi_filter</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/kpi_bind_keywords.html">kpi_bind_keywords</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
 
 <span class="co"># count keywords</span>
-<span class="no">kpis_with_keywords</span> <span class="kw">%&gt;%</span>
-  <span class="kw pkg">tidyr</span><span class="kw ns">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span>(<span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/reexports.html">starts_with</a></span>(<span class="st">"keyword"</span>), <span class="kw">values_to</span> <span class="kw">=</span> <span class="st">"keyword"</span>) <span class="kw">%&gt;%</span>
-  <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span>(<span class="no">keyword</span>, <span class="kw">sort</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
-<span class="co">#&gt; # A tibble: 305 x 2</span>
+<span class="va">kpis_with_keywords</span> <span class="op">%&gt;%</span>
+  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"keyword"</span><span class="op">)</span>, values_to <span class="op">=</span> <span class="st">"keyword"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">keyword</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 334 x 2</span>
 <span class="co">#&gt;    keyword            n</span>
 <span class="co">#&gt;    &lt;chr&gt;          &lt;int&gt;</span>
-<span class="co">#&gt;  1 elever           126</span>
-<span class="co">#&gt;  2 gymnasieelever    92</span>
-<span class="co">#&gt;  3 grundskola        80</span>
-<span class="co">#&gt;  4 gymnasieskola     68</span>
-<span class="co">#&gt;  5 åk                67</span>
-<span class="co">#&gt;  6 ungdomar          63</span>
-<span class="co">#&gt;  7 studerar          58</span>
-<span class="co">#&gt;  8 förskola          57</span>
-<span class="co">#&gt;  9 kostnad           57</span>
-<span class="co">#&gt; 10 år                55</span>
-<span class="co">#&gt; # … with 295 more rows</span></pre></body></html></div>
-<p>Some KPIs can be very similar-looking and it can sometimes be hard to discern which of the KPIs to use. To make sifting through data easier, <code><a href="../reference/kpi_minimize.html">kpi_minimize()</a></code> can be used to remove all redundant columns from a KPI table. (In this case, “redundant” means "containing no information that helps in differentiating KPIs from one another, i.e. columns containing only one single value for all observations in the table):</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="co"># Top 10 rows of the table</span>
-<span class="no">kpi_filter</span> <span class="kw">%&gt;%</span> <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span>(<span class="fl">1</span>:<span class="fl">10</span>)
+<span class="co">#&gt;  1 elever           115</span>
+<span class="co">#&gt;  2 grundskola        89</span>
+<span class="co">#&gt;  3 gymnasieelever    84</span>
+<span class="co">#&gt;  4 gymnasieskola     81</span>
+<span class="co">#&gt;  5 förskola          79</span>
+<span class="co">#&gt;  6 åk                69</span>
+<span class="co">#&gt;  7 kommunal          63</span>
+<span class="co">#&gt;  8 ungdomar          63</span>
+<span class="co">#&gt;  9 kostnad           60</span>
+<span class="co">#&gt; 10 studerar          58</span>
+<span class="co">#&gt; # … with 324 more rows</span></code></pre></div>
+<p>Some KPIs can be very similar-looking and it can sometimes be hard to discern which of the KPIs to use. To make sifting through data easier, <code><a href="../reference/kpi_minimize.html">kpi_minimize()</a></code> can be used to remove all redundant columns from a KPI table. (In this case, “redundant” means “containing no information that helps in differentiating KPIs from one another”, i.e. columns containing only one single value for all observations in the table):</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Top 10 rows of the table</span>
+<span class="va">kpi_filter</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 10 x 13</span>
-<span class="co">#&gt;    auspices description has_ou_data id    is_divided_by_g… municipality_ty…</span>
-<span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt;       &lt;lgl&gt;       &lt;chr&gt;            &lt;int&gt; &lt;chr&gt;           </span>
-<span class="co">#&gt;  1 &lt;NA&gt;     Kostnadsut… FALSE       N000…                0 K               </span>
-<span class="co">#&gt;  2 &lt;NA&gt;     Kostnadsut… FALSE       N000…                0 K               </span>
-<span class="co">#&gt;  3 &lt;NA&gt;     Kostnadsut… FALSE       N000…                0 K               </span>
-<span class="co">#&gt;  4 T        Avvikelse … FALSE       N000…                0 K               </span>
-<span class="co">#&gt;  5 T        Strukturko… FALSE       N001…                0 K               </span>
-<span class="co">#&gt;  6 E        Månadsavlö… FALSE       N001…                0 K               </span>
-<span class="co">#&gt;  7 E        Årsarbetar… FALSE       N001…                0 K               </span>
-<span class="co">#&gt;  8 X        Antal invå… FALSE       N017…                0 K               </span>
-<span class="co">#&gt;  9 X        Investerin… FALSE       N031…                0 K               </span>
-<span class="co">#&gt; 10 X        Investerin… FALSE       N031…                0 K               </span>
+<span class="co">#&gt;    auspices description      has_ou_data id    is_divided_by_g… municipality_ty…</span>
+<span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt;            &lt;lgl&gt;       &lt;chr&gt;            &lt;int&gt; &lt;chr&gt;           </span>
+<span class="co">#&gt;  1 &lt;NA&gt;     Kostnadsutj.net… FALSE       N000…                0 K               </span>
+<span class="co">#&gt;  2 &lt;NA&gt;     Kostnadsutj.net… FALSE       N000…                0 K               </span>
+<span class="co">#&gt;  3 &lt;NA&gt;     Kostnadsutj.net… FALSE       N000…                0 K               </span>
+<span class="co">#&gt;  4 T        Avvikelse i pro… FALSE       N000…                0 K               </span>
+<span class="co">#&gt;  5 T        Strukturkostnad… FALSE       N001…                0 K               </span>
+<span class="co">#&gt;  6 E        Månadsavlönad p… FALSE       N001…                0 K               </span>
+<span class="co">#&gt;  7 E        Årsarbetare, ko… FALSE       N001…                0 K               </span>
+<span class="co">#&gt;  8 X        Antal invånare,… FALSE       N017…                0 K               </span>
+<span class="co">#&gt;  9 X        Investeringsutg… FALSE       N031…                0 K               </span>
+<span class="co">#&gt; 10 X        Antal barn 0-16… NA          N075…                0 A               </span>
 <span class="co">#&gt; # … with 7 more variables: operating_area &lt;chr&gt;, ou_publication_date &lt;chr&gt;,</span>
 <span class="co">#&gt; #   perspective &lt;chr&gt;, prel_publication_date &lt;chr&gt;, publ_period &lt;chr&gt;,</span>
 <span class="co">#&gt; #   publication_date &lt;chr&gt;, title &lt;chr&gt;</span>
 
 <span class="co"># Top 10 rows of the table, with non-distinct data removed</span>
-<span class="no">kpi_filter</span> <span class="kw">%&gt;%</span> <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span>(<span class="fl">1</span>:<span class="fl">10</span>) <span class="kw">%&gt;%</span> <span class="fu"><a href="../reference/kpi_minimize.html">kpi_minimize</a></span>()
-<span class="co">#&gt; # A tibble: 10 x 8</span>
-<span class="co">#&gt;    id    title description operating_area perspective prel_publicatio…</span>
-<span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;          &lt;chr&gt;       &lt;chr&gt;           </span>
-<span class="co">#&gt;  1 N000… Kost… Kostnadsut… Skatter och u… Resurser    &lt;NA&gt;            </span>
-<span class="co">#&gt;  2 N000… Kost… Kostnadsut… Skatter och u… Resurser    &lt;NA&gt;            </span>
-<span class="co">#&gt;  3 N000… Kost… Kostnadsut… Skatter och u… Resurser    &lt;NA&gt;            </span>
-<span class="co">#&gt;  4 N000… Nett… Avvikelse … Kommunen, öve… Resurser    2020-06-19      </span>
-<span class="co">#&gt;  5 N001… Stru… Strukturko… Kommunen, öve… Resurser    &lt;NA&gt;            </span>
-<span class="co">#&gt;  6 N001… Måna… Månadsavlö… Barn och utbi… Resurser    &lt;NA&gt;            </span>
-<span class="co">#&gt;  7 N001… Årsa… Årsarbetar… Barn och utbi… Resurser    &lt;NA&gt;            </span>
-<span class="co">#&gt;  8 N017… Invå… Antal invå… Befolkning     Volymer,Öv… &lt;NA&gt;            </span>
-<span class="co">#&gt;  9 N031… Inve… Investerin… Barn och utbi… Resurser    2020-04-08      </span>
-<span class="co">#&gt; 10 N031… Inve… Investerin… Barn och utbi… Resurser    &lt;NA&gt;            </span>
-<span class="co">#&gt; # … with 2 more variables: publ_period &lt;chr&gt;, publication_date &lt;chr&gt;</span></pre></body></html></div>
+<span class="va">kpi_filter</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/kpi_minimize.html">kpi_minimize</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 10 x 10</span>
+<span class="co">#&gt;    id     title      description     has_ou_data municipality_ty… operating_area</span>
+<span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;           &lt;lgl&gt;       &lt;chr&gt;            &lt;chr&gt;         </span>
+<span class="co">#&gt;  1 N00022 Kostnadsu… Kostnadsutj.ne… FALSE       K                Skatter och u…</span>
+<span class="co">#&gt;  2 N00023 Kostnadsu… Kostnadsutj.ne… FALSE       K                Skatter och u…</span>
+<span class="co">#&gt;  3 N00026 Kostnadsu… Kostnadsutj.ne… FALSE       K                Skatter och u…</span>
+<span class="co">#&gt;  4 N00097 Nettokost… Avvikelse i pr… FALSE       K                Kommunen, öve…</span>
+<span class="co">#&gt;  5 N00100 Strukturk… Strukturkostna… FALSE       K                Kommunen, öve…</span>
+<span class="co">#&gt;  6 N00108 Månadsavl… Månadsavlönad … FALSE       K                Barn och utbi…</span>
+<span class="co">#&gt;  7 N00114 Årsarbeta… Årsarbetare, k… FALSE       K                Barn och utbi…</span>
+<span class="co">#&gt;  8 N01721 Invånare,… Antal invånare… FALSE       K                Befolkning    </span>
+<span class="co">#&gt;  9 N03150 Investeri… Investeringsut… FALSE       K                Barn och utbi…</span>
+<span class="co">#&gt; 10 N07531 Invånare … Antal barn 0-1… NA          A                Kommunen, öve…</span>
+<span class="co">#&gt; # … with 4 more variables: perspective &lt;chr&gt;, prel_publication_date &lt;chr&gt;,</span>
+<span class="co">#&gt; #   publ_period &lt;chr&gt;, publication_date &lt;chr&gt;</span></code></pre></div>
+<p>Note that <code><a href="../reference/kpi_minimize.html">kpi_minimize()</a></code> operates on the <em>current table</em>. This means that results may vary depending on the data you’re operating on.</p>
 </div>
 <div id="metadata-groups" class="section level3">
 <h3 class="hasAnchor">
@@ -361,38 +370,41 @@
 <a href="#downloading-data-using-metadata" class="anchor"></a>Downloading data using metadata</h2>
 <p>An alternative approach to downloading data using known IDs is to use metadata tables to construct arguments to <code><a href="../reference/get_values.html">get_values()</a></code>. <code>rKolada</code> provides a <code>extract_ids</code> family of functions for passing a metadata table as an argument to <code>get_values</code>. A typical workflow would be to download metadata for (groups of) KPIs and/or municipalities, use functions like <code><a href="../reference/kpi_search.html">kpi_search()</a></code> to filter down the tables to a few rows, and then call <code><a href="../reference/get_values.html">get_values()</a></code> to fetch data.</p>
 <p>As an example, let’s say we want to download all KPIs describing Gross Regional Product for all municipalities that are socioeconomically similar to Arboga, a small municipality in central Sweden:</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="co"># Get KPIs describing Gross Regional Product of municipalities</span>
-<span class="no">kpi_filter</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_kpi.html">get_kpi</a></span>() <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/kpi_search.html">kpi_search</a></span>(<span class="st">"BRP"</span>)
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Get KPIs describing Gross Regional Product of municipalities</span>
+<span class="va">kpi_filter</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_kpi.html">get_kpi</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../reference/kpi_search.html">kpi_search</a></span><span class="op">(</span><span class="st">"BRP"</span><span class="op">)</span>
 <span class="co"># Creates a table with two rows</span>
 
-<span class="no">munic_grp_filter</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_kpi.html">get_municipality_groups</a></span>() <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/municipality_grp_search.html">municipality_grp_search</a></span>(<span class="st">"Liknande kommuner socioekonomi, Arboga"</span>)
+<span class="co"># Get a suitable group of municipalities</span>
+<span class="va">munic_grp_filter</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_kpi.html">get_municipality_groups</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../reference/municipality_grp_search.html">municipality_grp_search</a></span><span class="op">(</span><span class="st">"Liknande kommuner socioekonomi, Arboga"</span><span class="op">)</span>
 <span class="co"># Creates a table with one group of 7 municipalities</span>
 
-<span class="no">arboga_filter</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_kpi.html">get_municipality</a></span>() <span class="kw">%&gt;%</span> <span class="fu"><a href="../reference/municipality_search.html">municipality_search</a></span>(<span class="st">"Arboga"</span>)
+<span class="co"># Also include Arboga itself</span>
+<span class="va">arboga</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_kpi.html">get_municipality</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/municipality_search.html">municipality_search</a></span><span class="op">(</span><span class="st">"Arboga"</span><span class="op">)</span>
 
-<span class="co"># Get values</span>
-<span class="no">grp_data</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_values.html">get_values</a></span>(
-  <span class="kw">kpi</span> <span class="kw">=</span> <span class="fu"><a href="../reference/kpi_extract_ids.html">kpi_extract_ids</a></span>(<span class="no">kpi_filter</span>),
-  <span class="kw">municipality</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(
-    <span class="fu"><a href="../reference/municipality_grp_extract_ids.html">municipality_grp_extract_ids</a></span>(<span class="no">munic_grp_filter</span>),
-    <span class="fu"><a href="../reference/municipality_extract_ids.html">municipality_extract_ids</a></span>(<span class="no">arboga_filter</span>)
-  )
-)
+<span class="co"># Get data</span>
+<span class="va">grp_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_values.html">get_values</a></span><span class="op">(</span>
+  kpi <span class="op">=</span> <span class="fu"><a href="../reference/kpi_extract_ids.html">kpi_extract_ids</a></span><span class="op">(</span><span class="va">kpi_filter</span><span class="op">)</span>,
+  municipality <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
+    <span class="fu"><a href="../reference/municipality_grp_extract_ids.html">municipality_grp_extract_ids</a></span><span class="op">(</span><span class="va">munic_grp_filter</span><span class="op">)</span>,
+    <span class="fu"><a href="../reference/municipality_extract_ids.html">municipality_extract_ids</a></span><span class="op">(</span><span class="va">arboga</span><span class="op">)</span>
+  <span class="op">)</span>
+<span class="op">)</span>
 
 <span class="co"># Visualize results</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"ggplot2"</span>)
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">grp_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="no">year</span>, <span class="no">value</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="no">municipality</span>)) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span>(<span class="no">kpi</span> ~ <span class="no">.</span>, <span class="kw">scales</span> <span class="kw">=</span> <span class="st">"free"</span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(
-    <span class="kw">title</span> <span class="kw">=</span> <span class="st">"Gross Regional Product 2012-2017"</span>,
-    <span class="kw">subtitle</span> <span class="kw">=</span> <span class="st">"Swedish municipalities similar to Arboga"</span>,
-    <span class="kw">caption</span> <span class="kw">=</span> <span class="fu"><a href="../reference/values_legend.html">values_legend</a></span>(<span class="no">grp_data</span>, <span class="no">kpi_filter</span>)
-  ) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html">scale_color_viridis_d</a></span>(<span class="kw">option</span> <span class="kw">=</span> <span class="st">"B"</span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span>(<span class="kw">labels</span> <span class="kw">=</span> <span class="kw pkg">scales</span><span class="kw ns">::</span><span class="no"><a href="https://scales.r-lib.org//reference/label_number.html">comma</a></span>)</pre></body></html></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org">"ggplot2"</a></span><span class="op">)</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">grp_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">year</span>, <span class="va">value</span>, color <span class="op">=</span> <span class="va">municipality</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>linetype <span class="op">=</span> <span class="va">municipality</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span><span class="op">(</span><span class="va">kpi</span> <span class="op">~</span> <span class="va">.</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>
+    title <span class="op">=</span> <span class="st">"Gross Regional Product per capita 2012-2018"</span>,
+    subtitle <span class="op">=</span> <span class="st">"Swedish municipalities similar to Arboga"</span>,
+    caption <span class="op">=</span> <span class="fu"><a href="../reference/values_legend.html">values_legend</a></span><span class="op">(</span><span class="va">grp_data</span>, <span class="va">kpi_filter</span><span class="op">)</span>
+  <span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html">scale_color_viridis_d</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="va"><a href="https://scales.r-lib.org//reference/label_number.html">comma</a></span><span class="op">)</span></code></pre></div>
 <p><img src="introduction-to-rkolada_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
 </div>
   </div>
@@ -412,7 +424,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

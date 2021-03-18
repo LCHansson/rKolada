@@ -75,7 +75,7 @@ dplyr::filter." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rKolada</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -83,7 +83,7 @@ dplyr::filter." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -112,7 +112,7 @@ dplyr::filter." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/lchansson/rKolada/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -141,7 +141,7 @@ the <code>column</code> parameter. For more precise matching, please use
 <code><a href='https://dplyr.tidyverse.org/reference/filter.html'>dplyr::filter</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>kpi_search</span>(<span class='no'>kpi_df</span>, <span class='no'>query</span>, <span class='kw'>column</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>kpi_search</span><span class='op'>(</span><span class='va'>kpi_df</span>, <span class='va'>query</span>, column <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -169,17 +169,19 @@ columns in which to search for <code>query</code>.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Search for a single search term in a KPI table</span>
-<span class='no'>kpis</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_kpi.html'>get_kpi</a></span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"N11002"</span>, <span class='st'>"N11003"</span>, <span class='st'>"N11004"</span>, <span class='st'>"N11005"</span>))
-<span class='no'>kpi_filter</span> <span class='kw'>&lt;-</span> <span class='fu'>kpi_search</span>(<span class='no'>kpis</span>, <span class='st'>"kostnad"</span>)
+<span class='va'>kpis</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_kpi.html'>get_kpi</a></span><span class='op'>(</span>id <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"N11002"</span>, <span class='st'>"N11003"</span>, <span class='st'>"N11004"</span>, <span class='st'>"N11005"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>kpi_filter</span> <span class='op'>&lt;-</span> <span class='fu'>kpi_search</span><span class='op'>(</span><span class='va'>kpis</span>, <span class='st'>"kostnad"</span><span class='op'>)</span>
 
 <span class='co'># Add keywords to a KPI table and search for multiple terms among</span>
 <span class='co'># the keywords</span>
-<span class='no'>kpi_filter</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_kpi.html'>get_kpi</a></span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"N11002"</span>, <span class='st'>"N11003"</span>, <span class='st'>"N11004"</span>, <span class='st'>"N11005"</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='kpi_bind_keywords.html'>kpi_bind_keywords</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>3</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>kpi_search</span>(
-    <span class='kw'>query</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"nettokostnad"</span>),
-    <span class='kw'>column</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"keyword_1"</span>, <span class='st'>"keyword_2"</span>, <span class='st'>"keyword_3"</span>)
-  )</div></pre>
+<span class='va'>kpi_filter</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_kpi.html'>get_kpi</a></span><span class='op'>(</span>id <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"N11002"</span>, <span class='st'>"N11003"</span>, <span class='st'>"N11004"</span>, <span class='st'>"N11005"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='kpi_bind_keywords.html'>kpi_bind_keywords</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>kpi_search</span><span class='op'>(</span>
+    query <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"nettokostnad"</span><span class='op'>)</span>,
+    column <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"keyword_1"</span>, <span class='st'>"keyword_2"</span>, <span class='st'>"keyword_3"</span><span class='op'>)</span>
+  <span class='op'>)</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -195,7 +197,7 @@ columns in which to search for <code>query</code>.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
