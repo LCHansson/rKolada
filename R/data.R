@@ -14,6 +14,8 @@
 #' @param unit_type One of \code{"municipality"} or \code{"ou"}. Whether to
 #' fetch data for Municipalities or Organizational Units.
 #' Units. Defaults to \code{"municipality"}.
+#' @param page What page to fetch. Used mainly in large queries. Fetches a page using the value of \code{"per_page"} as pagination delimiter.
+#' @param per_page Number of results per page.
 #' @param version Version of the API. Currently only \code{"v2"} is supported.
 #'
 #' @return A string containing a URL to the Kolada REST API.
@@ -146,12 +148,7 @@ get_values <- function(
 ) {
 
   if (isTRUE(verbose))
-    message("Downloading Kolada data using URL")
-
-  res <- httr::RETRY("GET", query)
-
-  contents_raw <- httr::content(res, as = "text")
-  contents <- jsonlite::fromJSON(contents_raw)
+    message("Downloading Kolada metadata using URL(s):")
 
   next_page <- TRUE
   page <- 1
@@ -163,7 +160,12 @@ get_values <- function(
     if (isTRUE(verbose))
       message(query)
 
-    res <- httr::RETRY("GET", query, quiet = FALSE)
+    res <- try(httr::RETRY("GET", query, quiet = !verbose), silent = TRUE)
+
+    if(inherits(res, "try-error")) {
+      warning("Could not connect to the Kolada database. Please check your internet connection. Did you misspel the query?\nRe-run query with verbose = TRUE to see the URL used in the query.")
+      return(NULL)
+    }
 
     contents_raw <- httr::content(res, as = "text")
     contents <- jsonlite::fromJSON(contents_raw)

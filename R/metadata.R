@@ -10,6 +10,8 @@
 #' @param id The ID of any entry in the current entity.
 #' @param municipality If entity is \code{"ou"}, the municipality parameter can
 #' be added to narrow the search.
+#' @param page What page to fetch. Used mainly in large queries. Fetches a page using the value of \code{"per_page"} as pagination delimiter.
+#' @param per_page Number of results per page.
 #' @param version Version of the API. Currently only \code{"v2"} is supported.
 #'
 #' @return A string containing a URL to the Kolada REST API.
@@ -27,17 +29,19 @@ compose_metadata_query <- function(
   if (!is.null(entity))
     entity <- tolower(entity)
   else
-    stop("RAISE ENTITY ERROR HERE")
+    stop("No entity was specified. You must specify an entity.")
 
   if(!entity %in% allowed_entities())
-    stop("RAISE ENTITY MISSPELLED ERROR HERE")
+    stop("The specified entity is no in the list of valid entities. Please check your spelling.\nFor a list of allowed entities, please see allowed_entities()")
 
   base_url <- glue::glue("http://api.kolada.se/{version}/{entity}")
   query_url <- glue::glue("{base_url}")
 
   if (!is.null(title)) {
-    if (length(title) > 1)
-      stop("RAISE TITLE LENGTH > 1 ERROR HERE")
+    if (length(title) > 1) {
+      title <- title[1]
+      warning("You have specified a title vector of length > 1. Only the first element in the vector will be used.")
+    }
 
     title <- tolower(title)
     query_url <- glue::glue("{query_url}?title={title}")
@@ -114,7 +118,7 @@ get_metadata <- function(
     return(ch("load"))
 
   if (isTRUE(verbose))
-    message("Downloading Kolada metadata using URL")
+    message("Downloading Kolada metadata using URL(s):")
 
   next_page <- TRUE
   page <- 1
@@ -126,7 +130,13 @@ get_metadata <- function(
     if (isTRUE(verbose))
       message(query)
 
-    res <- httr::RETRY("GET", query, quiet = FALSE)
+    res <- try(httr::RETRY("GET", query, quiet = !verbose), silent = TRUE)
+
+    if(inherits(res, "try-error")) {
+      warning("Could not connect to the Kolada database. Please check your internet connection. Did you misspel the query?\nRe-run query with verbose = TRUE to see the URL used in the query.")
+      return(NULL)
+    }
+
 
     contents_raw <- httr::content(res, as = "text")
     contents <- jsonlite::fromJSON(contents_raw)
