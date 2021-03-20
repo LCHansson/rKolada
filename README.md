@@ -9,7 +9,7 @@ To learn more about using `rKolada`, it is recommended you use the following res
 
 ## Getting started with rKolada
 
-1. To get up and running quickly with rKolada, please see the vignette [A quick start guide to rKolada](https://lchansson.github.io/rKolada/articles/quickstart-rkolada.html).
+1. To get up and running quickly with rKolada, please see the vignette [A quick start guide to rKolada](https://lchansson.github.io/rKolada/articles/a-quickstart-rkolada.html).
 1. For an introduction to rKolada and the design principles of functions included, please see [Introduction to rKolada](https://lchansson.github.io/rKolada/articles/introduction-to-rkolada.html).
 1. See the [Reference section of the package homepage](https://lchansson.github.io/rKolada/reference/index.html) to learn about the full set of functionality included with the package.
 

@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-`rKolada` is an R package for *downloading*, *inspecting* and *processing* data from [Kolada](https://kolada.se/), a Key Performance Indicator database for Swedish municipalities and regions. This vignette provides an overview of the methods included in the `rKolada` package and the design principles of the package API. To learn more about the specifics of functions and to see a full list of the functions included, please see the [Reference section of the package homepage](https://lchansson.github.io/rKolada/reference/index.html) or run `??rKolada`. For a quick introduction to the package see the vignette [A quick start guide to rKolada](quickstart-rkolada.html).
+`rKolada` is an R package for *downloading*, *inspecting* and *processing* data from [Kolada](https://kolada.se/), a Key Performance Indicator database for Swedish municipalities and regions. This vignette provides an overview of the methods included in the `rKolada` package and the design principles of the package API. To learn more about the specifics of functions and to see a full list of the functions included, please see the [Reference section of the package homepage](https://lchansson.github.io/rKolada/reference/index.html) or run `??rKolada`. For a quick introduction to the package see the vignette [A quick start guide to rKolada](a-quickstart-rkolada.html).
 
 NOTE: All metadata and data labels in Kolada are written in Swedish only.
 
