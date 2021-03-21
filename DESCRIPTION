@@ -16,6 +16,8 @@ Suggests:
     testthat,
     knitr,
     rmarkdown,
+    stringi,
+    ggplot2,
     scales
 RoxygenNote: 7.1.1
 Imports: 
@@ -28,8 +30,6 @@ Imports:
     magrittr,
     tidyr,
     purrr,
-    stringi,
-    ggplot2,
     rlang,
     urltools
 VignetteBuilder: knitr
