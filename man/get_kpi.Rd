@@ -8,11 +8,18 @@
 \alias{get_municipality_groups}
 \title{Download metadata for a specific entity from the Kolada API}
 \usage{
-get_kpi(id = NULL, cache = FALSE, cache_location = tempdir, verbose = FALSE)
+get_kpi(
+  id = NULL,
+  max_results = NULL,
+  cache = FALSE,
+  cache_location = tempdir,
+  verbose = FALSE
+)
 
 get_kpi_groups(
   id = NULL,
   cache = FALSE,
+  max_results = NULL,
   cache_location = tempdir,
   verbose = FALSE
 )
@@ -20,6 +27,7 @@ get_kpi_groups(
 get_ou(
   id = NULL,
   municipality = NULL,
+  max_results = NULL,
   cache = FALSE,
   cache_location = tempdir,
   verbose = FALSE
@@ -28,6 +36,7 @@ get_ou(
 get_municipality(
   id = NULL,
   cache = FALSE,
+  max_results = NULL,
   cache_location = tempdir,
   verbose = FALSE
 )
@@ -35,12 +44,16 @@ get_municipality(
 get_municipality_groups(
   id = NULL,
   cache = FALSE,
+  max_results = NULL,
   cache_location = tempdir,
   verbose = FALSE
 )
 }
 \arguments{
 \item{id}{(Optional) One or several KPI IDs}
+
+\item{max_results}{(Optional) Specify the maximum number of results
+returned by the query.}
 
 \item{cache}{Logical. If TRUE, downloaded data are stored to the local disk
 in the place specified by \code{cache_location}. If data is already present
@@ -73,7 +86,6 @@ retrieves a table with the metadata for that entity. The \code{get_ENTITY}
 functions are thin wrappers around \code{\link{get_metadata}}.
 }
 \examples{
-
 # Download KPI table and store a cache copy of the results in
 # your current working directory
 kpi_df <- get_kpi(cache = TRUE)

@@ -10,6 +10,7 @@ get_values(
   period = NULL,
   ou = NULL,
   unit_type = "municipality",
+  max_results = NULL,
   simplify = TRUE,
   verbose = FALSE
 )
@@ -30,6 +31,9 @@ available for certain KPIs.}
 \item{unit_type}{One of \code{"municipality"} or \code{"ou"}. Whether to
 fetch data for Municipalities or Organizational Units.}
 
+\item{max_results}{(Optional) Specify the maximum number of results
+returned by the query.}
+
 \item{simplify}{Whether to make results more human readable.}
 
 \item{verbose}{Whether to print the call to the Kolada API as a message to
@@ -47,7 +51,7 @@ is omitted, all available data for that dimension will be downloaded.
 \examples{
 # Download data for KPIs for Gross Regional Product ("BRP" in Swedish)
 # for three municipalities
-grp_kpi <- get_kpi(
+brp_kpi <- get_kpi(
   id = c("N03068", "N03069", "N03070", "N03700", "N03701")
 ) \%>\%
  kpi_search("BRP") \%>\%
@@ -57,7 +61,7 @@ munic_sample <- get_municipality() \%>\%
   municipality_name_to_id(c("Stockholm", "Arboga", "Lund"))
 
 grp_data <- get_values(
-  kpi = grp_kpi,
+  kpi = brp_kpi,
   municipality = munic_sample
 )
 

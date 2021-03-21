@@ -9,6 +9,7 @@ get_metadata(
   title = NULL,
   id = NULL,
   municipality = NULL,
+  max_results = NULL,
   cache = FALSE,
   cache_location = tempdir,
   verbose = FALSE
@@ -25,6 +26,9 @@ current entity. Case insensitive.}
 
 \item{municipality}{If entity is \code{"ou"}, the municipality parameter can
 be added to narrow the search.}
+
+\item{max_results}{(Optional) Specify the maximum number of results
+returned by the query.}
 
 \item{cache}{Logical. If TRUE, downloaded data are stored to the local disk
 in the place specified by \code{cache_location}. If data is already present

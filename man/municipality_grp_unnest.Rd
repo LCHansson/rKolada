@@ -26,7 +26,8 @@ metadata table for further processing.
 }
 \examples{
 # Download Municipality Group metadata
-munic_grp_df <- get_municipality_groups()
+# (skip the parameter "max_results" to actually download all available data)
+munic_grp_df <- get_municipality_groups(max_results = 100)
 
 # Create a Municipality metadata table from municipality groups matching the
 # term "Arboga"
