@@ -150,8 +150,8 @@ get_values <- function(
   verbose = FALSE
 ) {
 
-  if (isTRUE(verbose))
-    message("Downloading Kolada metadata using URL(s):")
+  # if (isTRUE(verbose))
+  #   message("Downloading Kolada metadata using URL(s):")
 
   next_page <- TRUE
   page <- 1
@@ -166,8 +166,8 @@ get_values <- function(
 
     query <- compose_data_query(kpi = kpi, municipality = municipality, period = period, ou = ou, unit_type = unit_type, page = page, per_page = page_size)
 
-    if (isTRUE(verbose))
-      message(query)
+    # if (isTRUE(verbose))
+    #   message(query)
 
     res <- try(httr::GET(query, httr::config(verbose = verbose)), silent = TRUE)
 
