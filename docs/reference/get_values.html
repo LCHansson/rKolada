@@ -147,6 +147,7 @@ is omitted, all available data for that dimension will be downloaded.</p>
   period <span class='op'>=</span> <span class='cn'>NULL</span>,
   ou <span class='op'>=</span> <span class='cn'>NULL</span>,
   unit_type <span class='op'>=</span> <span class='st'>"municipality"</span>,
+  max_results <span class='op'>=</span> <span class='cn'>NULL</span>,
   simplify <span class='op'>=</span> <span class='cn'>TRUE</span>,
   verbose <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
@@ -180,6 +181,11 @@ available for certain KPIs.</p></td>
 fetch data for Municipalities or Organizational Units.</p></td>
     </tr>
     <tr>
+      <th>max_results</th>
+      <td><p>(Optional) Specify the maximum number of results
+returned by the query.</p></td>
+    </tr>
+    <tr>
       <th>simplify</th>
       <td><p>Whether to make results more human readable.</p></td>
     </tr>
@@ -197,7 +203,7 @@ the R console.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Download data for KPIs for Gross Regional Product ("BRP" in Swedish)</span>
 <span class='co'># for three municipalities</span>
-<span class='va'>grp_kpi</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_kpi.html'>get_kpi</a></span><span class='op'>(</span>
+<span class='va'>brp_kpi</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_kpi.html'>get_kpi</a></span><span class='op'>(</span>
   id <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"N03068"</span>, <span class='st'>"N03069"</span>, <span class='st'>"N03070"</span>, <span class='st'>"N03700"</span>, <span class='st'>"N03701"</span><span class='op'>)</span>
 <span class='op'>)</span> <span class='op'>%&gt;%</span>
  <span class='fu'><a href='kpi_search.html'>kpi_search</a></span><span class='op'>(</span><span class='st'>"BRP"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
@@ -207,7 +213,7 @@ the R console.</p></td>
   <span class='fu'><a href='municipality_name_to_id.html'>municipality_name_to_id</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Stockholm"</span>, <span class='st'>"Arboga"</span>, <span class='st'>"Lund"</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='va'>grp_data</span> <span class='op'>&lt;-</span> <span class='fu'>get_values</span><span class='op'>(</span>
-  kpi <span class='op'>=</span> <span class='va'>grp_kpi</span>,
+  kpi <span class='op'>=</span> <span class='va'>brp_kpi</span>,
   municipality <span class='op'>=</span> <span class='va'>munic_sample</span>
 <span class='op'>)</span>
 

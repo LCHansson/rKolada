@@ -169,9 +169,10 @@ columns in which to search for <code>query</code>.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Search for all OUs matching the search term "skola" (school)</span>
-<span class='va'>ou_df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_kpi.html'>get_ou</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='co'># (skip the parameter "max_results" to actually download all data)</span>
+<span class='va'>ou_df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_kpi.html'>get_ou</a></span><span class='op'>(</span>max_results <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
 <span class='fu'>ou_search</span><span class='op'>(</span><span class='va'>ou_df</span>, <span class='st'>"skola"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 13,109 x 4</span><span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 54 x 4</span><span>
 #&gt;    id           title                              municipality  municipality_id
 #&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                              </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>          
 #&gt; </span><span style='color: #BCBCBC;'> 1</span><span> V11E0114123… EDS FÖRSKOLA                       Upplands Väs… 0114           
@@ -184,11 +185,13 @@ columns in which to search for <code>query</code>.</p></td>
 #&gt; </span><span style='color: #BCBCBC;'> 8</span><span> V11E0114123… STALLETS FÖRSKOLA                  Upplands Väs… 0114           
 #&gt; </span><span style='color: #BCBCBC;'> 9</span><span> V11E0114123… SVERIGEFINSKA FÖRSKOLAN            Upplands Väs… 0114           
 #&gt; </span><span style='color: #BCBCBC;'>10</span><span> V11E0115123… BROTTBY FÖRSKOLA                   Vallentuna    0115           
-#&gt; </span><span style='color: #949494;'># … with 13,099 more rows</span><span></div><div class='input'>
-<span class='co'># Only keep OU entities matching "skola" located in Stockholm municipality</span>
-<span class='va'>ou_filter</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_kpi.html'>get_ou</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>ou_search</span><span class='op'>(</span><span class='st'>"Stockholm"</span>, column <span class='op'>=</span> <span class='st'>"municipality"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>ou_search</span><span class='op'>(</span><span class='st'>"skola"</span><span class='op'>)</span>
+#&gt; </span><span style='color: #949494;'># … with 44 more rows</span><span></div><div class='input'>
+<span class='co'># Only keep OU entities matching "skola" but not "förskola" (preschool)</span>
+<span class='co'># located in Gothenburg municipality and starting with an "A" using</span>
+<span class='co'># regex matching</span>
+<span class='va'>ou_filter</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_kpi.html'>get_ou</a></span><span class='op'>(</span>municipality <span class='op'>=</span> <span class='st'>"1480"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>ou_search</span><span class='op'>(</span><span class='st'>"^A"</span>, column <span class='op'>=</span> <span class='st'>"title"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>ou_search</span><span class='op'>(</span><span class='st'>"[^(för)]skola"</span><span class='op'>)</span>
 
 </div></span></pre>
   </div>

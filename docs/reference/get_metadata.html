@@ -146,6 +146,7 @@ For further information about the Kolada API specification, please see the
   title <span class='op'>=</span> <span class='cn'>NULL</span>,
   id <span class='op'>=</span> <span class='cn'>NULL</span>,
   municipality <span class='op'>=</span> <span class='cn'>NULL</span>,
+  max_results <span class='op'>=</span> <span class='cn'>NULL</span>,
   cache <span class='op'>=</span> <span class='cn'>FALSE</span>,
   cache_location <span class='op'>=</span> <span class='va'>tempdir</span>,
   verbose <span class='op'>=</span> <span class='cn'>FALSE</span>
@@ -172,6 +173,11 @@ current entity. Case insensitive.</p></td>
       <th>municipality</th>
       <td><p>If entity is <code>"ou"</code>, the municipality parameter can
 be added to narrow the search.</p></td>
+    </tr>
+    <tr>
+      <th>max_results</th>
+      <td><p>(Optional) Specify the maximum number of results
+returned by the query.</p></td>
     </tr>
     <tr>
       <th>cache</th>

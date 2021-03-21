@@ -156,27 +156,27 @@ value for all observations.</p>
     <p>A Kolada values table</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Download values for a KPI for the year 2010</span>
-<span class='va'>vals</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_values.html'>get_values</a></span><span class='op'>(</span>kpi <span class='op'>=</span> <span class='st'>"N00002"</span>, period <span class='op'>=</span> <span class='fl'>2010</span>, simplify <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>municipality_type</span> <span class='op'>==</span> <span class='st'>"K"</span><span class='op'>)</span>
-<span class='co'># (Returns a table with 29 rows and 8 columns)</span>
+    <pre class="examples"><div class='input'><span class='co'># Download values for all available years of a given KPI for</span>
+<span class='co'># Malmö municipality (code 1280)</span>
+<span class='va'>vals</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_values.html'>get_values</a></span><span class='op'>(</span>kpi <span class='op'>=</span> <span class='st'>"N00002"</span>, municipality <span class='op'>=</span> <span class='st'>"1280"</span>, simplify <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='co'># (Returns a table with 22 rows and 8 columns)</span>
 
 <span class='co'># Remove columns with no information to differentiate between rows</span>
 <span class='fu'>values_minimize</span><span class='op'>(</span><span class='va'>vals</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 290 x 4</span><span>
-#&gt;    kpi    municipality_id value municipality  
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>         
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> N00002 0114             31.5 Upplands Väsby
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> N00002 0115             44.2 Vallentuna    
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> N00002 0117             43.8 Österåker     
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> N00002 0120             46.9 Värmdö        
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> N00002 0123             46.3 Järfälla      
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> N00002 0125             45.0 Ekerö         
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> N00002 0126             51.1 Huddinge      
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> N00002 0127             57.2 Botkyrka      
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> N00002 0128             46.8 Salem         
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> N00002 0136             51.4 Haninge       
-#&gt; </span><span style='color: #949494;'># … with 280 more rows</span><span></div><div class='input'><span class='co'># (Returns a table with 29 rows and 4 columns)</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 22 x 4</span><span>
+#&gt;    kpi     year value municipality
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> N00002  </span><span style='text-decoration: underline;'>1</span><span>998  60.0 Malmö       
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> N00002  </span><span style='text-decoration: underline;'>1</span><span>999  50   Malmö       
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> N00002  </span><span style='text-decoration: underline;'>2</span><span>000  51.0 Malmö       
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> N00002  </span><span style='text-decoration: underline;'>2</span><span>001  52.0 Malmö       
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> N00002  </span><span style='text-decoration: underline;'>2</span><span>002  53.1 Malmö       
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> N00002  </span><span style='text-decoration: underline;'>2</span><span>003  54.0 Malmö       
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> N00002  </span><span style='text-decoration: underline;'>2</span><span>004  54.0 Malmö       
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> N00002  </span><span style='text-decoration: underline;'>2</span><span>005  54.0 Malmö       
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> N00002  </span><span style='text-decoration: underline;'>2</span><span>006  55.0 Malmö       
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> N00002  </span><span style='text-decoration: underline;'>2</span><span>007  55.1 Malmö       
+#&gt; </span><span style='color: #949494;'># … with 12 more rows</span><span></div><div class='input'><span class='co'># (Returns a table with 22 rows and 4 columns)</span>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
