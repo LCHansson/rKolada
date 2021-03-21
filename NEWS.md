@@ -3,6 +3,7 @@
 - add support for paging. This implies that queries that produce a result with more than 5,000 rows are no longer truncated
 - vignette polish
 - graceful fail on no internet connection (and other HTTP problems)
+- add `max_results` argument to all `get_` functions
 
 # rKolada 0.1.3
 
