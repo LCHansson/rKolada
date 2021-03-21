@@ -189,12 +189,19 @@ kpi_describe <- function(
 #' \code{\link{get_kpi}}.
 #'
 #' @examples
-#' # Download Kolada data for all KPIs matching the term "BRP" (gross regional
+#' # Download Kolada data for KPIs matching the term "BRP" (gross regional
 #' # product) for the years 2010-2019
-#' kpi_filter <- get_kpi(id = c("N03068", "N03069", "N03070", "N03700", "N03701")) %>%
+#' # (omit the parameter "max_results" to actually download all data)
+#' kpi_filter <- get_kpi(max_results = 1000) %>%
 #'   kpi_search("BRP")
 #'
-#' kld_data <- get_values(kpi = kpi_extract_ids(kpi_filter), period = 2010:2019)
+#' # Only download 100 observations
+#' # (omit the parameter "max_results" to actually download all data)
+#' kld_data <- get_values(
+#'   kpi = kpi_extract_ids(kpi_filter),
+#'   period = 2010:2019,
+#'   max_results = 100
+#' )
 #'
 #' @return A vector of KPI IDs.
 #'

@@ -17,7 +17,6 @@
 #'
 #' @examples
 #' munic_df <- get_municipality()
-#' municipality_name_to_id(munic_df, c("Arboga", "Lund", "Stockholm", "Arboga"))
 #' munic_df %>%
 #'   municipality_name_to_id(c("Arboga", "Lund", "Stockholm", "Arboga"))
 #'

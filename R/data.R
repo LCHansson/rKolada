@@ -98,6 +98,8 @@ compose_data_query <- function(
 #' available for certain KPIs.
 #' @param unit_type One of \code{"municipality"} or \code{"ou"}. Whether to
 #' fetch data for Municipalities or Organizational Units.
+#' @param max_results (Optional) Specify the maximum number of results
+#'  returned by the query.
 #' @param simplify Whether to make results more human readable.
 #' @param verbose Whether to print the call to the Kolada API as a message to
 #' the R console.
@@ -107,7 +109,7 @@ compose_data_query <- function(
 #' @examples
 #' # Download data for KPIs for Gross Regional Product ("BRP" in Swedish)
 #' # for three municipalities
-#' grp_kpi <- get_kpi(
+#' brp_kpi <- get_kpi(
 #'   id = c("N03068", "N03069", "N03070", "N03700", "N03701")
 #' ) %>%
 #'  kpi_search("BRP") %>%
@@ -117,7 +119,7 @@ compose_data_query <- function(
 #'   municipality_name_to_id(c("Stockholm", "Arboga", "Lund"))
 #'
 #' grp_data <- get_values(
-#'   kpi = grp_kpi,
+#'   kpi = brp_kpi,
 #'   municipality = munic_sample
 #' )
 #'
@@ -143,6 +145,7 @@ get_values <- function(
   period = NULL,
   ou = NULL,
   unit_type = "municipality",
+  max_results = NULL,
   simplify = TRUE,
   verbose = FALSE
 ) {
@@ -152,18 +155,24 @@ get_values <- function(
 
   next_page <- TRUE
   page <- 1
+  per_page <- 2000
 
   while(isTRUE(next_page)) {
 
-    query <- compose_data_query(kpi = kpi, municipality = municipality, period = period, ou = ou, unit_type = unit_type, page = page, per_page = 2000)
+    if(!is.null(max_results) && page * per_page > max_results)
+      page_size <- max_results %% per_page
+    else
+      page_size <- per_page
+
+    query <- compose_data_query(kpi = kpi, municipality = municipality, period = period, ou = ou, unit_type = unit_type, page = page, per_page = page_size)
 
     if (isTRUE(verbose))
       message(query)
 
-    res <- try(httr::RETRY("GET", query, quiet = !verbose), silent = TRUE)
+    res <- try(httr::GET(query, httr::config(verbose = verbose)), silent = TRUE)
 
     if(inherits(res, "try-error")) {
-      warning("Could not connect to the Kolada database. Please check your internet connection. Did you misspel the query?\nRe-run query with verbose = TRUE to see the URL used in the query.")
+      warning("\nCould not connect to the Kolada database. Please check your internet connection. Did you misspel the query?\nRe-run query with verbose = TRUE to see the URL used in the query.")
       return(NULL)
     }
 
@@ -180,6 +189,9 @@ get_values <- function(
       next_page <- FALSE
     else
       page <- page + 1
+
+    if(!is.null(max_results) && nrow(vals) == max_results)
+      next_page <- FALSE
   }
 
   ret <- vals %>%
@@ -251,14 +263,14 @@ get_values <- function(
 #' @return A Kolada values table
 #'
 #' @examples
-#' # Download values for a KPI for the year 2010
-#' vals <- get_values(kpi = "N00002", period = 2010, simplify = TRUE) %>%
-#'   dplyr::filter(municipality_type == "K")
-#' # (Returns a table with 29 rows and 8 columns)
+#' # Download values for all available years of a given KPI for
+#' # Malmö municipality (code 1280)
+#' vals <- get_values(kpi = "N00002", municipality = "1280", simplify = TRUE)
+#' # (Returns a table with 22 rows and 8 columns)
 #'
 #' # Remove columns with no information to differentiate between rows
 #' values_minimize(vals)
-#' # (Returns a table with 29 rows and 4 columns)
+#' # (Returns a table with 22 rows and 4 columns)
 #' @export
 
 values_minimize <- function(values_df) {

@@ -16,13 +16,16 @@
 #'
 #' @examples
 #' # Search for all OUs matching the search term "skola" (school)
-#' ou_df <- get_ou()
+#' # (skip the parameter "max_results" to actually download all data)
+#' ou_df <- get_ou(max_results = 100)
 #' ou_search(ou_df, "skola")
 #'
-#' # Only keep OU entities matching "skola" located in Stockholm municipality
-#' ou_filter <- get_ou() %>%
-#'   ou_search("Stockholm", column = "municipality") %>%
-#'   ou_search("skola")
+#' # Only keep OU entities matching "skola" but not "förskola" (preschool)
+#' # located in Gothenburg municipality and starting with an "A" using
+#' # regex matching
+#' ou_filter <- get_ou(municipality = "1480") %>%
+#'   ou_search("^A", column = "title") %>%
+#'   ou_search("[^(för)]skola")
 #'
 #' @export
 ou_search <- function(ou_df, query, column = NULL) {

@@ -81,6 +81,8 @@ compose_metadata_query <- function(
 #' @param id The ID of any entry in the current entity.
 #' @param municipality If entity is \code{"ou"}, the municipality parameter can
 #' be added to narrow the search.
+#' @param max_results (Optional) Specify the maximum number of results
+#'  returned by the query.
 #' @param cache Logical. If TRUE, downloaded data are stored to the local disk
 #' in the place specified by \code{cache_location}. If data is already present
 #' on the local disk, this data is returned instead of downloading data from the
@@ -108,6 +110,7 @@ get_metadata <- function(
   title = NULL,
   id = NULL,
   municipality = NULL,
+  max_results = NULL,
   cache = FALSE,
   cache_location = tempdir,
   verbose = FALSE
@@ -122,21 +125,26 @@ get_metadata <- function(
 
   next_page <- TRUE
   page <- 1
+  per_page <- 2000
 
   while(isTRUE(next_page)) {
 
-    query <- compose_metadata_query(entity, title, id, municipality, page = page, per_page = 2000)
+    if(!is.null(max_results) && page * per_page > max_results)
+      page_size <- max_results %% per_page
+    else
+      page_size <- per_page
+
+    query <- compose_metadata_query(entity, title, id, municipality, page = page, per_page = page_size)
 
     if (isTRUE(verbose))
       message(query)
 
-    res <- try(httr::RETRY("GET", query, quiet = !verbose), silent = TRUE)
+    res <- try(httr::GET(query, httr::config(verbose = verbose)), silent = TRUE)
 
     if(inherits(res, "try-error")) {
-      warning("Could not connect to the Kolada database. Please check your internet connection. Did you misspel the query?\nRe-run query with verbose = TRUE to see the URL used in the query.")
+      warning("\nCould not connect to the Kolada database. Please check your internet connection. Did you misspel the query?\nRe-run query with verbose = TRUE to see the URL used in the query.")
       return(NULL)
     }
-
 
     contents_raw <- httr::content(res, as = "text")
     contents <- jsonlite::fromJSON(contents_raw)
@@ -151,6 +159,9 @@ get_metadata <- function(
       next_page <- FALSE
     else
       page <- page + 1
+
+    if(!is.null(max_results) && nrow(vals) == max_results)
+      next_page <- FALSE
   }
 
   vals <- ch("store", vals)
@@ -168,6 +179,8 @@ get_metadata <- function(
 #' functions are thin wrappers around \code{\link{get_metadata}}.
 #'
 #' @param id (Optional) One or several KPI IDs
+#' @param max_results (Optional) Specify the maximum number of results
+#'  returned by the query.
 #' @param cache Logical. If TRUE, downloaded data are stored to the local disk
 #'  in the place specified by \code{cache_location}. If data is already present
 #'  on the local disk, this data is returned instead of downloading data from
@@ -188,18 +201,17 @@ get_metadata <- function(
 #' as \code{\link{kpi_bind_keywords}}.
 #'
 #' @examples
-#'
 #' # Download KPI table and store a cache copy of the results in
 #' # your current working directory
 #' kpi_df <- get_kpi(cache = TRUE)
 #'
 #' @export
 get_kpi <- function(
-  id = NULL, cache = FALSE,
+  id = NULL, max_results = NULL, cache = FALSE,
   cache_location = tempdir, verbose = FALSE
 ) {
   get_metadata(
-    entity = "kpi", id = id, cache = cache,
+    entity = "kpi", id = id, max_results = max_results, cache = cache,
     cache_location = cache_location, verbose = verbose
   )
 }
@@ -207,11 +219,11 @@ get_kpi <- function(
 #' @export
 #' @rdname get_kpi
 get_kpi_groups <- function(
-  id = NULL, cache = FALSE,
+  id = NULL, cache = FALSE, max_results = NULL,
   cache_location = tempdir, verbose = FALSE
 ) {
   get_metadata(
-    entity = "kpi_groups", id = id, cache = cache,
+    entity = "kpi_groups", id = id, max_results = max_results, cache = cache,
     cache_location = cache_location, verbose = verbose
   )
 }
@@ -219,13 +231,13 @@ get_kpi_groups <- function(
 #' @export
 #' @rdname get_kpi
 get_ou <- function(
-  id = NULL, municipality = NULL, cache = FALSE,
+  id = NULL, municipality = NULL, max_results = NULL, cache = FALSE,
   cache_location = tempdir, verbose = FALSE
 ) {
   munic_df <- get_municipality(cache = cache, cache_location = cache_location)
 
   get_metadata(
-    entity = "ou", id = id, municipality = municipality,
+    entity = "ou", id = id, max_results = max_results, municipality = municipality,
     cache = cache, cache_location = cache_location, verbose = verbose
   ) %>%
     dplyr::mutate(
@@ -239,11 +251,11 @@ get_ou <- function(
 #' @export
 #' @rdname get_kpi
 get_municipality <- function(
-  id = NULL, cache = FALSE,
+  id = NULL, cache = FALSE, max_results = NULL,
   cache_location = tempdir, verbose = FALSE
 ) {
   get_metadata(
-    entity = "municipality", id = id, cache = cache,
+    entity = "municipality", id = id, max_results = max_results, cache = cache,
     cache_location = cache_location, verbose = verbose
   )
 }
@@ -251,11 +263,11 @@ get_municipality <- function(
 #' @export
 #' @rdname get_kpi
 get_municipality_groups <- function(
-  id = NULL, cache = FALSE,
+  id = NULL, cache = FALSE, max_results = NULL,
   cache_location = tempdir, verbose = FALSE
 ) {
   get_metadata(
-    entity = "municipality_groups", id = id, cache = cache,
+    entity = "municipality_groups", id = id, max_results = max_results, cache = cache,
     cache_location = cache_location, verbose = verbose
   )
 }
