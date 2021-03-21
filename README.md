@@ -1,7 +1,5 @@
 # rKolada
 
-[![R build status](https://github.com/LCHansson/rKolada/workflows/R-CMD-check/badge.svg)](https://github.com/LCHansson/rKolada/actions)
-
 [`rKolada`](https://lchansson.github.io/rKolada/index.html) is an R package for *downloading*, *inspecting* and *processing* data from [Kolada](https://kolada.se/), an open database containing over 4,000 Key Performance Indicators for Swedish municipalities and regions.
 
 To learn more about using `rKolada`, it is recommended you use the following resources in order:
