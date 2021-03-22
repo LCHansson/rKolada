@@ -201,9 +201,9 @@ get_metadata <- function(
 #' as \code{\link{kpi_bind_keywords}}.
 #'
 #' @examples
-#' # Download KPI table and store a cache copy of the results in
-#' # your current working directory
-#' kpi_df <- get_kpi(cache = TRUE)
+#' # Download KPI table and store a cache copy of the results in a temporary folder
+#' # (to actually download all available data, don't specify max_results)
+#' kpi_df <- get_kpi(cache = TRUE, max_results = 100)
 #'
 #' @export
 get_kpi <- function(
