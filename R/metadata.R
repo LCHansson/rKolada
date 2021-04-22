@@ -72,7 +72,7 @@ compose_metadata_query <- function(
 #' This is a generalized function for downloading metadata from the Kolada API.
 #' The function parameters closely mask the names specified in the original API.
 #' For further information about the Kolada API specification, please see the
-#' \url{https://github.com/Hypergene/kolada}{official documentation on GitHub}.
+#' \href{https://github.com/Hypergene/kolada}{official documentation on GitHub}.
 #'
 #' @param entity Any allowed metadata entity. Check \code{allowed_entities()} to
 #' see an updated list.
