@@ -89,7 +89,7 @@ compose_metadata_query <- function(
 #' API.
 #' @param cache_location Where to store and search for cached data. Can be a
 #' path to a directory or the name of any function that returns the path to a
-#' directory when called, like \code{link{getwd}}. Defaults to
+#' directory when called, like \code{\link{getwd}}. Defaults to
 #' \code{\link{tempdir}}.
 #' @param verbose Whether to print the call to the Kolada API as a message to
 #' the R console.
@@ -98,7 +98,7 @@ compose_metadata_query <- function(
 #' terminology, a table returned by e.g. \code{entity = "kpi"} is referred to
 #' as a \code{kpi_df} and can be passed to functions starting with "kpi" such
 #' as \code{\link{kpi_bind_keywords}}.
-#'#'
+#'
 #' @seealso \code{\link{get_kpi}}, \code{\link{get_kpi_groups}},
 #'  \code{\link{get_municipality}},
 #'  \code{\link{get_municipality_groups}},
