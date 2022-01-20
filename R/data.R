@@ -1,6 +1,6 @@
 #' Compose a query to fetch metadata from the Kolada API. Its use is mainly
 #'
-#' Mainly used as a supporting function for \code{link{get_values}} but can also
+#' Mainly used as a supporting function for \code{\link{get_values}} but can also
 #' be used to create a working URL to paste in your web browser.
 #'
 #' @param kpi What kpis should be fetched? Can be a single name or a vector of
