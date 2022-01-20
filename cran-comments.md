@@ -1,14 +1,9 @@
 ## Resubmission
-This is a resubmission. In this version I have:
+In this version I have:
 
-* removed a dead URL from Readme.md (this was causing a NOTE)
-
-* added the official URL to the database to the package Description field
-
-* removed an unnecessary "in R" from the package Title field
-
+* Added checks to ensure all downloading functions fail gracefully when the query returns an empty dataset 
 ## Test environments
-* local OS X install, R 4.0.3
+* local OS X install, R 4.1.2
 * R-hub Fedora Linux, R-devel, clang, gfortran
 * R-hub Ubuntu Linux 20.04.1 LTS, R-release, GCC
 * R-hub Windows Server 2008 R2 SP1, R-devel, 32/64 bit
