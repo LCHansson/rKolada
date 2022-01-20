@@ -49,7 +49,7 @@ cache_handler <- function(entity, cache, cache_location) {
     cache_location <- cache_location()
 
   storage <- switch(
-    as.character(cache),
+    as.character(isTRUE(cache)),
     "FALSE" = "",
     "TRUE" = paste0(cache_location, "/rkolada_", entity,
                     "_cache_", Sys.Date(), ".RData")
