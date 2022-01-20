@@ -1,3 +1,7 @@
+# rKolada 0.2.1
+
+- data downloaders fail gracefully when using bad KPI names
+
 # rKolada 0.2.0
 
 - add support for paging. This implies that queries that produce a result with more than 5,000 rows are no longer truncated
