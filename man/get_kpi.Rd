@@ -62,7 +62,7 @@ the API.}
 
 \item{cache_location}{Where to store and search for cached data. Can be a
 path to a directory or the name of any function that returns the path to a
-directory when called, like \code{link{getwd}}. Defaults to
+directory when called, like \code{\link{getwd}}. Defaults to
 \code{\link{tempdir}}.}
 
 \item{verbose}{Whether to print the call to the Kolada API as a message to
@@ -86,8 +86,7 @@ retrieves a table with the metadata for that entity. The \code{get_ENTITY}
 functions are thin wrappers around \code{\link{get_metadata}}.
 }
 \examples{
-# Download KPI table and store a cache copy of the results in
-# your current working directory
+# Download KPI table and store a cache copy of the results in a temporary folder
 # (to actually download all available data, don't specify max_results)
 kpi_df <- get_kpi(cache = TRUE, max_results = 100)
 

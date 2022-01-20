@@ -11,6 +11,12 @@
 #'
 #' @export
 municipality_grp_extract_ids <- function(munic_grp_df) {
+
+  if (is.null(munic_grp_df)) {
+    warning("\nAn empty object was used as input to municipality_grp_extract_ids().")
+    return(NULL)
+  }
+
   purrr::map(munic_grp_df$members, purrr::pluck(1)) %>% unlist()
 }
 
@@ -45,6 +51,12 @@ municipality_grp_extract_ids <- function(munic_grp_df) {
 #'
 #' @export
 municipality_grp_unnest <- function(munic_grp_df) {
+
+  if (is.null(munic_grp_df)) {
+    warning("\nAn empty object was used as input to municipality_grp_unnest().")
+    return(NULL)
+  }
+
   munic_grp_df %>%
     tidyr::unnest(cols = c(.data$members)) %>%
     dplyr::select(

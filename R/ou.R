@@ -29,6 +29,12 @@
 #'
 #' @export
 ou_search <- function(ou_df, query, column = NULL) {
+
+  if (is.null(ou_df)) {
+    warning("\nAn empty object was used as input to ou_search().")
+    return(NULL)
+  }
+
   if (is.null(column))
     column <- names(ou_df)
 

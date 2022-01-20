@@ -20,6 +20,12 @@ kpi_minimize <- function(
   remove_undocumented_columns = TRUE,
   remove_monotonous_data = TRUE
 ) {
+
+  if (is.null(kpi_df)) {
+    warning("\nAn empty object was used as input to kpi_minimize().")
+    return(NULL)
+  }
+
   if (isTRUE(remove_undocumented_columns) & "auspices" %in% names(kpi_df)) {
     kpi_df <- kpi_df %>%
       dplyr::select(-.data$auspices)
@@ -51,11 +57,17 @@ kpi_minimize <- function(
 #' @return A Kolada KPI metadata table
 #'
 #' @examples
-#' kpi_df <- get_kpi(id = c("N00002", "N00003")) %>%
+#' kpi_df <- get_kpi(id = c("N45933", "U28563")) %>%
 #'   kpi_bind_keywords(n = 3)
 #'
 #' @export
 kpi_bind_keywords <- function(kpi_df, n = 2, form = c("wide", "long")) {
+
+  if (is.null(kpi_df)) {
+    warning("\nAn empty object was used as input to kpi_bind_keywords().")
+    return(NULL)
+  }
+
   form <- form[[1]]
 
   kpi_df <- kpi_df %>%
@@ -106,12 +118,18 @@ kpi_bind_keywords <- function(kpi_df, n = 2, form = c("wide", "long")) {
 #' kpi_filter <- get_kpi(id = c("N11002", "N11003", "N11004", "N11005")) %>%
 #'   kpi_bind_keywords(n = 3) %>%
 #'   kpi_search(
-#'     query = c("nettokostnad"),
+#'     query = c("nettokostnad", "öppen"),
 #'     column = c("keyword_1", "keyword_2", "keyword_3")
 #'   )
 #'
 #' @export
 kpi_search <- function(kpi_df, query, column = NULL) {
+
+  if (is.null(kpi_df)) {
+    warning("\nAn empty object was used as input to kpi_search().")
+    return(NULL)
+  }
+
   if (is.null(column))
     column <- names(kpi_df)
 
@@ -157,6 +175,12 @@ kpi_describe <- function(
   heading_level = 2,
   sub_heading_level = heading_level + 1
 ) {
+
+  if (is.null(kpi_df)) {
+    warning("\nAn empty object was used as input to kpi_describe().")
+    return(NULL)
+  }
+
   if (!format %in% c("inline", "md"))
     stop("'format' must be one of c(\"inline\", \"md\")")
 
@@ -207,6 +231,12 @@ kpi_describe <- function(
 #'
 #' @export
 kpi_extract_ids <- function(kpi_df) {
+
+  if (is.null(kpi_df)) {
+    warning("\nAn empty object was used as input to kpi_extract_ids().")
+    return(NULL)
+  }
+
   kpi_df$id
 }
 

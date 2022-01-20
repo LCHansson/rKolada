@@ -150,8 +150,8 @@ get_values <- function(
   verbose = FALSE
 ) {
 
-  # if (isTRUE(verbose))
-  #   message("Downloading Kolada metadata using URL(s):")
+  if (isTRUE(verbose))
+    message("Downloading Kolada metadata using URL(s):")
 
   next_page <- TRUE
   page <- 1
@@ -178,6 +178,11 @@ get_values <- function(
 
     contents_raw <- httr::content(res, as = "text")
     contents <- jsonlite::fromJSON(contents_raw)
+
+    if(length(contents$values) == 0) {
+      warning("\nThe query returned zero hits from the Kolada database. Did you misspel the query?\nRe-run query with verbose = TRUE to see the URL used in the query.")
+      return(NULL)
+    }
 
     if(page == 1)
       vals <- tibble::as_tibble(contents$values)
@@ -265,15 +270,21 @@ get_values <- function(
 #' @examples
 #' # Download values for all available years of a given KPI for
 #' # Malmö municipality (code 1280)
-#' vals <- get_values(kpi = "N00002", municipality = "1280", simplify = TRUE)
-#' # (Returns a table with 22 rows and 8 columns)
+#' vals <- get_values(kpi = "N45933", municipality = "1280", simplify = TRUE)
+#' # (Returns a table with 5 rows and 8 columns)
 #'
 #' # Remove columns with no information to differentiate between rows
 #' values_minimize(vals)
-#' # (Returns a table with 22 rows and 4 columns)
+#' # (Returns a table with 5 rows and 4 columns)
 #' @export
 
 values_minimize <- function(values_df) {
+
+  if (is.null(values_df)) {
+    warning("\nAn empty object was used as input to values_df().")
+    return(NULL)
+  }
+
   values_df %>%
     dplyr::select_if(names(.) %in% c("kpi", "municipality", "value") |
                        purrr::map(., dplyr::n_distinct) > 1)
@@ -295,6 +306,12 @@ values_minimize <- function(values_df) {
 #'
 #' @export
 values_legend <- function(values_df, kpi_df) {
+
+  if (is.null(values_df) || is.null(kpi_df)) {
+    warning("\nAn empty object was used as input to values_legend().")
+    return(NULL)
+  }
+
   kpis <- unique(values_df$kpi)
   desc <- kpi_df %>%
     dplyr::select(.data$id, .data$title) %>%

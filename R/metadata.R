@@ -187,7 +187,7 @@ get_metadata <- function(
 #'  the API.
 #' @param cache_location Where to store and search for cached data. Can be a
 #'  path to a directory or the name of any function that returns the path to a
-#'  directory when called, like \code{link{getwd}}. Defaults to
+#'  directory when called, like \code{\link{getwd}}. Defaults to
 #'  \code{\link{tempdir}}.
 #' @param municipality (Optional) A string or vector of strings containing
 #' municipality codes. If getting OU data, you can use this parameter to narrow

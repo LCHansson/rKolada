@@ -24,6 +24,12 @@
 #'
 #' @export
 municipality_name_to_id <- function(munic_df, municipality, remove_na = FALSE) {
+
+  if (is.null(munic_df)) {
+    warning("\nAn empty object was used as input to municipality_name_to_id().")
+    return(NULL)
+  }
+
   munic_names <- tolower(municipality)
 
   res <- munic_df$id[match(munic_names, tolower(munic_df$title))]
@@ -69,6 +75,11 @@ municipality_name_to_id <- function(munic_df, municipality, remove_na = FALSE) {
 #' @export
 municipality_id_to_name <- function(munic_df, id, remove_na = FALSE) {
 
+  if (is.null(munic_df)) {
+    warning("\nAn empty object was used as input to municipality_id_to_name().")
+    return(NULL)
+  }
+
   res <- munic_df$title[match(id, tolower(munic_df$id))]
   names(res) <- munic_df$id[match(id, tolower(munic_df$id))]
 
@@ -95,17 +106,23 @@ municipality_id_to_name <- function(munic_df, id, remove_na = FALSE) {
 #'
 #' @examples
 #' # Download Kolada data for all municipalities of type "L"
-#' # (regions and national total) for KPI "N00002" and all available years
+#' # (regions and national total) for KPI "N45933" and all available years
 #' munic_filter <- get_municipality() %>%
 #'   municipality_search("L", column = "type")
 #'
 #' kld_data <- get_values(
-#'   kpi = "N00002",
+#'   kpi = "N45933",
 #'   municipality = municipality_extract_ids(munic_filter)
 #' )
 #'
 #' @export
 municipality_extract_ids <- function(munic_df) {
+
+  if (is.null(munic_df)) {
+    warning("\nAn empty object was used as input to municipality_extract_ids().")
+    return(NULL)
+  }
+
   munic_df$id
 }
 
@@ -141,6 +158,12 @@ municipality_extract_ids <- function(munic_df) {
 #'
 #' @export
 municipality_search <- function(munic_df, query, column = NULL) {
+
+  if (is.null(munic_df)) {
+    warning("\nAn empty object was used as input to municipality_search().")
+    return(NULL)
+  }
+
   if (is.null(column))
     column <- names(munic_df)
 
