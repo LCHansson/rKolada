@@ -35,7 +35,7 @@ kpi_filter <- kpi_search(kpis, "kostnad")
 kpi_filter <- get_kpi(id = c("N11002", "N11003", "N11004", "N11005")) \%>\%
   kpi_bind_keywords(n = 3) \%>\%
   kpi_search(
-    query = c("nettokostnad"),
+    query = c("nettokostnad", "öppen"),
     column = c("keyword_1", "keyword_2", "keyword_3")
   )
 

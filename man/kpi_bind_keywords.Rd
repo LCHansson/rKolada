@@ -24,7 +24,7 @@ Identify \code{n} keywords describing the KPI and add them as new columns.
 Keywords are inferred from the \code{title} field of the table.
 }
 \examples{
-kpi_df <- get_kpi(id = c("N00002", "N00003")) \%>\%
+kpi_df <- get_kpi(id = c("N45933", "U28563")) \%>\%
   kpi_bind_keywords(n = 3)
 
 }

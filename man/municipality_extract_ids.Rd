@@ -16,12 +16,12 @@ Kolada municipality metadata table to \code{\link{get_values}}.
 }
 \examples{
 # Download Kolada data for all municipalities of type "L"
-# (regions and national total) for KPI "N00002" and all available years
+# (regions and national total) for KPI "N45933" and all available years
 munic_filter <- get_municipality() \%>\%
   municipality_search("L", column = "type")
 
 kld_data <- get_values(
-  kpi = "N00002",
+  kpi = "N45933",
   municipality = municipality_extract_ids(munic_filter)
 )
 
