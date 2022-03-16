@@ -1,4 +1,4 @@
-# rKolada 0.2.2
+# rKolada 0.2.2 (development version)
 
 - Correctly print URLs on `verbose = TRUE` (#6)
 
