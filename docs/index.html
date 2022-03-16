@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,23 +33,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">rKolada</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1.9999</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -67,7 +63,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/lchansson/rKolada/">
+  <a href="https://github.com/lchansson/rKolada/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -84,46 +80,65 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="rkolada" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#rkolada" class="anchor"></a>rKolada</h1></div>
-<p><a href="https://lchansson.github.io/rKolada/index.html"><code>rKolada</code></a> is an R package for <em>downloading</em>, <em>inspecting</em> and <em>processing</em> data from <a href="https://kolada.se/">Kolada</a>, an open database containing over 4,000 Key Performance Indicators for Swedish municipalities and regions.</p>
-<p>To learn more about using <code>rKolada</code>, it is recommended you use the following resources in order:</p>
-<div id="getting-started-with-rkolada" class="section level2">
-<h2 class="hasAnchor">
-<a href="#getting-started-with-rkolada" class="anchor"></a>Getting started with rKolada</h2>
-<ol>
-<li>To get up and running quickly with rKolada, please see the vignette <a href="https://lchansson.github.io/rKolada/articles/a-quickstart-rkolada.html">A quick start guide to rKolada</a>.</li>
-<li>For an introduction to rKolada and the design principles of functions included, please see <a href="https://lchansson.github.io/rKolada/articles/introduction-to-rkolada.html">Introduction to rKolada</a>.</li>
-<li>See the <a href="https://lchansson.github.io/rKolada/reference/index.html">Reference section of the package homepage</a> to learn about the full set of functionality included with the package.</li>
+<div class="section level1">
+<div class="page-header"><h1 id="rkolada">rKolada<a class="anchor" aria-label="anchor" href="#rkolada"></a>
+</h1></div>
+<p><a href="https://lchansson.github.io/rKolada/index.html" class="external-link"><code>rKolada</code></a>
+is an R package for <em>downloading</em>, <em>inspecting</em> and
+<em>processing</em> data from <a href="https://kolada.se/" class="external-link">Kolada</a>,
+an open database containing over 4,000 Key Performance Indicators for
+Swedish municipalities and regions.</p>
+<p>To learn more about using <code>rKolada</code>, it is recommended you
+use the following resources in order:</p>
+<div class="section level2">
+<h2 id="getting-started-with-rkolada">Getting started with rKolada<a class="anchor" aria-label="anchor" href="#getting-started-with-rkolada"></a>
+</h2>
+<ol style="list-style-type: decimal">
+<li>To get up and running quickly with rKolada, please see the vignette
+<a href="https://lchansson.github.io/rKolada/articles/a-quickstart-rkolada.html" class="external-link">A
+quick start guide to rKolada</a>.</li>
+<li>For an introduction to rKolada and the design principles of
+functions included, please see <a href="https://lchansson.github.io/rKolada/articles/introduction-to-rkolada.html" class="external-link">Introduction
+to rKolada</a>.</li>
+<li>See the <a href="https://lchansson.github.io/rKolada/reference/index.html" class="external-link">Reference
+section of the package homepage</a> to learn about the full set of
+functionality included with the package.</li>
 </ol>
-<p><code>rKolada</code> is open source licensed under the Affero Gnu Public License version 3. This means you are free to download the source, modify and redistribute it as you please, but any copies or modifications must retain the original license. Please see the file LICENSE.md for further information.</p>
+<p><code>rKolada</code> is open source licensed under the Affero Gnu
+Public License version 3. This means you are free to download the
+source, modify and redistribute it as you please, but any copies or
+modifications must retain the original license. Please see the file
+LICENSE.md for further information.</p>
 </div>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
 <p>rKolada is on CRAN. To install it, run the following code in R:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"rKolada"</span><span class="op">)</span></code></pre></div>
-<p>To install the development version from GitHub, use the <code>remotes</code> package:</p>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"rKolada"</span><span class="op">)</span></code></pre></div>
+<p>To install the development version from GitHub, use the
+<code>remotes</code> package:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://remotes.r-lib.org">"remotes"</a></span><span class="op">)</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"LCHansson/rKolada"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://remotes.r-lib.org" class="external-link">"remotes"</a></span><span class="op">)</span>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"LCHansson/rKolada"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="contributing" class="section level2">
-<h2 class="hasAnchor">
-<a href="#contributing" class="anchor"></a>Contributing</h2>
-<p>You are welcome to contribute to the further development of the rKolada package in any of the following ways:</p>
+<div class="section level2">
+<h2 id="contributing">Contributing<a class="anchor" aria-label="anchor" href="#contributing"></a>
+</h2>
+<p>You are welcome to contribute to the further development of the
+rKolada package in any of the following ways:</p>
 <ul>
-<li>Open an <a href="https://github.com/LCHansson/rKolada/issues">issue</a>
+<li>Open an <a href="https://github.com/LCHansson/rKolada/issues" class="external-link">issue</a>
 </li>
 <li>Clone this repo, make modifications and create a pull request</li>
 <li>Spread the word!</li>
 </ul>
-<div id="code-of-conduct" class="section level3">
-<h3 class="hasAnchor">
-<a href="#code-of-conduct" class="anchor"></a>Code of Conduct</h3>
-<p>Please note that the rKolada project is released with a <a href="https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
+<div class="section level3">
+<h3 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
+</h3>
+<p>Please note that the rKolada project is released with a <a href="https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html" class="external-link">Contributor
+Code of Conduct</a>. By contributing to this project, you agree to abide
+by its terms.</p>
 </div>
 </div>
 </div>
@@ -131,46 +146,58 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=rKolada">https://​cloud.r-project.org/​package=rKolada</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/lchansson/rKolada/">https://​github.com/​lchansson/​rKolada/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/lchansson/rKolada/issues">https://​github.com/​lchansson/​rKolada/​issues</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=rKolada" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/lchansson/rKolada/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/lchansson/rKolada/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://www.r-project.org/Licenses/AGPL-3">AGPL-3</a></small></li>
+<li><small><a href="https://www.r-project.org/Licenses/AGPL-3" class="external-link">AGPL-3</a></small></li>
 </ul>
 </div>
+
 <div class="community">
-<h2>Community</h2>
+<h2 data-toc-skip>Community</h2>
 <ul class="list-unstyled">
 <li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
 </ul>
 </div>
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing rKolada</a></li>
+</ul>
+</div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Love Hansson <br><small class="roles"> Author, maintainer </small>  </li>
 </ul>
 </div>
+
+
 
   </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Love Hansson.</p>
+  <p></p>
+<p>Developed by Love Hansson.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.2.</p>
 </div>
 
       </footer>
@@ -178,6 +205,8 @@
 
   
 
+
+  
 
   </body>
 </html>

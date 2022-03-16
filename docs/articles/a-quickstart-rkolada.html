@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,23 +33,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rKolada</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1.9999</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -67,7 +63,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/lchansson/rKolada/">
+  <a href="https://github.com/lchansson/rKolada/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -82,13 +78,13 @@
 
       
 
-      </header><script src="a-quickstart-rkolada_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>A quick start guide to rKolada</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/lchansson/rKolada/blob/master/vignettes/a-quickstart-rkolada.Rmd"><code>vignettes/a-quickstart-rkolada.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/lchansson/rKolada/blob/HEAD/vignettes/a-quickstart-rkolada.Rmd" class="external-link"><code>vignettes/a-quickstart-rkolada.Rmd</code></a></small>
       <div class="hidden name"><code>a-quickstart-rkolada.Rmd</code></div>
 
     </div>
@@ -96,12 +92,16 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://lchansson.github.io/rKolada/">"rKolada"</a></span><span class="op">)</span></code></pre></div>
-<p>This vignette provides a quick start guide to get up and running with rKolada as fast as possible. For a more comprehensive introduction to the rKolada package, see <a href="introduction-to-rkolada.html">Introduction to rKolada</a>.</p>
-<p>In this guide we walk you through five steps to download, inspect and search through Kolada metadata. We then use our search results to download data from Kolada and plot it.</p>
-<div id="get-metadata" class="section level3">
-<h3 class="hasAnchor">
-<a href="#get-metadata" class="anchor"></a>1. Get metadata</h3>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://lchansson.github.io/rKolada/" class="external-link">"rKolada"</a></span><span class="op">)</span></code></pre></div>
+<p>This vignette provides a quick start guide to get up and running with
+rKolada as fast as possible. For a more comprehensive introduction to
+the rKolada package, see <a href="introduction-to-rkolada.html">Introduction to rKolada</a>.</p>
+<p>In this guide we walk you through five steps to download, inspect and
+search through Kolada metadata. We then use our search results to
+download data from Kolada and plot it.</p>
+<div class="section level3">
+<h3 id="get-metadata">1. Get metadata<a class="anchor" aria-label="anchor" href="#get-metadata"></a>
+</h3>
 <p>Kolada contains five different types of metadata entities:</p>
 <ol style="list-style-type: decimal">
 <li>
@@ -113,97 +113,135 @@
 <li>
 <code>kpi_groups</code>: Thematic groupings of KPIs</li>
 <li>
-<code>municipality_groups</code>: Thematic groupings of municipalities</li>
+<code>municipality_groups</code>: Thematic groupings of
+municipalities</li>
 </ol>
-<p>To obtain data using <code>rKolada</code> it is usually a good idea to start by exploring metadata. <code>rKolada</code> comes with convenience functions for each of the five above mentioned entities. These functions are all names <code>get_[entity]()</code> and can be called as follows. The <code>cache</code> parameter allows you to temporarily store results on disk to avoid repeated calls to the API in case you need to re-run your code:</p>
+<p>To obtain data using <code>rKolada</code> it is usually a good idea
+to start by exploring metadata. <code>rKolada</code> comes with
+convenience functions for each of the five above mentioned entities.
+These functions are all names <code>get_[entity]()</code> and can be
+called as follows. The <code>cache</code> parameter allows you to
+temporarily store results on disk to avoid repeated calls to the API in
+case you need to re-run your code:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">kpis</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_kpi.html">get_kpi</a></span><span class="op">(</span>cache <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="va">munic</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_kpi.html">get_municipality</a></span><span class="op">(</span>cache <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
-<p>If you have already familiarised yourself with the Kolada API (e.g. by reading the <a href="https://github.com/Hypergene/kolada">official docs on GitHub</a>) you can access the full metadata API using <code><a href="../reference/get_metadata.html">get_metadata()</a></code>.</p>
+<p>If you have already familiarised yourself with the Kolada API
+(e.g. by reading the <a href="https://github.com/Hypergene/kolada" class="external-link">official docs on GitHub</a>)
+you can access the full metadata API using
+<code><a href="../reference/get_metadata.html">get_metadata()</a></code>.</p>
 </div>
-<div id="search-metadata" class="section level3">
-<h3 class="hasAnchor">
-<a href="#search-metadata" class="anchor"></a>2. Search metadata</h3>
-<p>Metadata tables are stored as regular <code>tibble</code>s so you can start inspecting them by simply viewing them in RStudio. For example, the KPI metadata we downloaded looks like this:</p>
+<div class="section level3">
+<h3 id="search-metadata">2. Search metadata<a class="anchor" aria-label="anchor" href="#search-metadata"></a>
+</h3>
+<p>Metadata tables are stored as regular <code>tibble</code>s so you can
+start inspecting them by simply viewing them in RStudio. For example,
+the KPI metadata we downloaded looks like this:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">kpis</span><span class="op">)</span>
-<span class="co">#&gt; Rows: 5,083</span>
+<code class="sourceCode R"><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">kpis</span><span class="op">)</span>
+<span class="co">#&gt; Rows: 5,376</span>
 <span class="co">#&gt; Columns: 13</span>
-<span class="co">#&gt; $ auspices              &lt;chr&gt; "E", "E", "X", NA, NA, NA, "X", NA, "X", "X", NA…</span>
-<span class="co">#&gt; $ description           &lt;chr&gt; "Personalkostnader kommunen totalt, dividerat me…</span>
-<span class="co">#&gt; $ has_ou_data           &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE,…</span>
-<span class="co">#&gt; $ id                    &lt;chr&gt; "N00002", "N00003", "N00005", "N00009", "N00011"…</span>
-<span class="co">#&gt; $ is_divided_by_gender  &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …</span>
-<span class="co">#&gt; $ municipality_type     &lt;chr&gt; "K", "K", "K", "K", "K", "K", "K", "K", "K", "K"…</span>
-<span class="co">#&gt; $ operating_area        &lt;chr&gt; "Kommunen, övergripande", "Kommunen, övergripand…</span>
-<span class="co">#&gt; $ ou_publication_date   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span>
-<span class="co">#&gt; $ perspective           &lt;chr&gt; "Resurser", "Resurser", "Resurser", "Resurser", …</span>
-<span class="co">#&gt; $ prel_publication_date &lt;chr&gt; "2021-04-06", "2021-04-06", "2021-04-06", NA, NA…</span>
-<span class="co">#&gt; $ publ_period           &lt;chr&gt; "2020", "2020", "2020", "2020", NA, NA, NA, NA, …</span>
-<span class="co">#&gt; $ publication_date      &lt;chr&gt; "2021-08-31", "2021-08-31", "2021-08-31", "2021-…</span>
-<span class="co">#&gt; $ title                 &lt;chr&gt; "Personalkostnader som andel av verksamhetens ko…</span></code></pre></div>
-<p>But <code>rKolada</code> also comes with a set of convenience functions to simplify the task of exploring KPI metadata. <code><a href="../reference/kpi_search.html">kpi_search()</a></code> filters down a list of KPIs using a search term, and <code><a href="../reference/kpi_minimize.html">kpi_minimize()</a></code> can be used to clean the KPI metadata table from columns that don’t contain any information that distinguish KPIs from each other:</p>
+<span class="co">#&gt; $ auspices              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "E", "E", "X", NA, NA, NA, "X", NA, "X", "X", NA…</span>
+<span class="co">#&gt; $ description           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Personalkostnader kommunen totalt, dividerat me…</span>
+<span class="co">#&gt; $ has_ou_data           <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> NA, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FA…</span>
+<span class="co">#&gt; $ id                    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "N00000", "N00003", "N00005", "N00009", "N00011"…</span>
+<span class="co">#&gt; $ is_divided_by_gender  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …</span>
+<span class="co">#&gt; $ municipality_type     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "K", "K", "K", "K", "K", "K", "K", "K", "K", "K"…</span>
+<span class="co">#&gt; $ operating_area        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Kommunen, övergripande", "Kommunen, övergripand…</span>
+<span class="co">#&gt; $ ou_publication_date   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span>
+<span class="co">#&gt; $ perspective           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Resurser", "Resurser", "Resurser", "Resurser", …</span>
+<span class="co">#&gt; $ prel_publication_date <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, "2022-04-06", "2022-04-06", NA, "2021-11-01"…</span>
+<span class="co">#&gt; $ publ_period           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, "2021", "2021", "2021", "2022", "2022", "202…</span>
+<span class="co">#&gt; $ publication_date      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, "2022-08-31", "2022-08-31", "2022-02-22", "2…</span>
+<span class="co">#&gt; $ title                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Personalkostnader som andel av verksamhetens ko…</span></code></pre></div>
+<p>But <code>rKolada</code> also comes with a set of convenience
+functions to simplify the task of exploring KPI metadata.
+<code><a href="../reference/kpi_search.html">kpi_search()</a></code> filters down a list of KPIs using a search
+term, and <code><a href="../reference/kpi_minimize.html">kpi_minimize()</a></code> can be used to clean the KPI
+metadata table from columns that don’t contain any information that
+distinguish KPIs from each other:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Get a list KPIs matching a search for "BRP" (Gross regional product)</span>
-<span class="va">kpi_res</span> <span class="op">&lt;-</span> <span class="va">kpis</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/kpi_search.html">kpi_search</a></span><span class="op">(</span><span class="st">"BRP"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+<span class="va">kpi_res</span> <span class="op">&lt;-</span> <span class="va">kpis</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/kpi_search.html">kpi_search</a></span><span class="op">(</span><span class="st">"BRP"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/kpi_minimize.html">kpi_minimize</a></span><span class="op">(</span>remove_undocumented_columns <span class="op">=</span> <span class="cn">TRUE</span>, remove_monotonous_data <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
-<span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">kpi_res</span><span class="op">)</span>
+<span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">kpi_res</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 2</span>
-<span class="co">#&gt; Columns: 5</span>
-<span class="co">#&gt; $ id               &lt;chr&gt; "N03700", "N03701"</span>
-<span class="co">#&gt; $ title            &lt;chr&gt; "Bruttoregionalprodukt (BRP), kr/inv", "Bruttoregiona…</span>
-<span class="co">#&gt; $ description      &lt;chr&gt; "BRP dividerat med antal invånare i det geografiska o…</span>
-<span class="co">#&gt; $ publ_period      &lt;chr&gt; "2020", "2019"</span>
-<span class="co">#&gt; $ publication_date &lt;chr&gt; "2021-02-22", "2020-12-13"</span></code></pre></div>
-<p>Let’s say we are interested in retrieving data for four Swedish municipalities. We thus want to create a table containing metadata about these four municipalities:</p>
+<span class="co">#&gt; Columns: 6</span>
+<span class="co">#&gt; $ id               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "N03700", "N03701"</span>
+<span class="co">#&gt; $ title            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Bruttoregionalprodukt (BRP), kr/inv", "Bruttoregiona…</span>
+<span class="co">#&gt; $ description      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "BRP dividerat med antal invånare i det geografiska o…</span>
+<span class="co">#&gt; $ perspective      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Resurser", "Resurser,Volymer"</span>
+<span class="co">#&gt; $ publ_period      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "2021", "2020"</span>
+<span class="co">#&gt; $ publication_date <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "2022-02-22", "2021-12-13"</span></code></pre></div>
+<p>Let’s say we are interested in retrieving data for four Swedish
+municipalities. We thus want to create a table containing metadata about
+these four municipalities:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">munic_res</span> <span class="op">&lt;-</span> <span class="va">munic</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">munic_res</span> <span class="op">&lt;-</span> <span class="va">munic</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
   <span class="co"># Only keep municipalities (drop regions)</span>
-  <span class="fu"><a href="../reference/municipality_search.html">municipality_search</a></span><span class="op">(</span><span class="st">"K"</span>, column <span class="op">=</span> <span class="st">"type"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../reference/municipality_search.html">municipality_search</a></span><span class="op">(</span><span class="st">"K"</span>, column <span class="op">=</span> <span class="st">"type"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
   <span class="co"># Only keep Stockholm, Gothenburg and Malmö</span>
-  <span class="fu"><a href="../reference/municipality_search.html">municipality_search</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Stockholm"</span>, <span class="st">"Göteborg"</span>, <span class="st">"Malmö"</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="../reference/municipality_search.html">municipality_search</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Stockholm"</span>, <span class="st">"Göteborg"</span>, <span class="st">"Malmö"</span><span class="op">)</span><span class="op">)</span>
 
-<span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">munic_res</span><span class="op">)</span>
+<span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">munic_res</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 3</span>
 <span class="co">#&gt; Columns: 3</span>
-<span class="co">#&gt; $ id    &lt;chr&gt; "1480", "1280", "0180"</span>
-<span class="co">#&gt; $ title &lt;chr&gt; "Göteborg", "Malmö", "Stockholm"</span>
-<span class="co">#&gt; $ type  &lt;chr&gt; "K", "K", "K"</span></code></pre></div>
+<span class="co">#&gt; $ id    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1480", "1280", "0180"</span>
+<span class="co">#&gt; $ title <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Göteborg", "Malmö", "Stockholm"</span>
+<span class="co">#&gt; $ type  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "K", "K", "K"</span></code></pre></div>
 </div>
-<div id="describe-kpis" class="section level3">
-<h3 class="hasAnchor">
-<a href="#describe-kpis" class="anchor"></a>3. Describe KPIs</h3>
-<p>In addition to the information provided about every KPI in the <code>title</code> and <code>description</code> columns of a KPI table, <code><a href="../reference/kpi_bind_keywords.html">kpi_bind_keywords()</a></code> can be used to create a rough summary of every KPI creating a number of <em>keyword</em> columns. The function <code><a href="../reference/kpi_describe.html">kpi_describe()</a></code> can be used to print a huamn readable table containing a summary of a table of KPIs. For instance, by setting the <code>knitr</code> chunk option <code>results='asis'</code>, the following code renders a Markdown section that is automatically inluded as a part of the HTML that renders this web page:</p>
+<div class="section level3">
+<h3 id="describe-kpis">3. Describe KPIs<a class="anchor" aria-label="anchor" href="#describe-kpis"></a>
+</h3>
+<p>In addition to the information provided about every KPI in the
+<code>title</code> and <code>description</code> columns of a KPI table,
+<code><a href="../reference/kpi_bind_keywords.html">kpi_bind_keywords()</a></code> can be used to create a rough summary
+of every KPI creating a number of <em>keyword</em> columns. The function
+<code><a href="../reference/kpi_describe.html">kpi_describe()</a></code> can be used to print a huamn readable table
+containing a summary of a table of KPIs. For instance, by setting the
+<code>knitr</code> chunk option <code>results='asis'</code>, the
+following code renders a Markdown section that is automatically inluded
+as a part of the HTML that renders this web page:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">kpi_res</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/kpi_bind_keywords.html">kpi_bind_keywords</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">kpi_res</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/kpi_bind_keywords.html">kpi_bind_keywords</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/kpi_describe.html">kpi_describe</a></span><span class="op">(</span>max_n <span class="op">=</span> <span class="fl">1</span>, format <span class="op">=</span> <span class="st">"md"</span>, heading_level <span class="op">=</span> <span class="fl">4</span>, sub_heading_level <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></code></pre></div>
-<div id="n03700-bruttoregionalprodukt-brp-krinv" class="section level4">
-<h4 class="hasAnchor">
-<a href="#n03700-bruttoregionalprodukt-brp-krinv" class="anchor"></a>N03700: Bruttoregionalprodukt (BRP), kr/inv</h4>
-<div id="description" class="section level5">
-<h5 class="hasAnchor">
-<a href="#description" class="anchor"></a>Description</h5>
-<p>BRP dividerat med antal invånare i det geografiska området. Bruttoregionprodukt (BRP) är den regionala motsvarigheten till bruttonationalprodukt (BNP) mätt från produktsidan: värden av all produktion av varor och tjänster i en region. Nyckeltalet visar den ekonomiska utvecklingen inom det geografiska området. 2020 gjorde SCB en översyn av BRP vilket resulterade i en revidering av historisk data vilket innebär att även den data som finns i Kolada blivit reviderad historiskt. Revideringen påverkar främst nivåerna och i mindre grad utveckling över tid. De äldre tidsserierna samt mer information finns på SCB:s hemsida. Senaste års uppgifter är preliminära till nästa års publicering. Källa: SCB</p>
+<div class="section level4">
+<h4 id="n03700-bruttoregionalprodukt-brp-krinv">N03700: Bruttoregionalprodukt (BRP), kr/inv<a class="anchor" aria-label="anchor" href="#n03700-bruttoregionalprodukt-brp-krinv"></a>
+</h4>
+<div class="section level5">
+<h5 id="description">Description<a class="anchor" aria-label="anchor" href="#description"></a>
+</h5>
+<p>BRP dividerat med antal invånare i det geografiska området.
+Bruttoregionprodukt (BRP) är den regionala motsvarigheten
+till bruttonationalprodukt (BNP) mätt från produktsidan: värden av all
+produktion av varor och tjänster i en region. Nyckeltalet visar den
+ekonomiska utvecklingen inom det geografiska området. 2020 gjorde SCB en
+översyn av BRP vilket resulterade i en revidering av historisk data
+vilket innebär att även den data som finns i Kolada blivit reviderad
+historiskt. Revideringen påverkar främst nivåerna och i mindre grad
+utveckling över tid. De äldre tidsserierna samt mer information finns på
+SCB:s hemsida. Senaste års uppgifter är preliminära till nästa års
+publicering. Källa: SCB</p>
 </div>
-<div id="metadata" class="section level5">
-<h5 class="hasAnchor">
-<a href="#metadata" class="anchor"></a>Metadata</h5>
+<div class="section level5">
+<h5 id="metadata">Metadata<a class="anchor" aria-label="anchor" href="#metadata"></a>
+</h5>
 <ul>
 <li><p>Has OU data: Unknown</p></li>
 <li><p>Divided by gender: Unknown</p></li>
 <li><p>Municipality type: Unknown</p></li>
 <li><p>Operating area: Unknown</p></li>
-<li><p>Publication date: 2021-02-22</p></li>
-<li><p>Publication period: 2020</p></li>
+<li><p>Publication date: 2022-02-22</p></li>
+<li><p>Publication period: 2021</p></li>
 <li><p>OU publication date: Unknown</p></li>
 </ul>
 </div>
-<div id="keywords" class="section level5">
-<h5 class="hasAnchor">
-<a href="#keywords" class="anchor"></a>Keywords</h5>
+<div class="section level5">
+<h5 id="keywords">Keywords<a class="anchor" aria-label="anchor" href="#keywords"></a>
+</h5>
 <ul>
 <li>bruttoregionalprodukt</li>
 <li>brp</li>
@@ -213,19 +251,26 @@
 </div>
 </div>
 </div>
-<div id="get-data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#get-data" class="anchor"></a>4. Get data</h3>
-<p>Once we have settled on what KPIs we are interested in the next step is to download actual data from Kolada. Use <code><a href="../reference/get_values.html">get_values()</a></code> to do this. To download data from the Kolada API you need to provide at least two of the following parameters:</p>
+<div class="section level3">
+<h3 id="get-data">4. Get data<a class="anchor" aria-label="anchor" href="#get-data"></a>
+</h3>
+<p>Once we have settled on what KPIs we are interested in the next step
+is to download actual data from Kolada. Use <code><a href="../reference/get_values.html">get_values()</a></code> to
+do this. To download data from the Kolada API you need to provide at
+least two of the following parameters:</p>
 <ol style="list-style-type: decimal">
 <li>
 <code>kpi</code>: One or a vector of several KPI IDs</li>
 <li>
-<code>municipality</code>: One or a vector of several municipality IDs or municipality group IDs</li>
+<code>municipality</code>: One or a vector of several municipality
+IDs or municipality group IDs</li>
 <li>
-<code>period</code>: The years for which data should be downloaded.</li>
+<code>period</code>: The years for which data should be
+downloaded.</li>
 </ol>
-<p>The ID tags for KPIs and municipalities can be extracted using the convenience functions <code><a href="../reference/kpi_extract_ids.html">kpi_extract_ids()</a></code> and <code><a href="../reference/municipality_extract_ids.html">municipality_extract_ids()</a></code>:</p>
+<p>The ID tags for KPIs and municipalities can be extracted using the
+convenience functions <code><a href="../reference/kpi_extract_ids.html">kpi_extract_ids()</a></code> and
+<code><a href="../reference/municipality_extract_ids.html">municipality_extract_ids()</a></code>:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">kld_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_values.html">get_values</a></span><span class="op">(</span>
   kpi <span class="op">=</span> <span class="fu"><a href="../reference/kpi_extract_ids.html">kpi_extract_ids</a></span><span class="op">(</span><span class="va">kpi_res</span><span class="op">)</span>,
@@ -233,21 +278,23 @@
   period <span class="op">=</span> <span class="fl">1990</span><span class="op">:</span><span class="fl">2019</span>,
   simplify <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span></code></pre></div>
-<p>Setting the <code>simplify</code> parameter to <code>TRUE</code>, again, makes results more human readable, by removing undocumented columns and relabeling data with human-friendly labels.</p>
+<p>Setting the <code>simplify</code> parameter to <code>TRUE</code>,
+again, makes results more human readable, by removing undocumented
+columns and relabeling data with human-friendly labels.</p>
 </div>
-<div id="inspect-and-visualise-results" class="section level3">
-<h3 class="hasAnchor">
-<a href="#inspect-and-visualise-results" class="anchor"></a>5. Inspect and visualise results</h3>
+<div class="section level3">
+<h3 id="inspect-and-visualise-results">5. Inspect and visualise results<a class="anchor" aria-label="anchor" href="#inspect-and-visualise-results"></a>
+</h3>
 <p>Finally, time to inspect our data:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Visualise results</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org">"ggplot2"</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">"ggplot2"</a></span><span class="op">)</span>
 
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">kld_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">year</span>, y <span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">municipality</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span><span class="op">(</span><span class="va">kpi</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="va"><a href="https://scales.r-lib.org//reference/label_number.html">comma</a></span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">kld_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">year</span>, y <span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">municipality</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html" class="external-link">facet_grid</a></span><span class="op">(</span><span class="va">kpi</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="va"><a href="https://scales.r-lib.org/reference/label_number.html" class="external-link">comma</a></span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>
     title <span class="op">=</span> <span class="st">"Gross Regional Product"</span>,
     subtitle <span class="op">=</span> <span class="st">"Yearly development in Sweden's three\nmost populous municipalities"</span>,
     x <span class="op">=</span> <span class="st">"Year"</span>,
@@ -267,11 +314,14 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Love Hansson.</p>
+  <p></p>
+<p>Developed by Love Hansson.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.2.</p>
 </div>
 
       </footer>
@@ -279,6 +329,8 @@
 
   
 
+
+  
 
   </body>
 </html>
