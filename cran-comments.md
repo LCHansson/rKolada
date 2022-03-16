@@ -2,11 +2,13 @@
 In this version I have:
 
 * Added checks to ensure all downloading functions fail gracefully when the query returns an empty dataset 
+
 ## Test environments
 * local OS X install, R 4.1.2
 * R-hub Fedora Linux, R-devel, clang, gfortran
 * R-hub Ubuntu Linux 20.04.1 LTS, R-release, GCC
 * R-hub Windows Server 2008 R2 SP1, R-devel, 32/64 bit
+* r-release-macosx-arm64|4.1.1|macosx|macOS 11.5.2 (20G95)|Mac mini|Apple M1||en_US.UTF-8
 
 ## R CMD check results
 There were no ERRORs or WARNINGs.

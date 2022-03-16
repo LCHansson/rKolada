@@ -1,3 +1,7 @@
+# rKolada 0.2.2
+
+- Correctly print URLs on `verbose = TRUE` (#6)
+
 # rKolada 0.2.1
 
 - data downloaders fail gracefully when using bad KPI names
