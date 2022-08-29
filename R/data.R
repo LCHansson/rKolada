@@ -167,12 +167,14 @@ get_values <- function(
     query <- compose_data_query(kpi = kpi, municipality = municipality, period = period, ou = ou, unit_type = unit_type, page = page, per_page = page_size)
 
     if (isTRUE(verbose))
-      message(query)
+      message(paste(query, collapse = "\n"), "\n")
 
-    res <- try(httr::GET(query, httr::config(verbose = verbose)), silent = TRUE)
+    res <- purrr::map(query, function(x) {
+      try(httr::GET(x, httr::config(verbose = verbose)), silent = TRUE)
+    })
 
-    if(inherits(res, "try-error")) {
-      warning("\nCould not connect to the Kolada database. Please check your internet connection. Did you misspel the query?\nRe-run query with verbose = TRUE to see the URL used in the query.")
+    if(purrr::map(res, inherits, "try-error") |> unlist() |> any()) {
+      warning("\nCould not connect to the Kolada database. Please check your internet connection. Did you misspel the query?\nRe-run query with verbose = TRUE to see the URL(s) used in the query.")
       return(NULL)
     }
 
@@ -180,7 +182,7 @@ get_values <- function(
     contents <- jsonlite::fromJSON(contents_raw)
 
     if(length(contents$values) == 0) {
-      warning("\nThe query returned zero hits from the Kolada database. Did you misspel the query?\nRe-run query with verbose = TRUE to see the URL used in the query.")
+      warning("\nThe query returned zero hits from the Kolada database. Did you misspel the query?\nRe-run query with verbose = TRUE to see the URL(s) used in the query.")
       return(NULL)
     }
 
