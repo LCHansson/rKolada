@@ -20,7 +20,7 @@ rKolada is on CRAN. To install it, run the following code in R:
 install.packages("rKolada")
 ```
 
-To install the development version from GitHub, use the `remotes` package:
+To install the latest development version from GitHub, use the `remotes` package:
 
 ``` r
 library("remotes")
