@@ -177,12 +177,18 @@ get_values <- function(
     }
 
     contents_raw <- httr::content(res, as = "text")
-    contents <- jsonlite::fromJSON(contents_raw)
+    contents <- try(jsonlite::fromJSON(contents_raw), silent = TRUE)
+
+    if(inherits(contents, "try-error")) {
+      warning("\nKolada returned a 404 or malformatted HTML/JSON. Did you misspel the query?\nRe-run query with verbose = TRUE to see the URL used in the query.")
+      return(NULL)
+    }
 
     if(length(contents$values) == 0) {
       warning("\nThe query returned zero hits from the Kolada database. Did you misspel the query?\nRe-run query with verbose = TRUE to see the URL used in the query.")
       return(NULL)
     }
+
 
     if(page == 1)
       vals <- tibble::as_tibble(contents$values)
