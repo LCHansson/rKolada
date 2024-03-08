@@ -54,7 +54,11 @@ Also, the Kolada database proves useful groupings of municipalities and KPIs tha
 
 If the user already has knowledge of the IDs of the KPIs and/or municipalities they want to download, this can be done using the function `get_values()`. For instance, if you want to download all values for the KPI `N00945` ("Tillfälliga föräldrapenningdagar (VAB) som tas ut av män, andel av antal dagar (%)") for Sweden's three most populous cities; Stockholm (id `"0180"`), Gothenburg (Swedish: _Göteborg_; `"1480"`) and Malmö (`"1280"`):
 
-```{r}
+```{r, echo = FALSE}
+n00945
+```
+
+```{r, eval = FALSE}
 n00945 <- get_values(
   kpi = "N00945",
   municipality = c("0180", "1480", "1280"),
@@ -78,7 +82,12 @@ Kolada has five different kinds of metadata entities Each one of these can be do
 
 Each function returns a `tibble` with all available data for the specified metadata entity.
 
-```{r}
+```{r, echo = FALSE}
+kpi_df
+```
+
+
+```{r, eval = FALSE}
 # Download all KPI metadata as a tibble (kpi_df)
 kpi_df <- get_kpi()
 
@@ -101,9 +110,18 @@ The most important family of metadata convenience functions is the `search` fami
 # Search for KPIs with the term "BRP" in their description or title
 kpi_filter <- kpi_df %>% kpi_search("skola", column = c("description", "title"))
 kpi_filter
+```
 
+```{r, echo = FALSE}
+munic_g
+```
+
+```{r, eval = FALSE}
 # Search for municipality groups containing the name "Arboga"
 munic_g <- get_municipality_groups()
+```
+
+```{r}
 arboga_groups <- munic_g %>% municipality_grp_search("Arboga")
 arboga_groups
 ```
@@ -155,7 +173,8 @@ An alternative approach to downloading data using known IDs is to use metadata t
 
 As an example, let's say we want to download all KPIs describing Gross Regional Product for all municipalities that are socioeconomically similar to Arboga, a small municipality in central Sweden:
 
-```{r}
+
+```{r, eval = FALSE}
 # Get KPIs describing Gross Regional Product of municipalities
 kpi_filter <- get_kpi() %>% 
   kpi_search("BRP")
@@ -177,7 +196,9 @@ grp_data <- get_values(
     municipality_extract_ids(arboga)
   )
 )
+```
 
+```{r}
 # Visualize results
 library("ggplot2")
 ggplot(grp_data, aes(year, value, color = municipality)) +
