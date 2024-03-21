@@ -206,7 +206,7 @@ get_values <- function(
   }
 
   ret <- vals %>%
-    tidyr::unnest(cols = c(.data$values))
+    tidyr::unnest(cols = c("values"))
 
   if (isTRUE(simplify) & unit_type == "municipality") {
     ret_has_groups <- any(stringr::str_detect(ret$municipality, "^G"))

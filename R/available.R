@@ -6,11 +6,11 @@
 #' @export
 
 kolada_available <- function() {
-  kpi_data <- get_values(
+  suppressWarnings(kpi_data <- get_values(
     kpi = "N00003",
     municipality = c("0180", "1480"),
     period = 2021
-  )
+  ))
 
   if(is.null(kpi_data))
     return(FALSE)
