@@ -1,6 +1,7 @@
-# rKolada 0.2.2 (development version)
+# rKolada 0.2.2
 
 - Correctly print URLs on `verbose = TRUE` (#6)
+- Check if the Kolada API is availoable using `kolada_available()`
 
 # rKolada 0.2.1
 
