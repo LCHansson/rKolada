@@ -14,7 +14,8 @@ munic <- get_municipality()
 munic_g <- get_municipality_groups()
 
 kpi_filter <- kpi_df %>%
-  kpi_search("BRP")
+  kpi_search("BRP") %>%
+  kpi_search("K", column = "municipality_type")
 
 munic_grp_filter <- munic_g %>%
   municipality_grp_search("Liknande kommuner socioekonomi, Arboga")
