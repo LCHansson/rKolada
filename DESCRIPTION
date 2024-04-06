@@ -1,11 +1,11 @@
 Package: rKolada
 Type: Package
 Title: Access Data from the 'Kolada' Database
-Version: 0.2.2
+Version: 0.2.3
 Authors@R: person("Love", "Hansson", email =
  "love.hansson@gmail.com", role = c("aut", "cre"))
 Maintainer: Love Hansson <love.hansson@gmail.com>
-Description: Methods for downloading and processing data and metadata from 'Kolada', the official Swedish regions and municipalities database <https://kolada.se/>.
+Description: Methods for downloading and processing data and metadata from 'Kolada', the official Swedish regions and municipalities database <https://www.kolada.se/>.
 License: AGPL-3
 URL: https://lchansson.github.io/rKolada/,
     https://github.com/lchansson/rKolada
@@ -32,8 +32,7 @@ Imports:
     tidyr,
     purrr,
     rlang,
-    urltools,
-    sass
+    urltools
 VignetteBuilder: knitr
 Depends: 
-    R (>= 2.10)
+    R (>= 4.0.0)
