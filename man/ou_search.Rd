@@ -26,6 +26,7 @@ with the \code{column} parameter. For more precise matching, please use
 \code{\link[dplyr:filter]{dplyr::filter}}.
 }
 \examples{
+if (kolada_available()) {
 # Search for all OUs matching the search term "skola" (school)
 # (skip the parameter "max_results" to actually download all data)
 ou_df <- get_ou(max_results = 100)
@@ -37,5 +38,6 @@ ou_search(ou_df, "skola")
 ou_filter <- get_ou(municipality = "1480") \%>\%
   ou_search("^A", column = "title") \%>\%
   ou_search("[^(för)]skola")
+}
 
 }

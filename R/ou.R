@@ -15,6 +15,7 @@
 #' @return A Kolada Organizational Unit metadata table
 #'
 #' @examples
+#' if (kolada_available()) {
 #' # Search for all OUs matching the search term "skola" (school)
 #' # (skip the parameter "max_results" to actually download all data)
 #' ou_df <- get_ou(max_results = 100)
@@ -26,6 +27,7 @@
 #' ou_filter <- get_ou(municipality = "1480") %>%
 #'   ou_search("^A", column = "title") %>%
 #'   ou_search("[^(för)]skola")
+#' }
 #'
 #' @export
 ou_search <- function(ou_df, query, column = NULL) {

@@ -16,9 +16,11 @@
 #' \code{\link{municipality_id_to_name}}
 #'
 #' @examples
+#' if (kolada_available()) {
 #' munic_df <- get_municipality()
 #' munic_df %>%
 #'   municipality_name_to_id(c("Arboga", "Lund", "Stockholm", "Arboga"))
+#' }
 #'
 #' @return A vector of Municipality IDs.
 #'
@@ -67,8 +69,10 @@ municipality_name_to_id <- function(munic_df, municipality, remove_na = FALSE) {
 #' \code{\link{municipality_name_to_id}}
 #'
 #' @examples
+#' if (kolada_available()) {
 #' munic_df <- get_municipality()
 #' municipality_id_to_name(munic_df, c("1280", "1281", "0180", "1280"))
+#' }
 #'
 #' @return A vector of Municipality names.
 #'
@@ -105,15 +109,18 @@ municipality_id_to_name <- function(munic_df, id, remove_na = FALSE) {
 #' \code{get_municipality}.
 #'
 #' @examples
+#' if (kolada_available()) {
 #' # Download Kolada data for all municipalities of type "L"
-#' # (regions and national total) for KPI "N45933" and all available years
+#' # (regions and national total) for KPI "N45933"
 #' munic_filter <- get_municipality() %>%
 #'   municipality_search("L", column = "type")
 #'
 #' kld_data <- get_values(
 #'   kpi = "N45933",
-#'   municipality = municipality_extract_ids(munic_filter)
+#'   municipality = municipality_extract_ids(munic_filter),
+#'   period = 2022
 #' )
+#' }
 #'
 #' @export
 municipality_extract_ids <- function(munic_df) {
@@ -148,6 +155,7 @@ municipality_extract_ids <- function(munic_df) {
 #' @return A Kolada Municipality metadata table
 #'
 #' @examples
+#' if (kolada_available()) {
 #' # Search for a single search term in a municipality table
 #' munic_df <- get_municipality()
 #' municipality_search(munic_df, "Arboga")
@@ -155,6 +163,7 @@ municipality_extract_ids <- function(munic_df) {
 #' # Only keep columns with type == "K" (keep municipalities, drop regions)
 #' munic_filter <- get_municipality(cache = TRUE) %>%
 #'   municipality_search("K", column = "type")
+#' }
 #'
 #' @export
 municipality_search <- function(munic_df, query, column = NULL) {

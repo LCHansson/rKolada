@@ -109,6 +109,7 @@ compose_data_query <- function(
 #' @examples
 #' # Download data for KPIs for Gross Regional Product ("BRP" in Swedish)
 #' # for three municipalities
+#' if (kolada_available()) {
 #' brp_kpi <- get_kpi(
 #'   id = c("N03068", "N03069", "N03070", "N03700", "N03701")
 #' ) %>%
@@ -137,6 +138,7 @@ compose_data_query <- function(
 #'  ou = "V15E144001101",
 #'  unit_type = "ou"
 #' )
+#' }
 #'
 #' @export
 get_values <- function(
@@ -276,12 +278,14 @@ get_values <- function(
 #' @examples
 #' # Download values for all available years of a given KPI for
 #' # Malmö municipality (code 1280)
+#' if (kolada_available()) {
 #' vals <- get_values(kpi = "N45933", municipality = "1280", simplify = TRUE)
 #' # (Returns a table with 5 rows and 8 columns)
 #'
 #' # Remove columns with no information to differentiate between rows
 #' values_minimize(vals)
 #' # (Returns a table with 5 rows and 4 columns)
+#' }
 #' @export
 
 values_minimize <- function(values_df) {

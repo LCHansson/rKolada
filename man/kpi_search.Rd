@@ -26,6 +26,7 @@ the \code{column} parameter. For more precise matching, please use
 \code{\link[dplyr:filter]{dplyr::filter}}.
 }
 \examples{
+if (kolada_available()) {
 # Search for a single search term in a KPI table
 kpis <- get_kpi(id = c("N11002", "N11003", "N11004", "N11005"))
 kpi_filter <- kpi_search(kpis, "kostnad")
@@ -38,5 +39,6 @@ kpi_filter <- get_kpi(id = c("N11002", "N11003", "N11004", "N11005")) \%>\%
     query = c("nettokostnad", "öppen"),
     column = c("keyword_1", "keyword_2", "keyword_3")
   )
+}
 
 }

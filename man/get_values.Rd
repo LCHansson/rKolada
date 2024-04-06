@@ -51,6 +51,7 @@ is omitted, all available data for that dimension will be downloaded.
 \examples{
 # Download data for KPIs for Gross Regional Product ("BRP" in Swedish)
 # for three municipalities
+if (kolada_available()) {
 brp_kpi <- get_kpi(
   id = c("N03068", "N03069", "N03070", "N03700", "N03701")
 ) \%>\%
@@ -79,5 +80,6 @@ ou_data <- get_values(
  ou = "V15E144001101",
  unit_type = "ou"
 )
+}
 
 }

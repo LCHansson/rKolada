@@ -30,6 +30,7 @@ examples below for an alternative approach avoiding any direct calls to
 \code{filter}.
 }
 \examples{
+if (kolada_available()) {
 # Search for a single search term in a municipality table
 munic_df <- get_municipality()
 municipality_search(munic_df, "Arboga")
@@ -37,5 +38,6 @@ municipality_search(munic_df, "Arboga")
 # Only keep columns with type == "K" (keep municipalities, drop regions)
 munic_filter <- get_municipality(cache = TRUE) \%>\%
   municipality_search("K", column = "type")
+}
 
 }

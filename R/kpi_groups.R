@@ -32,6 +32,7 @@ kpi_grp_extract_ids <- function(kpi_grp_df) {
 #' @return A Kolada KPI metadata table
 #'
 #' @examples
+#' if (kolada_available()) {
 #' # Download KPI Group metadata
 #' kpi_grp_df <- get_kpi_groups()
 #'
@@ -40,6 +41,7 @@ kpi_grp_extract_ids <- function(kpi_grp_df) {
 #' kpi_grp_df %>%
 #'   kpi_grp_search("utbildning") %>%
 #'   kpi_grp_unnest()
+#' }
 #'
 #' @export
 kpi_grp_unnest <- function(kpi_grp_df) {
@@ -123,6 +125,7 @@ kpi_grp_describe <- function(
 #' @return A Kolada KPI Group metadata table
 #'
 #' @examples
+#' if (kolada_available()) {
 #' kpi_grp_df <- get_kpi_groups()
 #'
 #' # Which KPI groups match the keyword "ekonomi" (economy)?
@@ -133,6 +136,7 @@ kpi_grp_describe <- function(
 #'   kpi_grp_unnest() %>%
 #'   kpi_search("arbete") %>%
 #'   dplyr::count(group_title, sort = TRUE)
+#' }
 #'
 #' @export
 kpi_grp_search <- function(kpi_grp_df, query) {

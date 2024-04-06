@@ -18,6 +18,7 @@ This function is primarily intended as a convenient way to pass a (filtered)
 Kolada KPI metadata table to \code{\link{get_values}}.
 }
 \examples{
+if (kolada_available()) {
 # Download Kolada data for KPIs matching the term "BRP" (gross regional
 # product) for the years 2010-2019
 # (omit the parameter "max_results" to actually download all data)
@@ -31,5 +32,6 @@ kld_data <- get_values(
   period = 2010:2019,
   max_results = 100
 )
+}
 
 }

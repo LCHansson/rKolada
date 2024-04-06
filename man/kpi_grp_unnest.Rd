@@ -24,6 +24,7 @@ are looking for, \code{\link{kpi_grp_unnest}} is used to create a KPI
 metadata table for further processing.
 }
 \examples{
+if (kolada_available()) {
 # Download KPI Group metadata
 kpi_grp_df <- get_kpi_groups()
 
@@ -32,5 +33,6 @@ kpi_grp_df <- get_kpi_groups()
 kpi_grp_df \%>\%
   kpi_grp_search("utbildning") \%>\%
   kpi_grp_unnest()
+}
 
 }

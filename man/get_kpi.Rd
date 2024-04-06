@@ -88,6 +88,8 @@ functions are thin wrappers around \code{\link{get_metadata}}.
 \examples{
 # Download KPI table and store a cache copy of the results in a temporary folder
 # (to actually download all available data, don't specify max_results)
+if (kolada_available()) {
 kpi_df <- get_kpi(cache = TRUE, max_results = 100)
+}
 
 }

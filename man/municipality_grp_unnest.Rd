@@ -25,6 +25,7 @@ narrowed down to the group/s you are looking for,
 metadata table for further processing.
 }
 \examples{
+if (kolada_available()) {
 # Download Municipality Group metadata
 # (skip the parameter "max_results" to actually download all available data)
 munic_grp_df <- get_municipality_groups(max_results = 100)
@@ -34,5 +35,6 @@ munic_grp_df <- get_municipality_groups(max_results = 100)
 munic_grp_df \%>\%
   municipality_grp_search("arboga") \%>\%
   municipality_grp_unnest()
+}
 
 }

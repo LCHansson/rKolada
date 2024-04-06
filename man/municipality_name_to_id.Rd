@@ -26,9 +26,11 @@ e.g. to pass as a parameter to \code{\link{get_values}}. This function is the
 inverse to \code{\link{municipality_id_to_name}}.
 }
 \examples{
+if (kolada_available()) {
 munic_df <- get_municipality()
 munic_df \%>\%
   municipality_name_to_id(c("Arboga", "Lund", "Stockholm", "Arboga"))
+}
 
 }
 \seealso{

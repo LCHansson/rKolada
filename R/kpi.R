@@ -57,8 +57,10 @@ kpi_minimize <- function(
 #' @return A Kolada KPI metadata table
 #'
 #' @examples
+#' if (kolada_available()) {
 #' kpi_df <- get_kpi(id = c("N45933", "U28563")) %>%
 #'   kpi_bind_keywords(n = 3)
+#' }
 #'
 #' @export
 kpi_bind_keywords <- function(kpi_df, n = 2, form = c("wide", "long")) {
@@ -109,6 +111,7 @@ kpi_bind_keywords <- function(kpi_df, n = 2, form = c("wide", "long")) {
 #' @return A Kolada KPI metadata table
 #'
 #' @examples
+#' if (kolada_available()) {
 #' # Search for a single search term in a KPI table
 #' kpis <- get_kpi(id = c("N11002", "N11003", "N11004", "N11005"))
 #' kpi_filter <- kpi_search(kpis, "kostnad")
@@ -121,6 +124,7 @@ kpi_bind_keywords <- function(kpi_df, n = 2, form = c("wide", "long")) {
 #'     query = c("nettokostnad", "öppen"),
 #'     column = c("keyword_1", "keyword_2", "keyword_3")
 #'   )
+#' }
 #'
 #' @export
 kpi_search <- function(kpi_df, query, column = NULL) {
@@ -213,6 +217,7 @@ kpi_describe <- function(
 #' \code{\link{get_kpi}}.
 #'
 #' @examples
+#' if (kolada_available()) {
 #' # Download Kolada data for KPIs matching the term "BRP" (gross regional
 #' # product) for the years 2010-2019
 #' # (omit the parameter "max_results" to actually download all data)
@@ -226,6 +231,7 @@ kpi_describe <- function(
 #'   period = 2010:2019,
 #'   max_results = 100
 #' )
+#' }
 #'
 #' @return A vector of KPI IDs.
 #'

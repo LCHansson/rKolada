@@ -21,10 +21,12 @@ value for all observations.
 \examples{
 # Download values for all available years of a given KPI for
 # Malmö municipality (code 1280)
+if (kolada_available()) {
 vals <- get_values(kpi = "N45933", municipality = "1280", simplify = TRUE)
 # (Returns a table with 5 rows and 8 columns)
 
 # Remove columns with no information to differentiate between rows
 values_minimize(vals)
 # (Returns a table with 5 rows and 4 columns)
+}
 }
