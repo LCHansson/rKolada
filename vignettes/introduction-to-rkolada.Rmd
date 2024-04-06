@@ -55,7 +55,7 @@ Also, the Kolada database proves useful groupings of municipalities and KPIs tha
 If the user already has knowledge of the IDs of the KPIs and/or municipalities they want to download, this can be done using the function `get_values()`. For instance, if you want to download all values for the KPI `N00945` ("Tillfälliga föräldrapenningdagar (VAB) som tas ut av män, andel av antal dagar (%)") for Sweden's three most populous cities; Stockholm (id `"0180"`), Gothenburg (Swedish: _Göteborg_; `"1480"`) and Malmö (`"1280"`):
 
 ```{r, echo = FALSE}
-n00945
+(n00945 <- rKolada:::n00945)
 ```
 
 ```{r, eval = FALSE}
@@ -83,7 +83,7 @@ Kolada has five different kinds of metadata entities Each one of these can be do
 Each function returns a `tibble` with all available data for the specified metadata entity.
 
 ```{r, echo = FALSE}
-kpi_df
+(kpi_df <- rKolada:::kpi_df)
 ```
 
 
@@ -113,7 +113,7 @@ kpi_filter
 ```
 
 ```{r, echo = FALSE}
-munic_g
+(munic_g <- rKolada:::munic_g)
 ```
 
 ```{r, eval = FALSE}
@@ -172,6 +172,13 @@ A crucial difference between group metadata and other metadata tables, however, 
 An alternative approach to downloading data using known IDs is to use metadata tables to construct arguments to `get_values()`. `rKolada` provides a `extract_ids` family of functions for passing a metadata table as an argument to `get_values`. A typical workflow would be to download metadata for (groups of) KPIs and/or municipalities, use functions like `kpi_search()` to filter down the tables to a few rows, and then call `get_values()` to fetch data.
 
 As an example, let's say we want to download all KPIs describing Gross Regional Product for all municipalities that are socioeconomically similar to Arboga, a small municipality in central Sweden:
+
+```{r, echo = FALSE}
+kpi_filter <- rKolada:::kpi_filter
+munic_grp_filter <- rKolada:::munic_grp_filter
+arboga <- rKolada:::arboga
+grp_data <- rKolada:::grp_data
+```
 
 
 ```{r, eval = FALSE}

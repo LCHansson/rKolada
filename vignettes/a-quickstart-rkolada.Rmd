@@ -34,7 +34,13 @@ Kolada contains five different types of metadata entities:
 
 To obtain data using `rKolada` it is usually a good idea to start by exploring metadata. `rKolada` comes with convenience functions for each of the five above mentioned entities. These functions are all names `get_[entity]()` and can be called as follows. The `cache` parameter allows you to temporarily store results on disk to avoid repeated calls to the API in case you need to re-run your code:
 
-```{r}
+```{r, echo = FALSE}
+kpis <- rKolada:::kpi_df
+munic <- rKolada:::munic
+```
+
+
+```{r, eval = FALSE}
 kpis <- get_kpi(cache = FALSE)
 munic <- get_municipality(cache = FALSE)
 ```
@@ -55,6 +61,8 @@ But `rKolada` also comes with a set of convenience functions to simplify the tas
 # Get a list KPIs matching a search for "BRP" (Gross regional product)
 kpi_res <- kpis %>%
   kpi_search("BRP") %>%
+  # Keep only KPIs with data for the municipality level
+  kpi_search("K", column = "municipality_type") %>%
   kpi_minimize(remove_undocumented_columns = TRUE, remove_monotonous_data = TRUE)
 
 dplyr::glimpse(kpi_res)
@@ -94,7 +102,12 @@ Once we have settled on what KPIs we are interested in the next step is to downl
 
 The ID tags for KPIs and municipalities can be extracted using the convenience functions `kpi_extract_ids()` and `municipality_extract_ids()`:
 
-```{r}
+```{r, echo = FALSE}
+kld_data <- rKolada:::kld_data
+```
+
+
+```{r, eval = FALSE}
 kld_data <- get_values(
   kpi = kpi_extract_ids(kpi_res),
   municipality = municipality_extract_ids(munic_res),
