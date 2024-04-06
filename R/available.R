@@ -17,7 +17,7 @@ kolada_available <- function() {
   if (is.null(kpi_data))
     return(FALSE)
 
-  if (any(map_lgl(kpi_data, ~ any(is.na(.x)))))
+  if (any(purrr::map_lgl(kpi_data, ~ any(is.na(.x)))))
     return(FALSE)
 
   if (nrow(kpi_data) != 2)
