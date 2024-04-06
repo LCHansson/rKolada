@@ -14,11 +14,11 @@ knitr::opts_chunk$set(
 )
 ```
 
+This vignette provides a quick start guide to get up and running with rKolada as fast as possible. For a more comprehensive introduction to the rKolada package, see [Introduction to rKolada](introduction-to-rkolada.html).
+
 ```{r setup}
 library("rKolada")
 ```
-
-This vignette provides a quick start guide to get up and running with rKolada as fast as possible. For a more comprehensive introduction to the rKolada package, see [Introduction to rKolada](introduction-to-rkolada.html).
 
 In this guide we walk you through five steps to download, inspect and search through Kolada metadata. We then use our search results to download data from Kolada and plot it.
 

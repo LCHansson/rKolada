@@ -3,13 +3,11 @@ title: "Introduction to rKolada"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Introduction to rKolada}
-  %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
-editor_options: 
-  chunk_output_type: console
+  %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r opts, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -22,7 +20,7 @@ NOTE: All metadata and data labels in Kolada are written in Swedish only.
 
 The design of `rKolada` functions is inspired by, and are supported by, the design and functionality provided by several packages in the `tidyverse` family. It is thus recommended that you install the `tidyverse` package before installing rKolada:
 
-```{r, eval = FALSE}
+```{r install, eval = FALSE}
 install.packages("tidyverse")
 install.packages("rKolada")
 ```
@@ -54,11 +52,11 @@ Also, the Kolada database proves useful groupings of municipalities and KPIs tha
 
 If the user already has knowledge of the IDs of the KPIs and/or municipalities they want to download, this can be done using the function `get_values()`. For instance, if you want to download all values for the KPI `N00945` ("Tillfälliga föräldrapenningdagar (VAB) som tas ut av män, andel av antal dagar (%)") for Sweden's three most populous cities; Stockholm (id `"0180"`), Gothenburg (Swedish: _Göteborg_; `"1480"`) and Malmö (`"1280"`):
 
-```{r, echo = FALSE}
+```{r datapoint, echo = FALSE}
 (n00945 <- rKolada:::n00945)
 ```
 
-```{r, eval = FALSE}
+```{r datapoint_mock, eval = FALSE}
 n00945 <- get_values(
   kpi = "N00945",
   municipality = c("0180", "1480", "1280"),
@@ -82,16 +80,17 @@ Kolada has five different kinds of metadata entities Each one of these can be do
 
 Each function returns a `tibble` with all available data for the specified metadata entity.
 
-```{r, echo = FALSE}
-(kpi_df <- rKolada:::kpi_df)
+```{r kpi_df, echo = FALSE}
+kpi_df <- rKolada:::kpi_df
+head(kpi_df, n = 10)
 ```
 
 
-```{r, eval = FALSE}
+```{r kpi_df_mock, eval = FALSE}
 # Download all KPI metadata as a tibble (kpi_df)
 kpi_df <- get_kpi()
 
-kpi_df
+head(kpi_df, n = 10)
 ```
 
 All `get` functions are thin wrappers around the more general function `get_metadata()`. If you are familiar with the terminology used in the Kolada API for accessing metadata you might want to use this function instead.
@@ -106,29 +105,29 @@ All metadata convenience functions have been designed with functional piping in 
 
 The most important family of metadata convenience functions is the `search` family. Much like `dplyr::filter()` they can be used to search for one or several search terms in the entire table or in a subset of named columns:
 
-```{r}
+```{r kpi_filter}
 # Search for KPIs with the term "BRP" in their description or title
 kpi_filter <- kpi_df %>% kpi_search("skola", column = c("description", "title"))
 kpi_filter
 ```
 
-```{r, echo = FALSE}
+```{r munic_g, echo = FALSE}
 (munic_g <- rKolada:::munic_g)
 ```
 
-```{r, eval = FALSE}
+```{r munic_g_mock, eval = FALSE}
 # Search for municipality groups containing the name "Arboga"
 munic_g <- get_municipality_groups()
 ```
 
-```{r}
+```{r arboga_groups}
 arboga_groups <- munic_g %>% municipality_grp_search("Arboga")
 arboga_groups
 ```
 
 Another important family of exploration functions is the `describe` family of functions. These functions take a metadata table and print a human-readable summary of the most important facts about each row in the table (up to a limit, specified by `max_n`). By default, output is printed directly to the R console. But by specifying `format = "md"` you can make the `describe` functions create markdown-ready output which can be added directly to a R markdown file by setting the chunk option `results='asis'`. The output then looks as follows:
 
-```{r, results='asis'}
+```{r describe_example, results='asis'}
 kpi_filter %>% kpi_describe(max_n = 2, format = "md", heading_level = 4)
 ```
 
@@ -136,7 +135,7 @@ kpi_filter %>% kpi_describe(max_n = 2, format = "md", heading_level = 4)
 
 KPI metadata is considerably more complex than other types of metadata. To further assist in exploring KPI metadata the function `kpi_bind_keywords()` can be used to tag data with keywords (these are inferred from the KPI title) to classify KPIs and make them more searchable.
 
-```{r}
+```{r keywords_example}
 # Add keywords to a KPI table
 kpis_with_keywords <- kpi_filter %>% kpi_bind_keywords(n = 4)
 
@@ -184,7 +183,8 @@ grp_data <- rKolada:::grp_data
 ```{r, eval = FALSE}
 # Get KPIs describing Gross Regional Product of municipalities
 kpi_filter <- get_kpi() %>% 
-  kpi_search("BRP")
+  kpi_search("BRP") %>%
+  kpi_search("K", column = "municipality_type")
 # Creates a table with two rows
 
 # Get a suitable group of municipalities
