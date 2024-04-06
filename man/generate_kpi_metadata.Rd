@@ -6,6 +6,9 @@
 \usage{
 generate_kpi_metadata(kpi_df)
 }
+\arguments{
+\item{kpi_df}{A Kolada KPI tibble}
+}
 \value{
 a Kolada KPI metadata table
 }
