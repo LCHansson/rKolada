@@ -1,8 +1,8 @@
-pandoc: 2.17.1.1
-pkgdown: 2.0.2
+pandoc: 3.1.1
+pkgdown: 2.0.8
 pkgdown_sha: ~
 articles:
   a-quickstart-rkolada: a-quickstart-rkolada.html
   introduction-to-rkolada: introduction-to-rkolada.html
-last_built: 2022-03-16T09:52Z
+last_built: 2024-05-12T13:14Z
 

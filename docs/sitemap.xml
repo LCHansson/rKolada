@@ -49,6 +49,9 @@
     <loc>/reference/desc_glue_spec.html</loc>
   </url>
   <url>
+    <loc>/reference/generate_kpi_metadata.html</loc>
+  </url>
+  <url>
     <loc>/reference/get_kld_data.html</loc>
   </url>
   <url>
@@ -62,6 +65,9 @@
   </url>
   <url>
     <loc>/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>/reference/kolada_available.html</loc>
   </url>
   <url>
     <loc>/reference/kpi_bind_keywords.html</loc>
