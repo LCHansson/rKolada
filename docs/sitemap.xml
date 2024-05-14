@@ -19,9 +19,6 @@
     <loc>/articles/introduction-to-rkolada.html</loc>
   </url>
   <url>
-    <loc>/articles/quickstart-rkolada.html</loc>
-  </url>
-  <url>
     <loc>/authors.html</loc>
   </url>
   <url>
@@ -34,25 +31,13 @@
     <loc>/reference/allowed_entities.html</loc>
   </url>
   <url>
-    <loc>/reference/cache_handler.html</loc>
-  </url>
-  <url>
-    <loc>/reference/check_table_spec.html</loc>
-  </url>
-  <url>
     <loc>/reference/compose_data_query.html</loc>
   </url>
   <url>
     <loc>/reference/compose_metadata_query.html</loc>
   </url>
   <url>
-    <loc>/reference/desc_glue_spec.html</loc>
-  </url>
-  <url>
     <loc>/reference/generate_kpi_metadata.html</loc>
-  </url>
-  <url>
-    <loc>/reference/get_kld_data.html</loc>
   </url>
   <url>
     <loc>/reference/get_kpi.html</loc>
@@ -91,9 +76,6 @@
     <loc>/reference/kpi_grp_unnest.html</loc>
   </url>
   <url>
-    <loc>/reference/kpi_grp_unnest_kpis.html</loc>
-  </url>
-  <url>
     <loc>/reference/kpi_minimize.html</loc>
   </url>
   <url>
@@ -115,16 +97,10 @@
     <loc>/reference/municipality_grp_unnest.html</loc>
   </url>
   <url>
-    <loc>/reference/municipality_grp_unnest_municipalities.html</loc>
-  </url>
-  <url>
     <loc>/reference/municipality_id_to_name.html</loc>
   </url>
   <url>
     <loc>/reference/municipality_name_to_id.html</loc>
-  </url>
-  <url>
-    <loc>/reference/municipality_names_to_ids.html</loc>
   </url>
   <url>
     <loc>/reference/municipality_search.html</loc>
@@ -134,9 +110,6 @@
   </url>
   <url>
     <loc>/reference/pipe.html</loc>
-  </url>
-  <url>
-    <loc>/reference/stopwords.html</loc>
   </url>
   <url>
     <loc>/reference/values_legend.html</loc>
