@@ -28,6 +28,10 @@ current entity. Case insensitive.}
 \item{municipality}{If entity is \code{"ou"}, the municipality parameter can
 be added to narrow the search.}
 
+\item{region_type}{(Optional) Filter municipalities by region type. Only
+used when \code{entity} is \code{"municipality"}. Common values: \code{"K"}
+(municipality), \code{"L"} (region).}
+
 \item{max_results}{(Optional) Specify the maximum number of results
 returned by the query.}
 

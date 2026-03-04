@@ -93,6 +93,9 @@ compose_metadata_query <- function(
 #' @param id The ID of any entry in the current entity.
 #' @param municipality If entity is \code{"ou"}, the municipality parameter can
 #' be added to narrow the search.
+#' @param region_type (Optional) Filter municipalities by region type. Only
+#' used when \code{entity} is \code{"municipality"}. Common values: \code{"K"}
+#' (municipality), \code{"L"} (region).
 #' @param max_results (Optional) Specify the maximum number of results
 #'  returned by the query.
 #' @param cache Logical. If TRUE, downloaded data are stored to the local disk
