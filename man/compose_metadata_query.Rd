@@ -9,9 +9,10 @@ compose_metadata_query(
   title = NULL,
   id = NULL,
   municipality = NULL,
+  region_type = NULL,
   page = NA,
   per_page = NA,
-  version = "v2"
+  version = "v3"
 )
 }
 \arguments{
@@ -26,11 +27,15 @@ current entity. Case insensitive.}
 \item{municipality}{If entity is \code{"ou"}, the municipality parameter can
 be added to narrow the search.}
 
+\item{region_type}{(Optional) Filter municipalities by region type. Only
+used when \code{entity} is \code{"municipality"}. Common values: \code{"K"}
+(municipality), \code{"L"} (region).}
+
 \item{page}{What page to fetch. Used mainly in large queries. Fetches a page using the value of \code{"per_page"} as pagination delimiter.}
 
 \item{per_page}{Number of results per page.}
 
-\item{version}{Version of the API. Currently only \code{"v2"} is supported.}
+\item{version}{Version of the API. Defaults to \code{"v3"}.}
 }
 \value{
 A string containing a URL to the Kolada REST API.

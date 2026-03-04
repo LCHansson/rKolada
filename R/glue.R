@@ -14,10 +14,10 @@ desc_glue_spec <- function(type) {
 - Divided by gender: {as.logical(is_divided_by_gender)}
 - Municipality type: {municipality_type}
 - Operating area: {operating_area}
+- Auspice: {auspice}
 
 - Publication date: {publication_date}
 - Publication period: {publ_period}
-- OU publication date: {ou_publication_date}
 
 {sub_heading_prefix} Keywords
 {keywords}

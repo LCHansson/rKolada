@@ -31,27 +31,5 @@
 #'
 #' @export
 ou_search <- function(ou_df, query, column = NULL) {
-
-  if (is.null(ou_df)) {
-    warning("\nAn empty object was used as input to ou_search().")
-    return(NULL)
-  }
-
-  if (is.null(column))
-    column <- names(ou_df)
-
-  f <- function(obj, query) {
-    stringr::str_detect(
-      tolower(obj),
-      tolower(as.character(paste(query, collapse = "|")))
-    )
-  }
-
-  hits <- ou_df %>%
-    dplyr::filter_at(
-      .vars = dplyr::vars(column),
-      .vars_predicate = dplyr::any_vars(f(., query))
-    )
-
-  hits
+  entity_search(ou_df, query, column, "ou_search")
 }

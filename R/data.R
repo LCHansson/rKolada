@@ -16,7 +16,9 @@
 #' Units. Defaults to \code{"municipality"}.
 #' @param page What page to fetch. Used mainly in large queries. Fetches a page using the value of \code{"per_page"} as pagination delimiter.
 #' @param per_page Number of results per page.
-#' @param version Version of the API. Currently only \code{"v2"} is supported.
+#' @param from_date (Optional) Only return data updated after this date.
+#' Format: \code{"YYYY-MM-DD"}.
+#' @param version Version of the API. Defaults to \code{"v3"}.
 #'
 #' @return A string containing a URL to the Kolada REST API.
 compose_data_query <- function(
@@ -25,18 +27,19 @@ compose_data_query <- function(
   period = NULL,
   ou = NULL,
   unit_type = "municipality",
+  from_date = NULL,
   page = NA,
   per_page = NA,
-  version = "v2"
+  version = "v3"
 ) {
   unit_type <- tolower(unit_type)
   if (!unit_type %in% c("municipality", "ou"))
     stop("argument to 'unit_type' must be one of 'municipality' or 'ou'.")
 
   if (unit_type == "municipality")
-    base_url <- glue::glue("http://api.kolada.se/{version}/data")
+    base_url <- glue::glue("https://api.kolada.se/{version}/data")
   else if (unit_type == "ou")
-    base_url <- glue::glue("http://api.kolada.se/{version}/oudata")
+    base_url <- glue::glue("https://api.kolada.se/{version}/oudata")
 
   if (is.null(kpi))
     kpi <- ""
@@ -74,9 +77,9 @@ compose_data_query <- function(
   if (sum(stringr::str_length(c(kpi, unit, period)) > 0) < 2)
     stop("Too few parameters specified! At least two of the following parameters must have non-empty values: kpi, period, (municipality OR ou).")
 
-  query_url <- glue::glue("{base_url}{kpi}{unit}{period}") %>%
-    urltools::param_set("page", page) %>%
-    urltools::param_set("per_page", per_page)
+  query_url <- glue::glue("{base_url}{kpi}{unit}{period}")
+  query_url <- append_query_params(query_url, page = page, per_page = per_page,
+                                   from_date = from_date)
 
   return(utils::URLencode(query_url))
 }
@@ -100,6 +103,10 @@ compose_data_query <- function(
 #' fetch data for Municipalities or Organizational Units.
 #' @param max_results (Optional) Specify the maximum number of results
 #'  returned by the query.
+#' @param from_date (Optional) Only return data updated after this date.
+#' Format: \code{"YYYY-MM-DD"}.
+#' @param keep_deleted Logical. If \code{FALSE} (default), rows where
+#' \code{isdeleted} is \code{TRUE} are removed from the result.
 #' @param simplify Whether to make results more human readable.
 #' @param verbose Whether to print the call to the Kolada API as a message to
 #' the R console.
@@ -137,6 +144,8 @@ get_values <- function(
   ou = NULL,
   unit_type = "municipality",
   max_results = NULL,
+  from_date = NULL,
+  keep_deleted = FALSE,
   simplify = TRUE,
   verbose = FALSE
 ) {
@@ -144,60 +153,114 @@ get_values <- function(
   if (isTRUE(verbose))
     message("Downloading Kolada data using URL(s):")
 
-  next_page <- TRUE
-  page <- 1
-  per_page <- 2000
+  # Chunk parameters to stay within the API's 25-element-per-path-segment limit
+  kpi_chunks <- chunk_vector(kpi)
+  period_chunks <- chunk_vector(period)
+  if (tolower(unit_type) == "ou")
+    unit_chunks <- chunk_vector(ou)
+  else
+    unit_chunks <- chunk_vector(municipality)
 
-  while(isTRUE(next_page)) {
+  all_vals <- list()
 
-    if(!is.null(max_results) && page * per_page > max_results)
-      page_size <- max_results %% per_page
-    else
-      page_size <- per_page
+  for (kpi_c in kpi_chunks) {
+    for (unit_c in unit_chunks) {
+      for (period_c in period_chunks) {
 
-    query <- compose_data_query(kpi = kpi, municipality = municipality, period = period, ou = ou, unit_type = unit_type, page = page, per_page = page_size)
+        if (tolower(unit_type) == "ou") {
+          munic_c <- municipality
+          ou_c <- unit_c
+        } else {
+          munic_c <- unit_c
+          ou_c <- ou
+        }
 
-    if (isTRUE(verbose))
-      message(query)
+        has_next <- TRUE
+        page <- 1
+        per_page <- 5000
 
-    res <- try(httr::GET(query, httr::config(verbose = verbose)), silent = TRUE)
+        while(isTRUE(has_next)) {
 
-    if(inherits(res, "try-error")) {
-      warning("\nCould not connect to the Kolada database. Please check your internet connection. Did you misspel the query?\nRe-run query with verbose = TRUE to see the URL used in the query.")
-      return(NULL)
+          if(!is.null(max_results) && page * per_page > max_results)
+            page_size <- max_results %% per_page
+          else
+            page_size <- per_page
+
+          query <- compose_data_query(kpi = kpi_c, municipality = munic_c,
+                                      period = period_c, ou = ou_c,
+                                      unit_type = unit_type, from_date = from_date,
+                                      page = page, per_page = page_size)
+
+          if (isTRUE(verbose))
+            message(query)
+
+          res <- try(
+            httr2::request(query) |>
+              httr2::req_error(is_error = function(resp) FALSE) |>
+              httr2::req_perform(),
+            silent = TRUE
+          )
+
+          if(inherits(res, "try-error")) {
+            warning("\nCould not connect to the Kolada database. Please check your internet connection. Did you misspel the query?\nRe-run query with verbose = TRUE to see the URL used in the query.")
+            return(NULL)
+          }
+
+          contents_raw <- httr2::resp_body_string(res)
+          contents <- try(jsonlite::fromJSON(contents_raw), silent = TRUE)
+
+          if(inherits(contents, "try-error")) {
+            warning("\nKolada returned a 404 or malformatted HTML/JSON. Did you misspel the query?\nRe-run query with verbose = TRUE to see the URL used in the query.")
+            return(NULL)
+          }
+
+          if(length(contents$values) == 0)
+            break
+
+          if(page == 1)
+            chunk_vals <- tibble::as_tibble(contents$values)
+          else
+            chunk_vals <- dplyr::bind_rows(chunk_vals, tibble::as_tibble(contents$values))
+
+          if(is.null(contents$next_url) || contents$next_url == "")
+            has_next <- FALSE
+          else
+            page <- page + 1
+
+          if(!is.null(max_results) && nrow(chunk_vals) >= max_results) {
+            chunk_vals <- utils::head(chunk_vals, max_results)
+            has_next <- FALSE
+          }
+        }
+
+        if (exists("chunk_vals", inherits = FALSE)) {
+          all_vals <- c(all_vals, list(chunk_vals))
+          rm(chunk_vals)
+        }
+
+      }
     }
-
-    contents_raw <- httr::content(res, as = "text")
-    contents <- try(jsonlite::fromJSON(contents_raw), silent = TRUE)
-
-    if(inherits(contents, "try-error")) {
-      warning("\nKolada returned a 404 or malformatted HTML/JSON. Did you misspel the query?\nRe-run query with verbose = TRUE to see the URL used in the query.")
-      return(NULL)
-    }
-
-    if(length(contents$values) == 0) {
-      warning("\nThe query returned zero hits from the Kolada database. Did you misspel the query?\nRe-run query with verbose = TRUE to see the URL used in the query.")
-      return(NULL)
-    }
-
-
-    if(page == 1)
-      vals <- tibble::as_tibble(contents$values)
-    else
-      vals <- dplyr::bind_rows(vals, tibble::as_tibble(contents$values))
-
-
-    if(is.null(contents$next_page))
-      next_page <- FALSE
-    else
-      page <- page + 1
-
-    if(!is.null(max_results) && nrow(vals) == max_results)
-      next_page <- FALSE
   }
+
+  if (length(all_vals) == 0) {
+    warning("\nThe query returned zero hits from the Kolada database. Did you misspel the query?\nRe-run query with verbose = TRUE to see the URL used in the query.")
+    return(NULL)
+  }
+
+  vals <- dplyr::bind_rows(all_vals)
+
+  if (!is.null(max_results) && nrow(vals) > max_results)
+    vals <- utils::head(vals, max_results)
 
   ret <- vals %>%
     tidyr::unnest(cols = c("values"))
+
+  # Filter out deleted records if present
+  if (!isTRUE(keep_deleted) && "isdeleted" %in% names(ret)) {
+    ret <- ret %>%
+      dplyr::filter(!.data$isdeleted) %>%
+      dplyr::select(-"isdeleted")
+  }
 
   if (isTRUE(simplify) & unit_type == "municipality") {
     ret_has_groups <- any(stringr::str_detect(ret$municipality, "^G"))
@@ -208,7 +271,7 @@ get_values <- function(
       munic_tbl <- munic_tbl %>%
       dplyr::bind_rows(
         get_municipality_groups(verbose = FALSE) %>%
-          dplyr::select(.data$id, .data$title) %>%
+          dplyr::select("id", "title") %>%
           dplyr::mutate(type = "G")
       )
 
@@ -217,17 +280,17 @@ get_values <- function(
       # dplyr::select(-.data$status) %>%
       # Convert codes to names
       dplyr::rename(
-        municipality_id = .data$municipality
+        municipality_id = "municipality"
       ) %>%
       dplyr::inner_join(
         dplyr::select(
           munic_tbl,
-          municipality_id = .data$id,
-          municipality = .data$title,
-          municipality_type = .data$type),
+          municipality_id = "id",
+          municipality = "title",
+          municipality_type = "type"),
         by = "municipality_id"
       ) %>%
-      dplyr::rename(year = .data$period)
+      dplyr::rename(year = "period")
   }
 
   if (isTRUE(simplify) & unit_type == "ou") {
@@ -235,19 +298,19 @@ get_values <- function(
 
     ret <- ret %>%
       # Remove "status" column (does it ever contain anything?)
-      dplyr::select(-.data$status) %>%
+      dplyr::select(-"status") %>%
       # Convert codes to names
       dplyr::rename(
-        ou_id = .data$ou
+        ou_id = "ou"
       ) %>%
       dplyr::inner_join(
         dplyr::select(
           ou_tbl,
-          ou_id = .data$id,
-          ou = .data$title),
+          ou_id = "id",
+          ou = "title"),
         by = "ou_id"
       ) %>%
-      dplyr::rename(year = .data$period)
+      dplyr::rename(year = "period")
   }
 
   ret
@@ -284,9 +347,9 @@ values_minimize <- function(values_df) {
     return(NULL)
   }
 
-  values_df %>%
-    dplyr::select_if(names(.) %in% c("kpi", "municipality", "value") |
-                       purrr::map(., dplyr::n_distinct) > 1)
+  keep <- names(values_df) %in% c("kpi", "municipality", "value") |
+    purrr::map_lgl(values_df, ~ dplyr::n_distinct(.x) > 1)
+  values_df %>% dplyr::select(dplyr::all_of(names(values_df)[keep]))
 }
 
 #' Create KPI long-form descriptions to add to a plot
@@ -313,7 +376,7 @@ values_legend <- function(values_df, kpi_df) {
 
   kpis <- unique(values_df$kpi)
   desc <- kpi_df %>%
-    dplyr::select(.data$id, .data$title) %>%
+    dplyr::select("id", "title") %>%
     dplyr::filter(.data$id %in% .env$kpis)
 
   paste(glue::glue_data(desc, "{id}: {title}"), collapse = "\n")

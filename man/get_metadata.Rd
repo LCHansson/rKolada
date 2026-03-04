@@ -9,6 +9,7 @@ get_metadata(
   title = NULL,
   id = NULL,
   municipality = NULL,
+  region_type = NULL,
   max_results = NULL,
   cache = FALSE,
   cache_location = tempdir,

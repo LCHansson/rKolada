@@ -10,9 +10,10 @@ compose_data_query(
   period = NULL,
   ou = NULL,
   unit_type = "municipality",
+  from_date = NULL,
   page = NA,
   per_page = NA,
-  version = "v2"
+  version = "v3"
 )
 }
 \arguments{
@@ -32,11 +33,14 @@ available for certain KPIs. Only used if \code{unit_type} is set to \code{"ou"}.
 fetch data for Municipalities or Organizational Units.
 Units. Defaults to \code{"municipality"}.}
 
+\item{from_date}{(Optional) Only return data updated after this date.
+Format: \code{"YYYY-MM-DD"}.}
+
 \item{page}{What page to fetch. Used mainly in large queries. Fetches a page using the value of \code{"per_page"} as pagination delimiter.}
 
 \item{per_page}{Number of results per page.}
 
-\item{version}{Version of the API. Currently only \code{"v2"} is supported.}
+\item{version}{Version of the API. Defaults to \code{"v3"}.}
 }
 \value{
 A string containing a URL to the Kolada REST API.

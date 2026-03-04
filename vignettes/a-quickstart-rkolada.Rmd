@@ -63,12 +63,12 @@ kpi_res <- kpis %>%
   kpi_search("BRP") %>%
   # Keep only KPIs with data for the municipality level
   kpi_search("K", column = "municipality_type") %>%
-  kpi_minimize(remove_undocumented_columns = TRUE, remove_monotonous_data = TRUE)
+  kpi_minimize(remove_monotonous_data = TRUE)
 
 dplyr::glimpse(kpi_res)
 ```
 
-Let's say we are interested in retrieving data for four Swedish municipalities. We thus want to create a table containing metadata about these four municipalities:
+Let's say we are interested in retrieving data for three Swedish municipalities. We thus want to create a table containing metadata about these four municipalities:
 
 ```{r}
 munic_res <- munic %>% 
@@ -140,5 +140,5 @@ ggplot(kld_data, aes(x = year, y = value)) +
   )
 ```
 
-
+Note the use of the helper function `values_legend()` to produce a legend containing the names and keys of all KPIs included in the graph.
 
