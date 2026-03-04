@@ -78,82 +78,82 @@ antal dagar (%)”) for Sweden’s three most populous cities; Stockholm (id
 `"0180"`), Gothenburg (Swedish: *Göteborg*; `"1480"`) and Malmö
 (`"1280"`):
 
-    #>       kpi municipality_id year count gender status    value municipality
-    #> 1  N00945            0180 1996     1      T              NA    Stockholm
-    #> 2  N00945            1280 1996     1      T              NA        Malmö
-    #> 3  N00945            1480 1996     1      T              NA     Göteborg
-    #> 4  N00945            0180 1997     1      T              NA    Stockholm
-    #> 5  N00945            1280 1997     1      T              NA        Malmö
-    #> 6  N00945            1480 1997     1      T              NA     Göteborg
-    #> 7  N00945            0180 1998     1      T        30.41209    Stockholm
-    #> 8  N00945            1280 1998     1      T        26.69198        Malmö
-    #> 9  N00945            1480 1998     1      T        30.45307     Göteborg
-    #> 10 N00945            0180 1999     1      T        30.62354    Stockholm
-    #> 11 N00945            1280 1999     1      T        26.84941        Malmö
-    #> 12 N00945            1480 1999     1      T        32.00700     Göteborg
-    #> 13 N00945            0180 2000     1      T        31.32960    Stockholm
-    #> 14 N00945            1280 2000     1      T        28.36723        Malmö
-    #> 15 N00945            1480 2000     1      T        33.23952     Göteborg
-    #> 16 N00945            0180 2001     1      T        31.90901    Stockholm
-    #> 17 N00945            1280 2001     1      T        29.14839        Malmö
-    #> 18 N00945            1480 2001     1      T        34.34883     Göteborg
-    #> 19 N00945            0180 2002     1      T        33.13784    Stockholm
-    #> 20 N00945            1280 2002     1      T        30.18228        Malmö
-    #> 21 N00945            1480 2002     1      T        35.15515     Göteborg
-    #> 22 N00945            0180 2003     1      T        33.82520    Stockholm
-    #> 23 N00945            1280 2003     1      T        29.88630        Malmö
-    #> 24 N00945            1480 2003     1      T        35.55795     Göteborg
-    #> 25 N00945            0180 2004     1      T        34.21939    Stockholm
-    #> 26 N00945            1280 2004     1      T        31.21299        Malmö
-    #> 27 N00945            1480 2004     1      T        35.51597     Göteborg
-    #> 28 N00945            0180 2005     1      T        35.00610    Stockholm
-    #> 29 N00945            1280 2005     1      T        32.26879        Malmö
-    #> 30 N00945            1480 2005     1      T        36.71541     Göteborg
-    #> 31 N00945            0180 2006     1      T        35.78205    Stockholm
-    #> 32 N00945            1280 2006     1      T        33.89914        Malmö
-    #> 33 N00945            1480 2006     1      T        37.20446     Göteborg
-    #> 34 N00945            0180 2007     1      T        35.61412    Stockholm
-    #> 35 N00945            1280 2007     1      T        32.27672        Malmö
-    #> 36 N00945            1480 2007     1      T        36.03724     Göteborg
-    #> 37 N00945            0180 2008     1      T        36.34371    Stockholm
-    #> 38 N00945            1280 2008     1      T        32.99687        Malmö
-    #> 39 N00945            1480 2008     1      T        36.04195     Göteborg
-    #> 40 N00945            0180 2009     1      T        36.59765    Stockholm
-    #> 41 N00945            1280 2009     1      T        33.88994        Malmö
-    #> 42 N00945            1480 2009     1      T        35.93543     Göteborg
-    #> 43 N00945            0180 2010     1      T        36.92186    Stockholm
-    #> 44 N00945            1280 2010     1      T        33.82857        Malmö
-    #> 45 N00945            1480 2010     1      T        36.39835     Göteborg
-    #> 46 N00945            0180 2011     1      T        37.04921    Stockholm
-    #> 47 N00945            1280 2011     1      T        33.20278        Malmö
-    #> 48 N00945            1480 2011     1      T        37.00446     Göteborg
-    #> 49 N00945            0180 2012     1      T        37.04136    Stockholm
-    #> 50 N00945            1280 2012     1      T        34.31265        Malmö
-    #> 51 N00945            1480 2012     1      T        36.87452     Göteborg
-    #> 52 N00945            0180 2013     1      T        38.35227    Stockholm
-    #> 53 N00945            1280 2013     1      T        34.82378        Malmö
-    #> 54 N00945            1480 2013     1      T        37.95666     Göteborg
-    #> 55 N00945            0180 2014     1      T        38.61051    Stockholm
-    #> 56 N00945            1280 2014     1      T        35.30861        Malmö
-    #> 57 N00945            1480 2014     1      T        38.12922     Göteborg
-    #> 58 N00945            0180 2015     1      T        39.09000    Stockholm
-    #> 59 N00945            1280 2015     1      T        35.78000        Malmö
-    #> 60 N00945            1480 2015     1      T        38.19000     Göteborg
-    #> 61 N00945            0180 2016     1      T        38.79194    Stockholm
-    #> 62 N00945            1280 2016     1      T        36.26382        Malmö
-    #> 63 N00945            1480 2016     1      T        38.60823     Göteborg
-    #> 64 N00945            0180 2017     1      T        38.93364    Stockholm
-    #> 65 N00945            1280 2017     1      T        35.68866        Malmö
-    #> 66 N00945            1480 2017     1      T        38.86796     Göteborg
-    #> 67 N00945            0180 2018     1      T        39.40000    Stockholm
-    #> 68 N00945            1280 2018     1      T        36.50000        Malmö
-    #> 69 N00945            1480 2018     1      T        39.10000     Göteborg
-    #> 70 N00945            0180 2019     1      T        39.30000    Stockholm
-    #> 71 N00945            1280 2019     1      T        35.40000        Malmö
-    #> 72 N00945            1480 2019     1      T        39.10000     Göteborg
-    #> 73 N00945            0180 2020     1      T        40.80000    Stockholm
-    #> 74 N00945            1280 2020     1      T        37.00000        Malmö
-    #> 75 N00945            1480 2020     1      T        39.50000     Göteborg
+    #>    gender count status    value    kpi year municipality_id municipality
+    #> 1       T     0              NA N00945 1996            0180    Stockholm
+    #> 2       T     0              NA N00945 1996            1280        Malmö
+    #> 3       T     0              NA N00945 1996            1480     Göteborg
+    #> 4       T     0              NA N00945 1997            0180    Stockholm
+    #> 5       T     0              NA N00945 1997            1280        Malmö
+    #> 6       T     0              NA N00945 1997            1480     Göteborg
+    #> 7       T     1        30.41209 N00945 1998            0180    Stockholm
+    #> 8       T     1        26.69198 N00945 1998            1280        Malmö
+    #> 9       T     1        30.45307 N00945 1998            1480     Göteborg
+    #> 10      T     1        30.62354 N00945 1999            0180    Stockholm
+    #> 11      T     1        26.84941 N00945 1999            1280        Malmö
+    #> 12      T     1        32.00700 N00945 1999            1480     Göteborg
+    #> 13      T     1        31.32960 N00945 2000            0180    Stockholm
+    #> 14      T     1        28.36723 N00945 2000            1280        Malmö
+    #> 15      T     1        33.23952 N00945 2000            1480     Göteborg
+    #> 16      T     1        31.90901 N00945 2001            0180    Stockholm
+    #> 17      T     1        29.14839 N00945 2001            1280        Malmö
+    #> 18      T     1        34.34883 N00945 2001            1480     Göteborg
+    #> 19      T     1        33.13784 N00945 2002            0180    Stockholm
+    #> 20      T     1        30.18228 N00945 2002            1280        Malmö
+    #> 21      T     1        35.15515 N00945 2002            1480     Göteborg
+    #> 22      T     1        33.82520 N00945 2003            0180    Stockholm
+    #> 23      T     1        29.88630 N00945 2003            1280        Malmö
+    #> 24      T     1        35.55795 N00945 2003            1480     Göteborg
+    #> 25      T     1        34.21939 N00945 2004            0180    Stockholm
+    #> 26      T     1        31.21299 N00945 2004            1280        Malmö
+    #> 27      T     1        35.51597 N00945 2004            1480     Göteborg
+    #> 28      T     1        35.00610 N00945 2005            0180    Stockholm
+    #> 29      T     1        32.26879 N00945 2005            1280        Malmö
+    #> 30      T     1        36.71541 N00945 2005            1480     Göteborg
+    #> 31      T     1        35.78205 N00945 2006            0180    Stockholm
+    #> 32      T     1        33.89914 N00945 2006            1280        Malmö
+    #> 33      T     1        37.20446 N00945 2006            1480     Göteborg
+    #> 34      T     1        35.61412 N00945 2007            0180    Stockholm
+    #> 35      T     1        32.27672 N00945 2007            1280        Malmö
+    #> 36      T     1        36.03724 N00945 2007            1480     Göteborg
+    #> 37      T     1        36.34371 N00945 2008            0180    Stockholm
+    #> 38      T     1        32.99687 N00945 2008            1280        Malmö
+    #> 39      T     1        36.04195 N00945 2008            1480     Göteborg
+    #> 40      T     1        36.59765 N00945 2009            0180    Stockholm
+    #> 41      T     1        33.88994 N00945 2009            1280        Malmö
+    #> 42      T     1        35.93543 N00945 2009            1480     Göteborg
+    #> 43      T     1        36.92186 N00945 2010            0180    Stockholm
+    #> 44      T     1        33.82857 N00945 2010            1280        Malmö
+    #> 45      T     1        36.39835 N00945 2010            1480     Göteborg
+    #> 46      T     1        37.04921 N00945 2011            0180    Stockholm
+    #> 47      T     1        33.20278 N00945 2011            1280        Malmö
+    #> 48      T     1        37.00446 N00945 2011            1480     Göteborg
+    #> 49      T     1        37.04136 N00945 2012            0180    Stockholm
+    #> 50      T     1        34.31265 N00945 2012            1280        Malmö
+    #> 51      T     1        36.87452 N00945 2012            1480     Göteborg
+    #> 52      T     1        38.35227 N00945 2013            0180    Stockholm
+    #> 53      T     1        34.82378 N00945 2013            1280        Malmö
+    #> 54      T     1        37.95666 N00945 2013            1480     Göteborg
+    #> 55      T     1        38.61051 N00945 2014            0180    Stockholm
+    #> 56      T     1        35.30861 N00945 2014            1280        Malmö
+    #> 57      T     1        38.12922 N00945 2014            1480     Göteborg
+    #> 58      T     1        39.09000 N00945 2015            0180    Stockholm
+    #> 59      T     1        35.78000 N00945 2015            1280        Malmö
+    #> 60      T     1        38.19000 N00945 2015            1480     Göteborg
+    #> 61      T     1        38.79194 N00945 2016            0180    Stockholm
+    #> 62      T     1        36.26382 N00945 2016            1280        Malmö
+    #> 63      T     1        38.60823 N00945 2016            1480     Göteborg
+    #> 64      T     1        38.93364 N00945 2017            0180    Stockholm
+    #> 65      T     1        35.68866 N00945 2017            1280        Malmö
+    #> 66      T     1        38.86796 N00945 2017            1480     Göteborg
+    #> 67      T     1        39.40000 N00945 2018            0180    Stockholm
+    #> 68      T     1        36.50000 N00945 2018            1280        Malmö
+    #> 69      T     1        39.10000 N00945 2018            1480     Göteborg
+    #> 70      T     1        39.30000 N00945 2019            0180    Stockholm
+    #> 71      T     1        35.40000 N00945 2019            1280        Malmö
+    #> 72      T     1        39.10000 N00945 2019            1480     Göteborg
+    #> 73      T     1        40.80000 N00945 2020            0180    Stockholm
+    #> 74      T     1        37.00000 N00945 2020            1280        Malmö
+    #> 75      T     1        39.50000 N00945 2020            1480     Göteborg
     #>    municipality_type
     #> 1                  K
     #> 2                  K
@@ -266,17 +266,17 @@ entity:
 Each function returns a `tibble` with all available data for the
 specified metadata entity.
 
-    #>    auspices
-    #> 1         E
-    #> 2         X
-    #> 3      <NA>
-    #> 4      <NA>
-    #> 5      <NA>
-    #> 6         X
-    #> 7      <NA>
-    #> 8         X
-    #> 9         X
-    #> 10     <NA>
+    #>        id                                               title
+    #> 1  N00003                           Personalkostnader, kr/inv
+    #> 2  N00005      Utjämningssystemet enl resultaträkning, kr/inv
+    #> 3  N00009                    Intäkter kommunen totalt, kr/inv
+    #> 4  N00011 Inkomstutjämning, bidrag/avgift, kr/inv 1 nov fg år
+    #> 5  N00012            Kostnadsutjämning, bidrag/avgift, kr/inv
+    #> 6  N00014                     Regleringsbidrag/avgift, kr/inv
+    #> 7  N00016                  Utjämningssystemet enl SCB, kr/inv
+    #> 8  N00018                             Införandebidrag, kr/inv
+    #> 9  N00019                              Strukturbidrag, kr/inv
+    #> 10 N00021                Intäkter egentlig verksamhet, kr/inv
     #>                                                                                                                                                       description
     #> 1                                                      Personalkostnader kommunen totalt, dividerat med antal invånare totalt 31/12. Avser egen regi. Källa: SCB.
     #> 2                                                                     Kommunalekonomisk utjämning kommun, dividerat med antal invånare totalt 31/12 . Källa: SCB.
@@ -288,50 +288,28 @@ specified metadata entity.
     #> 8                                                                                              Införandebidrag, i kronor per invånare den 1/11 fg år. Källa: SCB.
     #> 9                                                                                               Strukturbidrag, i kronor per invånare den 1/11 fg år. Källa: SCB.
     #> 10 Externa intäkter exklusive intäkter från försäljning till andra kommuner och regioner för egentlig verksamhet, dividerat med antal invånare 31/12. Källa: SCB.
-    #>    has_ou_data     id is_divided_by_gender municipality_type
-    #> 1        FALSE N00003                    0                 K
-    #> 2        FALSE N00005                    0                 K
-    #> 3        FALSE N00009                    0                 K
-    #> 4        FALSE N00011                    0                 K
-    #> 5        FALSE N00012                    0                 K
-    #> 6        FALSE N00014                    0                 K
-    #> 7        FALSE N00016                    0                 K
-    #> 8        FALSE N00018                    0                 K
-    #> 9        FALSE N00019                    0                 K
-    #> 10       FALSE N00021                    0                 K
-    #>            operating_area ou_publication_date perspective prel_publication_date
-    #> 1  Kommunen, övergripande                <NA>    Resurser            2024-04-04
-    #> 2   Skatter och utjämning                <NA>    Resurser            2024-04-04
-    #> 3  Kommunen, övergripande                <NA>    Resurser                  <NA>
-    #> 4   Skatter och utjämning                <NA>    Resurser            2023-09-28
-    #> 5   Skatter och utjämning                <NA>    Resurser            2023-09-28
-    #> 6   Skatter och utjämning                <NA>    Resurser            2023-09-28
-    #> 7   Skatter och utjämning                <NA>    Resurser            2023-09-28
-    #> 8   Skatter och utjämning                <NA>    Resurser            2023-09-28
-    #> 9   Skatter och utjämning                <NA>    Resurser            2023-09-28
-    #> 10 Kommunen, övergripande                <NA>    Resurser            2024-04-04
-    #>    publ_period publication_date
-    #> 1         2024       2025-02-22
-    #> 2         2024       2025-02-22
-    #> 3         2024       2025-02-22
-    #> 4         2024       2024-04-15
-    #> 5         2024       2024-04-15
-    #> 6         2024       2024-04-15
-    #> 7         2024       2024-04-15
-    #> 8         2024       2024-04-15
-    #> 9         2024       2024-04-15
-    #> 10        2024       2025-02-22
-    #>                                                  title
-    #> 1                            Personalkostnader, kr/inv
-    #> 2       Utjämningssystemet enl resultaträkning, kr/inv
-    #> 3                     Intäkter kommunen totalt, kr/inv
-    #> 4  Inkomstutjämning, bidrag/avgift, kr/inv 1 nov fg år
-    #> 5             Kostnadsutjämning, bidrag/avgift, kr/inv
-    #> 6              Regleringsbidrag/avgift, kr/inv (2005-)
-    #> 7                   Utjämningssystemet enl SCB, kr/inv
-    #> 8                      Införandebidrag, kr/inv (2005-)
-    #> 9                       Strukturbidrag, kr/inv (2005-)
-    #> 10                Intäkter egentlig verksamhet, kr/inv
+    #>    is_divided_by_gender municipality_type auspice         operating_area
+    #> 1                 FALSE                 K       E Kommunen, övergripande
+    #> 2                 FALSE                 K       X Kommunen, övergripande
+    #> 3                 FALSE                 K    <NA> Kommunen, övergripande
+    #> 4                 FALSE                 K    <NA> Kommunen, övergripande
+    #> 5                 FALSE                 K    <NA> Kommunen, övergripande
+    #> 6                 FALSE                 K       X Kommunen, övergripande
+    #> 7                 FALSE                 K    <NA> Kommunen, övergripande
+    #> 8                 FALSE                 K       X Kommunen, övergripande
+    #> 9                 FALSE                 K       X Kommunen, övergripande
+    #> 10                FALSE                 K    <NA> Kommunen, övergripande
+    #>    perspective prel_publication_date publication_date publ_period has_ou_data
+    #> 1     Resurser            2026-04-01       2026-08-28        2025       FALSE
+    #> 2     Resurser            2026-04-01       2026-08-28        2025       FALSE
+    #> 3     Resurser                  <NA>       2027-02-24        2026       FALSE
+    #> 4     Resurser            2025-09-28       2026-04-15        2026       FALSE
+    #> 5     Resurser            2025-09-28       2026-04-15        2026       FALSE
+    #> 6     Resurser            2025-09-28       2026-04-15        2026       FALSE
+    #> 7     Resurser            2025-09-28       2026-04-15        2026       FALSE
+    #> 8     Resurser            2025-09-28       2026-04-15        2026       FALSE
+    #> 9     Resurser            2025-09-28       2026-04-15        2026       FALSE
+    #> 10    Resurser            2026-04-01       2026-08-28        2025       FALSE
 
 ``` r
 # Download all KPI metadata as a tibble (kpi_df)
@@ -369,42 +347,42 @@ they can be used to search for one or several search terms in the entire
 table or in a subset of named columns:
 
 ``` r
-# Search for KPIs with the term "BRP" in their description or title
+# Search for KPIs with the term "skola" in their description or title
 kpi_filter <- kpi_df %>% kpi_search("skola", column = c("description", "title"))
 kpi_filter
-#> # A tibble: 901 × 13
-#>    auspices description has_ou_data id    is_divided_by_gender municipality_type
-#>    <chr>    <chr>       <lgl>       <chr>                <int> <chr>            
-#>  1 NA       "Kostnadsu… FALSE       N000…                    0 K                
-#>  2 NA       "Kostnadsu… FALSE       N000…                    0 K                
-#>  3 NA       "Kostnadsu… FALSE       N000…                    0 K                
-#>  4 T        "Avvikelse… FALSE       N000…                    0 K                
-#>  5 T        "Strukturk… FALSE       N001…                    0 K                
-#>  6 E        "Antal ans… FALSE       N001…                    0 K                
-#>  7 E        "Antal års… FALSE       N001…                    0 K                
-#>  8 T        "Kommunind… FALSE       N003…                    0 K                
-#>  9 T        "Kommunind… FALSE       N003…                    0 K                
-#> 10 T        "Kommunind… FALSE       N003…                    0 K                
-#> # ℹ 891 more rows
-#> # ℹ 7 more variables: operating_area <chr>, ou_publication_date <chr>,
-#> #   perspective <chr>, prel_publication_date <chr>, publ_period <chr>,
-#> #   publication_date <chr>, title <chr>
+#> # A tibble: 846 × 12
+#>    id     title       description is_divided_by_gender municipality_type auspice
+#>    <chr>  <chr>       <chr>       <lgl>                <chr>             <chr>  
+#>  1 N00022 Kostnadsut… "Kostnadsu… FALSE                K                 NA     
+#>  2 N00023 Kostnadsut… "Kostnadsu… FALSE                K                 NA     
+#>  3 N00026 Kostnadsut… "Kostnadsu… FALSE                K                 NA     
+#>  4 N00097 Nettokostn… "Avvikelse… FALSE                K                 T      
+#>  5 N00100 Strukturko… "Strukturk… FALSE                K                 T      
+#>  6 N00108 Månadsavlö… "Antal ans… FALSE                K                 E      
+#>  7 N00114 Årsarbetar… "Antal års… FALSE                K                 E      
+#>  8 N00303 Tillgängli… "Kommunind… FALSE                K                 T      
+#>  9 N00314 Tillgängli… "Kvinnors … FALSE                K                 T      
+#> 10 N00325 Tillgängli… "Mäns Komm… FALSE                K                 T      
+#> # ℹ 836 more rows
+#> # ℹ 6 more variables: operating_area <chr>, perspective <chr>,
+#> #   prel_publication_date <chr>, publication_date <chr>, publ_period <chr>,
+#> #   has_ou_data <lgl>
 ```
 
-    #> # A tibble: 3,312 × 3
-    #>    id      members       title                                                
-    #>    <chr>   <list>        <chr>                                                
-    #>  1 G114418 <df [4 × 2]>  Fyrkommunsnätverket (ovägt medel)                    
-    #>  2 G114419 <df [4 × 2]>  SMS - Samhällsskydd mellersta Skaraborg (ovägt medel)
-    #>  3 G114798 <df [4 × 2]>  4M -  Fyra Mälarstäder (ovägt medel)                 
-    #>  4 G114915 <df [68 × 2]> SmåKom (ovägt medel)                                 
-    #>  5 G116237 <df [9 × 2]>  Sjuhärad kommunalförbund (ovägt medel)               
-    #>  6 G116238 <df [15 × 2]> Skaraborgs kommunalförbund (ovägt medel)             
-    #>  7 G122469 <df [10 × 2]> Region 10 (ovägt medel)                              
-    #>  8 G122931 <df [5 × 2]>  3KVH (ovägt medel)                                   
-    #>  9 G128518 <df [11 × 2]> Familjen Helsingborg (ovägt medel)                   
-    #> 10 G128681 <df [12 × 2]> Stor-Malmö (ovägt medel)                             
-    #> # ℹ 3,302 more rows
+    #> # A tibble: 3,630 × 3
+    #>    id      title                                                 members      
+    #>    <chr>   <chr>                                                 <list>       
+    #>  1 G114418 Fyrkommunsnätverket (ovägt medel)                     <df [4 × 2]> 
+    #>  2 G114419 SMS - Samhällsskydd mellersta Skaraborg (ovägt medel) <df [4 × 2]> 
+    #>  3 G114798 4M -  Fyra Mälarstäder (ovägt medel)                  <df [4 × 2]> 
+    #>  4 G114915 SmåKom (ovägt medel)                                  <df [68 × 2]>
+    #>  5 G116237 Sjuhärad kommunalförbund (ovägt medel)                <df [9 × 2]> 
+    #>  6 G116238 Skaraborgs kommunalförbund (ovägt medel)              <df [15 × 2]>
+    #>  7 G122469 Region 10 (ovägt medel)                               <df [10 × 2]>
+    #>  8 G122931 3KVH (ovägt medel)                                    <df [5 × 2]> 
+    #>  9 G128518 Familjen Helsingborg (ovägt medel)                    <df [11 × 2]>
+    #> 10 G128681 Stor-Malmö (ovägt medel)                              <df [12 × 2]>
+    #> # ℹ 3,620 more rows
 
 ``` r
 # Search for municipality groups containing the name "Arboga"
@@ -414,20 +392,21 @@ munic_g <- get_municipality_groups()
 ``` r
 arboga_groups <- munic_g %>% municipality_grp_search("Arboga")
 arboga_groups
-#> # A tibble: 11 × 3
-#>    id      members      title                                             
-#>    <chr>   <list>       <chr>                                             
-#>  1 G175909 <df [7 × 2]> Liknande kommuner ekonomiskt bistånd, Arboga, 2022
-#>  2 G176199 <df [7 × 2]> Liknande kommuner socioekonomi, Arboga, 2022      
-#>  3 G176489 <df [7 × 2]> Liknande kommuner äldreomsorg, Arboga, 2022       
-#>  4 G35869  <df [7 × 2]> Liknande kommuner grundskola, Arboga, 2022        
-#>  5 G36161  <df [7 × 2]> Liknande kommuner gymnasieskola, Arboga, 2022     
-#>  6 G36453  <df [7 × 2]> Liknande kommuner IFO, Arboga, 2022               
-#>  7 G37329  <df [7 × 2]> Liknande kommuner, övergripande, Arboga, 2022     
-#>  8 G39502  <df [7 × 2]> Liknande kommuner LSS, Arboga, 2022               
-#>  9 G85463  <df [7 × 2]> Liknande kommuner fritidshem, Arboga, 2022        
-#> 10 G85755  <df [7 × 2]> Liknande kommuner förskola, Arboga, 2022          
-#> 11 G87629  <df [7 × 2]> Liknande kommuner integration, Arboga, 2022
+#> # A tibble: 12 × 3
+#>    id      title                                              members     
+#>    <chr>   <chr>                                              <list>      
+#>  1 G175909 Liknande kommuner ekonomiskt bistånd, Arboga, 2023 <df [7 × 2]>
+#>  2 G176199 Liknande kommuner socioekonomi, Arboga, 2024       <df [7 × 2]>
+#>  3 G176489 Liknande kommuner äldreomsorg, Arboga, 2024        <df [7 × 2]>
+#>  4 G216099 Liknande kommuner arbetsmarknad, Arboga, 2024      <df [7 × 2]>
+#>  5 G219042 Liknande kommuner räddningstjänst, Arboga, 2024    <df [7 × 2]>
+#>  6 G35869  Liknande kommuner grundskola, Arboga, 2024         <df [7 × 2]>
+#>  7 G36161  Liknande kommuner gymnasieskola, Arboga, 2024      <df [7 × 2]>
+#>  8 G36453  Liknande kommuner IFO, Arboga, 2024                <df [7 × 2]>
+#>  9 G37329  Liknande kommuner, övergripande, Arboga, 2024      <df [7 × 2]>
+#> 10 G39502  Liknande kommuner LSS, Arboga, 2024                <df [7 × 2]>
+#> 11 G85463  Liknande kommuner fritidshem, Arboga, 2024         <df [7 × 2]>
+#> 12 G85755  Liknande kommuner förskola, Arboga, 2024           <df [7 × 2]>
 ```
 
 Another important family of exploration functions is the `describe`
@@ -459,13 +438,13 @@ dividerat med antal invånare totalt 1/11 nov fg år. Källa: SCB.
 
 - Municipality type: K
 
-- Operating area: Skatter och utjämning
+- Operating area: Kommunen, övergripande
 
-- Auspice: Unknown
+- Auspice: NA
 
-- Publication date: 2024-04-15
+- Publication date: 2026-04-15
 
-- Publication period: 2024
+- Publication period: 2026
 
 ##### Keywords
 
@@ -487,13 +466,13 @@ antal invånare totalt 1/11 fg år. Källa: SCB.
 
 - Municipality type: K
 
-- Operating area: Skatter och utjämning
+- Operating area: Kommunen, övergripande
 
-- Auspice: Unknown
+- Auspice: NA
 
-- Publication date: 2024-04-15
+- Publication date: 2026-04-15
 
-- Publication period: 2024
+- Publication period: 2026
 
 ##### Keywords
 
@@ -515,20 +494,20 @@ kpis_with_keywords <- kpi_filter %>% kpi_bind_keywords(n = 4)
 kpis_with_keywords %>%
   tidyr::pivot_longer(dplyr::starts_with("keyword"), values_to = "keyword") %>%
   dplyr::count(keyword, sort = TRUE)
-#> # A tibble: 417 × 2
+#> # A tibble: 383 × 2
 #>    keyword            n
 #>    <chr>          <int>
-#>  1 elever           176
-#>  2 grundskola       146
-#>  3 gymnasieelever   112
-#>  4 pedagogisk       112
-#>  5 åk               112
-#>  6 gymnasieskola    100
-#>  7 förskola          91
-#>  8 personal          87
-#>  9 år                73
-#> 10 kommunal          67
-#> # ℹ 407 more rows
+#>  1 elever           160
+#>  2 grundskola       150
+#>  3 pedagogisk       113
+#>  4 gymnasieelever   106
+#>  5 gymnasieskola    103
+#>  6 förskola          91
+#>  7 personal          91
+#>  8 åk                91
+#>  9 kommunal          71
+#> 10 år                69
+#> # ℹ 373 more rows
 ```
 
 Some KPIs can be very similar-looking and it can sometimes be hard to
@@ -542,40 +521,40 @@ single value for all observations in the table):
 ``` r
 # Top 10 rows of the table
 kpi_filter %>% dplyr::slice(1:10)
-#> # A tibble: 10 × 13
-#>    auspices description has_ou_data id    is_divided_by_gender municipality_type
-#>    <chr>    <chr>       <lgl>       <chr>                <int> <chr>            
-#>  1 NA       "Kostnadsu… FALSE       N000…                    0 K                
-#>  2 NA       "Kostnadsu… FALSE       N000…                    0 K                
-#>  3 NA       "Kostnadsu… FALSE       N000…                    0 K                
-#>  4 T        "Avvikelse… FALSE       N000…                    0 K                
-#>  5 T        "Strukturk… FALSE       N001…                    0 K                
-#>  6 E        "Antal ans… FALSE       N001…                    0 K                
-#>  7 E        "Antal års… FALSE       N001…                    0 K                
-#>  8 T        "Kommunind… FALSE       N003…                    0 K                
-#>  9 T        "Kommunind… FALSE       N003…                    0 K                
-#> 10 T        "Kommunind… FALSE       N003…                    0 K                
-#> # ℹ 7 more variables: operating_area <chr>, ou_publication_date <chr>,
-#> #   perspective <chr>, prel_publication_date <chr>, publ_period <chr>,
-#> #   publication_date <chr>, title <chr>
+#> # A tibble: 10 × 12
+#>    id     title       description is_divided_by_gender municipality_type auspice
+#>    <chr>  <chr>       <chr>       <lgl>                <chr>             <chr>  
+#>  1 N00022 Kostnadsut… "Kostnadsu… FALSE                K                 NA     
+#>  2 N00023 Kostnadsut… "Kostnadsu… FALSE                K                 NA     
+#>  3 N00026 Kostnadsut… "Kostnadsu… FALSE                K                 NA     
+#>  4 N00097 Nettokostn… "Avvikelse… FALSE                K                 T      
+#>  5 N00100 Strukturko… "Strukturk… FALSE                K                 T      
+#>  6 N00108 Månadsavlö… "Antal ans… FALSE                K                 E      
+#>  7 N00114 Årsarbetar… "Antal års… FALSE                K                 E      
+#>  8 N00303 Tillgängli… "Kommunind… FALSE                K                 T      
+#>  9 N00314 Tillgängli… "Kvinnors … FALSE                K                 T      
+#> 10 N00325 Tillgängli… "Mäns Komm… FALSE                K                 T      
+#> # ℹ 6 more variables: operating_area <chr>, perspective <chr>,
+#> #   prel_publication_date <chr>, publication_date <chr>, publ_period <chr>,
+#> #   has_ou_data <lgl>
 
 # Top 10 rows of the table, with non-distinct data removed
 kpi_filter %>% dplyr::slice(1:10) %>% kpi_minimize()
 #> # A tibble: 10 × 9
-#>    id     title                  description auspices operating_area perspective
-#>    <chr>  <chr>                  <chr>       <chr>    <chr>          <chr>      
-#>  1 N00022 Kostnadsutjämningsnet… "Kostnadsu… NA       Skatter och u… Resurser   
-#>  2 N00023 Kostnadsutjämningsnet… "Kostnadsu… NA       Skatter och u… Resurser   
-#>  3 N00026 Kostnadsutjämningsnet… "Kostnadsu… NA       Skatter och u… Resurser   
-#>  4 N00097 Nettokostnadsavvikels… "Avvikelse… T        Kommunen, öve… Resurser   
-#>  5 N00100 Strukturkostnad kommu… "Strukturk… T        Kommunen, öve… Resurser   
-#>  6 N00108 Månadsavlönad persona… "Antal ans… E        Barn och utbi… Resurser   
-#>  7 N00114 Årsarbetare inom förs… "Antal års… E        Barn och utbi… Resurser   
-#>  8 N00300 Medborgarengagemang o… "Kommunind… T        Kommunen, öve… Kvalitet o…
-#>  9 N00301 Trygghet och säkerhet… "Kommunind… T        Kommunen, öve… Kvalitet o…
-#> 10 N00303 Tillgänglighet till t… "Kommunind… T        Kommunen, öve… Kvalitet o…
-#> # ℹ 3 more variables: prel_publication_date <chr>, publ_period <chr>,
-#> #   publication_date <chr>
+#>    id     title                   description auspice operating_area perspective
+#>    <chr>  <chr>                   <chr>       <chr>   <chr>          <chr>      
+#>  1 N00022 Kostnadsutjämningsnett… "Kostnadsu… NA      Kommunen, öve… Resurser   
+#>  2 N00023 Kostnadsutjämningsnett… "Kostnadsu… NA      Kommunen, öve… Resurser   
+#>  3 N00026 Kostnadsutjämningsnett… "Kostnadsu… NA      Kommunen, öve… Resurser   
+#>  4 N00097 Nettokostnadsavvikelse… "Avvikelse… T       Kommunen, öve… Resurser   
+#>  5 N00100 Strukturkostnad kommun… "Strukturk… T       Kommunen, öve… Resurser   
+#>  6 N00108 Månadsavlönad personal… "Antal ans… E       Förskoleverks… Resurser   
+#>  7 N00114 Årsarbetare inom försk… "Antal års… E       Förskoleverks… Resurser   
+#>  8 N00303 Tillgänglighet till tj… "Kommunind… T       Kommunen, öve… Kvalitet o…
+#>  9 N00314 Tillgänglighet till tj… "Kvinnors … T       Kommunen, öve… Kvalitet o…
+#> 10 N00325 Tillgänglighet till tj… "Mäns Komm… T       Kommunen, öve… Kvalitet o…
+#> # ℹ 3 more variables: prel_publication_date <chr>, publication_date <chr>,
+#> #   publ_period <chr>
 ```
 
 Note that
@@ -661,6 +640,96 @@ ggplot(grp_data, aes(year, value, color = municipality)) +
   ) +
   scale_color_viridis_d(option = "B") +
   scale_y_continuous(labels = scales::comma)
+#> Warning: Removed 952 rows containing missing values or values outside the scale range
+#> (`geom_line()`).
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
+#> `geom_line()`: Each group consists of only one observation.
+#> ℹ Do you need to adjust the group aesthetic?
 ```
 
 ![](introduction-to-rkolada_files/figure-html/unnamed-chunk-4-1.png)
