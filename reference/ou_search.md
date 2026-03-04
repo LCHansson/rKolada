@@ -1,0 +1,51 @@
+# Search a Kolada Organizational Unit metadata table
+
+Search a Kolada Organizational Unit metadata table. Only keep rows that
+contain the search query. Matches against all columns or columns named
+with the `column` parameter. For more precise matching, please use
+[`dplyr::filter`](https://dplyr.tidyverse.org/reference/filter.html).
+
+## Usage
+
+``` r
+ou_search(ou_df, query, column = NULL)
+```
+
+## Arguments
+
+- ou_df:
+
+  A Kolada Organizational Unit metadata table, as created by e.g.
+  `get_municipality`.
+
+- query:
+
+  A search term or a vector of search terms to filter by. Case
+  insensitive.
+
+- column:
+
+  (Optional) A string or character vector with the names of columns in
+  which to search for `query`.
+
+## Value
+
+A Kolada Organizational Unit metadata table
+
+## Examples
+
+``` r
+if (kolada_available()) {
+# Search for all OUs matching the search term "skola" (school)
+# (skip the parameter "max_results" to actually download all data)
+ou_df <- get_ou(max_results = 100)
+ou_search(ou_df, "skola")
+
+# Only keep OU entities matching "skola" but not "förskola" (preschool)
+# located in Gothenburg municipality and starting with an "A" using
+# regex matching
+ou_filter <- get_ou(municipality = "1480") %>%
+  ou_search("^A", column = "title") %>%
+  ou_search("[^(för)]skola")
+}
+```
