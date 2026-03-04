@@ -183,7 +183,7 @@ grp_data <- rKolada:::grp_data
 ```{r, eval = FALSE}
 # Get KPIs describing Gross Regional Product of municipalities
 kpi_filter <- get_kpi() %>% 
-  kpi_search("BRP") %>%
+  kpi_search("bruttoregionprodukt") %>%
   kpi_search("K", column = "municipality_type")
 # Creates a table with two rows
 

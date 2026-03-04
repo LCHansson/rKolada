@@ -33,7 +33,7 @@ grp_data <- get_values(
 kld_data <- get_values(
   kpi = kpi_df %>%
     kpi_search("BRP") %>%
-    kpi_minimize(remove_undocumented_columns = TRUE, remove_monotonous_data = TRUE) %>%
+    kpi_minimize(remove_monotonous_data = TRUE) %>%
     kpi_search("K", column = "municipality_type") %>%
     kpi_extract_ids(),
   municipality = munic %>%

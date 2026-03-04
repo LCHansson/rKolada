@@ -7,8 +7,6 @@
 #'
 #' @param kpi_df A Kolada KPI metadata table, e.g. as created by
 #' \code{\link{get_kpi}}.
-#' @param remove_undocumented_columns Remove columns from the KPI table which
-#' are undocumented in the API?
 #' @param remove_monotonous_data Remove columns from the KPI table which contain
 #' exactly the same information for all entries in the table?
 #'
@@ -17,7 +15,6 @@
 #' @export
 kpi_minimize <- function(
   kpi_df,
-  remove_undocumented_columns = TRUE,
   remove_monotonous_data = TRUE
 ) {
 
@@ -26,17 +23,14 @@ kpi_minimize <- function(
     return(NULL)
   }
 
-  if (isTRUE(remove_undocumented_columns) & "auspices" %in% names(kpi_df)) {
-    kpi_df <- kpi_df %>%
-      dplyr::select(-.data$auspices)
+  if (isTRUE(remove_monotonous_data)) {
+    keep <- names(kpi_df) %in% c("id", "title", "description") |
+      purrr::map_lgl(kpi_df, ~ dplyr::n_distinct(.x) > 1)
+    kpi_df <- kpi_df %>% dplyr::select(dplyr::all_of(names(kpi_df)[keep]))
   }
-  if (isTRUE(remove_monotonous_data))
-    kpi_df <- kpi_df %>%
-      dplyr::select_if(names(.) %in% c("id", "title", "description") |
-                         purrr::map(., dplyr::n_distinct) > 1)
 
   kpi_df <- kpi_df %>%
-    dplyr::select(.data$id, .data$title, .data$description, dplyr::everything())
+    dplyr::select("id", "title", "description", dplyr::everything())
 
   kpi_df
 }
@@ -76,7 +70,7 @@ kpi_bind_keywords <- function(kpi_df, n = 2, form = c("wide", "long")) {
     dplyr::mutate(
       title_words = stringr::str_extract_all(tolower(.data$title), "\\w+")
     ) %>%
-    tidyr::unnest(cols = c(.data$title_words)) %>%
+    tidyr::unnest(cols = c("title_words")) %>%
     dplyr::filter(!.data$title_words %in% stopwords()) %>%
     dplyr::group_by(.data$id) %>%
     dplyr::slice(1:n)
@@ -85,8 +79,8 @@ kpi_bind_keywords <- function(kpi_df, n = 2, form = c("wide", "long")) {
     kpi_df <- kpi_df %>%
       dplyr::mutate(nm_col = dplyr::row_number()) %>%
       tidyr::pivot_wider(
-        names_from = .data$nm_col, names_prefix = "keyword_",
-        values_from = .data$title_words, values_fill = list(title_words = "")
+        names_from = "nm_col", names_prefix = "keyword_",
+        values_from = "title_words", values_fill = list(title_words = "")
       )
   }
 
@@ -128,29 +122,7 @@ kpi_bind_keywords <- function(kpi_df, n = 2, form = c("wide", "long")) {
 #'
 #' @export
 kpi_search <- function(kpi_df, query, column = NULL) {
-
-  if (is.null(kpi_df)) {
-    warning("\nAn empty object was used as input to kpi_search().")
-    return(NULL)
-  }
-
-  if (is.null(column))
-    column <- names(kpi_df)
-
-  f <- function(obj, query) {
-    stringr::str_detect(
-      tolower(obj),
-      tolower(as.character(paste(query, collapse="|")))
-    )
-  }
-
-  hits <- kpi_df %>%
-    dplyr::filter_at(
-      .vars = dplyr::vars(column),
-      .vars_predicate = dplyr::any_vars(f(., query))
-    )
-
-  hits
+  entity_search(kpi_df, query, column, "kpi_search")
 }
 
 

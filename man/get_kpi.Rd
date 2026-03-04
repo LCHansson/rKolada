@@ -35,6 +35,7 @@ get_ou(
 
 get_municipality(
   id = NULL,
+  region_type = NULL,
   cache = FALSE,
   max_results = NULL,
   cache_location = tempdir,
@@ -71,6 +72,9 @@ the R console.}
 \item{municipality}{(Optional) A string or vector of strings containing
 municipality codes. If getting OU data, you can use this parameter to narrow
 the search.}
+
+\item{region_type}{(Optional) Filter municipalities by region type. Common
+values: \code{"K"} (municipality), \code{"L"} (region).}
 }
 \value{
 Returns a tibble with metadata for the specified entity. In rKolada

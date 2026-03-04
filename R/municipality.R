@@ -167,27 +167,5 @@ municipality_extract_ids <- function(munic_df) {
 #'
 #' @export
 municipality_search <- function(munic_df, query, column = NULL) {
-
-  if (is.null(munic_df)) {
-    warning("\nAn empty object was used as input to municipality_search().")
-    return(NULL)
-  }
-
-  if (is.null(column))
-    column <- names(munic_df)
-
-  f <- function(obj, query) {
-    stringr::str_detect(
-      tolower(obj),
-      tolower(as.character(paste(query, collapse = "|")))
-    )
-  }
-
-  hits <- munic_df %>%
-    dplyr::filter_at(
-      .vars = dplyr::vars(column),
-      .vars_predicate = dplyr::any_vars(f(., query))
-    )
-
-  hits
+  entity_search(munic_df, query, column, "municipality_search")
 }

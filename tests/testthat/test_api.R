@@ -1,8 +1,4 @@
-
-# context("Metadata")
-# munic <- get_metadata(entity = "municipality", cache = FALSE)
-#
-# test_that("metadata downloads correctly", {
-#   expect_true(inherits(munic, "tbl_df"))
-#   expect_true(nrow(munic) > 0)
-# })
+# Legacy test file - tests have been moved to dedicated test files:
+# test-query-composers.R, test-utils.R, test-search.R, test-kpi.R,
+# test-municipality.R, test-groups.R, test-data-helpers.R,
+# test-api-mocked.R, test-api-live.R

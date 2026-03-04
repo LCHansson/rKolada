@@ -60,12 +60,12 @@ municipality_grp_unnest <- function(munic_grp_df) {
   }
 
   munic_grp_df %>%
-    tidyr::unnest(cols = c(.data$members)) %>%
+    tidyr::unnest(cols = c("members")) %>%
     dplyr::select(
-      group_id = .data$id, id = .data$member_id,
-      group_title = .data$title, title = .data$member_title
+      group_id = "id", id = "member_id",
+      group_title = "title", title = "member_title"
     ) %>%
-    dplyr::select(.data$id, .data$title, .data$group_id, .data$group_title)
+    dplyr::select("id", "title", "group_id", "group_title")
 }
 
 

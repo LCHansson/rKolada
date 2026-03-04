@@ -12,7 +12,10 @@
 #' be added to narrow the search.
 #' @param page What page to fetch. Used mainly in large queries. Fetches a page using the value of \code{"per_page"} as pagination delimiter.
 #' @param per_page Number of results per page.
-#' @param version Version of the API. Currently only \code{"v2"} is supported.
+#' @param region_type (Optional) Filter municipalities by region type. Only
+#' used when \code{entity} is \code{"municipality"}. Common values: \code{"K"}
+#' (municipality), \code{"L"} (region).
+#' @param version Version of the API. Defaults to \code{"v3"}.
 #'
 #' @return A string containing a URL to the Kolada REST API.
 #'
@@ -22,9 +25,10 @@ compose_metadata_query <- function(
   title = NULL,
   id = NULL,
   municipality = NULL,
+  region_type = NULL,
   page = NA,
   per_page = NA,
-  version = "v2"
+  version = "v3"
 ) {
   if (!is.null(entity))
     entity <- tolower(entity)
@@ -34,7 +38,7 @@ compose_metadata_query <- function(
   if(!entity %in% allowed_entities())
     stop("The specified entity is no in the list of valid entities. Please check your spelling.\nFor a list of allowed entities, please see allowed_entities()")
 
-  base_url <- glue::glue("http://api.kolada.se/{version}/{entity}")
+  base_url <- glue::glue("https://api.kolada.se/{version}/{entity}")
   query_url <- glue::glue("{base_url}")
 
   if (!is.null(title)) {
@@ -60,9 +64,17 @@ compose_metadata_query <- function(
     query_url <- glue::glue("{query_url}{separator}municipality={municipality}")
   }
 
-  query_url <- query_url %>%
-    urltools::param_set("page", page) %>%
-    urltools::param_set("per_page", per_page)
+  if (entity == "municipality" & !is.null(region_type)) {
+    if (!is.null(title))
+      separator <- "&"
+    else if (grepl("\\?", query_url))
+      separator <- "&"
+    else
+      separator <- "?"
+    query_url <- glue::glue("{query_url}{separator}region_type={region_type}")
+  }
+
+  query_url <- append_query_params(query_url, page = page, per_page = per_page)
 
   return(utils::URLencode(query_url))
 }
@@ -81,6 +93,9 @@ compose_metadata_query <- function(
 #' @param id The ID of any entry in the current entity.
 #' @param municipality If entity is \code{"ou"}, the municipality parameter can
 #' be added to narrow the search.
+#' @param region_type (Optional) Filter municipalities by region type. Only
+#' used when \code{entity} is \code{"municipality"}. Common values: \code{"K"}
+#' (municipality), \code{"L"} (region).
 #' @param max_results (Optional) Specify the maximum number of results
 #'  returned by the query.
 #' @param cache Logical. If TRUE, downloaded data are stored to the local disk
@@ -110,6 +125,7 @@ get_metadata <- function(
   title = NULL,
   id = NULL,
   municipality = NULL,
+  region_type = NULL,
   max_results = NULL,
   cache = FALSE,
   cache_location = tempdir,
@@ -123,51 +139,83 @@ get_metadata <- function(
   if (isTRUE(verbose))
     message("Downloading Kolada metadata using URL(s):")
 
-  next_page <- TRUE
-  page <- 1
-  per_page <- 2000
+  # Chunk id to stay within the API's 25-element-per-path-segment limit
+  id_chunks <- chunk_vector(id)
 
-  while(isTRUE(next_page)) {
+  all_vals <- list()
 
-    if(!is.null(max_results) && page * per_page > max_results)
-      page_size <- max_results %% per_page
-    else
-      page_size <- per_page
+  for (id_c in id_chunks) {
 
-    query <- compose_metadata_query(entity, title, id, municipality, page = page, per_page = page_size)
+    has_next <- TRUE
+    page <- 1
+    per_page <- 5000
 
-    if (isTRUE(verbose))
-      message(query)
+    while(isTRUE(has_next)) {
 
-    res <- try(httr::GET(query, httr::config(verbose = verbose)), silent = TRUE)
+      if(!is.null(max_results) && page * per_page > max_results)
+        page_size <- max_results %% per_page
+      else
+        page_size <- per_page
 
-    if(inherits(res, "try-error")) {
-      warning("\nCould not connect to the Kolada database. Please check your internet connection. Did you misspel the query?\nRe-run query with verbose = TRUE to see the URL used in the query.")
-      return(NULL)
+      query <- compose_metadata_query(entity, title, id_c, municipality,
+                                      region_type = region_type,
+                                      page = page, per_page = page_size)
+
+      if (isTRUE(verbose))
+        message(query)
+
+      res <- try(
+        httr2::request(query) |>
+          httr2::req_error(is_error = function(resp) FALSE) |>
+          httr2::req_perform(),
+        silent = TRUE
+      )
+
+      if(inherits(res, "try-error")) {
+        warning("\nCould not connect to the Kolada database. Please check your internet connection. Did you misspel the query?\nRe-run query with verbose = TRUE to see the URL used in the query.")
+        return(NULL)
+      }
+
+      contents_raw <- httr2::resp_body_string(res)
+      contents <- try(jsonlite::fromJSON(contents_raw), silent = TRUE)
+
+      if(inherits(contents, "try-error")) {
+        warning("\nKolada returned a 404 or malformatted HTML/JSON. Did you misspel the query?\nRe-run query with verbose = TRUE to see the URL used in the query.")
+        return(NULL)
+      }
+
+      if (length(contents$values) == 0)
+        break
+
+      if(page == 1)
+        chunk_vals <- tibble::as_tibble(contents$values)
+      else
+        chunk_vals <- dplyr::bind_rows(chunk_vals, tibble::as_tibble(contents$values))
+
+      if(is.null(contents$next_url) || contents$next_url == "")
+        has_next <- FALSE
+      else
+        page <- page + 1
+
+      if(!is.null(max_results) && nrow(chunk_vals) >= max_results) {
+        chunk_vals <- utils::head(chunk_vals, max_results)
+        has_next <- FALSE
+      }
     }
 
-    contents_raw <- httr::content(res, as = "text")
-    contents <- try(jsonlite::fromJSON(contents_raw), silent = TRUE)
-
-    if(inherits(contents, "try-error")) {
-      warning("\nKolada returned a 404 or malformatted HTML/JSON. Did you misspel the query?\nRe-run query with verbose = TRUE to see the URL used in the query.")
-      return(NULL)
+    if (exists("chunk_vals", inherits = FALSE)) {
+      all_vals <- c(all_vals, list(chunk_vals))
+      rm(chunk_vals)
     }
-
-    if(page == 1)
-      vals <- tibble::as_tibble(contents$values)
-    else
-      vals <- dplyr::bind_rows(vals, tibble::as_tibble(contents$values))
-
-
-    if(is.null(contents$next_page))
-      next_page <- FALSE
-    else
-      page <- page + 1
-
-    if(!is.null(max_results) && nrow(vals) == max_results)
-      next_page <- FALSE
   }
+
+  if (length(all_vals) == 0)
+    vals <- tibble::tibble()
+  else
+    vals <- dplyr::bind_rows(all_vals)
+
+  if (!is.null(max_results) && nrow(vals) > max_results)
+    vals <- utils::head(vals, max_results)
 
   vals <- ch("store", vals)
 
@@ -251,18 +299,21 @@ get_ou <- function(
       municipality_id = .data$municipality,
       municipality = municipality_id_to_name(.env$munic_df, .data$municipality_id)
     ) %>%
-    dplyr::select(.data$id, .data$title, .data$municipality, .data$municipality_id)
+    dplyr::select("id", "title", "municipality", "municipality_id")
 }
 
 
+#' @param region_type (Optional) Filter municipalities by region type. Common
+#' values: \code{"K"} (municipality), \code{"L"} (region).
 #' @export
 #' @rdname get_kpi
 get_municipality <- function(
-  id = NULL, cache = FALSE, max_results = NULL,
+  id = NULL, region_type = NULL, cache = FALSE, max_results = NULL,
   cache_location = tempdir, verbose = FALSE
 ) {
   get_metadata(
-    entity = "municipality", id = id, max_results = max_results, cache = cache,
+    entity = "municipality", id = id, region_type = region_type,
+    max_results = max_results, cache = cache,
     cache_location = cache_location, verbose = verbose
   )
 }

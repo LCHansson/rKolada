@@ -1,6 +1,47 @@
 # Global variables
 utils::globalVariables(c("."))
 
+# Append query parameters to a URL string, replacing urltools::param_set().
+# Drops any params whose value is NA or NULL.
+append_query_params <- function(url, ...) {
+  params <- list(...)
+  params <- params[!vapply(params, function(x) is.null(x) || all(is.na(x)), logical(1))]
+  if (length(params) == 0) return(url)
+
+  has_query <- grepl("\\?", url)
+  param_strings <- paste0(
+    names(params), "=",
+    vapply(params, as.character, character(1))
+  )
+  query_string <- paste(param_strings, collapse = "&")
+
+  if (has_query)
+    paste0(url, "&", query_string)
+  else
+    paste0(url, "?", query_string)
+}
+
+# Internal helper for *_search() functions. Replaces deprecated filter_at().
+entity_search <- function(df, query, column, caller_name) {
+  if (is.null(df)) {
+    warning("\nAn empty object was used as input to ", caller_name, "().")
+    return(NULL)
+  }
+
+  if (is.null(column))
+    column <- names(df)
+
+  pattern <- tolower(as.character(paste(query, collapse = "|")))
+
+  df %>%
+    dplyr::filter(
+      dplyr::if_any(
+        dplyr::all_of(column),
+        ~ stringr::str_detect(tolower(.x), pattern)
+      )
+    )
+}
+
 #' Allowed entities: Kolada metadata classes
 #'
 #' @return A vector of names of allowed metadata entities, i.e. the correct
@@ -17,6 +58,13 @@ allowed_entities <- function() {
   )
 }
 
+
+# Split a vector into chunks of at most max_size elements.
+# Returns a list of vectors. NULL and short inputs pass through as a single-element list.
+chunk_vector <- function(x, max_size = 25) {
+  if (is.null(x) || length(x) <= max_size) return(list(x))
+  split(x, ceiling(seq_along(x) / max_size))
+}
 
 # Custom stop words for keyword detection
 stopwords <- function() {

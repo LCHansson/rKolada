@@ -17,16 +17,10 @@ kolada_available <- function() {
   if (is.null(kpi_data))
     return(FALSE)
 
-  if (any(purrr::map_lgl(kpi_data, ~ any(is.na(.x)))))
+  if (nrow(kpi_data) < 1)
     return(FALSE)
 
-  if (nrow(kpi_data) != 2)
-    return(FALSE)
-
-  if (unique(kpi_data$kpi) != "N00003")
-    return(FALSE)
-
-  if (length(unique(kpi_data$kpi)) != 1)
+  if (!"kpi" %in% names(kpi_data) || !"value" %in% names(kpi_data))
     return(FALSE)
 
   if (!is.numeric(kpi_data$value))

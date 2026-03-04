@@ -11,6 +11,8 @@ get_values(
   ou = NULL,
   unit_type = "municipality",
   max_results = NULL,
+  from_date = NULL,
+  keep_deleted = FALSE,
   simplify = TRUE,
   verbose = FALSE
 )
@@ -33,6 +35,12 @@ fetch data for Municipalities or Organizational Units.}
 
 \item{max_results}{(Optional) Specify the maximum number of results
 returned by the query.}
+
+\item{from_date}{(Optional) Only return data updated after this date.
+Format: \code{"YYYY-MM-DD"}.}
+
+\item{keep_deleted}{Logical. If \code{FALSE} (default), rows where
+\code{isdeleted} is \code{TRUE} are removed from the result.}
 
 \item{simplify}{Whether to make results more human readable.}
 
