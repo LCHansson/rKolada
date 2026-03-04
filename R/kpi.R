@@ -7,8 +7,6 @@
 #'
 #' @param kpi_df A Kolada KPI metadata table, e.g. as created by
 #' \code{\link{get_kpi}}.
-#' @param remove_undocumented_columns Remove columns from the KPI table which
-#' are undocumented in the API?
 #' @param remove_monotonous_data Remove columns from the KPI table which contain
 #' exactly the same information for all entries in the table?
 #'
