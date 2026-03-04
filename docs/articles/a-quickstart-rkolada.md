@@ -75,21 +75,23 @@ can be used to clean the KPI metadata table from columns that don’t
 contain any information that distinguish KPIs from each other:
 
 ``` r
-# Get a list KPIs matching a search for "BRP" (Gross regional product)
+# Get a list KPIs matching a search for "bruttoregionprodukt" (Gross regional product)
 kpi_res <- kpis %>%
-  kpi_search("BRP") %>%
+  kpi_search("bruttoregionprodukt") %>%
   # Keep only KPIs with data for the municipality level
   kpi_search("K", column = "municipality_type") %>%
   kpi_minimize(remove_monotonous_data = TRUE)
 
 dplyr::glimpse(kpi_res)
-#> Rows: 2
-#> Columns: 5
-#> $ id               <chr> "N03702", "N03703"
-#> $ title            <chr> "Bruttoregionprodukt, kommun (BRP), 1000 kr/invånare"…
-#> $ description      <chr> "BRP dividerat med antal invånare i det geografiska o…
-#> $ publ_period      <chr> "2024", "2022"
-#> $ publication_date <chr> "2025-02-22", "2025-01-09"
+#> Rows: 3
+#> Columns: 7
+#> $ id               <chr> "N00370", "N03702", "N03703"
+#> $ title            <chr> "Ekonomisk hållbarhet - Kommunindex", "Bruttoregionpr…
+#> $ description      <chr> "Kommunindex för tema Ekonomisk hållbarhet baseras på…
+#> $ operating_area   <chr> "Befolkning", "Bakgrund", "Bakgrund"
+#> $ perspective      <chr> "Kvalitet och resultat", "Volymer", "Volymer"
+#> $ publ_period      <chr> "2023", "2024", "2022"
+#> $ publication_date <chr> "2024-05-15", "2025-02-22", "2025-01-09"
 ```
 
 Let’s say we are interested in retrieving data for three Swedish
@@ -130,15 +132,26 @@ kpi_res %>%
   kpi_describe(max_n = 1, format = "md", heading_level = 4, sub_heading_level = 5)
 ```
 
-#### N03702: Bruttoregionprodukt, kommun (BRP), 1000 kr/invånare
+#### N00370: Ekonomisk hållbarhet - Kommunindex
 
 ##### Description
 
-BRP dividerat med antal invånare i det geografiska området.
-Bruttoregionprodukt (BRP) är den regionala motsvarigheten
-till bruttonationalprodukt (BNP) mätt från produktsidan: värden av all
-produktion av varor och tjänster i en region. Nyckeltalet visar den
-ekonomiska utvecklingen inom det geografiska området. Källa: SCB
+Kommunindex för tema Ekonomisk hållbarhet baseras på Genomsnittlig
+allmän pensionsavgift, kr/invånare 20-64 år. Bruttoregionprodukt 1000
+kr/invånare, Finansiella kapitalvinster/förluster, medelvärde i
+befolkningen, kronor, Kapitalvinster/förluster vid försäljning av
+fastighet och bostadsrätt, medelvärde i befolkningen, kronor samt
+Individer med kapitalvinst/förlust, andel (%). Nyckeltalen normaliseras
+så att alla kommunernas värden placeras på en skala från 0 till 100 där
+0 är sämst och 100 är bäst (för vissa indikatorer används inverterad
+skala). I nästa steg vägs de standardiserade indikatorvärdena samman
+till index på aspektnivå (temat bygger i dagsläget på indikatorer inom
+tre aspekter). Detta görs med medelvärden, samtliga indikatorer vägs
+samman med samma vikt inom respektive aspekt. Värdena hamnar även på
+denna nivå i intervallet 0 till 100. Därefter vägs indexet på aspektnivå
+ihop till temanivå enligt samma princip och även dessa värden hamnar
+mellan 0 och 100. Viktningen är lika stor för samtliga aspekter inom
+temat. Källa: Tillväxtverkets beräkningar
 
 ##### Metadata
 
@@ -148,20 +161,19 @@ ekonomiska utvecklingen inom det geografiska området. Källa: SCB
 
 - Municipality type: Unknown
 
-- Operating area: Unknown
+- Operating area: Befolkning
 
 - Auspice: Unknown
 
-- Publication date: 2025-02-22
+- Publication date: 2024-05-15
 
-- Publication period: 2024
+- Publication period: 2023
 
 ##### Keywords
 
-- bruttoregionprodukt
-- kommun
-- brp
-- 1000
+- ekonomisk
+- hållbarhet
+- kommunindex
 
 ### 4. Get data
 

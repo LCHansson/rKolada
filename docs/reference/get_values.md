@@ -81,7 +81,7 @@ A tibble containing Kolada values and metadata.
 ## Examples
 
 ``` r
-# Download data for KPIs for Gross Regional Product ("BRP" in Swedish)
+# Download data for KPIs for Gross Regional Product ("bruttoregionprodukt" in Swedish)
 # for three municipalities
 if (kolada_available()) {
 

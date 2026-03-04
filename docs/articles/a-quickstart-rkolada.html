@@ -136,21 +136,23 @@ term, and <code><a href="../reference/kpi_minimize.html">kpi_minimize()</a></cod
 metadata table from columns that don’t contain any information that
 distinguish KPIs from each other:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Get a list KPIs matching a search for "BRP" (Gross regional product)</span></span>
+<code class="sourceCode R"><span><span class="co"># Get a list KPIs matching a search for "bruttoregionprodukt" (Gross regional product)</span></span>
 <span><span class="va">kpi_res</span> <span class="op">&lt;-</span> <span class="va">kpis</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/kpi_search.html">kpi_search</a></span><span class="op">(</span><span class="st">"BRP"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/kpi_search.html">kpi_search</a></span><span class="op">(</span><span class="st">"bruttoregionprodukt"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="co"># Keep only KPIs with data for the municipality level</span></span>
 <span>  <span class="fu"><a href="../reference/kpi_search.html">kpi_search</a></span><span class="op">(</span><span class="st">"K"</span>, column <span class="op">=</span> <span class="st">"municipality_type"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/kpi_minimize.html">kpi_minimize</a></span><span class="op">(</span>remove_monotonous_data <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">kpi_res</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Rows: 2</span></span>
-<span><span class="co">#&gt; Columns: 5</span></span>
-<span><span class="co">#&gt; $ id               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "N03702"<span style="color: #949494;">, </span>"N03703"</span></span>
-<span><span class="co">#&gt; $ title            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Bruttoregionprodukt, kommun (BRP), 1000 kr/invånare"…</span></span>
-<span><span class="co">#&gt; $ description      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "BRP dividerat med antal invånare i det geografiska o…</span></span>
-<span><span class="co">#&gt; $ publ_period      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "2024"<span style="color: #949494;">, </span>"2022"</span></span>
-<span><span class="co">#&gt; $ publication_date <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "2025-02-22"<span style="color: #949494;">, </span>"2025-01-09"</span></span></code></pre></div>
+<span><span class="co">#&gt; Rows: 3</span></span>
+<span><span class="co">#&gt; Columns: 7</span></span>
+<span><span class="co">#&gt; $ id               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "N00370"<span style="color: #949494;">, </span>"N03702"<span style="color: #949494;">, </span>"N03703"</span></span>
+<span><span class="co">#&gt; $ title            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Ekonomisk hållbarhet - Kommunindex"<span style="color: #949494;">, </span>"Bruttoregionpr…</span></span>
+<span><span class="co">#&gt; $ description      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Kommunindex för tema Ekonomisk hållbarhet baseras på…</span></span>
+<span><span class="co">#&gt; $ operating_area   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Befolkning"<span style="color: #949494;">, </span>"Bakgrund"<span style="color: #949494;">, </span>"Bakgrund"</span></span>
+<span><span class="co">#&gt; $ perspective      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Kvalitet och resultat"<span style="color: #949494;">, </span>"Volymer"<span style="color: #949494;">, </span>"Volymer"</span></span>
+<span><span class="co">#&gt; $ publ_period      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "2023"<span style="color: #949494;">, </span>"2024"<span style="color: #949494;">, </span>"2022"</span></span>
+<span><span class="co">#&gt; $ publication_date <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "2024-05-15"<span style="color: #949494;">, </span>"2025-02-22"<span style="color: #949494;">, </span>"2025-01-09"</span></span></code></pre></div>
 <p>Let’s say we are interested in retrieving data for three Swedish
 municipalities. We thus want to create a table containing metadata about
 these four municipalities:</p>
@@ -185,16 +187,27 @@ as a part of the HTML that renders this web page:</p>
 <span>  <span class="fu"><a href="../reference/kpi_bind_keywords.html">kpi_bind_keywords</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../reference/kpi_describe.html">kpi_describe</a></span><span class="op">(</span>max_n <span class="op">=</span> <span class="fl">1</span>, format <span class="op">=</span> <span class="st">"md"</span>, heading_level <span class="op">=</span> <span class="fl">4</span>, sub_heading_level <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 <div class="section level4">
-<h4 id="n03702-bruttoregionprodukt-kommun-brp-1000-krinvånare">N03702: Bruttoregionprodukt, kommun (BRP), 1000 kr/invånare<a class="anchor" aria-label="anchor" href="#n03702-bruttoregionprodukt-kommun-brp-1000-krinv%C3%A5nare"></a>
+<h4 id="n00370-ekonomisk-hållbarhet---kommunindex">N00370: Ekonomisk hållbarhet - Kommunindex<a class="anchor" aria-label="anchor" href="#n00370-ekonomisk-h%C3%A5llbarhet---kommunindex"></a>
 </h4>
 <div class="section level5">
 <h5 id="description">Description<a class="anchor" aria-label="anchor" href="#description"></a>
 </h5>
-<p>BRP dividerat med antal invånare i det geografiska området.
-Bruttoregionprodukt (BRP) är den regionala motsvarigheten
-till bruttonationalprodukt (BNP) mätt från produktsidan: värden av all
-produktion av varor och tjänster i en region. Nyckeltalet visar den
-ekonomiska utvecklingen inom det geografiska området. Källa: SCB</p>
+<p>Kommunindex för tema Ekonomisk hållbarhet baseras på Genomsnittlig
+allmän pensionsavgift, kr/invånare 20-64 år. Bruttoregionprodukt 1000
+kr/invånare, Finansiella kapitalvinster/förluster, medelvärde i
+befolkningen, kronor, Kapitalvinster/förluster vid försäljning av
+fastighet och bostadsrätt, medelvärde i befolkningen, kronor samt
+Individer med kapitalvinst/förlust, andel (%). Nyckeltalen normaliseras
+så att alla kommunernas värden placeras på en skala från 0 till 100 där
+0 är sämst och 100 är bäst (för vissa indikatorer används inverterad
+skala). I nästa steg vägs de standardiserade indikatorvärdena samman
+till index på aspektnivå (temat bygger i dagsläget på indikatorer inom
+tre aspekter). Detta görs med medelvärden, samtliga indikatorer vägs
+samman med samma vikt inom respektive aspekt. Värdena hamnar även på
+denna nivå i intervallet 0 till 100. Därefter vägs indexet på aspektnivå
+ihop till temanivå enligt samma princip och även dessa värden hamnar
+mellan 0 och 100. Viktningen är lika stor för samtliga aspekter inom
+temat. Källa: Tillväxtverkets beräkningar</p>
 </div>
 <div class="section level5">
 <h5 id="metadata">Metadata<a class="anchor" aria-label="anchor" href="#metadata"></a>
@@ -203,20 +216,19 @@ ekonomiska utvecklingen inom det geografiska området. Källa: SCB</p>
 <li><p>Has OU data: Unknown</p></li>
 <li><p>Divided by gender: Unknown</p></li>
 <li><p>Municipality type: Unknown</p></li>
-<li><p>Operating area: Unknown</p></li>
+<li><p>Operating area: Befolkning</p></li>
 <li><p>Auspice: Unknown</p></li>
-<li><p>Publication date: 2025-02-22</p></li>
-<li><p>Publication period: 2024</p></li>
+<li><p>Publication date: 2024-05-15</p></li>
+<li><p>Publication period: 2023</p></li>
 </ul>
 </div>
 <div class="section level5">
 <h5 id="keywords">Keywords<a class="anchor" aria-label="anchor" href="#keywords"></a>
 </h5>
 <ul>
-<li>bruttoregionprodukt</li>
-<li>kommun</li>
-<li>brp</li>
-<li>1000</li>
+<li>ekonomisk</li>
+<li>hållbarhet</li>
+<li>kommunindex</li>
 </ul>
 </div>
 </div>

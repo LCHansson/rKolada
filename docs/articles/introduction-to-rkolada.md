@@ -369,7 +369,7 @@ they can be used to search for one or several search terms in the entire
 table or in a subset of named columns:
 
 ``` r
-# Search for KPIs with the term "BRP" in their description or title
+# Search for KPIs with the term "skola" in their description or title
 kpi_filter <- kpi_df %>% kpi_search("skola", column = c("description", "title"))
 kpi_filter
 #> # A tibble: 901 × 13

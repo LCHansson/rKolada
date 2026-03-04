@@ -14,7 +14,7 @@ munic <- get_municipality()
 munic_g <- get_municipality_groups()
 
 kpi_filter <- kpi_df %>%
-  kpi_search("BRP") %>%
+  kpi_search("bruttoregionprodukt") %>%
   kpi_search("K", column = "municipality_type")
 
 munic_grp_filter <- munic_g %>%
@@ -32,7 +32,7 @@ grp_data <- get_values(
 
 kld_data <- get_values(
   kpi = kpi_df %>%
-    kpi_search("BRP") %>%
+    kpi_search("bruttoregionprodukt") %>%
     kpi_minimize(remove_monotonous_data = TRUE) %>%
     kpi_search("K", column = "municipality_type") %>%
     kpi_extract_ids(),

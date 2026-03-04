@@ -58,9 +58,9 @@ dplyr::glimpse(kpis)
 But `rKolada` also comes with a set of convenience functions to simplify the task of exploring KPI metadata. `kpi_search()` filters down a list of KPIs using a search term, and `kpi_minimize()` can be used to clean the KPI metadata table from columns that don't contain any information that distinguish KPIs from each other:
 
 ```{r}
-# Get a list KPIs matching a search for "BRP" (Gross regional product)
+# Get a list KPIs matching a search for "bruttoregionprodukt" (Gross regional product)
 kpi_res <- kpis %>%
-  kpi_search("BRP") %>%
+  kpi_search("bruttoregionprodukt") %>%
   # Keep only KPIs with data for the municipality level
   kpi_search("K", column = "municipality_type") %>%
   kpi_minimize(remove_monotonous_data = TRUE)

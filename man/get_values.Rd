@@ -57,7 +57,7 @@ supply arguments for at least two of these three dimensions. If a dimension
 is omitted, all available data for that dimension will be downloaded.
 }
 \examples{
-# Download data for KPIs for Gross Regional Product ("BRP" in Swedish)
+# Download data for KPIs for Gross Regional Product ("bruttoregionprodukt" in Swedish)
 # for three municipalities
 if (kolada_available()) {
 

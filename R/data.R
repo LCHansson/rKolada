@@ -114,7 +114,7 @@ compose_data_query <- function(
 #' @return A tibble containing Kolada values and metadata.
 #'
 #' @examples
-#' # Download data for KPIs for Gross Regional Product ("BRP" in Swedish)
+#' # Download data for KPIs for Gross Regional Product ("bruttoregionprodukt" in Swedish)
 #' # for three municipalities
 #' if (kolada_available()) {
 #'
