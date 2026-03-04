@@ -12,11 +12,14 @@ In this version I have:
 * Removed unused `httptest2` from Suggests
 
 ## Test environments
-* local Windows install, R 4.x
-* GitHub Actions (ubuntu-latest, R-release)
+* GitHub Actions: macOS (latest, R-release)
+* GitHub Actions: Windows (latest, R-release)
+* GitHub Actions: Ubuntu (latest, R-release)
+* GitHub Actions: Ubuntu (latest, R-devel)
+* GitHub Actions: Ubuntu (latest, R-oldrel-1)
 
 ## R CMD check results
-There were no ERRORs or WARNINGs.
+0 ERRORs | 0 WARNINGs | 0 NOTEs on all five platforms.
 
 ## Downstream dependencies
 No downstream dependencies at this time.
