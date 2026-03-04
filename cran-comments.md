@@ -1,6 +1,7 @@
 ## Resubmission
 In this version I have:
 
+* Fixed an issue with non-standard files accidentally included with the submission
 * Migrated from Kolada API v2 to v3 (v2 is being shut down on March 31, 2026)
 * Replaced `httr` with `httr2` and removed `urltools` dependency
 * Replaced deprecated dplyr patterns (`filter_at`, `select_if`, `.data$` in tidyselect)
