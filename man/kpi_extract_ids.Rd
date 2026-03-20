@@ -8,21 +8,21 @@ kpi_extract_ids(kpi_df)
 }
 \arguments{
 \item{kpi_df}{A Kolada KPI metadata table, e.g. as created by
-\code{\link{get_kpi}}.}
+\code{\link[=get_kpi]{get_kpi()}}.}
 }
 \value{
 A vector of KPI IDs.
 }
 \description{
 This function is primarily intended as a convenient way to pass a (filtered)
-Kolada KPI metadata table to \code{\link{get_values}}.
+Kolada KPI metadata table to \code{\link[=get_values]{get_values()}}.
 }
 \examples{
 if (kolada_available()) {
 # Download Kolada data for the first KPI in the list matching the term "Grundskola" (primary school)
 # for the years 2010-2019
 # (omit the parameter "max_results" to actually download all data)
-kpi_filter <- get_kpi(max_results = 500) \%>\%
+kpi_filter <- get_kpi(max_results = 500) |>
   kpi_search("Grundskola")
 
 # Only keep the top row

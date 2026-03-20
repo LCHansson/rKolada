@@ -42,8 +42,8 @@ API.}
 
 \item{cache_location}{Where to store and search for cached data. Can be a
 path to a directory or the name of any function that returns the path to a
-directory when called, like \code{\link{getwd}}. Defaults to
-\code{\link{tempdir}}.}
+directory when called, like \code{\link[=getwd]{getwd()}}. Defaults to
+\code{\link[=tempdir]{tempdir()}}.}
 
 \item{verbose}{Whether to print the call to the Kolada API as a message to
 the R console.}
@@ -52,7 +52,7 @@ the R console.}
 Returns a tibble with metadata for the specified entity. In rKolada
 terminology, a table returned by e.g. \code{entity = "kpi"} is referred to
 as a \code{kpi_df} and can be passed to functions starting with "kpi" such
-as \code{\link{kpi_bind_keywords}}.
+as \code{\link[=kpi_bind_keywords]{kpi_bind_keywords()}}.
 }
 \description{
 This is a generalized function for downloading metadata from the Kolada API.
@@ -61,8 +61,8 @@ For further information about the Kolada API specification, please see the
 \href{https://github.com/Hypergene/kolada}{official documentation on GitHub}.
 }
 \seealso{
-\code{\link{get_kpi}}, \code{\link{get_kpi_groups}},
- \code{\link{get_municipality}},
- \code{\link{get_municipality_groups}},
- \code{\link{get_ou}}
+\code{\link[=get_kpi]{get_kpi()}}, \code{\link[=get_kpi_groups]{get_kpi_groups()}},
+\code{\link[=get_municipality]{get_municipality()}},
+\code{\link[=get_municipality_groups]{get_municipality_groups()}},
+\code{\link[=get_ou]{get_ou()}}
 }

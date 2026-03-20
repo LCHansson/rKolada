@@ -24,7 +24,7 @@ Search a Kolada municipality metadata table. Only keep rows that contain the
 search query. Note that some a quer might be both the name, or part of a
 name, of a municipality and part of the name of a region. Thus, a search
 might return rows for both municipalities and regions. To avoid this you can
-use \code{\link[dplyr:filter]{dplyr::filter}} to filter the \code{type}
+use \link[dplyr:filter]{dplyr::filter} to filter the \code{type}
 column to keep only "K" (municipalities) or "L" (regions) rows. See also
 examples below for an alternative approach avoiding any direct calls to
 \code{filter}.
@@ -36,7 +36,7 @@ munic_df <- get_municipality()
 municipality_search(munic_df, "Arboga")
 
 # Only keep columns with type == "K" (keep municipalities, drop regions)
-munic_filter <- get_municipality(cache = TRUE) \%>\%
+munic_filter <- get_municipality(cache = TRUE) |>
   municipality_search("K", column = "type")
 }
 

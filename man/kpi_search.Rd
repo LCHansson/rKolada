@@ -8,7 +8,7 @@ kpi_search(kpi_df, query, column = NULL)
 }
 \arguments{
 \item{kpi_df}{A Kolada KPI metadata table, e.g. as created by
-\code{\link{get_kpi}}.}
+\code{\link[=get_kpi]{get_kpi()}}.}
 
 \item{query}{A search term or a vector of search terms to filter by. Case
 insensitive.}
@@ -23,7 +23,7 @@ A Kolada KPI metadata table
 Search a Kolada KPI metadata table. Only keep rows that
 contain the search query. Matches against all columns or columns named with
 the \code{column} parameter. For more precise matching, please use
-\code{\link[dplyr:filter]{dplyr::filter}}.
+\link[dplyr:filter]{dplyr::filter}.
 }
 \examples{
 if (kolada_available()) {
@@ -33,8 +33,8 @@ kpi_filter <- kpi_search(kpis, "kostnad")
 
 # Add keywords to a KPI table and search for multiple terms among
 # the keywords
-kpi_filter <- get_kpi(id = c("N11002", "N11003", "N11004", "N11005")) \%>\%
-  kpi_bind_keywords(n = 3) \%>\%
+kpi_filter <- get_kpi(id = c("N11002", "N11003", "N11004", "N11005")) |>
+  kpi_bind_keywords(n = 3) |>
   kpi_search(
     query = c("nettokostnad", "öppen"),
     column = c("keyword_1", "keyword_2", "keyword_3")

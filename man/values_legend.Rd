@@ -8,9 +8,9 @@ values_legend(values_df, kpi_df)
 }
 \arguments{
 \item{values_df}{A Kolada value table, as created by
-\code{\link{get_values}}.}
+\code{\link[=get_values]{get_values()}}.}
 
-\item{kpi_df}{A KPI table, e.g. as created by \code{\link{get_kpi}}.}
+\item{kpi_df}{A KPI table, e.g. as created by \code{\link[=get_kpi]{get_kpi()}}.}
 }
 \value{
 A string which should be used as caption in a plot.

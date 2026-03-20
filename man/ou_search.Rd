@@ -23,7 +23,7 @@ A Kolada Organizational Unit metadata table
 Search a Kolada Organizational Unit metadata table. Only keep rows that
 contain the search query. Matches against all columns or columns named
 with the \code{column} parameter. For more precise matching, please use
-\code{\link[dplyr:filter]{dplyr::filter}}.
+\link[dplyr:filter]{dplyr::filter}.
 }
 \examples{
 if (kolada_available()) {
@@ -35,8 +35,8 @@ ou_search(ou_df, "skola")
 # Only keep OU entities matching "skola" but not "förskola" (preschool)
 # located in Gothenburg municipality and starting with an "A" using
 # regex matching
-ou_filter <- get_ou(municipality = "1480") \%>\%
-  ou_search("^A", column = "title") \%>\%
+ou_filter <- get_ou(municipality = "1480") |>
+  ou_search("^A", column = "title") |>
   ou_search("[^(för)]skola")
 }
 

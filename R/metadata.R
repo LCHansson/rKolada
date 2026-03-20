@@ -1,21 +1,21 @@
 #' Compose a query to fetch metadata from the Kolada API.
 #'
-#' Mainly used as a supporting function for \code{\link{get_metadata}} but can
+#' Mainly used as a supporting function for [get_metadata()] but can
 #' also be used to create a working URL to paste in your web browser.
 #'
 #' @param entity Any allowed metadata entity. Check
-#' \code{\link{allowed_entities}} to see an updated list.
+#' [allowed_entities()] to see an updated list.
 #' @param title A free-form search term or the exact title of any entry in the
 #' current entity. Case insensitive.
 #' @param id The ID of any entry in the current entity.
-#' @param municipality If entity is \code{"ou"}, the municipality parameter can
+#' @param municipality If entity is `"ou"`, the municipality parameter can
 #' be added to narrow the search.
-#' @param page What page to fetch. Used mainly in large queries. Fetches a page using the value of \code{"per_page"} as pagination delimiter.
+#' @param page What page to fetch. Used mainly in large queries. Fetches a page using the value of `"per_page"` as pagination delimiter.
 #' @param per_page Number of results per page.
 #' @param region_type (Optional) Filter municipalities by region type. Only
-#' used when \code{entity} is \code{"municipality"}. Common values: \code{"K"}
-#' (municipality), \code{"L"} (region).
-#' @param version Version of the API. Defaults to \code{"v3"}.
+#' used when `entity` is `"municipality"`. Common values: `"K"`
+#' (municipality), `"L"` (region).
+#' @param version Version of the API. Defaults to `"v3"`.
 #'
 #' @return A string containing a URL to the Kolada REST API.
 #'
@@ -33,26 +33,29 @@ compose_metadata_query <- function(
   if (!is.null(entity))
     entity <- tolower(entity)
   else
-    stop("No entity was specified. You must specify an entity.")
+    cli::cli_abort("No entity was specified. You must specify an entity.")
 
   if(!entity %in% allowed_entities())
-    stop("The specified entity is no in the list of valid entities. Please check your spelling.\nFor a list of allowed entities, please see allowed_entities()")
+    cli::cli_abort(c(
+      "The specified entity is not in the list of valid entities.",
+      "i" = "Please check your spelling. For a list of allowed entities, see {.fn allowed_entities}."
+    ))
 
-  base_url <- glue::glue("https://api.kolada.se/{version}/{entity}")
-  query_url <- glue::glue("{base_url}")
+  base_url <- paste0("https://api.kolada.se/", version, "/", entity)
+  query_url <- base_url
 
   if (!is.null(title)) {
     if (length(title) > 1) {
       title <- title[1]
-      warning("You have specified a title vector of length > 1. Only the first element in the vector will be used.")
+      cli::cli_warn("You have specified a {.arg title} vector of length > 1. Only the first element in the vector will be used.")
     }
 
     title <- tolower(title)
-    query_url <- glue::glue("{query_url}?title={title}")
+    query_url <- paste0(query_url, "?title=", title)
 
   } else if (!is.null(id)) {
     id <- paste(id, collapse = ",")
-    query_url <- glue::glue("{query_url}/{id}")
+    query_url <- paste0(query_url, "/", id)
   }
 
   if (entity == "ou" & !is.null(municipality)) {
@@ -61,7 +64,7 @@ compose_metadata_query <- function(
     else
       separator <- "?"
     municipality <- paste(municipality, collapse = ",")
-    query_url <- glue::glue("{query_url}{separator}municipality={municipality}")
+    query_url <- paste0(query_url, separator, "municipality=", municipality)
   }
 
   if (entity == "municipality" & !is.null(region_type)) {
@@ -71,7 +74,7 @@ compose_metadata_query <- function(
       separator <- "&"
     else
       separator <- "?"
-    query_url <- glue::glue("{query_url}{separator}region_type={region_type}")
+    query_url <- paste0(query_url, separator, "region_type=", region_type)
   }
 
   query_url <- append_query_params(query_url, page = page, per_page = per_page)
@@ -86,38 +89,38 @@ compose_metadata_query <- function(
 #' For further information about the Kolada API specification, please see the
 #' \href{https://github.com/Hypergene/kolada}{official documentation on GitHub}.
 #'
-#' @param entity Any allowed metadata entity. Check \code{allowed_entities()} to
+#' @param entity Any allowed metadata entity. Check `allowed_entities()` to
 #' see an updated list.
 #' @param title A free-form search term or the exact title of any entry in the
 #' current entity. Case insensitive.
 #' @param id The ID of any entry in the current entity.
-#' @param municipality If entity is \code{"ou"}, the municipality parameter can
+#' @param municipality If entity is `"ou"`, the municipality parameter can
 #' be added to narrow the search.
 #' @param region_type (Optional) Filter municipalities by region type. Only
-#' used when \code{entity} is \code{"municipality"}. Common values: \code{"K"}
-#' (municipality), \code{"L"} (region).
+#' used when `entity` is `"municipality"`. Common values: `"K"`
+#' (municipality), `"L"` (region).
 #' @param max_results (Optional) Specify the maximum number of results
 #'  returned by the query.
 #' @param cache Logical. If TRUE, downloaded data are stored to the local disk
-#' in the place specified by \code{cache_location}. If data is already present
+#' in the place specified by `cache_location`. If data is already present
 #' on the local disk, this data is returned instead of downloading data from the
 #' API.
 #' @param cache_location Where to store and search for cached data. Can be a
 #' path to a directory or the name of any function that returns the path to a
-#' directory when called, like \code{\link{getwd}}. Defaults to
-#' \code{\link{tempdir}}.
+#' directory when called, like [getwd()]. Defaults to
+#' [tempdir()].
 #' @param verbose Whether to print the call to the Kolada API as a message to
 #' the R console.
 #'
 #' @return Returns a tibble with metadata for the specified entity. In rKolada
-#' terminology, a table returned by e.g. \code{entity = "kpi"} is referred to
-#' as a \code{kpi_df} and can be passed to functions starting with "kpi" such
-#' as \code{\link{kpi_bind_keywords}}.
+#' terminology, a table returned by e.g. `entity = "kpi"` is referred to
+#' as a `kpi_df` and can be passed to functions starting with "kpi" such
+#' as [kpi_bind_keywords()].
 #'
-#' @seealso \code{\link{get_kpi}}, \code{\link{get_kpi_groups}},
-#'  \code{\link{get_municipality}},
-#'  \code{\link{get_municipality_groups}},
-#'  \code{\link{get_ou}}
+#' @seealso [get_kpi()], [get_kpi_groups()],
+#'  [get_municipality()],
+#'  [get_municipality_groups()],
+#'  [get_ou()]
 #'
 #' @export
 get_metadata <- function(
@@ -137,7 +140,7 @@ get_metadata <- function(
     return(ch("load"))
 
   if (isTRUE(verbose))
-    message("Downloading Kolada metadata using URL(s):")
+    cli::cli_inform("Downloading Kolada metadata using URL(s):")
 
   # Chunk id to stay within the API's 25-element-per-path-segment limit
   id_chunks <- chunk_vector(id)
@@ -162,27 +165,12 @@ get_metadata <- function(
                                       page = page, per_page = page_size)
 
       if (isTRUE(verbose))
-        message(query)
+        cli::cli_inform(query)
 
-      res <- try(
-        httr2::request(query) |>
-          httr2::req_error(is_error = function(resp) FALSE) |>
-          httr2::req_perform(),
-        silent = TRUE
-      )
+      contents <- kolada_get(query)
 
-      if(inherits(res, "try-error")) {
-        warning("\nCould not connect to the Kolada database. Please check your internet connection. Did you misspel the query?\nRe-run query with verbose = TRUE to see the URL used in the query.")
+      if (is.null(contents))
         return(NULL)
-      }
-
-      contents_raw <- httr2::resp_body_string(res)
-      contents <- try(jsonlite::fromJSON(contents_raw), silent = TRUE)
-
-      if(inherits(contents, "try-error")) {
-        warning("\nKolada returned a 404 or malformatted HTML/JSON. Did you misspel the query?\nRe-run query with verbose = TRUE to see the URL used in the query.")
-        return(NULL)
-      }
 
       if (length(contents$values) == 0)
         break
@@ -227,21 +215,21 @@ get_metadata <- function(
 #'
 #' There are five different types of metadata entities in the Kolada database:
 #' "kpi", "kpi_groups", "municipality", "municipality_groups", and "ou". For
-#' every entity there is a corresponding function \code{get_ENTITY} which
-#' retrieves a table with the metadata for that entity. The \code{get_ENTITY}
-#' functions are thin wrappers around \code{\link{get_metadata}}.
+#' every entity there is a corresponding function `get_ENTITY` which
+#' retrieves a table with the metadata for that entity. The `get_ENTITY`
+#' functions are thin wrappers around [get_metadata()].
 #'
 #' @param id (Optional) One or several KPI IDs
 #' @param max_results (Optional) Specify the maximum number of results
 #'  returned by the query.
 #' @param cache Logical. If TRUE, downloaded data are stored to the local disk
-#'  in the place specified by \code{cache_location}. If data is already present
+#'  in the place specified by `cache_location`. If data is already present
 #'  on the local disk, this data is returned instead of downloading data from
 #'  the API.
 #' @param cache_location Where to store and search for cached data. Can be a
 #'  path to a directory or the name of any function that returns the path to a
-#'  directory when called, like \code{\link{getwd}}. Defaults to
-#'  \code{\link{tempdir}}.
+#'  directory when called, like [getwd()]. Defaults to
+#'  [tempdir()].
 #' @param municipality (Optional) A string or vector of strings containing
 #' municipality codes. If getting OU data, you can use this parameter to narrow
 #' the search.
@@ -249,9 +237,9 @@ get_metadata <- function(
 #' the R console.
 #'
 #' @return Returns a tibble with metadata for the specified entity. In rKolada
-#' terminology, a table returned by e.g. \code{\link{get_kpi}} is referred to
-#' as a \code{kpi_df} and can be passed to functions starting with "kpi" such
-#' as \code{\link{kpi_bind_keywords}}.
+#' terminology, a table returned by e.g. [get_kpi()] is referred to
+#' as a `kpi_df` and can be passed to functions starting with "kpi" such
+#' as [kpi_bind_keywords()].
 #'
 #' @examples
 #' # Download KPI table and store a cache copy of the results in a temporary folder
@@ -294,17 +282,17 @@ get_ou <- function(
   get_metadata(
     entity = "ou", id = id, max_results = max_results, municipality = municipality,
     cache = cache, cache_location = cache_location, verbose = verbose
-  ) %>%
+  ) |>
     dplyr::mutate(
       municipality_id = .data$municipality,
       municipality = municipality_id_to_name(.env$munic_df, .data$municipality_id)
-    ) %>%
+    ) |>
     dplyr::select("id", "title", "municipality", "municipality_id")
 }
 
 
 #' @param region_type (Optional) Filter municipalities by region type. Common
-#' values: \code{"K"} (municipality), \code{"L"} (region).
+#' values: `"K"` (municipality), `"L"` (region).
 #' @export
 #' @rdname get_kpi
 get_municipality <- function(

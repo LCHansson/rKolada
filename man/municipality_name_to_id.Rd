@@ -22,18 +22,18 @@ A vector of Municipality IDs.
 Given a vector of names of municipalities or regions, return a named vector
 of municipality IDs/codes. Codes of municipalities and regions follow
 the Swedish standard for municipality codes. The codes extracted can be used
-e.g. to pass as a parameter to \code{\link{get_values}}. This function is the
-inverse to \code{\link{municipality_id_to_name}}.
+e.g. to pass as a parameter to \code{\link[=get_values]{get_values()}}. This function is the
+inverse to \code{\link[=municipality_id_to_name]{municipality_id_to_name()}}.
 }
 \examples{
 if (kolada_available()) {
 munic_df <- get_municipality()
-munic_df \%>\%
+munic_df |>
   municipality_name_to_id(c("Arboga", "Lund", "Stockholm", "Arboga"))
 }
 
 }
 \seealso{
-\code{\link{municipality_extract_ids}},
-\code{\link{municipality_id_to_name}}
+\code{\link[=municipality_extract_ids]{municipality_extract_ids()}},
+\code{\link[=municipality_id_to_name]{municipality_id_to_name()}}
 }

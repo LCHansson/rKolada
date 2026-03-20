@@ -15,6 +15,6 @@ A vector of Municipality IDs.
 }
 \description{
 This function is primarily intended as a convenient way to pass a (filtered)
-Kolada municipality group metadata table to \code{\link{get_values}}. All IDs
+Kolada municipality group metadata table to \code{\link[=get_values]{get_values()}}. All IDs
 of the municipalities contained in each group in the table are extracted.
 }

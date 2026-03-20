@@ -12,13 +12,13 @@ municipality_extract_ids(munic_df)
 }
 \description{
 This function is primarily intended as a convenient way to pass a (filtered)
-Kolada municipality metadata table to \code{\link{get_values}}.
+Kolada municipality metadata table to \code{\link[=get_values]{get_values()}}.
 }
 \examples{
 if (kolada_available()) {
 # Download Kolada data for all municipalities of type "L"
 # (regions and national total) for KPI "N45933"
-munic_filter <- get_municipality() \%>\%
+munic_filter <- get_municipality() |>
   municipality_search("L", column = "type")
 
 kld_data <- get_values(

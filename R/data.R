@@ -1,6 +1,6 @@
 #' Compose a query to fetch metadata from the Kolada API. Its use is mainly
 #'
-#' Mainly used as a supporting function for \code{\link{get_values}} but can also
+#' Mainly used as a supporting function for [get_values()] but can also
 #' be used to create a working URL to paste in your web browser.
 #'
 #' @param kpi What kpis should be fetched? Can be a single name or a vector of
@@ -10,15 +10,15 @@
 #' @param period For what years should data be fetched? Can be one or more
 #' four-digit integers or character strings.
 #' @param ou (Optional) for what Operating Units should data be fetched? Only
-#' available for certain KPIs. Only used if \code{unit_type} is set to \code{"ou"}.
-#' @param unit_type One of \code{"municipality"} or \code{"ou"}. Whether to
+#' available for certain KPIs. Only used if `unit_type` is set to `"ou"`.
+#' @param unit_type One of `"municipality"` or `"ou"`. Whether to
 #' fetch data for Municipalities or Organizational Units.
-#' Units. Defaults to \code{"municipality"}.
-#' @param page What page to fetch. Used mainly in large queries. Fetches a page using the value of \code{"per_page"} as pagination delimiter.
+#' Units. Defaults to `"municipality"`.
+#' @param page What page to fetch. Used mainly in large queries. Fetches a page using the value of `"per_page"` as pagination delimiter.
 #' @param per_page Number of results per page.
 #' @param from_date (Optional) Only return data updated after this date.
-#' Format: \code{"YYYY-MM-DD"}.
-#' @param version Version of the API. Defaults to \code{"v3"}.
+#' Format: `"YYYY-MM-DD"`.
+#' @param version Version of the API. Defaults to `"v3"`.
 #'
 #' @return A string containing a URL to the Kolada REST API.
 compose_data_query <- function(
@@ -34,12 +34,12 @@ compose_data_query <- function(
 ) {
   unit_type <- tolower(unit_type)
   if (!unit_type %in% c("municipality", "ou"))
-    stop("argument to 'unit_type' must be one of 'municipality' or 'ou'.")
+    cli::cli_abort("Argument to {.arg unit_type} must be one of {.val municipality} or {.val ou}.")
 
   if (unit_type == "municipality")
-    base_url <- glue::glue("https://api.kolada.se/{version}/data")
+    base_url <- paste0("https://api.kolada.se/", version, "/data")
   else if (unit_type == "ou")
-    base_url <- glue::glue("https://api.kolada.se/{version}/oudata")
+    base_url <- paste0("https://api.kolada.se/", version, "/oudata")
 
   if (is.null(kpi))
     kpi <- ""
@@ -47,7 +47,7 @@ compose_data_query <- function(
     kpi <- paste0("/kpi/", paste(kpi, collapse = ","))
 
   if (!is.null(municipality) & !is.null(ou))
-    warning("Both 'municipality' and 'ou' are specified. Only using ", unit_type, ".")
+    cli::cli_warn("Both {.arg municipality} and {.arg ou} are specified. Only using {.val {unit_type}}.")
 
   if(unit_type == "municipality") {
     if (is.null(municipality))
@@ -75,9 +75,12 @@ compose_data_query <- function(
     period <- paste0("/year/", paste(period, collapse = ","))
 
   if (sum(stringr::str_length(c(kpi, unit, period)) > 0) < 2)
-    stop("Too few parameters specified! At least two of the following parameters must have non-empty values: kpi, period, (municipality OR ou).")
+    cli::cli_abort(c(
+      "Too few parameters specified.",
+      "x" = "At least two of the following parameters must have non-empty values: {.arg kpi}, {.arg period}, ({.arg municipality} or {.arg ou})."
+    ))
 
-  query_url <- glue::glue("{base_url}{kpi}{unit}{period}")
+  query_url <- paste0(base_url, kpi, unit, period)
   query_url <- append_query_params(query_url, page = page, per_page = per_page,
                                    from_date = from_date)
 
@@ -99,14 +102,14 @@ compose_data_query <- function(
 #' four-digit integers or character strings.
 #' @param ou (Optional) for what Operating Units should data be fetched? Only
 #' available for certain KPIs.
-#' @param unit_type One of \code{"municipality"} or \code{"ou"}. Whether to
+#' @param unit_type One of `"municipality"` or `"ou"`. Whether to
 #' fetch data for Municipalities or Organizational Units.
 #' @param max_results (Optional) Specify the maximum number of results
 #'  returned by the query.
 #' @param from_date (Optional) Only return data updated after this date.
-#' Format: \code{"YYYY-MM-DD"}.
-#' @param keep_deleted Logical. If \code{FALSE} (default), rows where
-#' \code{isdeleted} is \code{TRUE} are removed from the result.
+#' Format: `"YYYY-MM-DD"`.
+#' @param keep_deleted Logical. If `FALSE` (default), rows where
+#' `isdeleted` is `TRUE` are removed from the result.
 #' @param simplify Whether to make results more human readable.
 #' @param verbose Whether to print the call to the Kolada API as a message to
 #' the R console.
@@ -151,7 +154,7 @@ get_values <- function(
 ) {
 
   if (isTRUE(verbose))
-    message("Downloading Kolada data using URL(s):")
+    cli::cli_inform("Downloading Kolada data using URL(s):")
 
   # Chunk parameters to stay within the API's 25-element-per-path-segment limit
   kpi_chunks <- chunk_vector(kpi)
@@ -192,27 +195,12 @@ get_values <- function(
                                       page = page, per_page = page_size)
 
           if (isTRUE(verbose))
-            message(query)
+            cli::cli_inform(query)
 
-          res <- try(
-            httr2::request(query) |>
-              httr2::req_error(is_error = function(resp) FALSE) |>
-              httr2::req_perform(),
-            silent = TRUE
-          )
+          contents <- kolada_get(query)
 
-          if(inherits(res, "try-error")) {
-            warning("\nCould not connect to the Kolada database. Please check your internet connection. Did you misspel the query?\nRe-run query with verbose = TRUE to see the URL used in the query.")
+          if (is.null(contents))
             return(NULL)
-          }
-
-          contents_raw <- httr2::resp_body_string(res)
-          contents <- try(jsonlite::fromJSON(contents_raw), silent = TRUE)
-
-          if(inherits(contents, "try-error")) {
-            warning("\nKolada returned a 404 or malformatted HTML/JSON. Did you misspel the query?\nRe-run query with verbose = TRUE to see the URL used in the query.")
-            return(NULL)
-          }
 
           if(length(contents$values) == 0)
             break
@@ -243,7 +231,11 @@ get_values <- function(
   }
 
   if (length(all_vals) == 0) {
-    warning("\nThe query returned zero hits from the Kolada database. Did you misspel the query?\nRe-run query with verbose = TRUE to see the URL used in the query.")
+    cli::cli_warn(c(
+      "The query returned zero hits from the Kolada database.",
+      "i" = "Did you misspell the query?",
+      "i" = "Re-run query with {.code verbose = TRUE} to see the URL used in the query."
+    ))
     return(NULL)
   }
 
@@ -252,13 +244,13 @@ get_values <- function(
   if (!is.null(max_results) && nrow(vals) > max_results)
     vals <- utils::head(vals, max_results)
 
-  ret <- vals %>%
+  ret <- vals |>
     tidyr::unnest(cols = c("values"))
 
   # Filter out deleted records if present
   if (!isTRUE(keep_deleted) && "isdeleted" %in% names(ret)) {
-    ret <- ret %>%
-      dplyr::filter(!.data$isdeleted) %>%
+    ret <- ret |>
+      dplyr::filter(!.data$isdeleted) |>
       dplyr::select(-"isdeleted")
   }
 
@@ -268,20 +260,20 @@ get_values <- function(
     munic_tbl <- get_municipality(verbose = FALSE)
 
     if (ret_has_groups)
-      munic_tbl <- munic_tbl %>%
+      munic_tbl <- munic_tbl |>
       dplyr::bind_rows(
-        get_municipality_groups(verbose = FALSE) %>%
-          dplyr::select("id", "title") %>%
+        get_municipality_groups(verbose = FALSE) |>
+          dplyr::select("id", "title") |>
           dplyr::mutate(type = "G")
       )
 
-    ret <- ret %>%
+    ret <- ret |>
       # Remove "status" column (does it ever contain anything?)
-      # dplyr::select(-.data$status) %>%
+      # dplyr::select(-.data$status) |>
       # Convert codes to names
       dplyr::rename(
         municipality_id = "municipality"
-      ) %>%
+      ) |>
       dplyr::inner_join(
         dplyr::select(
           munic_tbl,
@@ -289,27 +281,27 @@ get_values <- function(
           municipality = "title",
           municipality_type = "type"),
         by = "municipality_id"
-      ) %>%
+      ) |>
       dplyr::rename(year = "period")
   }
 
   if (isTRUE(simplify) & unit_type == "ou") {
     ou_tbl <- get_ou(id = unique(ret$ou), verbose = FALSE)
 
-    ret <- ret %>%
+    ret <- ret |>
       # Remove "status" column (does it ever contain anything?)
-      dplyr::select(-"status") %>%
+      dplyr::select(-"status") |>
       # Convert codes to names
       dplyr::rename(
         ou_id = "ou"
-      ) %>%
+      ) |>
       dplyr::inner_join(
         dplyr::select(
           ou_tbl,
           ou_id = "id",
           ou = "title"),
         by = "ou_id"
-      ) %>%
+      ) |>
       dplyr::rename(year = "period")
   }
 
@@ -318,12 +310,12 @@ get_values <- function(
 
 #' Simplify a Kolada values table
 #'
-#' Simplify a Kolada values table, i.e as created by \code{\link{get_values}},
+#' Simplify a Kolada values table, i.e as created by [get_values()],
 #' by removing columns that contain monotonous data, i.e. that contain only one
 #' value for all observations.
 #'
 #' @param values_df A Kolada value table, as created by
-#' \code{\link{get_values}}.
+#' [get_values()].
 #'
 #' @return A Kolada values table
 #'
@@ -343,13 +335,13 @@ get_values <- function(
 values_minimize <- function(values_df) {
 
   if (is.null(values_df)) {
-    warning("\nAn empty object was used as input to values_df().")
+    cli::cli_warn("An empty object was used as input to {.fn values_minimize}.")
     return(NULL)
   }
 
   keep <- names(values_df) %in% c("kpi", "municipality", "value") |
     purrr::map_lgl(values_df, ~ dplyr::n_distinct(.x) > 1)
-  values_df %>% dplyr::select(dplyr::all_of(names(values_df)[keep]))
+  values_df |> dplyr::select(dplyr::all_of(names(values_df)[keep]))
 }
 
 #' Create KPI long-form descriptions to add to a plot
@@ -357,12 +349,12 @@ values_minimize <- function(values_df) {
 #' In a Kolada values table, only KPI ID names are preserved. But in plots you
 #' often want to add a legend to explain what each KPI ID represents. But since
 #' KPI explanations are mostly relatively wordy, ggplot2 legends are
-#' under-dimensioned for this task. \code{values_legend} returns a string which
+#' under-dimensioned for this task. `values_legend` returns a string which
 #' can conveniently be used as caption to a plot instead.
 #'
 #' @param values_df A Kolada value table, as created by
-#' \code{\link{get_values}}.
-#' @param kpi_df A KPI table, e.g. as created by \code{\link{get_kpi}}.
+#' [get_values()].
+#' @param kpi_df A KPI table, e.g. as created by [get_kpi()].
 #'
 #' @return A string which should be used as caption in a plot.
 #'
@@ -370,15 +362,15 @@ values_minimize <- function(values_df) {
 values_legend <- function(values_df, kpi_df) {
 
   if (is.null(values_df) || is.null(kpi_df)) {
-    warning("\nAn empty object was used as input to values_legend().")
+    cli::cli_warn("An empty object was used as input to {.fn values_legend}.")
     return(NULL)
   }
 
   kpis <- unique(values_df$kpi)
-  desc <- kpi_df %>%
-    dplyr::select("id", "title") %>%
+  desc <- kpi_df |>
+    dplyr::select("id", "title") |>
     dplyr::filter(.data$id %in% .env$kpis)
 
-  paste(glue::glue_data(desc, "{id}: {title}"), collapse = "\n")
+  paste(paste0(desc$id, ": ", desc$title), collapse = "\n")
 }
 

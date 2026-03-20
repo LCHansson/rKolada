@@ -17,7 +17,7 @@ compose_metadata_query(
 }
 \arguments{
 \item{entity}{Any allowed metadata entity. Check
-\code{\link{allowed_entities}} to see an updated list.}
+\code{\link[=allowed_entities]{allowed_entities()}} to see an updated list.}
 
 \item{title}{A free-form search term or the exact title of any entry in the
 current entity. Case insensitive.}
@@ -41,6 +41,6 @@ used when \code{entity} is \code{"municipality"}. Common values: \code{"K"}
 A string containing a URL to the Kolada REST API.
 }
 \description{
-Mainly used as a supporting function for \code{\link{get_metadata}} but can
+Mainly used as a supporting function for \code{\link[=get_metadata]{get_metadata()}} but can
 also be used to create a working URL to paste in your web browser.
 }

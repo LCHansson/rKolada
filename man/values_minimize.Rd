@@ -8,13 +8,13 @@ values_minimize(values_df)
 }
 \arguments{
 \item{values_df}{A Kolada value table, as created by
-\code{\link{get_values}}.}
+\code{\link[=get_values]{get_values()}}.}
 }
 \value{
 A Kolada values table
 }
 \description{
-Simplify a Kolada values table, i.e as created by \code{\link{get_values}},
+Simplify a Kolada values table, i.e as created by \code{\link[=get_values]{get_values()}},
 by removing columns that contain monotonous data, i.e. that contain only one
 value for all observations.
 }

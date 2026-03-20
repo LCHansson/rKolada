@@ -8,7 +8,7 @@ allowed_entities()
 }
 \value{
 A vector of names of allowed metadata entities, i.e. the correct
-spelling of all allowed values of the \code{entity} parameter in \code{\link{get_metadata}}.
+spelling of all allowed values of the \code{entity} parameter in \code{\link[=get_metadata]{get_metadata()}}.
 }
 \description{
 Allowed entities: Kolada metadata classes

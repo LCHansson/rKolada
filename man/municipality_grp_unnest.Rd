@@ -17,11 +17,11 @@ A Kolada Municipality metadata table
 Municipality groups are a convenient way to discover pre-rendered sets of
 municipalities. A practical workflow for discovering
 such sets can be to search through Municipality Group metadata using
-\code{\link{municipality_grp_search}} to search for keywords and
-\code{\link{municipality_grp_describe}} to inspect contents of KPI groups.
+\code{\link[=municipality_grp_search]{municipality_grp_search()}} to search for keywords and
+\code{\link[=municipality_grp_describe]{municipality_grp_describe()}} to inspect contents of KPI groups.
 Once you have created a Municipality Group metadata table that has been
 narrowed down to the group/s you are looking for,
-\code{\link{municipality_grp_unnest}} is used to create a municipality
+\code{\link[=municipality_grp_unnest]{municipality_grp_unnest()}} is used to create a municipality
 metadata table for further processing.
 }
 \examples{
@@ -32,8 +32,8 @@ munic_grp_df <- get_municipality_groups(max_results = 100)
 
 # Create a Municipality metadata table from municipality groups matching the
 # term "Arboga"
-munic_grp_df \%>\%
-  municipality_grp_search("arboga") \%>\%
+munic_grp_df |>
+  municipality_grp_search("arboga") |>
   municipality_grp_unnest()
 }
 

@@ -8,7 +8,7 @@ kpi_bind_keywords(kpi_df, n = 2, form = c("wide", "long"))
 }
 \arguments{
 \item{kpi_df}{A Kolada KPI metadata table, e.g. as created by
-\code{\link{get_kpi}}.}
+\code{\link[=get_kpi]{get_kpi()}}.}
 
 \item{n}{How many keyword columns should be added?}
 
@@ -25,7 +25,7 @@ Keywords are inferred from the \code{title} field of the table.
 }
 \examples{
 if (kolada_available()) {
-kpi_df <- get_kpi(id = c("N45933", "U28563")) \%>\%
+kpi_df <- get_kpi(id = c("N45933", "U28563")) |>
   kpi_bind_keywords(n = 3)
 }
 

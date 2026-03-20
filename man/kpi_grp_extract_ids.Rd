@@ -15,6 +15,6 @@ A vector of KPI IDs.
 }
 \description{
 This function is primarily intended as a convenient way to pass a (filtered)
-Kolada KPI Group metadata table to \code{\link{get_values}}. All IDs of the
+Kolada KPI Group metadata table to \code{\link[=get_values]{get_values()}}. All IDs of the
 KPIs contained in each group in the table are extracted.
 }

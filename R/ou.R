@@ -2,15 +2,15 @@
 #'
 #' Search a Kolada Organizational Unit metadata table. Only keep rows that
 #' contain the search query. Matches against all columns or columns named
-#' with the \code{column} parameter. For more precise matching, please use
-#' \code{\link[dplyr:filter]{dplyr::filter}}.
+#' with the `column` parameter. For more precise matching, please use
+#' [dplyr::filter].
 #'
 #' @param ou_df A Kolada Organizational Unit metadata table, as created by e.g.
-#'  \code{get_municipality}.
+#'  `get_municipality`.
 #' @param query A search term or a vector of search terms to filter by. Case
 #'  insensitive.
 #' @param column (Optional) A string or character vector with the names of
-#'  columns in which to search for \code{query}.
+#'  columns in which to search for `query`.
 #'
 #' @return A Kolada Organizational Unit metadata table
 #'
@@ -24,8 +24,8 @@
 #' # Only keep OU entities matching "skola" but not "förskola" (preschool)
 #' # located in Gothenburg municipality and starting with an "A" using
 #' # regex matching
-#' ou_filter <- get_ou(municipality = "1480") %>%
-#'   ou_search("^A", column = "title") %>%
+#' ou_filter <- get_ou(municipality = "1480") |>
+#'   ou_search("^A", column = "title") |>
 #'   ou_search("[^(för)]skola")
 #' }
 #'

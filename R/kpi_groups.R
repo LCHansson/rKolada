@@ -1,17 +1,17 @@
 #' Extract KPI ID strings from a Kolada KPI Group metadata table
 #'
 #' This function is primarily intended as a convenient way to pass a (filtered)
-#' Kolada KPI Group metadata table to \code{\link{get_values}}. All IDs of the
+#' Kolada KPI Group metadata table to [get_values()]. All IDs of the
 #' KPIs contained in each group in the table are extracted.
 #'
 #' @param kpi_grp_df A Kolada KPI Group metadata table, as created by e.g.
-#' \code{get_kpi_groups}.
+#' `get_kpi_groups`.
 #'
 #' @return A vector of KPI IDs.
 #'
 #' @export
 kpi_grp_extract_ids <- function(kpi_grp_df) {
-  purrr::map(kpi_grp_df$members, purrr::pluck(1)) %>% unlist()
+  purrr::map(kpi_grp_df$members, purrr::pluck(1)) |> unlist()
 }
 
 
@@ -20,14 +20,14 @@ kpi_grp_extract_ids <- function(kpi_grp_df) {
 #' KPI groups are a convenient way to discover sets of KPIs that can be used to
 #' highlight different aspects of a policy area. A practical workflow for
 #' discovering such sets can be to search through KPI Group metadata using
-#' \code{\link{kpi_grp_search}} to search for keywords and
-#' \code{\link{kpi_grp_describe}} to inspect contents of KPI groups. Once you
+#' [kpi_grp_search()] to search for keywords and
+#' [kpi_grp_describe()] to inspect contents of KPI groups. Once you
 #' have created a KPI group table that has been narrowed down to the group/s you
-#' are looking for, \code{\link{kpi_grp_unnest}} is used to create a KPI
+#' are looking for, [kpi_grp_unnest()] is used to create a KPI
 #' metadata table for further processing.
 #'
 #' @param kpi_grp_df A Kolada KPI Group metadata table, as created by e.g.
-#' \code{get_kpi_groups}.
+#' `get_kpi_groups`.
 #'
 #' @return A Kolada KPI metadata table
 #'
@@ -38,19 +38,19 @@ kpi_grp_extract_ids <- function(kpi_grp_df) {
 #'
 #' # Create a KPI metadata table from KPI groups matching the term
 #' # "utbidning" (education)
-#' kpi_grp_df %>%
-#'   kpi_grp_search("utbildning") %>%
+#' kpi_grp_df |>
+#'   kpi_grp_search("utbildning") |>
 #'   kpi_grp_unnest()
 #' }
 #'
 #' @export
 kpi_grp_unnest <- function(kpi_grp_df) {
-  kpi_grp_df %>%
-    tidyr::unnest(cols = c("members")) %>%
+  kpi_grp_df |>
+    tidyr::unnest(cols = c("members")) |>
     dplyr::select(
       group_id = "id", id = "member_id",
       group_title = "title", title = "member_title"
-    ) %>%
+    ) |>
     dplyr::select("id", "title", "group_id", "group_title")
 }
 
@@ -63,7 +63,7 @@ kpi_grp_unnest <- function(kpi_grp_df) {
 #' can be useful for documentation purposes.
 #'
 #' @param kpi_grp_df A Kolada KPI Group metadata table, as created by e.g.
-#' \code{get_kpi_groups}.
+#' `get_kpi_groups`.
 #' @param max_n The maximum number of KPI groups to describe.
 #' @param format Output format. Can be one of "inline" or "md" (markdown).
 #' @param heading_level The top heading level output format is "md".
@@ -81,12 +81,12 @@ kpi_grp_describe <- function(
   sub_heading_level = heading_level + 1
 ) {
   if (!format %in% c("inline", "md"))
-    stop("'format' must be one of c(\"inline\", \"md\")")
+    cli::cli_abort("{.arg format} must be one of {.val inline} or {.val md}.")
 
-  desc_df <- kpi_grp_df %>%
+  desc_df <- kpi_grp_df |>
     dplyr::slice(1:min(max_n, nrow(kpi_grp_df)))
 
-  desc_df <- desc_df %>%
+  desc_df <- desc_df |>
     dplyr::mutate(
       num_members = purrr::map(.data$members, nrow),
       m_id = purrr::map(.data$members, purrr::pluck("member_id")),
@@ -98,11 +98,11 @@ kpi_grp_describe <- function(
       )
     )
 
-  desc_df %>%
-    glue_data_safely(
-      desc_glue_spec("group"), .entity = "KPI", .format = format,
+  desc_df |>
+    format_data_safely(
+      type = "group", .entity = "KPI", .format = format,
       .heading_length = heading_level,
-      .sub_heading_length = sub_heading_level, .otherwise = "Unknown"
+      .sub_heading_length = sub_heading_level
     )
 
   invisible(kpi_grp_df)
@@ -115,10 +115,10 @@ kpi_grp_describe <- function(
 #' contain the search query. Searches group titles and group IDs. Note that this
 #' function does not search for individual KPIs contained within KPI groups!
 #' To search for KPIs within a KPI group, see examples below for an example
-#' using \code{kpi_grp_unnest}.
+#' using `kpi_grp_unnest`.
 #'
 #' @param kpi_grp_df A Kolada KPI Group metadata table, as created by e.g.
-#' \code{get_kpi_groups}.
+#' `get_kpi_groups`.
 #' @param query A search term or a vector of search terms to filter by. Case
 #' insensitive.
 #'
@@ -129,17 +129,17 @@ kpi_grp_describe <- function(
 #' kpi_grp_df <- get_kpi_groups()
 #'
 #' # Which KPI groups match the keyword "ekonomi" (economy)?
-#' kpi_grp_df %>% kpi_grp_search("ekonomi")
+#' kpi_grp_df |> kpi_grp_search("ekonomi")
 #'
 #' # Which KPI groups contain KPIs matching the keyword "arbete" (work/labour)?
-#' kpi_grp_df %>%
-#'   kpi_grp_unnest() %>%
-#'   kpi_search("arbete") %>%
+#' kpi_grp_df |>
+#'   kpi_grp_unnest() |>
+#'   kpi_search("arbete") |>
 #'   dplyr::count(group_title, sort = TRUE)
 #' }
 #'
 #' @export
 kpi_grp_search <- function(kpi_grp_df, query) {
-  kpi_grp_df %>%
+  kpi_grp_df |>
     dplyr::filter(stringr::str_detect(tolower(.data$title), tolower(query)))
 }

@@ -24,7 +24,7 @@ append_query_params <- function(url, ...) {
 # Internal helper for *_search() functions. Replaces deprecated filter_at().
 entity_search <- function(df, query, column, caller_name) {
   if (is.null(df)) {
-    warning("\nAn empty object was used as input to ", caller_name, "().")
+    cli::cli_warn("An empty object was used as input to {.fn {caller_name}}.")
     return(NULL)
   }
 
@@ -33,7 +33,7 @@ entity_search <- function(df, query, column, caller_name) {
 
   pattern <- tolower(as.character(paste(query, collapse = "|")))
 
-  df %>%
+  df |>
     dplyr::filter(
       dplyr::if_any(
         dplyr::all_of(column),
@@ -45,7 +45,7 @@ entity_search <- function(df, query, column, caller_name) {
 #' Allowed entities: Kolada metadata classes
 #'
 #' @return A vector of names of allowed metadata entities, i.e. the correct
-#' spelling of all allowed values of the \code{entity} parameter in \code{\link{get_metadata}}.
+#' spelling of all allowed values of the `entity` parameter in [get_metadata()].
 #'
 #' @export
 allowed_entities <- function() {
@@ -82,6 +82,89 @@ stopwords <- function() {
     "till", "under", "upp", "ut", "utan", "vad", "var", "v\u00e5r", "vara",
     "v\u00e5ra", "varf\u00f6r", "varit", "varje", "vars", "vart", "v\u00e5rt",
     "vem", "vi", "vid", "vilka", "vilkas", "vilken", "vilket")
+}
+
+# Internal HTTP helper with retry and error handling.
+# Returns the parsed JSON response or NULL on failure.
+kolada_get <- function(url, max_retries = 3) {
+  for (i in seq_len(max_retries + 1)) {
+    res <- tryCatch(
+      httr2::request(url) |>
+        httr2::req_error(is_error = function(resp) FALSE) |>
+        httr2::req_timeout(30) |>
+        httr2::req_perform(),
+      error = function(e) e
+    )
+
+    if (inherits(res, "error")) {
+      cli::cli_warn(c(
+        "Could not connect to the Kolada database.",
+        "i" = "Please check your internet connection.",
+        "i" = "URL: {.url {url}}"
+      ))
+      return(NULL)
+    }
+
+    status <- httr2::resp_status(res)
+
+    if (status == 429 && i <= max_retries) {
+      wait <- 2^i
+      cli::cli_inform("Rate limited (HTTP 429). Retrying in {wait}s...")
+      Sys.sleep(wait)
+      next
+    }
+
+    body_str <- httr2::resp_body_string(res)
+    parsed <- tryCatch(jsonlite::fromJSON(body_str), error = function(e) e)
+
+    if (inherits(parsed, "error")) {
+      cli::cli_warn(c(
+        "Kolada returned malformatted HTML/JSON.",
+        "i" = "URL: {.url {url}}"
+      ))
+      return(NULL)
+    }
+
+    return(parsed)
+  }
+
+  cli::cli_warn("Max retries exceeded for {.url {url}}.")
+  NULL
+}
+
+#' Get the rKolada cache directory
+#'
+#' Returns the path to the persistent cache directory used by rKolada.
+#' The directory is created if it does not exist.
+#'
+#' @return A string containing the path to the cache directory.
+#'
+#' @export
+kolada_cache_dir <- function() {
+  dir <- tools::R_user_dir("rKolada", "cache")
+  if (!dir.exists(dir)) dir.create(dir, recursive = TRUE)
+  dir
+}
+
+#' Clear the rKolada cache
+#'
+#' Removes all cached files from the rKolada cache directory.
+#'
+#' @param cache_dir The cache directory to clear. Defaults to
+#'   [kolada_cache_dir()].
+#'
+#' @return Invisibly returns the cache directory path.
+#'
+#' @export
+kolada_clear_cache <- function(cache_dir = kolada_cache_dir()) {
+  files <- list.files(cache_dir, full.names = TRUE)
+  if (length(files) > 0) {
+    file.remove(files)
+    cli::cli_inform("Removed {length(files)} cached file{?s} from {.path {cache_dir}}.")
+  } else {
+    cli::cli_inform("Cache directory is already empty.")
+  }
+  invisible(cache_dir)
 }
 
 # Cache handler factory

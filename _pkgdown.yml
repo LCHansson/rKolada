@@ -2,3 +2,63 @@ url: https://lchansson.github.io/rKolada/
 template:
   bootstrap: 5
 
+reference:
+  - title: "Data access"
+    desc: "Download data and metadata from the Kolada API."
+    contents:
+      - get_values
+      - get_metadata
+      - get_kpi
+      - get_kpi_groups
+      - get_municipality
+      - get_municipality_groups
+      - get_ou
+
+  - title: "Search and filter"
+    desc: "Search and filter metadata tables."
+    contents:
+      - kpi_search
+      - municipality_search
+      - ou_search
+      - kpi_grp_search
+      - municipality_grp_search
+
+  - title: "Describe"
+    desc: "Human-readable descriptions of metadata."
+    contents:
+      - kpi_describe
+      - kpi_grp_describe
+      - municipality_grp_describe
+
+  - title: "Transform"
+    desc: "Simplify and reshape metadata and data."
+    contents:
+      - kpi_minimize
+      - kpi_bind_keywords
+      - values_minimize
+      - values_legend
+      - kpi_grp_unnest
+      - municipality_grp_unnest
+
+  - title: "Extract IDs"
+    desc: "Extract ID vectors for use with get_values()."
+    contents:
+      - kpi_extract_ids
+      - municipality_extract_ids
+      - kpi_grp_extract_ids
+      - municipality_grp_extract_ids
+      - municipality_name_to_id
+      - municipality_id_to_name
+
+  - title: "Query building"
+    desc: "Compose API query URLs."
+    contents:
+      - compose_metadata_query
+
+  - title: "Utilities"
+    desc: "API availability, caching, and other helpers."
+    contents:
+      - kolada_available
+      - kolada_cache_dir
+      - kolada_clear_cache
+      - allowed_entities

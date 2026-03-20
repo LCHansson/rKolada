@@ -8,7 +8,7 @@ kpi_minimize(kpi_df, remove_monotonous_data = TRUE)
 }
 \arguments{
 \item{kpi_df}{A Kolada KPI metadata table, e.g. as created by
-\code{\link{get_kpi}}.}
+\code{\link[=get_kpi]{get_kpi()}}.}
 
 \item{remove_monotonous_data}{Remove columns from the KPI table which contain
 exactly the same information for all entries in the table?}

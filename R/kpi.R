@@ -6,7 +6,7 @@
 #' undocumented information.
 #'
 #' @param kpi_df A Kolada KPI metadata table, e.g. as created by
-#' \code{\link{get_kpi}}.
+#' [get_kpi()].
 #' @param remove_monotonous_data Remove columns from the KPI table which contain
 #' exactly the same information for all entries in the table?
 #'
@@ -19,17 +19,17 @@ kpi_minimize <- function(
 ) {
 
   if (is.null(kpi_df)) {
-    warning("\nAn empty object was used as input to kpi_minimize().")
+    cli::cli_warn("An empty object was used as input to {.fn kpi_minimize}.")
     return(NULL)
   }
 
   if (isTRUE(remove_monotonous_data)) {
     keep <- names(kpi_df) %in% c("id", "title", "description") |
       purrr::map_lgl(kpi_df, ~ dplyr::n_distinct(.x) > 1)
-    kpi_df <- kpi_df %>% dplyr::select(dplyr::all_of(names(kpi_df)[keep]))
+    kpi_df <- kpi_df |> dplyr::select(dplyr::all_of(names(kpi_df)[keep]))
   }
 
-  kpi_df <- kpi_df %>%
+  kpi_df <- kpi_df |>
     dplyr::select("id", "title", "description", dplyr::everything())
 
   kpi_df
@@ -38,11 +38,11 @@ kpi_minimize <- function(
 
 #' Add keyword columns to a Kolada KPI table
 #'
-#' Identify \code{n} keywords describing the KPI and add them as new columns.
-#' Keywords are inferred from the \code{title} field of the table.
+#' Identify `n` keywords describing the KPI and add them as new columns.
+#' Keywords are inferred from the `title` field of the table.
 #'
 #' @param kpi_df A Kolada KPI metadata table, e.g. as created by
-#' \code{\link{get_kpi}}.
+#' [get_kpi()].
 #' @param n How many keyword columns should be added?
 #' @param form Can be either "wide" (default) or "long". Whether to return
 #' keywords as separate columns ("wide") or as separate rows, duplicating all
@@ -52,7 +52,7 @@ kpi_minimize <- function(
 #'
 #' @examples
 #' if (kolada_available()) {
-#' kpi_df <- get_kpi(id = c("N45933", "U28563")) %>%
+#' kpi_df <- get_kpi(id = c("N45933", "U28563")) |>
 #'   kpi_bind_keywords(n = 3)
 #' }
 #'
@@ -60,24 +60,24 @@ kpi_minimize <- function(
 kpi_bind_keywords <- function(kpi_df, n = 2, form = c("wide", "long")) {
 
   if (is.null(kpi_df)) {
-    warning("\nAn empty object was used as input to kpi_bind_keywords().")
+    cli::cli_warn("An empty object was used as input to {.fn kpi_bind_keywords}.")
     return(NULL)
   }
 
   form <- form[[1]]
 
-  kpi_df <- kpi_df %>%
+  kpi_df <- kpi_df |>
     dplyr::mutate(
       title_words = stringr::str_extract_all(tolower(.data$title), "\\w+")
-    ) %>%
-    tidyr::unnest(cols = c("title_words")) %>%
-    dplyr::filter(!.data$title_words %in% stopwords()) %>%
-    dplyr::group_by(.data$id) %>%
+    ) |>
+    tidyr::unnest(cols = c("title_words")) |>
+    dplyr::filter(!.data$title_words %in% stopwords()) |>
+    dplyr::group_by(.data$id) |>
     dplyr::slice(1:n)
 
   if (form == "wide") {
-    kpi_df <- kpi_df %>%
-      dplyr::mutate(nm_col = dplyr::row_number()) %>%
+    kpi_df <- kpi_df |>
+      dplyr::mutate(nm_col = dplyr::row_number()) |>
       tidyr::pivot_wider(
         names_from = "nm_col", names_prefix = "keyword_",
         values_from = "title_words", values_fill = list(title_words = "")
@@ -92,15 +92,15 @@ kpi_bind_keywords <- function(kpi_df, n = 2, form = c("wide", "long")) {
 #'
 #' Search a Kolada KPI metadata table. Only keep rows that
 #' contain the search query. Matches against all columns or columns named with
-#' the \code{column} parameter. For more precise matching, please use
-#' \code{\link[dplyr:filter]{dplyr::filter}}.
+#' the `column` parameter. For more precise matching, please use
+#' [dplyr::filter].
 #'
 #' @param kpi_df A Kolada KPI metadata table, e.g. as created by
-#' \code{\link{get_kpi}}.
+#' [get_kpi()].
 #' @param query A search term or a vector of search terms to filter by. Case
 #' insensitive.
 #' @param column (Optional) A string or character vector with the names of
-#' columns in which to search for \code{query}.
+#' columns in which to search for `query`.
 #'
 #' @return A Kolada KPI metadata table
 #'
@@ -112,8 +112,8 @@ kpi_bind_keywords <- function(kpi_df, n = 2, form = c("wide", "long")) {
 #'
 #' # Add keywords to a KPI table and search for multiple terms among
 #' # the keywords
-#' kpi_filter <- get_kpi(id = c("N11002", "N11003", "N11004", "N11005")) %>%
-#'   kpi_bind_keywords(n = 3) %>%
+#' kpi_filter <- get_kpi(id = c("N11002", "N11003", "N11004", "N11005")) |>
+#'   kpi_bind_keywords(n = 3) |>
 #'   kpi_search(
 #'     query = c("nettokostnad", "öppen"),
 #'     column = c("keyword_1", "keyword_2", "keyword_3")
@@ -153,27 +153,27 @@ kpi_describe <- function(
 ) {
 
   if (is.null(kpi_df)) {
-    warning("\nAn empty object was used as input to kpi_describe().")
+    cli::cli_warn("An empty object was used as input to {.fn kpi_describe}.")
     return(NULL)
   }
 
   if (!format %in% c("inline", "md"))
-    stop("'format' must be one of c(\"inline\", \"md\")")
+    cli::cli_abort("{.arg format} must be one of {.val inline} or {.val md}.")
 
-  desc_df <- kpi_df %>%
+  desc_df <- kpi_df |>
     dplyr::slice(1:min(max_n, nrow(kpi_df)))
 
   if (any(stringr::str_detect(names(desc_df), "keyword")))
-    desc_df <- desc_df %>%
-    dplyr::mutate(keyword_1 = paste("- ", .data$keyword_1, sep = "")) %>%
-    tidyr::unite("keywords", dplyr::starts_with("keyword"), sep = "\n- ") %>%
+    desc_df <- desc_df |>
+    dplyr::mutate(keyword_1 = paste("- ", .data$keyword_1, sep = "")) |>
+    tidyr::unite("keywords", dplyr::starts_with("keyword"), sep = "\n- ") |>
     dplyr::mutate(keywords = stringr::str_remove(.data$keywords, "(-[\\s]*)+$"))
 
-  desc_df %>%
-    glue_data_safely(
-      desc_glue_spec("nogroup"), .entity = "KPI", .format = format,
+  desc_df |>
+    format_data_safely(
+      type = "nogroup", .entity = "KPI", .format = format,
       .heading_length = heading_level,
-      .sub_heading_length = sub_heading_level, .otherwise = "Unknown"
+      .sub_heading_length = sub_heading_level
     )
 
   invisible(kpi_df)
@@ -183,17 +183,17 @@ kpi_describe <- function(
 #' Extract a vector of KPI ID strings from a Kolada KPI metadata table
 #'
 #' This function is primarily intended as a convenient way to pass a (filtered)
-#' Kolada KPI metadata table to \code{\link{get_values}}.
+#' Kolada KPI metadata table to [get_values()].
 #'
 #' @param kpi_df A Kolada KPI metadata table, e.g. as created by
-#' \code{\link{get_kpi}}.
+#' [get_kpi()].
 #'
 #' @examples
 #' if (kolada_available()) {
 #' # Download Kolada data for the first KPI in the list matching the term "Grundskola" (primary school)
 #' # for the years 2010-2019
 #' # (omit the parameter "max_results" to actually download all data)
-#' kpi_filter <- get_kpi(max_results = 500) %>%
+#' kpi_filter <- get_kpi(max_results = 500) |>
 #'   kpi_search("Grundskola")
 #'
 #' # Only keep the top row
@@ -214,7 +214,7 @@ kpi_describe <- function(
 kpi_extract_ids <- function(kpi_df) {
 
   if (is.null(kpi_df)) {
-    warning("\nAn empty object was used as input to kpi_extract_ids().")
+    cli::cli_warn("An empty object was used as input to {.fn kpi_extract_ids}.")
     return(NULL)
   }
 

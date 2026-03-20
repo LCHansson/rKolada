@@ -1,11 +1,11 @@
 #' Extract municipality ID strings from a Kolada municipality group table
 #'
 #' This function is primarily intended as a convenient way to pass a (filtered)
-#' Kolada municipality group metadata table to \code{\link{get_values}}. All IDs
+#' Kolada municipality group metadata table to [get_values()]. All IDs
 #' of the municipalities contained in each group in the table are extracted.
 #'
 #' @param munic_grp_df A Kolada municipality group table, as created by e.g.
-#' \code{get_municipality_groups}.
+#' `get_municipality_groups`.
 #'
 #' @return A vector of Municipality IDs.
 #'
@@ -13,11 +13,11 @@
 municipality_grp_extract_ids <- function(munic_grp_df) {
 
   if (is.null(munic_grp_df)) {
-    warning("\nAn empty object was used as input to municipality_grp_extract_ids().")
+    cli::cli_warn("An empty object was used as input to {.fn municipality_grp_extract_ids}.")
     return(NULL)
   }
 
-  purrr::map(munic_grp_df$members, purrr::pluck(1)) %>% unlist()
+  purrr::map(munic_grp_df$members, purrr::pluck(1)) |> unlist()
 }
 
 
@@ -26,15 +26,15 @@ municipality_grp_extract_ids <- function(munic_grp_df) {
 #' Municipality groups are a convenient way to discover pre-rendered sets of
 #' municipalities. A practical workflow for discovering
 #' such sets can be to search through Municipality Group metadata using
-#' \code{\link{municipality_grp_search}} to search for keywords and
-#' \code{\link{municipality_grp_describe}} to inspect contents of KPI groups.
+#' [municipality_grp_search()] to search for keywords and
+#' [municipality_grp_describe()] to inspect contents of KPI groups.
 #' Once you have created a Municipality Group metadata table that has been
 #' narrowed down to the group/s you are looking for,
-#' \code{\link{municipality_grp_unnest}} is used to create a municipality
+#' [municipality_grp_unnest()] is used to create a municipality
 #' metadata table for further processing.
 #'
 #' @param munic_grp_df A Kolada Municipality Group metadata table, as created by
-#' e.g. \code{get_municipality_groups}.
+#' e.g. `get_municipality_groups`.
 #'
 #' @return A Kolada Municipality metadata table
 #'
@@ -46,8 +46,8 @@ municipality_grp_extract_ids <- function(munic_grp_df) {
 #'
 #' # Create a Municipality metadata table from municipality groups matching the
 #' # term "Arboga"
-#' munic_grp_df %>%
-#'   municipality_grp_search("arboga") %>%
+#' munic_grp_df |>
+#'   municipality_grp_search("arboga") |>
 #'   municipality_grp_unnest()
 #' }
 #'
@@ -55,16 +55,16 @@ municipality_grp_extract_ids <- function(munic_grp_df) {
 municipality_grp_unnest <- function(munic_grp_df) {
 
   if (is.null(munic_grp_df)) {
-    warning("\nAn empty object was used as input to municipality_grp_unnest().")
+    cli::cli_warn("An empty object was used as input to {.fn municipality_grp_unnest}.")
     return(NULL)
   }
 
-  munic_grp_df %>%
-    tidyr::unnest(cols = c("members")) %>%
+  munic_grp_df |>
+    tidyr::unnest(cols = c("members")) |>
     dplyr::select(
       group_id = "id", id = "member_id",
       group_title = "title", title = "member_title"
-    ) %>%
+    ) |>
     dplyr::select("id", "title", "group_id", "group_title")
 }
 
@@ -78,7 +78,7 @@ municipality_grp_unnest <- function(munic_grp_df) {
 #' documentation purposes.
 #'
 #' @param munic_grp_df A Kolada Municipality Group metadata table, as created
-#' by e.g. \code{get_municipality_groups}.
+#' by e.g. `get_municipality_groups`.
 #' @param max_n The maximum number of KPI groups to describe.
 #' @param format Output format. Can be one of "inline" or "md" (markdown).
 #' @param heading_level The top heading level output format is "md".
@@ -96,12 +96,12 @@ municipality_grp_describe <- function(
   sub_heading_level = heading_level + 1
 ) {
   if (!format %in% c("inline", "md"))
-    stop("'format' must be one of c(\"inline\", \"md\")")
+    cli::cli_abort("{.arg format} must be one of {.val inline} or {.val md}.")
 
-  desc_df <- munic_grp_df %>%
+  desc_df <- munic_grp_df |>
     dplyr::slice(1:min(max_n, nrow(munic_grp_df)))
 
-  desc_df <- desc_df %>%
+  desc_df <- desc_df |>
     dplyr::mutate(
       num_members = purrr::map(.data$members, nrow),
       m_id = purrr::map(.data$members, purrr::pluck("member_id")),
@@ -111,11 +111,12 @@ municipality_grp_describe <- function(
                                 paste, sep = " ", collapse = "\n")
     )
 
-  desc_df %>%
-    glue_data_safely(desc_glue_spec("group"), .entity = "Municipality",
-                     .format = format, .heading_length = heading_level,
-                     .sub_heading_length = sub_heading_level,
-                     .otherwise = "Unknown")
+  desc_df |>
+    format_data_safely(
+      type = "group", .entity = "Municipality",
+      .format = format, .heading_length = heading_level,
+      .sub_heading_length = sub_heading_level
+    )
 
   invisible(munic_grp_df)
 }
@@ -127,10 +128,10 @@ municipality_grp_describe <- function(
 #' contain the search query. Searches group titles and group IDs. Note that this
 #' function does not search for individual municipalities contained within
 #' municipality groups! To search for KPIs within a KPI group, see examples
-#' below for an example using \code{municipality_grp_unnest}.
+#' below for an example using `municipality_grp_unnest`.
 #'
 #' @param munic_grp_df A Kolada Municipality Group metadata table, as created by
-#' e.g. \code{get_municipality_groups}.
+#' e.g. `get_municipality_groups`.
 #' @param query A search term or a vector of search terms to filter by. Case
 #' insensitive.
 #'
@@ -138,6 +139,6 @@ municipality_grp_describe <- function(
 #'
 #' @export
 municipality_grp_search <- function(munic_grp_df, query) {
-  munic_grp_df %>%
+  munic_grp_df |>
     dplyr::filter(stringr::str_detect(tolower(.data$title), tolower(query)))
 }

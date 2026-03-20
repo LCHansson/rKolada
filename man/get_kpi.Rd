@@ -63,8 +63,8 @@ the API.}
 
 \item{cache_location}{Where to store and search for cached data. Can be a
 path to a directory or the name of any function that returns the path to a
-directory when called, like \code{\link{getwd}}. Defaults to
-\code{\link{tempdir}}.}
+directory when called, like \code{\link[=getwd]{getwd()}}. Defaults to
+\code{\link[=tempdir]{tempdir()}}.}
 
 \item{verbose}{Whether to print the call to the Kolada API as a message to
 the R console.}
@@ -78,16 +78,16 @@ values: \code{"K"} (municipality), \code{"L"} (region).}
 }
 \value{
 Returns a tibble with metadata for the specified entity. In rKolada
-terminology, a table returned by e.g. \code{\link{get_kpi}} is referred to
+terminology, a table returned by e.g. \code{\link[=get_kpi]{get_kpi()}} is referred to
 as a \code{kpi_df} and can be passed to functions starting with "kpi" such
-as \code{\link{kpi_bind_keywords}}.
+as \code{\link[=kpi_bind_keywords]{kpi_bind_keywords()}}.
 }
 \description{
 There are five different types of metadata entities in the Kolada database:
 "kpi", "kpi_groups", "municipality", "municipality_groups", and "ou". For
 every entity there is a corresponding function \code{get_ENTITY} which
 retrieves a table with the metadata for that entity. The \code{get_ENTITY}
-functions are thin wrappers around \code{\link{get_metadata}}.
+functions are thin wrappers around \code{\link[=get_metadata]{get_metadata()}}.
 }
 \examples{
 # Download KPI table and store a cache copy of the results in a temporary folder

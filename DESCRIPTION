@@ -1,7 +1,7 @@
 Package: rKolada
 Type: Package
 Title: Access Data from the 'Kolada' Database
-Version: 0.3.0
+Version: 0.3.1
 Authors@R: person("Love", "Hansson", email =
  "love.hansson@gmail.com", role = c("aut", "cre", "cph"))
 Maintainer: Love Hansson <love.hansson@gmail.com>
@@ -20,18 +20,18 @@ Suggests:
     scales,
     progress
 Config/testthat/edition: 3
+Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
 Imports:
-    tibble,
+    cli,
     dplyr,
-    glue,
-    stringr,
     httr2,
     jsonlite,
-    magrittr,
-    tidyr,
     purrr,
-    rlang
+    rlang,
+    stringr,
+    tibble,
+    tidyr
 VignetteBuilder: knitr
 Depends:
     R (>= 4.1.0)
