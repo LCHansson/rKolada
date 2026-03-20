@@ -1,5 +1,6 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://lchansson.github.io/rKolada/404.html</loc></url>
+<url><loc>https://lchansson.github.io/rKolada/CLAUDE.html</loc></url>
 <url><loc>https://lchansson.github.io/rKolada/CODE_OF_CONDUCT.html</loc></url>
 <url><loc>https://lchansson.github.io/rKolada/LICENSE.html</loc></url>
 <url><loc>https://lchansson.github.io/rKolada/articles/a-quickstart-rkolada.html</loc></url>
@@ -17,6 +18,8 @@
 <url><loc>https://lchansson.github.io/rKolada/reference/get_values.html</loc></url>
 <url><loc>https://lchansson.github.io/rKolada/reference/index.html</loc></url>
 <url><loc>https://lchansson.github.io/rKolada/reference/kolada_available.html</loc></url>
+<url><loc>https://lchansson.github.io/rKolada/reference/kolada_cache_dir.html</loc></url>
+<url><loc>https://lchansson.github.io/rKolada/reference/kolada_clear_cache.html</loc></url>
 <url><loc>https://lchansson.github.io/rKolada/reference/kpi_bind_keywords.html</loc></url>
 <url><loc>https://lchansson.github.io/rKolada/reference/kpi_describe.html</loc></url>
 <url><loc>https://lchansson.github.io/rKolada/reference/kpi_extract_ids.html</loc></url>
@@ -35,7 +38,6 @@
 <url><loc>https://lchansson.github.io/rKolada/reference/municipality_name_to_id.html</loc></url>
 <url><loc>https://lchansson.github.io/rKolada/reference/municipality_search.html</loc></url>
 <url><loc>https://lchansson.github.io/rKolada/reference/ou_search.html</loc></url>
-<url><loc>https://lchansson.github.io/rKolada/reference/pipe.html</loc></url>
 <url><loc>https://lchansson.github.io/rKolada/reference/values_legend.html</loc></url>
 <url><loc>https://lchansson.github.io/rKolada/reference/values_minimize.html</loc></url>
 </urlset>

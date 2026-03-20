@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">rKolada</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -74,17 +74,25 @@ the rKolada package, see <a href="introduction-to-rkolada.html">Introduction to 
 <p>In this guide we walk you through five steps to download, inspect and
 search through Kolada metadata. We then use our search results to
 download data from Kolada and plot it.</p>
+<p>Kolada stores data in three dimensions: <strong>KPI</strong> (what is
+measured), <strong>municipality/region</strong> (where), and
+<strong>year</strong> (when). To download data you specify at least two
+of these three. See <code><a href="../articles/introduction-to-rkolada.html">vignette("introduction-to-rkolada")</a></code> for
+a deeper explanation.</p>
 <div class="section level3">
 <h3 id="get-metadata">1. Get metadata<a class="anchor" aria-label="anchor" href="#get-metadata"></a>
 </h3>
 <p>Kolada contains five different types of metadata entities:</p>
 <ol style="list-style-type: decimal">
 <li>
-<code>kpi</code>: Key Performance Indicators</li>
+<code>kpi</code>: Key Performance Indicators — the measures
+themselves (e.g. “Share with post-secondary education”)</li>
 <li>
-<code>municipality</code>: Municipalities</li>
+<code>municipality</code>: Municipalities and regions, identified by
+numeric codes (e.g. Stockholm = <code>"0180"</code>)</li>
 <li>
-<code>ou</code>: Operating Unit, a subunit of municipalities</li>
+<code>ou</code>: Operating Units — sub-units within municipalities
+(e.g. a specific school or elderly home)</li>
 <li>
 <code>kpi_groups</code>: Thematic groupings of KPIs</li>
 <li>
@@ -136,10 +144,10 @@ metadata table from columns that don’t contain any information that
 distinguish KPIs from each other:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Get a list KPIs matching a search for "bruttoregionprodukt" (Gross regional product)</span></span>
-<span><span class="va">kpi_res</span> <span class="op">&lt;-</span> <span class="va">kpis</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/kpi_search.html">kpi_search</a></span><span class="op">(</span><span class="st">"bruttoregionprodukt"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="co"># Keep only KPIs with data for the municipality level</span></span>
-<span>  <span class="fu"><a href="../reference/kpi_search.html">kpi_search</a></span><span class="op">(</span><span class="st">"K"</span>, column <span class="op">=</span> <span class="st">"municipality_type"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span><span class="va">kpi_res</span> <span class="op">&lt;-</span> <span class="va">kpis</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/kpi_search.html">kpi_search</a></span><span class="op">(</span><span class="st">"bruttoregionprodukt"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="co"># "K" = data available at municipality level (not just region)</span></span>
+<span>  <span class="fu"><a href="../reference/kpi_search.html">kpi_search</a></span><span class="op">(</span><span class="st">"K"</span>, column <span class="op">=</span> <span class="st">"municipality_type"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/kpi_minimize.html">kpi_minimize</a></span><span class="op">(</span>remove_monotonous_data <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">kpi_res</span><span class="op">)</span></span>
@@ -152,9 +160,9 @@ distinguish KPIs from each other:</p>
 municipalities. We thus want to create a table containing metadata about
 these four municipalities:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">munic_res</span> <span class="op">&lt;-</span> <span class="va">munic</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="co"># Only keep municipalities (drop regions)</span></span>
-<span>  <span class="fu"><a href="../reference/municipality_search.html">municipality_search</a></span><span class="op">(</span><span class="st">"K"</span>, column <span class="op">=</span> <span class="st">"type"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<code class="sourceCode R"><span><span class="va">munic_res</span> <span class="op">&lt;-</span> <span class="va">munic</span> <span class="op">|&gt;</span></span>
+<span>  <span class="co"># type "K" = municipality (kommun), vs "L" for region (län)</span></span>
+<span>  <span class="fu"><a href="../reference/municipality_search.html">municipality_search</a></span><span class="op">(</span><span class="st">"K"</span>, column <span class="op">=</span> <span class="st">"type"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="co"># Only keep Stockholm, Gothenburg and Malmö</span></span>
 <span>  <span class="fu"><a href="../reference/municipality_search.html">municipality_search</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Stockholm"</span>, <span class="st">"Göteborg"</span>, <span class="st">"Malmö"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
@@ -178,8 +186,8 @@ containing a summary of a table of KPIs. For instance, by setting the
 following code renders a Markdown section that is automatically inluded
 as a part of the HTML that renders this web page:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">kpi_res</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/kpi_bind_keywords.html">kpi_bind_keywords</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<code class="sourceCode R"><span><span class="va">kpi_res</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/kpi_bind_keywords.html">kpi_bind_keywords</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/kpi_describe.html">kpi_describe</a></span><span class="op">(</span>max_n <span class="op">=</span> <span class="fl">1</span>, format <span class="op">=</span> <span class="st">"md"</span>, heading_level <span class="op">=</span> <span class="fl">4</span>, sub_heading_level <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="n03702-bruttoregionprodukt-kommun-brp-1000-krinvånare">N03702: Bruttoregionprodukt, kommun (BRP), 1000 kr/invånare<a class="anchor" aria-label="anchor" href="#n03702-bruttoregionprodukt-kommun-brp-1000-krinv%C3%A5nare"></a>
@@ -197,8 +205,8 @@ ekonomiska utvecklingen inom det geografiska området. Källa: SCB</p>
 <h5 id="metadata">Metadata<a class="anchor" aria-label="anchor" href="#metadata"></a>
 </h5>
 <ul>
-<li><p>Has OU data: Unknown</p></li>
-<li><p>Divided by gender: Unknown</p></li>
+<li><p>Has OU data: NA</p></li>
+<li><p>Divided by gender: NA</p></li>
 <li><p>Municipality type: Unknown</p></li>
 <li><p>Operating area: Unknown</p></li>
 <li><p>Auspice: Unknown</p></li>
@@ -245,9 +253,10 @@ convenience functions <code><a href="../reference/kpi_extract_ids.html">kpi_extr
 <span>  period <span class="op">=</span> <span class="fl">1990</span><span class="op">:</span><span class="fl">2019</span>,</span>
 <span>  simplify <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>Setting the <code>simplify</code> parameter to <code>TRUE</code>,
-again, makes results more human readable, by removing undocumented
-columns and relabeling data with human-friendly labels.</p>
+<p><code>simplify = TRUE</code> does two things: replaces numeric IDs
+with readable names (e.g. <code>"0180"</code> becomes
+<code>"Stockholm"</code>) and drops columns that are only used
+internally.</p>
 </div>
 <div class="section level3">
 <h3 id="inspect-and-visualise-results">5. Inspect and visualise results<a class="anchor" aria-label="anchor" href="#inspect-and-visualise-results"></a>
@@ -258,20 +267,43 @@ columns and relabeling data with human-friendly labels.</p>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">"ggplot2"</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">kld_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">year</span>, y <span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># One line per municipality, coloured by name</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">municipality</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># Separate panel per KPI (stacked vertically)</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html" class="external-link">facet_grid</a></span><span class="op">(</span><span class="va">kpi</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># Thousand separators for readability</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="va"><a href="https://scales.r-lib.org/reference/comma.html" class="external-link">comma</a></span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
 <span>    title <span class="op">=</span> <span class="st">"Gross Regional Product"</span>,</span>
 <span>    subtitle <span class="op">=</span> <span class="st">"Yearly development in Sweden's three\nmost populous municipalities"</span>,</span>
 <span>    x <span class="op">=</span> <span class="st">"Year"</span>,</span>
 <span>    y <span class="op">=</span> <span class="st">""</span>,</span>
-<span>    caption <span class="op">=</span> <span class="fu"><a href="../reference/values_legend.html">values_legend</a></span><span class="op">(</span><span class="va">kld_data</span>, <span class="va">kpis</span><span class="op">)</span></span>
+<span>    caption <span class="op">=</span> <span class="fu"><a href="../reference/values_legend.html">values_legend</a></span><span class="op">(</span><span class="va">kld_data</span>, <span class="va">kpis</span><span class="op">)</span>  <span class="co"># Auto-generated KPI legend</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <p><img src="a-quickstart-rkolada_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" alt="" width="700"></p>
 <p>Note the use of the helper function <code><a href="../reference/values_legend.html">values_legend()</a></code> to
 produce a legend containing the names and keys of all KPIs included in
 the graph.</p>
+</div>
+<div class="section level2">
+<h2 id="next-steps">Next steps<a class="anchor" aria-label="anchor" href="#next-steps"></a>
+</h2>
+<ul>
+<li>
+<strong>Deeper walkthrough</strong> —
+<code><a href="../articles/introduction-to-rkolada.html">vignette("introduction-to-rkolada")</a></code> covers the full data
+model, metadata groups, and more complex workflows.</li>
+<li>
+<strong>ggplot2 reference</strong> — <a href="https://ggplot2-book.org/" class="external-link uri">https://ggplot2-book.org/</a> for more on
+visualisation.</li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="related-packages">Related packages<a class="anchor" aria-label="anchor" href="#related-packages"></a>
+</h2>
+<p>If you work with data from PX-Web APIs (Statistics Sweden, Statistics
+Norway, Statistics Finland, etc.), see <a href="https://lchansson.github.io/rpx/" class="external-link">rpx</a> — a sibling package that
+follows the same design principles as rKolada.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

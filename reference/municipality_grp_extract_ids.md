@@ -2,7 +2,7 @@
 
 This function is primarily intended as a convenient way to pass a
 (filtered) Kolada municipality group metadata table to
-[`get_values`](https://lchansson.github.io/rKolada/reference/get_values.md).
+[`get_values()`](https://lchansson.github.io/rKolada/reference/get_values.md).
 All IDs of the municipalities contained in each group in the table are
 extracted.
 

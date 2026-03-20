@@ -13,7 +13,7 @@ dplyr::filter."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">rKolada</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,7 +48,7 @@ dplyr::filter."></head><body>
     <p>Search a Kolada KPI metadata table. Only keep rows that
 contain the search query. Matches against all columns or columns named with
 the <code>column</code> parameter. For more precise matching, please use
-<code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">dplyr::filter</a></code>.</p>
+<a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">dplyr::filter</a>.</p>
     </div>
 
     <div class="section level2">
@@ -62,7 +62,7 @@ the <code>column</code> parameter. For more precise matching, please use
 
 <dl><dt id="arg-kpi-df">kpi_df<a class="anchor" aria-label="anchor" href="#arg-kpi-df"></a></dt>
 <dd><p>A Kolada KPI metadata table, e.g. as created by
-<code><a href="get_kpi.html">get_kpi</a></code>.</p></dd>
+<code><a href="get_kpi.html">get_kpi()</a></code>.</p></dd>
 
 
 <dt id="arg-query">query<a class="anchor" aria-label="anchor" href="#arg-query"></a></dt>
@@ -89,8 +89,8 @@ columns in which to search for <code>query</code>.</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Add keywords to a KPI table and search for multiple terms among</span></span></span>
 <span class="r-in"><span><span class="co"># the keywords</span></span></span>
-<span class="r-in"><span><span class="va">kpi_filter</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_kpi.html">get_kpi</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"N11002"</span>, <span class="st">"N11003"</span>, <span class="st">"N11004"</span>, <span class="st">"N11005"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="kpi_bind_keywords.html">kpi_bind_keywords</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span><span class="va">kpi_filter</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_kpi.html">get_kpi</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"N11002"</span>, <span class="st">"N11003"</span>, <span class="st">"N11004"</span>, <span class="st">"N11005"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="kpi_bind_keywords.html">kpi_bind_keywords</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">kpi_search</span><span class="op">(</span></span></span>
 <span class="r-in"><span>    query <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"nettokostnad"</span>, <span class="st">"öppen"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    column <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"keyword_1"</span>, <span class="st">"keyword_2"</span>, <span class="st">"keyword_3"</span><span class="op">)</span></span></span>

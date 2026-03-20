@@ -52,6 +52,12 @@ package in any of the following ways:
 - Clone this repo, make modifications and create a pull request
 - Spread the word!
 
+## Related packages
+
+- [rpx](https://lchansson.github.io/rpx/) — R client for PX-Web APIs
+  (SCB, SSB, Statistics Finland, and more). Follows the same design
+  principles as rKolada.
+
 ### Code of Conduct
 
 Please note that the rKolada project is released with a [Contributor

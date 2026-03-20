@@ -4,9 +4,9 @@ Given a vector of municipality IDs/codes, return a named vector of names
 of municipalities or regions. Codes of municipalities and regions follow
 the Swedish standard for municipality codes. The codes extracted can be
 used e.g. to pass as a parameter to
-[`get_values`](https://lchansson.github.io/rKolada/reference/get_values.md).
+[`get_values()`](https://lchansson.github.io/rKolada/reference/get_values.md).
 This function is the inverse to
-[`municipality_name_to_id`](https://lchansson.github.io/rKolada/reference/municipality_name_to_id.md).
+[`municipality_name_to_id()`](https://lchansson.github.io/rKolada/reference/municipality_name_to_id.md).
 
 ## Usage
 
@@ -35,8 +35,8 @@ A vector of Municipality names.
 
 ## See also
 
-[`municipality_extract_ids`](https://lchansson.github.io/rKolada/reference/municipality_extract_ids.md),
-[`municipality_name_to_id`](https://lchansson.github.io/rKolada/reference/municipality_name_to_id.md)
+[`municipality_extract_ids()`](https://lchansson.github.io/rKolada/reference/municipality_extract_ids.md),
+[`municipality_name_to_id()`](https://lchansson.github.io/rKolada/reference/municipality_name_to_id.md)
 
 ## Examples
 

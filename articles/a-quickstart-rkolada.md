@@ -13,13 +13,22 @@ In this guide we walk you through five steps to download, inspect and
 search through Kolada metadata. We then use our search results to
 download data from Kolada and plot it.
 
+Kolada stores data in three dimensions: **KPI** (what is measured),
+**municipality/region** (where), and **year** (when). To download data
+you specify at least two of these three. See
+[`vignette("introduction-to-rkolada")`](https://lchansson.github.io/rKolada/articles/introduction-to-rkolada.md)
+for a deeper explanation.
+
 ### 1. Get metadata
 
 Kolada contains five different types of metadata entities:
 
-1.  `kpi`: Key Performance Indicators
-2.  `municipality`: Municipalities
-3.  `ou`: Operating Unit, a subunit of municipalities
+1.  `kpi`: Key Performance Indicators — the measures themselves (e.g.
+    “Share with post-secondary education”)
+2.  `municipality`: Municipalities and regions, identified by numeric
+    codes (e.g. Stockholm = `"0180"`)
+3.  `ou`: Operating Units — sub-units within municipalities (e.g. a
+    specific school or elderly home)
 4.  `kpi_groups`: Thematic groupings of KPIs
 5.  `municipality_groups`: Thematic groupings of municipalities
 
@@ -75,10 +84,10 @@ contain any information that distinguish KPIs from each other:
 
 ``` r
 # Get a list KPIs matching a search for "bruttoregionprodukt" (Gross regional product)
-kpi_res <- kpis %>%
-  kpi_search("bruttoregionprodukt") %>%
-  # Keep only KPIs with data for the municipality level
-  kpi_search("K", column = "municipality_type") %>%
+kpi_res <- kpis |>
+  kpi_search("bruttoregionprodukt") |>
+  # "K" = data available at municipality level (not just region)
+  kpi_search("K", column = "municipality_type") |>
   kpi_minimize(remove_monotonous_data = TRUE)
 
 dplyr::glimpse(kpi_res)
@@ -94,9 +103,9 @@ municipalities. We thus want to create a table containing metadata about
 these four municipalities:
 
 ``` r
-munic_res <- munic %>% 
-  # Only keep municipalities (drop regions)
-  municipality_search("K", column = "type") %>% 
+munic_res <- munic |>
+  # type "K" = municipality (kommun), vs "L" for region (län)
+  municipality_search("K", column = "type") |>
   # Only keep Stockholm, Gothenburg and Malmö
   municipality_search(c("Stockholm", "Göteborg", "Malmö"))
 
@@ -122,8 +131,8 @@ table of KPIs. For instance, by setting the `knitr` chunk option
 automatically inluded as a part of the HTML that renders this web page:
 
 ``` r
-kpi_res %>%
-  kpi_bind_keywords(n = 4) %>% 
+kpi_res |>
+  kpi_bind_keywords(n = 4) |>
   kpi_describe(max_n = 1, format = "md", heading_level = 4, sub_heading_level = 5)
 ```
 
@@ -139,9 +148,9 @@ ekonomiska utvecklingen inom det geografiska området. Källa: SCB
 
 ##### Metadata
 
-- Has OU data: Unknown
+- Has OU data: NA
 
-- Divided by gender: Unknown
+- Divided by gender: NA
 
 - Municipality type: Unknown
 
@@ -188,9 +197,9 @@ kld_data <- get_values(
 )
 ```
 
-Setting the `simplify` parameter to `TRUE`, again, makes results more
-human readable, by removing undocumented columns and relabeling data
-with human-friendly labels.
+`simplify = TRUE` does two things: replaces numeric IDs with readable
+names (e.g. `"0180"` becomes `"Stockholm"`) and drops columns that are
+only used internally.
 
 ### 5. Inspect and visualise results
 
@@ -201,15 +210,18 @@ Finally, time to inspect our data:
 library("ggplot2")
 
 ggplot(kld_data, aes(x = year, y = value)) +
+  # One line per municipality, coloured by name
   geom_line(aes(color = municipality)) +
+  # Separate panel per KPI (stacked vertically)
   facet_grid(kpi ~ .) +
+  # Thousand separators for readability
   scale_y_continuous(labels = scales::comma) +
   labs(
     title = "Gross Regional Product",
     subtitle = "Yearly development in Sweden's three\nmost populous municipalities",
     x = "Year",
     y = "",
-    caption = values_legend(kld_data, kpis)
+    caption = values_legend(kld_data, kpis)  # Auto-generated KPI legend
   )
 ```
 
@@ -219,3 +231,19 @@ Note the use of the helper function
 [`values_legend()`](https://lchansson.github.io/rKolada/reference/values_legend.md)
 to produce a legend containing the names and keys of all KPIs included
 in the graph.
+
+## Next steps
+
+- **Deeper walkthrough** —
+  [`vignette("introduction-to-rkolada")`](https://lchansson.github.io/rKolada/articles/introduction-to-rkolada.md)
+  covers the full data model, metadata groups, and more complex
+  workflows.
+- **ggplot2 reference** — <https://ggplot2-book.org/> for more on
+  visualisation.
+
+## Related packages
+
+If you work with data from PX-Web APIs (Statistics Sweden, Statistics
+Norway, Statistics Finland, etc.), see
+[rpx](https://lchansson.github.io/rpx/) — a sibling package that follows
+the same design principles as rKolada.

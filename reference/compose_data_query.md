@@ -1,7 +1,7 @@
 # Compose a query to fetch metadata from the Kolada API. Its use is mainly
 
 Mainly used as a supporting function for
-[`get_values`](https://lchansson.github.io/rKolada/reference/get_values.md)
+[`get_values()`](https://lchansson.github.io/rKolada/reference/get_values.md)
 but can also be used to create a working URL to paste in your web
 browser.
 

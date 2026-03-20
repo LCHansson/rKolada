@@ -1,6 +1,66 @@
 # Changelog
 
+## rKolada 0.3.1
+
+### Breaking changes
+
+- **`magrittr` pipe removed**: The `%>%` pipe is no longer re-exported.
+  Use the native R pipe `|>` instead (available since R 4.1.0, which is
+  already the minimum version for rKolada). If you rely on `%>%` in your
+  own code, add [`library(magrittr)`](https://magrittr.tidyverse.org) or
+  switch to `|>`.
+
+### New features
+
+- **[`kolada_cache_dir()`](https://lchansson.github.io/rKolada/reference/kolada_cache_dir.md)**:
+  New exported function returning the persistent cache directory path
+  (using [`tools::R_user_dir()`](https://rdrr.io/r/tools/userdir.html)).
+- **[`kolada_clear_cache()`](https://lchansson.github.io/rKolada/reference/kolada_clear_cache.md)**:
+  New exported function for clearing cached files.
+- **Lightweight
+  [`kolada_available()`](https://lchansson.github.io/rKolada/reference/kolada_available.md)**:
+  Now performs a fast HTTP check (single request, 5s timeout) instead of
+  downloading actual data. Much faster in examples and tests.
+- **HTTP retry with backoff**: API requests now automatically retry on
+  HTTP 429 (rate limiting) with exponential backoff, up to 3 retries.
+
+### Documentation
+
+- Improved quickstart vignette: explains the three-dimension data model,
+  enriched metadata entity descriptions, clearer `simplify = TRUE`
+  explanation, inline ggplot comments, and “K”-filter explanations.
+- Improved introduction vignette: prominent Swedish-only note, inline
+  ggplot comments, clearer groups/unnest explanation, and ggplot2
+  reference link.
+
+### Internal improvements
+
+- **`glue` replaced by `cli`**: All string interpolation now uses `cli`
+  for user-facing messages and
+  [`paste0()`](https://rdrr.io/r/base/paste.html) for URL construction.
+  `glue` is no longer a dependency.
+- **`magrittr` removed**: All internal code uses the native pipe `|>`.
+  `magrittr` is no longer a dependency.
+- **Structured messaging**:
+  [`message()`](https://rdrr.io/r/base/message.html),
+  [`warning()`](https://rdrr.io/r/base/warning.html), and
+  [`stop()`](https://rdrr.io/r/base/stop.html) replaced with
+  [`cli::cli_inform()`](https://cli.r-lib.org/reference/cli_abort.html),
+  [`cli::cli_warn()`](https://cli.r-lib.org/reference/cli_abort.html),
+  and
+  [`cli::cli_abort()`](https://cli.r-lib.org/reference/cli_abort.html)
+  throughout.
+- **Roxygen2 markdown**: Documentation now uses markdown syntax (e.g.,
+  `[func()]` instead of `\code{\link{func}}`).
+- **`kolada_get()` internal helper**: Centralised HTTP request logic
+  with [`tryCatch()`](https://rdrr.io/r/base/conditions.html), timeout,
+  and retry.
+- Removed legacy `CRAN-RELEASE` file.
+- Removed legacy `test_api.R` test stub.
+
 ## rKolada 0.3.0
+
+CRAN release: 2026-03-04
 
 ### Breaking changes
 

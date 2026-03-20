@@ -12,16 +12,17 @@ run `??rKolada`. For a quick introduction to the package see the
 vignette [A quick start guide to
 rKolada](https://lchansson.github.io/rKolada/articles/a-quickstart-rkolada.md).
 
-NOTE: All metadata and data labels in Kolada are written in Swedish
-only.
+> **Important:** All metadata and data labels in Kolada are in Swedish
+> only. Function names and parameters are in English, but KPI titles,
+> municipality names, and descriptions will be in Swedish.
 
-The design of `rKolada` functions is inspired by, and are supported by,
-the design and functionality provided by several packages in the
-`tidyverse` family. It is thus recommended that you install the
-`tidyverse` package before installing rKolada:
+The design of `rKolada` functions is inspired by the design and
+functionality provided by several packages in the `tidyverse` family.
+rKolada uses the base R pipe (`|>`) throughout. Some vignette examples
+use `dplyr`, `tidyr`, and `ggplot2` for data wrangling and
+visualisation:
 
 ``` r
-install.packages("tidyverse")
 install.packages("rKolada")
 ```
 
@@ -336,9 +337,9 @@ convenience functions are prefixed to reflect which kind of metadata
 table they operate on: `kpi`, `kpi_grp`, `municipality`,
 `municipality_grp`, and `ou`.
 
-All metadata convenience functions have been designed with functional
-piping in mind, so their first argument is always a metadata tibble.
-Most of them also return a tibble of the same type
+All metadata convenience functions have been designed with piping in
+mind, so their first argument is always a metadata tibble. Most of them
+also return a tibble of the same type.
 
 The most important family of metadata convenience functions is the
 `search` family. Much like
@@ -348,7 +349,7 @@ table or in a subset of named columns:
 
 ``` r
 # Search for KPIs with the term "skola" in their description or title
-kpi_filter <- kpi_df %>% kpi_search("skola", column = c("description", "title"))
+kpi_filter <- kpi_df |> kpi_search("skola", column = c("description", "title"))
 kpi_filter
 #> # A tibble: 846 × 12
 #>    id     title       description is_divided_by_gender municipality_type auspice
@@ -390,7 +391,7 @@ munic_g <- get_municipality_groups()
 ```
 
 ``` r
-arboga_groups <- munic_g %>% municipality_grp_search("Arboga")
+arboga_groups <- munic_g |> municipality_grp_search("Arboga")
 arboga_groups
 #> # A tibble: 12 × 3
 #>    id      title                                              members     
@@ -419,7 +420,7 @@ be added directly to a R markdown file by setting the chunk option
 `results='asis'`. The output then looks as follows:
 
 ``` r
-kpi_filter %>% kpi_describe(max_n = 2, format = "md", heading_level = 4)
+kpi_filter |> kpi_describe(max_n = 2, format = "md", heading_level = 4)
 ```
 
 #### N00022: Kostnadsutjämningsnetto förskola och skolbarnsomsorg, kr/inv 1 nov fg år
@@ -440,7 +441,7 @@ dividerat med antal invånare totalt 1/11 nov fg år. Källa: SCB.
 
 - Operating area: Kommunen, övergripande
 
-- Auspice: NA
+- Auspice: Unknown
 
 - Publication date: 2026-04-15
 
@@ -468,7 +469,7 @@ antal invånare totalt 1/11 fg år. Källa: SCB.
 
 - Operating area: Kommunen, övergripande
 
-- Auspice: NA
+- Auspice: Unknown
 
 - Publication date: 2026-04-15
 
@@ -488,11 +489,11 @@ title) to classify KPIs and make them more searchable.
 
 ``` r
 # Add keywords to a KPI table
-kpis_with_keywords <- kpi_filter %>% kpi_bind_keywords(n = 4)
+kpis_with_keywords <- kpi_filter |> kpi_bind_keywords(n = 4)
 
 # count keywords
-kpis_with_keywords %>%
-  tidyr::pivot_longer(dplyr::starts_with("keyword"), values_to = "keyword") %>%
+kpis_with_keywords |>
+  tidyr::pivot_longer(dplyr::starts_with("keyword"), values_to = "keyword") |>
   dplyr::count(keyword, sort = TRUE)
 #> # A tibble: 383 × 2
 #>    keyword            n
@@ -520,7 +521,7 @@ single value for all observations in the table):
 
 ``` r
 # Top 10 rows of the table
-kpi_filter %>% dplyr::slice(1:10)
+kpi_filter |> dplyr::slice(1:10)
 #> # A tibble: 10 × 12
 #>    id     title       description is_divided_by_gender municipality_type auspice
 #>    <chr>  <chr>       <chr>       <lgl>                <chr>             <chr>  
@@ -539,7 +540,7 @@ kpi_filter %>% dplyr::slice(1:10)
 #> #   has_ou_data <lgl>
 
 # Top 10 rows of the table, with non-distinct data removed
-kpi_filter %>% dplyr::slice(1:10) %>% kpi_minimize()
+kpi_filter |> dplyr::slice(1:10) |> kpi_minimize()
 #> # A tibble: 10 × 9
 #>    id     title                   description auspice operating_area perspective
 #>    <chr>  <chr>                   <chr>       <chr>   <chr>          <chr>      
@@ -584,6 +585,13 @@ metadata table as argument creates a `kpi_df` that can be further
 processed using the `kpi_` functios described in previous sections of
 this vignette.
 
+In other words: a group table has one row per *group*, with members
+nested inside. `unnest` expands it so you get one row per *member*,
+which you can then pipe into
+[`kpi_search()`](https://lchansson.github.io/rKolada/reference/kpi_search.md),
+[`kpi_describe()`](https://lchansson.github.io/rKolada/reference/kpi_describe.md),
+etc.
+
 ## Downloading data using metadata
 
 An alternative approach to downloading data using known IDs is to use
@@ -604,18 +612,18 @@ similar to Arboga, a small municipality in central Sweden:
 
 ``` r
 # Get KPIs describing Gross Regional Product of municipalities
-kpi_filter <- get_kpi() %>% 
-  kpi_search("bruttoregionprodukt") %>%
+kpi_filter <- get_kpi() |> 
+  kpi_search("bruttoregionprodukt") |>
   kpi_search("K", column = "municipality_type")
 # Creates a table with two rows
 
 # Get a suitable group of municipalities
-munic_grp_filter <- get_municipality_groups() %>% 
+munic_grp_filter <- get_municipality_groups() |> 
   municipality_grp_search("Liknande kommuner socioekonomi, Arboga")
 # Creates a table with one group of 7 municipalities
 
 # Also include Arboga itself
-arboga <- get_municipality() %>% municipality_search("Arboga")
+arboga <- get_municipality() |> municipality_search("Arboga")
 
 # Get data
 grp_data <- get_values(
@@ -631,13 +639,16 @@ grp_data <- get_values(
 # Visualize results
 library("ggplot2")
 ggplot(grp_data, aes(year, value, color = municipality)) +
+  # One line per municipality; linetype adds distinction in B/W print
   geom_line(aes(linetype = municipality)) +
+  # Separate panel per KPI; free y-scales since units differ
   facet_grid(kpi ~ ., scales = "free") +
   labs(
     title = "Gross Regional Product per capita 2012-2018",
     subtitle = "Swedish municipalities similar to Arboga",
-    caption = values_legend(grp_data, kpi_filter)
+    caption = values_legend(grp_data, kpi_filter)  # Auto-generated legend
   ) +
+  # Colour-blind-friendly palette
   scale_color_viridis_d(option = "B") +
   scale_y_continuous(labels = scales::comma)
 #> Warning: Removed 952 rows containing missing values or values outside the scale range
@@ -733,3 +744,12 @@ ggplot(grp_data, aes(year, value, color = municipality)) +
 ```
 
 ![](introduction-to-rkolada_files/figure-html/unnamed-chunk-4-1.png)
+
+> **More on ggplot2?** See <https://ggplot2-book.org/>.
+
+## Related packages
+
+If you work with data from PX-Web APIs (Statistics Sweden, Statistics
+Norway, Statistics Finland, etc.), see
+[rpx](https://lchansson.github.io/rpx/) — a sibling package that follows
+the same design principles as rKolada.

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">rKolada</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,9 +37,9 @@
     </div>
 
     <div class="section level2">
-      <h2 id="all-functions">All functions<a class="anchor" aria-label="anchor" href="#all-functions"></a></h2>
+      <h2 id="data-access">Data access<a class="anchor" aria-label="anchor" href="#data-access"></a></h2>
 
-
+      <div class="section-desc"><p>Download data and metadata from the Kolada API.</p></div>
 
       <dl></dl></div><div class="section level2">
 
@@ -48,38 +48,10 @@
 
       <dl><dt>
 
-          <code><a href="allowed_entities.html">allowed_entities()</a></code>
+          <code><a href="get_values.html">get_values()</a></code>
 
         </dt>
-        <dd>Allowed entities: Kolada metadata classes</dd>
-
-        <dt>
-
-          <code><a href="compose_data_query.html">compose_data_query()</a></code>
-
-        </dt>
-        <dd>Compose a query to fetch metadata from the Kolada API. Its use is mainly</dd>
-
-        <dt>
-
-          <code><a href="compose_metadata_query.html">compose_metadata_query()</a></code>
-
-        </dt>
-        <dd>Compose a query to fetch metadata from the Kolada API.</dd>
-
-        <dt>
-
-          <code><a href="generate_kpi_metadata.html">generate_kpi_metadata()</a></code>
-
-        </dt>
-        <dd>Generate KPI metadata from a Kolada KPI object</dd>
-
-        <dt>
-
-          <code><a href="get_kpi.html">get_kpi()</a></code> <code><a href="get_kpi.html">get_kpi_groups()</a></code> <code><a href="get_kpi.html">get_ou()</a></code> <code><a href="get_kpi.html">get_municipality()</a></code> <code><a href="get_kpi.html">get_municipality_groups()</a></code>
-
-        </dt>
-        <dd>Download metadata for a specific entity from the Kolada API</dd>
+        <dd>Get data from Kolada</dd>
 
         <dt>
 
@@ -90,129 +62,26 @@
 
         <dt>
 
-          <code><a href="get_values.html">get_values()</a></code>
+          <code><a href="get_kpi.html">get_kpi()</a></code> <code><a href="get_kpi.html">get_kpi_groups()</a></code> <code><a href="get_kpi.html">get_ou()</a></code> <code><a href="get_kpi.html">get_municipality()</a></code> <code><a href="get_kpi.html">get_municipality_groups()</a></code>
 
         </dt>
-        <dd>Get data from Kolada</dd>
+        <dd>Download metadata for a specific entity from the Kolada API</dd>
+      </dl></div><div class="section level2">
+      <h2 id="search-and-filter">Search and filter<a class="anchor" aria-label="anchor" href="#search-and-filter"></a></h2>
 
-        <dt>
+      <div class="section-desc"><p>Search and filter metadata tables.</p></div>
 
-          <code><a href="kolada_available.html">kolada_available()</a></code>
+      <dl></dl></div><div class="section level2">
 
-        </dt>
-        <dd>Check if the Kolada API is available</dd>
 
-        <dt>
 
-          <code><a href="kpi_bind_keywords.html">kpi_bind_keywords()</a></code>
 
-        </dt>
-        <dd>Add keyword columns to a Kolada KPI table</dd>
-
-        <dt>
-
-          <code><a href="kpi_describe.html">kpi_describe()</a></code>
-
-        </dt>
-        <dd>Describe the KPIs in a Kolada KPI metadata table</dd>
-
-        <dt>
-
-          <code><a href="kpi_extract_ids.html">kpi_extract_ids()</a></code>
-
-        </dt>
-        <dd>Extract a vector of KPI ID strings from a Kolada KPI metadata table</dd>
-
-        <dt>
-
-          <code><a href="kpi_grp_describe.html">kpi_grp_describe()</a></code>
-
-        </dt>
-        <dd>Describe the KPIs in a Kolada KPI Group metadata table</dd>
-
-        <dt>
-
-          <code><a href="kpi_grp_extract_ids.html">kpi_grp_extract_ids()</a></code>
-
-        </dt>
-        <dd>Extract KPI ID strings from a Kolada KPI Group metadata table</dd>
-
-        <dt>
-
-          <code><a href="kpi_grp_search.html">kpi_grp_search()</a></code>
-
-        </dt>
-        <dd>Search a Kolada KPI Group metadata table for group names</dd>
-
-        <dt>
-
-          <code><a href="kpi_grp_unnest.html">kpi_grp_unnest()</a></code>
-
-        </dt>
-        <dd>Create a KPI table from a Kolada KPI Group metadata table</dd>
-
-        <dt>
-
-          <code><a href="kpi_minimize.html">kpi_minimize()</a></code>
-
-        </dt>
-        <dd>Simplify a KPI table</dd>
-
-        <dt>
+      <dl><dt>
 
           <code><a href="kpi_search.html">kpi_search()</a></code>
 
         </dt>
         <dd>Search for Kolada KPIs using a Kolada KPI table</dd>
-
-        <dt>
-
-          <code><a href="municipality_extract_ids.html">municipality_extract_ids()</a></code>
-
-        </dt>
-        <dd>Extract a vector of municipality ID strings from a Kolada municipality table</dd>
-
-        <dt>
-
-          <code><a href="municipality_grp_describe.html">municipality_grp_describe()</a></code>
-
-        </dt>
-        <dd>Describe the municipalitie in a Kolada Municipality Group metadata table</dd>
-
-        <dt>
-
-          <code><a href="municipality_grp_extract_ids.html">municipality_grp_extract_ids()</a></code>
-
-        </dt>
-        <dd>Extract municipality ID strings from a Kolada municipality group table</dd>
-
-        <dt>
-
-          <code><a href="municipality_grp_search.html">municipality_grp_search()</a></code>
-
-        </dt>
-        <dd>Search a Kolada Municipality Group metadata table for group names</dd>
-
-        <dt>
-
-          <code><a href="municipality_grp_unnest.html">municipality_grp_unnest()</a></code>
-
-        </dt>
-        <dd>Create a municipality table from a Kolada Municipality Group metadata table</dd>
-
-        <dt>
-
-          <code><a href="municipality_id_to_name.html">municipality_id_to_name()</a></code>
-
-        </dt>
-        <dd>Convert a vector of municipality ids to municipality names</dd>
-
-        <dt>
-
-          <code><a href="municipality_name_to_id.html">municipality_name_to_id()</a></code>
-
-        </dt>
-        <dd>Convert a vector of municipality names to municipality ids</dd>
 
         <dt>
 
@@ -230,10 +99,77 @@
 
         <dt>
 
-          <code><a href="pipe.html">%&gt;%</a></code>
+          <code><a href="kpi_grp_search.html">kpi_grp_search()</a></code>
 
         </dt>
-        <dd>re-export magrittr pipe operator</dd>
+        <dd>Search a Kolada KPI Group metadata table for group names</dd>
+
+        <dt>
+
+          <code><a href="municipality_grp_search.html">municipality_grp_search()</a></code>
+
+        </dt>
+        <dd>Search a Kolada Municipality Group metadata table for group names</dd>
+      </dl></div><div class="section level2">
+      <h2 id="describe">Describe<a class="anchor" aria-label="anchor" href="#describe"></a></h2>
+
+      <div class="section-desc"><p>Human-readable descriptions of metadata.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="kpi_describe.html">kpi_describe()</a></code>
+
+        </dt>
+        <dd>Describe the KPIs in a Kolada KPI metadata table</dd>
+
+        <dt>
+
+          <code><a href="kpi_grp_describe.html">kpi_grp_describe()</a></code>
+
+        </dt>
+        <dd>Describe the KPIs in a Kolada KPI Group metadata table</dd>
+
+        <dt>
+
+          <code><a href="municipality_grp_describe.html">municipality_grp_describe()</a></code>
+
+        </dt>
+        <dd>Describe the municipalitie in a Kolada Municipality Group metadata table</dd>
+      </dl></div><div class="section level2">
+      <h2 id="transform">Transform<a class="anchor" aria-label="anchor" href="#transform"></a></h2>
+
+      <div class="section-desc"><p>Simplify and reshape metadata and data.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="kpi_minimize.html">kpi_minimize()</a></code>
+
+        </dt>
+        <dd>Simplify a KPI table</dd>
+
+        <dt>
+
+          <code><a href="kpi_bind_keywords.html">kpi_bind_keywords()</a></code>
+
+        </dt>
+        <dd>Add keyword columns to a Kolada KPI table</dd>
+
+        <dt>
+
+          <code><a href="values_minimize.html">values_minimize()</a></code>
+
+        </dt>
+        <dd>Simplify a Kolada values table</dd>
 
         <dt>
 
@@ -244,12 +180,131 @@
 
         <dt>
 
-          <code><a href="values_minimize.html">values_minimize()</a></code>
+          <code><a href="kpi_grp_unnest.html">kpi_grp_unnest()</a></code>
 
         </dt>
-        <dd>Simplify a Kolada values table</dd>
+        <dd>Create a KPI table from a Kolada KPI Group metadata table</dd>
+
+        <dt>
+
+          <code><a href="municipality_grp_unnest.html">municipality_grp_unnest()</a></code>
+
+        </dt>
+        <dd>Create a municipality table from a Kolada Municipality Group metadata table</dd>
+      </dl></div><div class="section level2">
+      <h2 id="extract-ids">Extract IDs<a class="anchor" aria-label="anchor" href="#extract-ids"></a></h2>
+
+      <div class="section-desc"><p>Extract ID vectors for use with get_values().</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="kpi_extract_ids.html">kpi_extract_ids()</a></code>
+
+        </dt>
+        <dd>Extract a vector of KPI ID strings from a Kolada KPI metadata table</dd>
+
+        <dt>
+
+          <code><a href="municipality_extract_ids.html">municipality_extract_ids()</a></code>
+
+        </dt>
+        <dd>Extract a vector of municipality ID strings from a Kolada municipality table</dd>
+
+        <dt>
+
+          <code><a href="kpi_grp_extract_ids.html">kpi_grp_extract_ids()</a></code>
+
+        </dt>
+        <dd>Extract KPI ID strings from a Kolada KPI Group metadata table</dd>
+
+        <dt>
+
+          <code><a href="municipality_grp_extract_ids.html">municipality_grp_extract_ids()</a></code>
+
+        </dt>
+        <dd>Extract municipality ID strings from a Kolada municipality group table</dd>
+
+        <dt>
+
+          <code><a href="municipality_name_to_id.html">municipality_name_to_id()</a></code>
+
+        </dt>
+        <dd>Convert a vector of municipality names to municipality ids</dd>
+
+        <dt>
+
+          <code><a href="municipality_id_to_name.html">municipality_id_to_name()</a></code>
+
+        </dt>
+        <dd>Convert a vector of municipality ids to municipality names</dd>
+      </dl></div><div class="section level2">
+      <h2 id="query-building">Query building<a class="anchor" aria-label="anchor" href="#query-building"></a></h2>
+
+      <div class="section-desc"><p>Compose API query URLs.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="compose_metadata_query.html">compose_metadata_query()</a></code>
+
+        </dt>
+        <dd>Compose a query to fetch metadata from the Kolada API.</dd>
+
+        <dt>
+
+          <code><a href="compose_data_query.html">compose_data_query()</a></code>
+
+        </dt>
+        <dd>Compose a query to fetch metadata from the Kolada API. Its use is mainly</dd>
+      </dl></div><div class="section level2">
+      <h2 id="utilities">Utilities<a class="anchor" aria-label="anchor" href="#utilities"></a></h2>
+
+      <div class="section-desc"><p>API availability, caching, and other helpers.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="kolada_available.html">kolada_available()</a></code>
+
+        </dt>
+        <dd>Check if the Kolada API is available</dd>
+
+        <dt>
+
+          <code><a href="kolada_cache_dir.html">kolada_cache_dir()</a></code>
+
+        </dt>
+        <dd>Get the rKolada cache directory</dd>
+
+        <dt>
+
+          <code><a href="kolada_clear_cache.html">kolada_clear_cache()</a></code>
+
+        </dt>
+        <dd>Clear the rKolada cache</dd>
+
+        <dt>
+
+          <code><a href="allowed_entities.html">allowed_entities()</a></code>
+
+        </dt>
+        <dd>Allowed entities: Kolada metadata classes</dd>
       </dl></div>
-  </main></div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">

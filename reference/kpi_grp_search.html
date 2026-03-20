@@ -15,7 +15,7 @@ using kpi_grp_unnest."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">rKolada</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -84,12 +84,12 @@ insensitive.</p></dd>
 <span class="r-in"><span><span class="va">kpi_grp_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_kpi.html">get_kpi_groups</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Which KPI groups match the keyword "ekonomi" (economy)?</span></span></span>
-<span class="r-in"><span><span class="va">kpi_grp_df</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">kpi_grp_search</span><span class="op">(</span><span class="st">"ekonomi"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">kpi_grp_df</span> <span class="op">|&gt;</span> <span class="fu">kpi_grp_search</span><span class="op">(</span><span class="st">"ekonomi"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Which KPI groups contain KPIs matching the keyword "arbete" (work/labour)?</span></span></span>
-<span class="r-in"><span><span class="va">kpi_grp_df</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="kpi_grp_unnest.html">kpi_grp_unnest</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="kpi_search.html">kpi_search</a></span><span class="op">(</span><span class="st">"arbete"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span><span class="va">kpi_grp_df</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="kpi_grp_unnest.html">kpi_grp_unnest</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="kpi_search.html">kpi_search</a></span><span class="op">(</span><span class="st">"arbete"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">group_title</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 29 × 2</span></span>

@@ -14,7 +14,7 @@ kpi_bind_keywords(kpi_df, n = 2, form = c("wide", "long"))
 - kpi_df:
 
   A Kolada KPI metadata table, e.g. as created by
-  [`get_kpi`](https://lchansson.github.io/rKolada/reference/get_kpi.md).
+  [`get_kpi()`](https://lchansson.github.io/rKolada/reference/get_kpi.md).
 
 - n:
 
@@ -34,7 +34,7 @@ A Kolada KPI metadata table
 
 ``` r
 if (kolada_available()) {
-kpi_df <- get_kpi(id = c("N45933", "U28563")) %>%
+kpi_df <- get_kpi(id = c("N45933", "U28563")) |>
   kpi_bind_keywords(n = 3)
 }
 ```
