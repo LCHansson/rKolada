@@ -3,6 +3,7 @@
 #' @param kpi_df A Kolada KPI tibble
 #'
 #' @return a Kolada KPI metadata table
+#' @keywords internal
 
 generate_kpi_metadata <- function(kpi_df) {
   descvar <- "description"

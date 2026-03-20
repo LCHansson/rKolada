@@ -15,3 +15,4 @@ a Kolada KPI metadata table
 \description{
 Generate KPI metadata from a Kolada KPI object
 }
+\keyword{internal}
