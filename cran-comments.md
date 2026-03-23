@@ -1,14 +1,12 @@
 ## Resubmission
 
-In this version I have:
+In this version (0.3.1) I have:
 
-* Migrated from Kolada API v2 to v3 (v2 is being shut down on March 31, 2026)
-* Replaced `httr` with `httr2` and removed `urltools` dependency
-* Replaced deprecated dplyr patterns (`filter_at`, `select_if`, `.data$` in tidyselect)
 * Removed `magrittr` pipe re-export — uses native `|>` throughout
-* Added comprehensive test suite (160+ tests, all offline-safe)
-* Added new v3 API features: `region_type`, `from_date`, `keep_deleted` parameters
-* `get_values()` and `get_metadata()` now automatically chunk oversized parameters to respect the v3 API's 25-element limit
+* Added `kolada_cache_dir()` and `kolada_clear_cache()` for cache management
+* Replaced `glue` with `cli` for all user-facing messages
+* Made `kolada_available()` faster (single lightweight HTTP check)
+* Added HTTP retry with exponential backoff for rate limiting
 * Improved vignettes with pedagogical explanations and inline code comments
 * All examples and vignettes remain guarded by `kolada_available()` / `eval = FALSE`
 
