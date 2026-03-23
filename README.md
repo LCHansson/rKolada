@@ -37,7 +37,7 @@ You are welcome to contribute to the further development of the rKolada package 
 
 ## Related packages
 
-- [rpx](https://lchansson.github.io/rpx/) — R client for PX-Web APIs (SCB, SSB, Statistics Finland, and more). Follows the same design principles as rKolada.
+- [pixieweb](https://lchansson.github.io/pixieweb/) — R client for PX-Web APIs (SCB, SSB, Statistics Finland, and more). Follows the same design principles as rKolada.
 
 ### Code of Conduct
 
