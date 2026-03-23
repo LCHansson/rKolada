@@ -67,8 +67,8 @@ get_metadata(
   Where to store and search for cached data. Can be a path to a
   directory or the name of any function that returns the path to a
   directory when called, like
-  [`getwd`](https://rdrr.io/r/base/getwd.html). Defaults to
-  [`tempdir`](https://rdrr.io/r/base/tempfile.html).
+  [`getwd()`](https://rdrr.io/r/base/getwd.html). Defaults to
+  [`tempdir()`](https://rdrr.io/r/base/tempfile.html).
 
 - verbose:
 
@@ -80,12 +80,12 @@ get_metadata(
 Returns a tibble with metadata for the specified entity. In rKolada
 terminology, a table returned by e.g. `entity = "kpi"` is referred to as
 a `kpi_df` and can be passed to functions starting with "kpi" such as
-[`kpi_bind_keywords`](https://lchansson.github.io/rKolada/reference/kpi_bind_keywords.md).
+[`kpi_bind_keywords()`](https://lchansson.github.io/rKolada/reference/kpi_bind_keywords.md).
 
 ## See also
 
-[`get_kpi`](https://lchansson.github.io/rKolada/reference/get_kpi.md),
-[`get_kpi_groups`](https://lchansson.github.io/rKolada/reference/get_kpi.md),
-[`get_municipality`](https://lchansson.github.io/rKolada/reference/get_kpi.md),
-[`get_municipality_groups`](https://lchansson.github.io/rKolada/reference/get_kpi.md),
-[`get_ou`](https://lchansson.github.io/rKolada/reference/get_kpi.md)
+[`get_kpi()`](https://lchansson.github.io/rKolada/reference/get_kpi.md),
+[`get_kpi_groups()`](https://lchansson.github.io/rKolada/reference/get_kpi.md),
+[`get_municipality()`](https://lchansson.github.io/rKolada/reference/get_kpi.md),
+[`get_municipality_groups()`](https://lchansson.github.io/rKolada/reference/get_kpi.md),
+[`get_ou()`](https://lchansson.github.io/rKolada/reference/get_kpi.md)

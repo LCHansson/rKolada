@@ -4,12 +4,12 @@ KPI groups are a convenient way to discover sets of KPIs that can be
 used to highlight different aspects of a policy area. A practical
 workflow for discovering such sets can be to search through KPI Group
 metadata using
-[`kpi_grp_search`](https://lchansson.github.io/rKolada/reference/kpi_grp_search.md)
+[`kpi_grp_search()`](https://lchansson.github.io/rKolada/reference/kpi_grp_search.md)
 to search for keywords and
-[`kpi_grp_describe`](https://lchansson.github.io/rKolada/reference/kpi_grp_describe.md)
+[`kpi_grp_describe()`](https://lchansson.github.io/rKolada/reference/kpi_grp_describe.md)
 to inspect contents of KPI groups. Once you have created a KPI group
 table that has been narrowed down to the group/s you are looking for,
-`kpi_grp_unnest` is used to create a KPI metadata table for further
+`kpi_grp_unnest()` is used to create a KPI metadata table for further
 processing.
 
 ## Usage
@@ -38,8 +38,8 @@ kpi_grp_df <- get_kpi_groups()
 
 # Create a KPI metadata table from KPI groups matching the term
 # "utbidning" (education)
-kpi_grp_df %>%
-  kpi_grp_search("utbildning") %>%
+kpi_grp_df |>
+  kpi_grp_search("utbildning") |>
   kpi_grp_unnest()
 }
 #> # A tibble: 12 × 4

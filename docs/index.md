@@ -32,6 +32,7 @@ information.
 rKolada is on CRAN. To install it, run the following code in R:
 
 ``` r
+
 install.packages("rKolada")
 ```
 
@@ -39,6 +40,7 @@ To install the latest development version from GitHub, use the `remotes`
 package:
 
 ``` r
+
 library("remotes")
 remotes::install_github("LCHansson/rKolada")
 ```
@@ -51,6 +53,12 @@ package in any of the following ways:
 - Open an [issue](https://github.com/LCHansson/rKolada/issues)
 - Clone this repo, make modifications and create a pull request
 - Spread the word!
+
+## Related packages
+
+- [pixieweb](https://lchansson.github.io/pixieweb/) — R client for
+  PX-Web APIs (SCB, SSB, Statistics Finland, and more). Follows the same
+  design principles as rKolada.
 
 ### Code of Conduct
 

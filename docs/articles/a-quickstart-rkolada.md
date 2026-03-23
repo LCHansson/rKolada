@@ -6,6 +6,7 @@ the rKolada package, see [Introduction to
 rKolada](https://lchansson.github.io/rKolada/articles/introduction-to-rkolada.md).
 
 ``` r
+
 library("rKolada")
 ```
 
@@ -13,13 +14,22 @@ In this guide we walk you through five steps to download, inspect and
 search through Kolada metadata. We then use our search results to
 download data from Kolada and plot it.
 
+Kolada stores data in three dimensions: **KPI** (what is measured),
+**municipality/region** (where), and **year** (when). To download data
+you specify at least two of these three. See
+[`vignette("introduction-to-rkolada")`](https://lchansson.github.io/rKolada/articles/introduction-to-rkolada.md)
+for a deeper explanation.
+
 ### 1. Get metadata
 
 Kolada contains five different types of metadata entities:
 
-1.  `kpi`: Key Performance Indicators
-2.  `municipality`: Municipalities
-3.  `ou`: Operating Unit, a subunit of municipalities
+1.  `kpi`: Key Performance Indicators — the measures themselves (e.g.
+    “Share with post-secondary education”)
+2.  `municipality`: Municipalities and regions, identified by numeric
+    codes (e.g. Stockholm = `"0180"`)
+3.  `ou`: Operating Units — sub-units within municipalities (e.g. a
+    specific school or elderly home)
 4.  `kpi_groups`: Thematic groupings of KPIs
 5.  `municipality_groups`: Thematic groupings of municipalities
 
@@ -31,6 +41,7 @@ allows you to temporarily store results on disk to avoid repeated calls
 to the API in case you need to re-run your code:
 
 ``` r
+
 kpis <- get_kpi(cache = FALSE)
 munic <- get_municipality(cache = FALSE)
 ```
@@ -48,22 +59,22 @@ inspecting them by simply viewing them in RStudio. For example, the KPI
 metadata we downloaded looks like this:
 
 ``` r
+
 dplyr::glimpse(kpis)
-#> Rows: 6,433
-#> Columns: 13
-#> $ auspices              <chr> "E", "X", NA, NA, NA, "X", NA, "X", "X", NA, NA,…
-#> $ description           <chr> "Personalkostnader kommunen totalt, dividerat me…
-#> $ has_ou_data           <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE,…
+#> Rows: 6,099
+#> Columns: 12
 #> $ id                    <chr> "N00003", "N00005", "N00009", "N00011", "N00012"…
-#> $ is_divided_by_gender  <int> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
-#> $ municipality_type     <chr> "K", "K", "K", "K", "K", "K", "K", "K", "K", "K"…
-#> $ operating_area        <chr> "Kommunen, övergripande", "Skatter och utjämning…
-#> $ ou_publication_date   <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
-#> $ perspective           <chr> "Resurser", "Resurser", "Resurser", "Resurser", …
-#> $ prel_publication_date <chr> "2024-04-04", "2024-04-04", NA, "2023-09-28", "2…
-#> $ publ_period           <chr> "2024", "2024", "2024", "2024", "2024", "2024", …
-#> $ publication_date      <chr> "2025-02-22", "2025-02-22", "2025-02-22", "2024-…
 #> $ title                 <chr> "Personalkostnader, kr/inv", "Utjämningssystemet…
+#> $ description           <chr> "Personalkostnader kommunen totalt, dividerat me…
+#> $ is_divided_by_gender  <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE,…
+#> $ municipality_type     <chr> "K", "K", "K", "K", "K", "K", "K", "K", "K", "K"…
+#> $ auspice               <chr> "E", "X", NA, NA, NA, "X", NA, "X", "X", NA, NA,…
+#> $ operating_area        <chr> "Kommunen, övergripande", "Kommunen, övergripand…
+#> $ perspective           <chr> "Resurser", "Resurser", "Resurser", "Resurser", …
+#> $ prel_publication_date <chr> "2026-04-01", "2026-04-01", NA, "2025-09-28", "2…
+#> $ publication_date      <chr> "2026-08-28", "2026-08-28", "2027-02-24", "2026-…
+#> $ publ_period           <chr> "2025", "2025", "2026", "2026", "2026", "2026", …
+#> $ has_ou_data           <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE,…
 ```
 
 But `rKolada` also comes with a set of convenience functions to simplify
@@ -75,41 +86,39 @@ can be used to clean the KPI metadata table from columns that don’t
 contain any information that distinguish KPIs from each other:
 
 ``` r
+
 # Get a list KPIs matching a search for "bruttoregionprodukt" (Gross regional product)
-kpi_res <- kpis %>%
-  kpi_search("bruttoregionprodukt") %>%
-  # Keep only KPIs with data for the municipality level
-  kpi_search("K", column = "municipality_type") %>%
+kpi_res <- kpis |>
+  kpi_search("bruttoregionprodukt") |>
+  # "K" = data available at municipality level (not just region)
+  kpi_search("K", column = "municipality_type") |>
   kpi_minimize(remove_monotonous_data = TRUE)
 
 dplyr::glimpse(kpi_res)
-#> Rows: 3
-#> Columns: 7
-#> $ id               <chr> "N00370", "N03702", "N03703"
-#> $ title            <chr> "Ekonomisk hållbarhet - Kommunindex", "Bruttoregionpr…
-#> $ description      <chr> "Kommunindex för tema Ekonomisk hållbarhet baseras på…
-#> $ operating_area   <chr> "Befolkning", "Bakgrund", "Bakgrund"
-#> $ perspective      <chr> "Kvalitet och resultat", "Volymer", "Volymer"
-#> $ publ_period      <chr> "2023", "2024", "2022"
-#> $ publication_date <chr> "2024-05-15", "2025-02-22", "2025-01-09"
+#> Rows: 2
+#> Columns: 3
+#> $ id          <chr> "N03702", "N03703"
+#> $ title       <chr> "Bruttoregionprodukt, kommun (BRP), 1000 kr/invånare", "Br…
+#> $ description <chr> "BRP dividerat med antal invånare i det geografiska område…
 ```
 
 Let’s say we are interested in retrieving data for three Swedish
 municipalities. We thus want to create a table containing metadata about
-these four municipalities:
+these municipalities:
 
 ``` r
-munic_res <- munic %>% 
-  # Only keep municipalities (drop regions)
-  municipality_search("K", column = "type") %>% 
+
+munic_res <- munic |>
+  # type "K" = municipality (kommun), vs "L" for region (län)
+  municipality_search("K", column = "type") |>
   # Only keep Stockholm, Gothenburg and Malmö
   municipality_search(c("Stockholm", "Göteborg", "Malmö"))
 
 dplyr::glimpse(munic_res)
 #> Rows: 3
 #> Columns: 3
-#> $ id    <chr> "1480", "1280", "0180"
-#> $ title <chr> "Göteborg", "Malmö", "Stockholm"
+#> $ id    <chr> "0180", "1280", "1480"
+#> $ title <chr> "Stockholm", "Malmö", "Göteborg"
 #> $ type  <chr> "K", "K", "K"
 ```
 
@@ -127,53 +136,44 @@ table of KPIs. For instance, by setting the `knitr` chunk option
 automatically inluded as a part of the HTML that renders this web page:
 
 ``` r
-kpi_res %>%
-  kpi_bind_keywords(n = 4) %>% 
+
+kpi_res |>
+  kpi_bind_keywords(n = 4) |>
   kpi_describe(max_n = 1, format = "md", heading_level = 4, sub_heading_level = 5)
 ```
 
-#### N00370: Ekonomisk hållbarhet - Kommunindex
+#### N03702: Bruttoregionprodukt, kommun (BRP), 1000 kr/invånare
 
 ##### Description
 
-Kommunindex för tema Ekonomisk hållbarhet baseras på Genomsnittlig
-allmän pensionsavgift, kr/invånare 20-64 år. Bruttoregionprodukt 1000
-kr/invånare, Finansiella kapitalvinster/förluster, medelvärde i
-befolkningen, kronor, Kapitalvinster/förluster vid försäljning av
-fastighet och bostadsrätt, medelvärde i befolkningen, kronor samt
-Individer med kapitalvinst/förlust, andel (%). Nyckeltalen normaliseras
-så att alla kommunernas värden placeras på en skala från 0 till 100 där
-0 är sämst och 100 är bäst (för vissa indikatorer används inverterad
-skala). I nästa steg vägs de standardiserade indikatorvärdena samman
-till index på aspektnivå (temat bygger i dagsläget på indikatorer inom
-tre aspekter). Detta görs med medelvärden, samtliga indikatorer vägs
-samman med samma vikt inom respektive aspekt. Värdena hamnar även på
-denna nivå i intervallet 0 till 100. Därefter vägs indexet på aspektnivå
-ihop till temanivå enligt samma princip och även dessa värden hamnar
-mellan 0 och 100. Viktningen är lika stor för samtliga aspekter inom
-temat. Källa: Tillväxtverkets beräkningar
+BRP dividerat med antal invånare i det geografiska området.
+Bruttoregionprodukt (BRP) är den regionala motsvarigheten
+till bruttonationalprodukt (BNP) mätt från produktsidan: värden av all
+produktion av varor och tjänster i en region. Nyckeltalet visar den
+ekonomiska utvecklingen inom det geografiska området. Källa: SCB
 
 ##### Metadata
 
-- Has OU data: Unknown
+- Has OU data: NA
 
-- Divided by gender: Unknown
+- Divided by gender: NA
 
 - Municipality type: Unknown
 
-- Operating area: Befolkning
+- Operating area: Unknown
 
 - Auspice: Unknown
 
-- Publication date: 2024-05-15
+- Publication date: Unknown
 
-- Publication period: 2023
+- Publication period: Unknown
 
 ##### Keywords
 
-- ekonomisk
-- hållbarhet
-- kommunindex
+- bruttoregionprodukt
+- kommun
+- brp
+- 1000
 
 ### 4. Get data
 
@@ -195,6 +195,7 @@ and
 [`municipality_extract_ids()`](https://lchansson.github.io/rKolada/reference/municipality_extract_ids.md):
 
 ``` r
+
 kld_data <- get_values(
   kpi = kpi_extract_ids(kpi_res),
   municipality = municipality_extract_ids(munic_res),
@@ -203,28 +204,32 @@ kld_data <- get_values(
 )
 ```
 
-Setting the `simplify` parameter to `TRUE`, again, makes results more
-human readable, by removing undocumented columns and relabeling data
-with human-friendly labels.
+`simplify = TRUE` does two things: replaces numeric IDs with readable
+names (e.g. `"0180"` becomes `"Stockholm"`) and drops columns that are
+only used internally.
 
 ### 5. Inspect and visualise results
 
 Finally, time to inspect our data:
 
 ``` r
+
 # Visualise results
 library("ggplot2")
 
 ggplot(kld_data, aes(x = year, y = value)) +
+  # One line per municipality, coloured by name
   geom_line(aes(color = municipality)) +
+  # Separate panel per KPI (stacked vertically)
   facet_grid(kpi ~ .) +
+  # Thousand separators for readability
   scale_y_continuous(labels = scales::comma) +
   labs(
     title = "Gross Regional Product",
     subtitle = "Yearly development in Sweden's three\nmost populous municipalities",
     x = "Year",
     y = "",
-    caption = values_legend(kld_data, kpis)
+    caption = values_legend(kld_data, kpis)  # Auto-generated KPI legend
   )
 ```
 
@@ -234,3 +239,19 @@ Note the use of the helper function
 [`values_legend()`](https://lchansson.github.io/rKolada/reference/values_legend.md)
 to produce a legend containing the names and keys of all KPIs included
 in the graph.
+
+## Next steps
+
+- **Deeper walkthrough** —
+  [`vignette("introduction-to-rkolada")`](https://lchansson.github.io/rKolada/articles/introduction-to-rkolada.md)
+  covers the full data model, metadata groups, and more complex
+  workflows.
+- **ggplot2 reference** — <https://ggplot2-book.org/> for more on
+  visualisation.
+
+## Related packages
+
+If you work with data from PX-Web APIs (Statistics Sweden, Statistics
+Norway, Statistics Finland, etc.), see
+[pixieweb](https://lchansson.github.io/pixieweb/) — a sibling package
+that follows the same design principles as rKolada.

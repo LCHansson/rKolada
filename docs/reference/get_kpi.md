@@ -5,7 +5,7 @@ database: "kpi", "kpi_groups", "municipality", "municipality_groups",
 and "ou". For every entity there is a corresponding function
 `get_ENTITY` which retrieves a table with the metadata for that entity.
 The `get_ENTITY` functions are thin wrappers around
-[`get_metadata`](https://lchansson.github.io/rKolada/reference/get_metadata.md).
+[`get_metadata()`](https://lchansson.github.io/rKolada/reference/get_metadata.md).
 
 ## Usage
 
@@ -76,8 +76,8 @@ get_municipality_groups(
   Where to store and search for cached data. Can be a path to a
   directory or the name of any function that returns the path to a
   directory when called, like
-  [`getwd`](https://rdrr.io/r/base/getwd.html). Defaults to
-  [`tempdir`](https://rdrr.io/r/base/tempfile.html).
+  [`getwd()`](https://rdrr.io/r/base/getwd.html). Defaults to
+  [`tempdir()`](https://rdrr.io/r/base/tempfile.html).
 
 - verbose:
 
@@ -98,9 +98,9 @@ get_municipality_groups(
 ## Value
 
 Returns a tibble with metadata for the specified entity. In rKolada
-terminology, a table returned by e.g. `get_kpi` is referred to as a
+terminology, a table returned by e.g. `get_kpi()` is referred to as a
 `kpi_df` and can be passed to functions starting with "kpi" such as
-[`kpi_bind_keywords`](https://lchansson.github.io/rKolada/reference/kpi_bind_keywords.md).
+[`kpi_bind_keywords()`](https://lchansson.github.io/rKolada/reference/kpi_bind_keywords.md).
 
 ## Examples
 

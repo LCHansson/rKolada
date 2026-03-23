@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">rKolada</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,7 +38,46 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.3.0" id="rkolada-030">rKolada 0.3.0<a class="anchor" aria-label="anchor" href="#rkolada-030"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.3.1" id="rkolada-031">rKolada 0.3.1<a class="anchor" aria-label="anchor" href="#rkolada-031"></a></h2>
+<div class="section level3">
+<h3 id="breaking-changes-0-3-1">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-3-1"></a></h3>
+<ul><li>
+<strong><code>magrittr</code> pipe removed</strong>: The <code>%&gt;%</code> pipe is no longer re-exported. Use the native R pipe <code>|&gt;</code> instead (available since R 4.1.0, which is already the minimum version for rKolada). If you rely on <code>%&gt;%</code> in your own code, add <code><a href="https://magrittr.tidyverse.org" class="external-link">library(magrittr)</a></code> or switch to <code>|&gt;</code>.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="new-features-0-3-1">New features<a class="anchor" aria-label="anchor" href="#new-features-0-3-1"></a></h3>
+<ul><li>
+<strong><code><a href="../reference/kolada_cache_dir.html">kolada_cache_dir()</a></code></strong>: New exported function returning the persistent cache directory path (using <code><a href="https://rdrr.io/r/tools/userdir.html" class="external-link">tools::R_user_dir()</a></code>).</li>
+<li>
+<strong><code><a href="../reference/kolada_clear_cache.html">kolada_clear_cache()</a></code></strong>: New exported function for clearing cached files.</li>
+<li>
+<strong>Lightweight <code><a href="../reference/kolada_available.html">kolada_available()</a></code></strong>: Now performs a fast HTTP check (single request, 5s timeout) instead of downloading actual data. Much faster in examples and tests.</li>
+<li>
+<strong>HTTP retry with backoff</strong>: API requests now automatically retry on HTTP 429 (rate limiting) with exponential backoff, up to 3 retries.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="documentation-0-3-1">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-3-1"></a></h3>
+<ul><li>Improved quickstart vignette: explains the three-dimension data model, enriched metadata entity descriptions, clearer <code>simplify = TRUE</code> explanation, inline ggplot comments, and “K”-filter explanations.</li>
+<li>Improved introduction vignette: prominent Swedish-only note, inline ggplot comments, clearer groups/unnest explanation, and ggplot2 reference link.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="internal-improvements-0-3-1">Internal improvements<a class="anchor" aria-label="anchor" href="#internal-improvements-0-3-1"></a></h3>
+<ul><li>
+<strong><code>glue</code> replaced by <code>cli</code></strong>: All string interpolation now uses <code>cli</code> for user-facing messages and <code><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0()</a></code> for URL construction. <code>glue</code> is no longer a dependency.</li>
+<li>
+<strong><code>magrittr</code> removed</strong>: All internal code uses the native pipe <code>|&gt;</code>. <code>magrittr</code> is no longer a dependency.</li>
+<li>
+<strong>Structured messaging</strong>: <code><a href="https://rdrr.io/r/base/message.html" class="external-link">message()</a></code>, <code><a href="https://rdrr.io/r/base/warning.html" class="external-link">warning()</a></code>, and <code><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop()</a></code> replaced with <code><a href="https://cli.r-lib.org/reference/cli_abort.html" class="external-link">cli::cli_inform()</a></code>, <code><a href="https://cli.r-lib.org/reference/cli_abort.html" class="external-link">cli::cli_warn()</a></code>, and <code><a href="https://cli.r-lib.org/reference/cli_abort.html" class="external-link">cli::cli_abort()</a></code> throughout.</li>
+<li>
+<strong>Roxygen2 markdown</strong>: Documentation now uses markdown syntax (e.g., <code>[func()]</code> instead of <code>\code{\link{func}}</code>).</li>
+<li>
+<strong><code>kolada_get()</code> internal helper</strong>: Centralised HTTP request logic with <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code>, timeout, and retry.</li>
+<li>Removed legacy <code>CRAN-RELEASE</code> file.</li>
+<li>Removed legacy <code>test_api.R</code> test stub.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.3.0" id="rkolada-030">rKolada 0.3.0<a class="anchor" aria-label="anchor" href="#rkolada-030"></a></h2><p class="text-muted">CRAN release: 2026-03-04</p>
 <div class="section level3">
 <h3 id="breaking-changes-0-3-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-3-0"></a></h3>
 <ul><li>

@@ -16,7 +16,7 @@ kpi_minimize(kpi_df, remove_monotonous_data = TRUE)
 - kpi_df:
 
   A Kolada KPI metadata table, e.g. as created by
-  [`get_kpi`](https://lchansson.github.io/rKolada/reference/get_kpi.md).
+  [`get_kpi()`](https://lchansson.github.io/rKolada/reference/get_kpi.md).
 
 - remove_monotonous_data:
 

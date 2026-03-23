@@ -17,12 +17,12 @@ values_legend(values_df, kpi_df)
 - values_df:
 
   A Kolada value table, as created by
-  [`get_values`](https://lchansson.github.io/rKolada/reference/get_values.md).
+  [`get_values()`](https://lchansson.github.io/rKolada/reference/get_values.md).
 
 - kpi_df:
 
   A KPI table, e.g. as created by
-  [`get_kpi`](https://lchansson.github.io/rKolada/reference/get_kpi.md).
+  [`get_kpi()`](https://lchansson.github.io/rKolada/reference/get_kpi.md).
 
 ## Value
 

@@ -3,7 +3,7 @@
 Search a Kolada KPI metadata table. Only keep rows that contain the
 search query. Matches against all columns or columns named with the
 `column` parameter. For more precise matching, please use
-[`dplyr::filter`](https://dplyr.tidyverse.org/reference/filter.html).
+[dplyr::filter](https://dplyr.tidyverse.org/reference/filter.html).
 
 ## Usage
 
@@ -16,7 +16,7 @@ kpi_search(kpi_df, query, column = NULL)
 - kpi_df:
 
   A Kolada KPI metadata table, e.g. as created by
-  [`get_kpi`](https://lchansson.github.io/rKolada/reference/get_kpi.md).
+  [`get_kpi()`](https://lchansson.github.io/rKolada/reference/get_kpi.md).
 
 - query:
 
@@ -42,8 +42,8 @@ kpi_filter <- kpi_search(kpis, "kostnad")
 
 # Add keywords to a KPI table and search for multiple terms among
 # the keywords
-kpi_filter <- get_kpi(id = c("N11002", "N11003", "N11004", "N11005")) %>%
-  kpi_bind_keywords(n = 3) %>%
+kpi_filter <- get_kpi(id = c("N11002", "N11003", "N11004", "N11005")) |>
+  kpi_bind_keywords(n = 3) |>
   kpi_search(
     query = c("nettokostnad", "öppen"),
     column = c("keyword_1", "keyword_2", "keyword_3")

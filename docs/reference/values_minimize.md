@@ -1,7 +1,7 @@
 # Simplify a Kolada values table
 
 Simplify a Kolada values table, i.e as created by
-[`get_values`](https://lchansson.github.io/rKolada/reference/get_values.md),
+[`get_values()`](https://lchansson.github.io/rKolada/reference/get_values.md),
 by removing columns that contain monotonous data, i.e. that contain only
 one value for all observations.
 
@@ -16,7 +16,7 @@ values_minimize(values_df)
 - values_df:
 
   A Kolada value table, as created by
-  [`get_values`](https://lchansson.github.io/rKolada/reference/get_values.md).
+  [`get_values()`](https://lchansson.github.io/rKolada/reference/get_values.md).
 
 ## Value
 

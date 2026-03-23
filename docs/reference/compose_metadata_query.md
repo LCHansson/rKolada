@@ -1,7 +1,7 @@
 # Compose a query to fetch metadata from the Kolada API.
 
 Mainly used as a supporting function for
-[`get_metadata`](https://lchansson.github.io/rKolada/reference/get_metadata.md)
+[`get_metadata()`](https://lchansson.github.io/rKolada/reference/get_metadata.md)
 but can also be used to create a working URL to paste in your web
 browser.
 
@@ -25,7 +25,7 @@ compose_metadata_query(
 - entity:
 
   Any allowed metadata entity. Check
-  [`allowed_entities`](https://lchansson.github.io/rKolada/reference/allowed_entities.md)
+  [`allowed_entities()`](https://lchansson.github.io/rKolada/reference/allowed_entities.md)
   to see an updated list.
 
 - title:
