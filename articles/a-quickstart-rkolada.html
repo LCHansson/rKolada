@@ -122,7 +122,7 @@ start inspecting them by simply viewing them in RStudio. For example,
 the KPI metadata we downloaded looks like this:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">kpis</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Rows: 6,205</span></span>
+<span><span class="co">#&gt; Rows: 6,099</span></span>
 <span><span class="co">#&gt; Columns: 12</span></span>
 <span><span class="co">#&gt; $ id                    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "N00003"<span style="color: #949494;">, </span>"N00005"<span style="color: #949494;">, </span>"N00009"<span style="color: #949494;">, </span>"N00011"<span style="color: #949494;">, </span>"N00012"…</span></span>
 <span><span class="co">#&gt; $ title                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Personalkostnader, kr/inv"<span style="color: #949494;">, </span>"Utjämningssystemet…</span></span>
@@ -158,7 +158,7 @@ distinguish KPIs from each other:</p>
 <span><span class="co">#&gt; $ description <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "BRP dividerat med antal invånare i det geografiska område…</span></span></code></pre></div>
 <p>Let’s say we are interested in retrieving data for three Swedish
 municipalities. We thus want to create a table containing metadata about
-these four municipalities:</p>
+these municipalities:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">munic_res</span> <span class="op">&lt;-</span> <span class="va">munic</span> <span class="op">|&gt;</span></span>
 <span>  <span class="co"># type "K" = municipality (kommun), vs "L" for region (län)</span></span>
@@ -302,8 +302,8 @@ visualisation.</li>
 <h2 id="related-packages">Related packages<a class="anchor" aria-label="anchor" href="#related-packages"></a>
 </h2>
 <p>If you work with data from PX-Web APIs (Statistics Sweden, Statistics
-Norway, Statistics Finland, etc.), see <a href="https://lchansson.github.io/rpx/" class="external-link">rpx</a> — a sibling package that
-follows the same design principles as rKolada.</p>
+Norway, Statistics Finland, etc.), see <a href="https://lchansson.github.io/pixieweb/" class="external-link">pixieweb</a> — a sibling
+package that follows the same design principles as rKolada.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

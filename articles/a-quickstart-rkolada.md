@@ -58,7 +58,7 @@ metadata we downloaded looks like this:
 
 ``` r
 dplyr::glimpse(kpis)
-#> Rows: 6,205
+#> Rows: 6,099
 #> Columns: 12
 #> $ id                    <chr> "N00003", "N00005", "N00009", "N00011", "N00012"…
 #> $ title                 <chr> "Personalkostnader, kr/inv", "Utjämningssystemet…
@@ -100,7 +100,7 @@ dplyr::glimpse(kpi_res)
 
 Let’s say we are interested in retrieving data for three Swedish
 municipalities. We thus want to create a table containing metadata about
-these four municipalities:
+these municipalities:
 
 ``` r
 munic_res <- munic |>
@@ -245,5 +245,5 @@ in the graph.
 
 If you work with data from PX-Web APIs (Statistics Sweden, Statistics
 Norway, Statistics Finland, etc.), see
-[rpx](https://lchansson.github.io/rpx/) — a sibling package that follows
-the same design principles as rKolada.
+[pixieweb](https://lchansson.github.io/pixieweb/) — a sibling package
+that follows the same design principles as rKolada.

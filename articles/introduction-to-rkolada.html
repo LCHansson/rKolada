@@ -99,9 +99,10 @@ organisations, politics and economic life. The <code>rKolada</code> R
 package provides an interface to R users to directly download, explore,
 and simplify metadata and data from Kolada.</p>
 <p>To get started with Kolada you might want to visit its homepage
-(Swedish-only) or read through the <a href="https://github.com/Hypergene/kolada" class="external-link">REST API documentation on
-Github</a>. However, you can also use the <code>rKolada</code> package
-to explore data without prior knowledge of the database.</p>
+(Swedish-only) or read through the <a href="https://api.kolada.se/v3/docs" class="external-link">Kolada API Swagger
+documentation</a> (English-only). However, you can also use the
+<code>rKolada</code> package to explore data without prior knowledge of
+the database.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://lchansson.github.io/rKolada/">"rKolada"</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
@@ -111,7 +112,7 @@ to explore data without prior knowledge of the database.</p>
 <ul>
 <li>A KPI ID</li>
 <li>A point in time (year)</li>
-<li>A municipality/region/ ID</li>
+<li>A municipality/region ID</li>
 </ul>
 <p>When downloading data, the user needs to specify search parameters
 for at least two of these three basic dimensions. (The Kolada API
@@ -119,11 +120,12 @@ documentation also specifies a fourth basic dimension: <em>gender</em>.
 However, data for all genders is always automatically downloaded when
 available.) The parameters can be a single, atomic value or a vector of
 values.</p>
-<p>Also, the Kolada database proves useful groupings of municipalities
-and KPIs that can be used for further exploration, or to create
-unweighted averages. Lastly, some KPIs are also available for
-<em>Organizational units</em> (OUs) within municipalities, e.g. a
-school, an administrative subdivision or an elderly home.</p>
+<p>Also, the Kolada database proves useful <em>groupings</em> of
+municipalities and KPIs that can be used for further exploration, or to
+create unweighted averages.</p>
+<p>Lastly, some KPIs are also available for <em>Organizational
+units</em> (OUs) within municipalities, e.g. a school, an administrative
+subdivision or an elderly home.</p>
 </div>
 <div class="section level3">
 <h3 id="downloading-data">Downloading data<a class="anchor" aria-label="anchor" href="#downloading-data"></a>
@@ -135,167 +137,28 @@ download all values for the KPI <code>N00945</code> (“Tillfälliga
 föräldrapenningdagar (VAB) som tas ut av män, andel av antal dagar (%)”)
 for Sweden’s three most populous cities; Stockholm (id
 <code>"0180"</code>), Gothenburg (Swedish: <em>Göteborg</em>;
-<code>"1480"</code>) and Malmö (<code>"1280"</code>):</p>
-<pre><code><span><span class="co">#&gt;    gender count status    value    kpi year municipality_id municipality</span></span>
-<span><span class="co">#&gt; 1       T     0              NA N00945 1996            0180    Stockholm</span></span>
-<span><span class="co">#&gt; 2       T     0              NA N00945 1996            1280        Malmö</span></span>
-<span><span class="co">#&gt; 3       T     0              NA N00945 1996            1480     Göteborg</span></span>
-<span><span class="co">#&gt; 4       T     0              NA N00945 1997            0180    Stockholm</span></span>
-<span><span class="co">#&gt; 5       T     0              NA N00945 1997            1280        Malmö</span></span>
-<span><span class="co">#&gt; 6       T     0              NA N00945 1997            1480     Göteborg</span></span>
-<span><span class="co">#&gt; 7       T     1        30.41209 N00945 1998            0180    Stockholm</span></span>
-<span><span class="co">#&gt; 8       T     1        26.69198 N00945 1998            1280        Malmö</span></span>
-<span><span class="co">#&gt; 9       T     1        30.45307 N00945 1998            1480     Göteborg</span></span>
-<span><span class="co">#&gt; 10      T     1        30.62354 N00945 1999            0180    Stockholm</span></span>
-<span><span class="co">#&gt; 11      T     1        26.84941 N00945 1999            1280        Malmö</span></span>
-<span><span class="co">#&gt; 12      T     1        32.00700 N00945 1999            1480     Göteborg</span></span>
-<span><span class="co">#&gt; 13      T     1        31.32960 N00945 2000            0180    Stockholm</span></span>
-<span><span class="co">#&gt; 14      T     1        28.36723 N00945 2000            1280        Malmö</span></span>
-<span><span class="co">#&gt; 15      T     1        33.23952 N00945 2000            1480     Göteborg</span></span>
-<span><span class="co">#&gt; 16      T     1        31.90901 N00945 2001            0180    Stockholm</span></span>
-<span><span class="co">#&gt; 17      T     1        29.14839 N00945 2001            1280        Malmö</span></span>
-<span><span class="co">#&gt; 18      T     1        34.34883 N00945 2001            1480     Göteborg</span></span>
-<span><span class="co">#&gt; 19      T     1        33.13784 N00945 2002            0180    Stockholm</span></span>
-<span><span class="co">#&gt; 20      T     1        30.18228 N00945 2002            1280        Malmö</span></span>
-<span><span class="co">#&gt; 21      T     1        35.15515 N00945 2002            1480     Göteborg</span></span>
-<span><span class="co">#&gt; 22      T     1        33.82520 N00945 2003            0180    Stockholm</span></span>
-<span><span class="co">#&gt; 23      T     1        29.88630 N00945 2003            1280        Malmö</span></span>
-<span><span class="co">#&gt; 24      T     1        35.55795 N00945 2003            1480     Göteborg</span></span>
-<span><span class="co">#&gt; 25      T     1        34.21939 N00945 2004            0180    Stockholm</span></span>
-<span><span class="co">#&gt; 26      T     1        31.21299 N00945 2004            1280        Malmö</span></span>
-<span><span class="co">#&gt; 27      T     1        35.51597 N00945 2004            1480     Göteborg</span></span>
-<span><span class="co">#&gt; 28      T     1        35.00610 N00945 2005            0180    Stockholm</span></span>
-<span><span class="co">#&gt; 29      T     1        32.26879 N00945 2005            1280        Malmö</span></span>
-<span><span class="co">#&gt; 30      T     1        36.71541 N00945 2005            1480     Göteborg</span></span>
-<span><span class="co">#&gt; 31      T     1        35.78205 N00945 2006            0180    Stockholm</span></span>
-<span><span class="co">#&gt; 32      T     1        33.89914 N00945 2006            1280        Malmö</span></span>
-<span><span class="co">#&gt; 33      T     1        37.20446 N00945 2006            1480     Göteborg</span></span>
-<span><span class="co">#&gt; 34      T     1        35.61412 N00945 2007            0180    Stockholm</span></span>
-<span><span class="co">#&gt; 35      T     1        32.27672 N00945 2007            1280        Malmö</span></span>
-<span><span class="co">#&gt; 36      T     1        36.03724 N00945 2007            1480     Göteborg</span></span>
-<span><span class="co">#&gt; 37      T     1        36.34371 N00945 2008            0180    Stockholm</span></span>
-<span><span class="co">#&gt; 38      T     1        32.99687 N00945 2008            1280        Malmö</span></span>
-<span><span class="co">#&gt; 39      T     1        36.04195 N00945 2008            1480     Göteborg</span></span>
-<span><span class="co">#&gt; 40      T     1        36.59765 N00945 2009            0180    Stockholm</span></span>
-<span><span class="co">#&gt; 41      T     1        33.88994 N00945 2009            1280        Malmö</span></span>
-<span><span class="co">#&gt; 42      T     1        35.93543 N00945 2009            1480     Göteborg</span></span>
-<span><span class="co">#&gt; 43      T     1        36.92186 N00945 2010            0180    Stockholm</span></span>
-<span><span class="co">#&gt; 44      T     1        33.82857 N00945 2010            1280        Malmö</span></span>
-<span><span class="co">#&gt; 45      T     1        36.39835 N00945 2010            1480     Göteborg</span></span>
-<span><span class="co">#&gt; 46      T     1        37.04921 N00945 2011            0180    Stockholm</span></span>
-<span><span class="co">#&gt; 47      T     1        33.20278 N00945 2011            1280        Malmö</span></span>
-<span><span class="co">#&gt; 48      T     1        37.00446 N00945 2011            1480     Göteborg</span></span>
-<span><span class="co">#&gt; 49      T     1        37.04136 N00945 2012            0180    Stockholm</span></span>
-<span><span class="co">#&gt; 50      T     1        34.31265 N00945 2012            1280        Malmö</span></span>
-<span><span class="co">#&gt; 51      T     1        36.87452 N00945 2012            1480     Göteborg</span></span>
-<span><span class="co">#&gt; 52      T     1        38.35227 N00945 2013            0180    Stockholm</span></span>
-<span><span class="co">#&gt; 53      T     1        34.82378 N00945 2013            1280        Malmö</span></span>
-<span><span class="co">#&gt; 54      T     1        37.95666 N00945 2013            1480     Göteborg</span></span>
-<span><span class="co">#&gt; 55      T     1        38.61051 N00945 2014            0180    Stockholm</span></span>
-<span><span class="co">#&gt; 56      T     1        35.30861 N00945 2014            1280        Malmö</span></span>
-<span><span class="co">#&gt; 57      T     1        38.12922 N00945 2014            1480     Göteborg</span></span>
-<span><span class="co">#&gt; 58      T     1        39.09000 N00945 2015            0180    Stockholm</span></span>
-<span><span class="co">#&gt; 59      T     1        35.78000 N00945 2015            1280        Malmö</span></span>
-<span><span class="co">#&gt; 60      T     1        38.19000 N00945 2015            1480     Göteborg</span></span>
-<span><span class="co">#&gt; 61      T     1        38.79194 N00945 2016            0180    Stockholm</span></span>
-<span><span class="co">#&gt; 62      T     1        36.26382 N00945 2016            1280        Malmö</span></span>
-<span><span class="co">#&gt; 63      T     1        38.60823 N00945 2016            1480     Göteborg</span></span>
-<span><span class="co">#&gt; 64      T     1        38.93364 N00945 2017            0180    Stockholm</span></span>
-<span><span class="co">#&gt; 65      T     1        35.68866 N00945 2017            1280        Malmö</span></span>
-<span><span class="co">#&gt; 66      T     1        38.86796 N00945 2017            1480     Göteborg</span></span>
-<span><span class="co">#&gt; 67      T     1        39.40000 N00945 2018            0180    Stockholm</span></span>
-<span><span class="co">#&gt; 68      T     1        36.50000 N00945 2018            1280        Malmö</span></span>
-<span><span class="co">#&gt; 69      T     1        39.10000 N00945 2018            1480     Göteborg</span></span>
-<span><span class="co">#&gt; 70      T     1        39.30000 N00945 2019            0180    Stockholm</span></span>
-<span><span class="co">#&gt; 71      T     1        35.40000 N00945 2019            1280        Malmö</span></span>
-<span><span class="co">#&gt; 72      T     1        39.10000 N00945 2019            1480     Göteborg</span></span>
-<span><span class="co">#&gt; 73      T     1        40.80000 N00945 2020            0180    Stockholm</span></span>
-<span><span class="co">#&gt; 74      T     1        37.00000 N00945 2020            1280        Malmö</span></span>
-<span><span class="co">#&gt; 75      T     1        39.50000 N00945 2020            1480     Göteborg</span></span>
-<span><span class="co">#&gt;    municipality_type</span></span>
-<span><span class="co">#&gt; 1                  K</span></span>
-<span><span class="co">#&gt; 2                  K</span></span>
-<span><span class="co">#&gt; 3                  K</span></span>
-<span><span class="co">#&gt; 4                  K</span></span>
-<span><span class="co">#&gt; 5                  K</span></span>
-<span><span class="co">#&gt; 6                  K</span></span>
-<span><span class="co">#&gt; 7                  K</span></span>
-<span><span class="co">#&gt; 8                  K</span></span>
-<span><span class="co">#&gt; 9                  K</span></span>
-<span><span class="co">#&gt; 10                 K</span></span>
-<span><span class="co">#&gt; 11                 K</span></span>
-<span><span class="co">#&gt; 12                 K</span></span>
-<span><span class="co">#&gt; 13                 K</span></span>
-<span><span class="co">#&gt; 14                 K</span></span>
-<span><span class="co">#&gt; 15                 K</span></span>
-<span><span class="co">#&gt; 16                 K</span></span>
-<span><span class="co">#&gt; 17                 K</span></span>
-<span><span class="co">#&gt; 18                 K</span></span>
-<span><span class="co">#&gt; 19                 K</span></span>
-<span><span class="co">#&gt; 20                 K</span></span>
-<span><span class="co">#&gt; 21                 K</span></span>
-<span><span class="co">#&gt; 22                 K</span></span>
-<span><span class="co">#&gt; 23                 K</span></span>
-<span><span class="co">#&gt; 24                 K</span></span>
-<span><span class="co">#&gt; 25                 K</span></span>
-<span><span class="co">#&gt; 26                 K</span></span>
-<span><span class="co">#&gt; 27                 K</span></span>
-<span><span class="co">#&gt; 28                 K</span></span>
-<span><span class="co">#&gt; 29                 K</span></span>
-<span><span class="co">#&gt; 30                 K</span></span>
-<span><span class="co">#&gt; 31                 K</span></span>
-<span><span class="co">#&gt; 32                 K</span></span>
-<span><span class="co">#&gt; 33                 K</span></span>
-<span><span class="co">#&gt; 34                 K</span></span>
-<span><span class="co">#&gt; 35                 K</span></span>
-<span><span class="co">#&gt; 36                 K</span></span>
-<span><span class="co">#&gt; 37                 K</span></span>
-<span><span class="co">#&gt; 38                 K</span></span>
-<span><span class="co">#&gt; 39                 K</span></span>
-<span><span class="co">#&gt; 40                 K</span></span>
-<span><span class="co">#&gt; 41                 K</span></span>
-<span><span class="co">#&gt; 42                 K</span></span>
-<span><span class="co">#&gt; 43                 K</span></span>
-<span><span class="co">#&gt; 44                 K</span></span>
-<span><span class="co">#&gt; 45                 K</span></span>
-<span><span class="co">#&gt; 46                 K</span></span>
-<span><span class="co">#&gt; 47                 K</span></span>
-<span><span class="co">#&gt; 48                 K</span></span>
-<span><span class="co">#&gt; 49                 K</span></span>
-<span><span class="co">#&gt; 50                 K</span></span>
-<span><span class="co">#&gt; 51                 K</span></span>
-<span><span class="co">#&gt; 52                 K</span></span>
-<span><span class="co">#&gt; 53                 K</span></span>
-<span><span class="co">#&gt; 54                 K</span></span>
-<span><span class="co">#&gt; 55                 K</span></span>
-<span><span class="co">#&gt; 56                 K</span></span>
-<span><span class="co">#&gt; 57                 K</span></span>
-<span><span class="co">#&gt; 58                 K</span></span>
-<span><span class="co">#&gt; 59                 K</span></span>
-<span><span class="co">#&gt; 60                 K</span></span>
-<span><span class="co">#&gt; 61                 K</span></span>
-<span><span class="co">#&gt; 62                 K</span></span>
-<span><span class="co">#&gt; 63                 K</span></span>
-<span><span class="co">#&gt; 64                 K</span></span>
-<span><span class="co">#&gt; 65                 K</span></span>
-<span><span class="co">#&gt; 66                 K</span></span>
-<span><span class="co">#&gt; 67                 K</span></span>
-<span><span class="co">#&gt; 68                 K</span></span>
-<span><span class="co">#&gt; 69                 K</span></span>
-<span><span class="co">#&gt; 70                 K</span></span>
-<span><span class="co">#&gt; 71                 K</span></span>
-<span><span class="co">#&gt; 72                 K</span></span>
-<span><span class="co">#&gt; 73                 K</span></span>
-<span><span class="co">#&gt; 74                 K</span></span>
-<span><span class="co">#&gt; 75                 K</span></span></code></pre>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code>"1480"</code>) and Malmö (<code>"1280"</code>) between the years
+2000 and 2020:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">n00945</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_values.html">get_values</a></span><span class="op">(</span></span>
 <span>  kpi <span class="op">=</span> <span class="st">"N00945"</span>,</span>
 <span>  municipality <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0180"</span>, <span class="st">"1480"</span>, <span class="st">"1280"</span><span class="op">)</span>,</span>
-<span>  period <span class="op">=</span> <span class="fl">1970</span><span class="op">:</span><span class="fl">2020</span></span>
+<span>  period <span class="op">=</span> <span class="fl">2000</span><span class="op">:</span><span class="fl">2020</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">n00945</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">n00945</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 9</span></span></span>
+<span><span class="co">#&gt;   gender count status value kpi     year municipality_id municipality</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> T          1 <span style="color: #949494;">""</span>      31.3 N00945  <span style="text-decoration: underline;">2</span>000 0180            Stockholm   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> T          1 <span style="color: #949494;">""</span>      28.4 N00945  <span style="text-decoration: underline;">2</span>000 1280            Malmö       </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> T          1 <span style="color: #949494;">""</span>      33.2 N00945  <span style="text-decoration: underline;">2</span>000 1480            Göteborg    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> T          1 <span style="color: #949494;">""</span>      31.9 N00945  <span style="text-decoration: underline;">2</span>001 0180            Stockholm   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> T          1 <span style="color: #949494;">""</span>      29.1 N00945  <span style="text-decoration: underline;">2</span>001 1280            Malmö       </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> T          1 <span style="color: #949494;">""</span>      34.3 N00945  <span style="text-decoration: underline;">2</span>001 1480            Göteborg    </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1 more variable: municipality_type &lt;chr&gt;</span></span></span></code></pre>
+<p>The relevant data points are stored in the <code>value</code> column
+of the resulting data.</p>
 <p>In many cases, however, you will not know in advance exactly what
 KPIs to be looking for, or you might not know the IDs of Sweden’s
 municipalities.</p>
@@ -321,55 +184,27 @@ available data for the specified metadata entity:</p>
 </ul>
 <p>Each function returns a <code>tibble</code> with all available data
 for the specified metadata entity.</p>
-<pre><code><span><span class="co">#&gt;        id                                               title</span></span>
-<span><span class="co">#&gt; 1  N00003                           Personalkostnader, kr/inv</span></span>
-<span><span class="co">#&gt; 2  N00005      Utjämningssystemet enl resultaträkning, kr/inv</span></span>
-<span><span class="co">#&gt; 3  N00009                    Intäkter kommunen totalt, kr/inv</span></span>
-<span><span class="co">#&gt; 4  N00011 Inkomstutjämning, bidrag/avgift, kr/inv 1 nov fg år</span></span>
-<span><span class="co">#&gt; 5  N00012            Kostnadsutjämning, bidrag/avgift, kr/inv</span></span>
-<span><span class="co">#&gt; 6  N00014                     Regleringsbidrag/avgift, kr/inv</span></span>
-<span><span class="co">#&gt; 7  N00016                  Utjämningssystemet enl SCB, kr/inv</span></span>
-<span><span class="co">#&gt; 8  N00018                             Införandebidrag, kr/inv</span></span>
-<span><span class="co">#&gt; 9  N00019                              Strukturbidrag, kr/inv</span></span>
-<span><span class="co">#&gt; 10 N00021                Intäkter egentlig verksamhet, kr/inv</span></span>
-<span><span class="co">#&gt;                                                                                                                                                       description</span></span>
-<span><span class="co">#&gt; 1                                                      Personalkostnader kommunen totalt, dividerat med antal invånare totalt 31/12. Avser egen regi. Källa: SCB.</span></span>
-<span><span class="co">#&gt; 2                                                                     Kommunalekonomisk utjämning kommun, dividerat med antal invånare totalt 31/12 . Källa: SCB.</span></span>
-<span><span class="co">#&gt; 3      Externa intäkter exklusive intäkter från försäljning till andra kommuner och regioner för kommunen totalt, dividerat med antal invånare 31/12. Källa: SCB.</span></span>
-<span><span class="co">#&gt; 4                                                                              Inkomstutjämning, bidrag/avgift, i kronor per invånare den 1/11 fg år. Källa: SCB.</span></span>
-<span><span class="co">#&gt; 5                                                                         Kostnadsutjämning, bidrag/avgift, i kronor per invånare den 1/11 nov fg år. Källa: SCB.</span></span>
-<span><span class="co">#&gt; 6                                                                                      Regleringsbidrag/avgift, i kronor per invånare den 1/11 fg år. Källa: SCB.</span></span>
-<span><span class="co">#&gt; 7                                                                                                                 Utjämningssystemet enl SCB, kr/inv. Källa: SCB.</span></span>
-<span><span class="co">#&gt; 8                                                                                              Införandebidrag, i kronor per invånare den 1/11 fg år. Källa: SCB.</span></span>
-<span><span class="co">#&gt; 9                                                                                               Strukturbidrag, i kronor per invånare den 1/11 fg år. Källa: SCB.</span></span>
-<span><span class="co">#&gt; 10 Externa intäkter exklusive intäkter från försäljning till andra kommuner och regioner för egentlig verksamhet, dividerat med antal invånare 31/12. Källa: SCB.</span></span>
-<span><span class="co">#&gt;    is_divided_by_gender municipality_type auspice         operating_area</span></span>
-<span><span class="co">#&gt; 1                 FALSE                 K       E Kommunen, övergripande</span></span>
-<span><span class="co">#&gt; 2                 FALSE                 K       X Kommunen, övergripande</span></span>
-<span><span class="co">#&gt; 3                 FALSE                 K    &lt;NA&gt; Kommunen, övergripande</span></span>
-<span><span class="co">#&gt; 4                 FALSE                 K    &lt;NA&gt; Kommunen, övergripande</span></span>
-<span><span class="co">#&gt; 5                 FALSE                 K    &lt;NA&gt; Kommunen, övergripande</span></span>
-<span><span class="co">#&gt; 6                 FALSE                 K       X Kommunen, övergripande</span></span>
-<span><span class="co">#&gt; 7                 FALSE                 K    &lt;NA&gt; Kommunen, övergripande</span></span>
-<span><span class="co">#&gt; 8                 FALSE                 K       X Kommunen, övergripande</span></span>
-<span><span class="co">#&gt; 9                 FALSE                 K       X Kommunen, övergripande</span></span>
-<span><span class="co">#&gt; 10                FALSE                 K    &lt;NA&gt; Kommunen, övergripande</span></span>
-<span><span class="co">#&gt;    perspective prel_publication_date publication_date publ_period has_ou_data</span></span>
-<span><span class="co">#&gt; 1     Resurser            2026-04-01       2026-08-28        2025       FALSE</span></span>
-<span><span class="co">#&gt; 2     Resurser            2026-04-01       2026-08-28        2025       FALSE</span></span>
-<span><span class="co">#&gt; 3     Resurser                  &lt;NA&gt;       2027-02-24        2026       FALSE</span></span>
-<span><span class="co">#&gt; 4     Resurser            2025-09-28       2026-04-15        2026       FALSE</span></span>
-<span><span class="co">#&gt; 5     Resurser            2025-09-28       2026-04-15        2026       FALSE</span></span>
-<span><span class="co">#&gt; 6     Resurser            2025-09-28       2026-04-15        2026       FALSE</span></span>
-<span><span class="co">#&gt; 7     Resurser            2025-09-28       2026-04-15        2026       FALSE</span></span>
-<span><span class="co">#&gt; 8     Resurser            2025-09-28       2026-04-15        2026       FALSE</span></span>
-<span><span class="co">#&gt; 9     Resurser            2025-09-28       2026-04-15        2026       FALSE</span></span>
-<span><span class="co">#&gt; 10    Resurser            2026-04-01       2026-08-28        2025       FALSE</span></span></code></pre>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Download all KPI metadata as a tibble (kpi_df)</span></span>
 <span><span class="va">kpi_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_kpi.html">get_kpi</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">kpi_df</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 10 × 12</span></span></span>
+<span><span class="co">#&gt;    id     title       description is_divided_by_gender municipality_type auspice</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> N00003 Personalko… Personalko… FALSE                K                 E      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> N00005 Utjämnings… Kommunalek… FALSE                K                 X      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> N00009 Intäkter k… Externa in… FALSE                K                 <span style="color: #BB0000;">NA</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> N00011 Inkomstutj… Inkomstutj… FALSE                K                 <span style="color: #BB0000;">NA</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> N00012 Kostnadsut… Kostnadsut… FALSE                K                 <span style="color: #BB0000;">NA</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> N00014 Reglerings… Reglerings… FALSE                K                 X      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> N00016 Utjämnings… Utjämnings… FALSE                K                 <span style="color: #BB0000;">NA</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> N00018 Införandeb… Införandeb… FALSE                K                 X      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> N00019 Strukturbi… Strukturbi… FALSE                K                 X      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> N00021 Intäkter e… Externa in… FALSE                K                 <span style="color: #BB0000;">NA</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 6 more variables: operating_area &lt;chr&gt;, perspective &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   prel_publication_date &lt;chr&gt;, publication_date &lt;chr&gt;, publ_period &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   has_ou_data &lt;lgl&gt;</span></span></span></code></pre>
 <p>All <code>get</code> functions are thin wrappers around the more
 general function <code><a href="../reference/get_metadata.html">get_metadata()</a></code>. If you are familiar with
 the terminology used in the Kolada API for accessing metadata you might
@@ -399,45 +234,26 @@ table or in a subset of named columns:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Search for KPIs with the term "skola" in their description or title</span></span>
 <span><span class="va">kpi_filter</span> <span class="op">&lt;-</span> <span class="va">kpi_df</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/kpi_search.html">kpi_search</a></span><span class="op">(</span><span class="st">"skola"</span>, column <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"description"</span>, <span class="st">"title"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">kpi_filter</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 846 × 12</span></span></span>
-<span><span class="co">#&gt;    id     title       description is_divided_by_gender municipality_type auspice</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> N00022 Kostnadsut… <span style="color: #949494;">"</span>Kostnadsu… FALSE                K                 <span style="color: #BB0000;">NA</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> N00023 Kostnadsut… <span style="color: #949494;">"</span>Kostnadsu… FALSE                K                 <span style="color: #BB0000;">NA</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> N00026 Kostnadsut… <span style="color: #949494;">"</span>Kostnadsu… FALSE                K                 <span style="color: #BB0000;">NA</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> N00097 Nettokostn… <span style="color: #949494;">"</span>Avvikelse… FALSE                K                 T      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> N00100 Strukturko… <span style="color: #949494;">"</span>Strukturk… FALSE                K                 T      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> N00108 Månadsavlö… <span style="color: #949494;">"</span>Antal ans… FALSE                K                 E      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> N00114 Årsarbetar… <span style="color: #949494;">"</span>Antal års… FALSE                K                 E      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> N00303 Tillgängli… <span style="color: #949494;">"</span>Kommunind… FALSE                K                 T      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> N00314 Tillgängli… <span style="color: #949494;">"</span>Kvinnors … FALSE                K                 T      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> N00325 Tillgängli… <span style="color: #949494;">"</span>Mäns Komm… FALSE                K                 T      </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 836 more rows</span></span></span>
+<span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">kpi_filter</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 12</span></span></span>
+<span><span class="co">#&gt;   id     title        description is_divided_by_gender municipality_type auspice</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> N00022 Kostnadsutj… <span style="color: #949494;">"</span>Kostnadsu… FALSE                K                 <span style="color: #BB0000;">NA</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> N00023 Kostnadsutj… <span style="color: #949494;">"</span>Kostnadsu… FALSE                K                 <span style="color: #BB0000;">NA</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> N00026 Kostnadsutj… <span style="color: #949494;">"</span>Kostnadsu… FALSE                K                 <span style="color: #BB0000;">NA</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> N00097 Nettokostna… <span style="color: #949494;">"</span>Avvikelse… FALSE                K                 T      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> N00100 Strukturkos… <span style="color: #949494;">"</span>Strukturk… FALSE                K                 T      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> N00108 Månadsavlön… <span style="color: #949494;">"</span>Antal ans… FALSE                K                 E      </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 6 more variables: operating_area &lt;chr&gt;, perspective &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   prel_publication_date &lt;chr&gt;, publication_date &lt;chr&gt;, publ_period &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   has_ou_data &lt;lgl&gt;</span></span></span></code></pre></div>
-<pre><code><span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3,630 × 3</span></span></span>
-<span><span class="co">#&gt;    id      title                                                 members      </span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                 <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>       </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> G114418 Fyrkommunsnätverket (ovägt medel)                     <span style="color: #949494;">&lt;df [4 × 2]&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> G114419 SMS - Samhällsskydd mellersta Skaraborg (ovägt medel) <span style="color: #949494;">&lt;df [4 × 2]&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> G114798 4M -  Fyra Mälarstäder (ovägt medel)                  <span style="color: #949494;">&lt;df [4 × 2]&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> G114915 SmåKom (ovägt medel)                                  <span style="color: #949494;">&lt;df [68 × 2]&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> G116237 Sjuhärad kommunalförbund (ovägt medel)                <span style="color: #949494;">&lt;df [9 × 2]&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> G116238 Skaraborgs kommunalförbund (ovägt medel)              <span style="color: #949494;">&lt;df [15 × 2]&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> G122469 Region 10 (ovägt medel)                               <span style="color: #949494;">&lt;df [10 × 2]&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> G122931 3KVH (ovägt medel)                                    <span style="color: #949494;">&lt;df [5 × 2]&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> G128518 Familjen Helsingborg (ovägt medel)                    <span style="color: #949494;">&lt;df [11 × 2]&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> G128681 Stor-Malmö (ovägt medel)                              <span style="color: #949494;">&lt;df [12 × 2]&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 3,620 more rows</span></span></span></code></pre>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Search for municipality groups containing the name "Arboga"</span></span>
-<span><span class="va">munic_g</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_kpi.html">get_municipality_groups</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">arboga_groups</span> <span class="op">&lt;-</span> <span class="va">munic_g</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/municipality_grp_search.html">municipality_grp_search</a></span><span class="op">(</span><span class="st">"Arboga"</span><span class="op">)</span></span>
-<span><span class="va">arboga_groups</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 12 × 3</span></span></span>
+<span><span class="va">munic_g</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_kpi.html">get_municipality_groups</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">arboga_groups</span> <span class="op">&lt;-</span> <span class="va">munic_g</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/municipality_grp_search.html">municipality_grp_search</a></span><span class="op">(</span><span class="st">"Arboga"</span><span class="op">)</span></span>
+<span><span class="va">arboga_groups</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 12 × 3</span></span></span>
 <span><span class="co">#&gt;    id      title                                              members     </span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                              <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>      </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> G175909 Liknande kommuner ekonomiskt bistånd, Arboga, 2023 <span style="color: #949494;">&lt;df [7 × 2]&gt;</span></span></span>
@@ -448,10 +264,10 @@ table or in a subset of named columns:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> G35869  Liknande kommuner grundskola, Arboga, 2024         <span style="color: #949494;">&lt;df [7 × 2]&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> G36161  Liknande kommuner gymnasieskola, Arboga, 2024      <span style="color: #949494;">&lt;df [7 × 2]&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> G36453  Liknande kommuner IFO, Arboga, 2024                <span style="color: #949494;">&lt;df [7 × 2]&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> G37329  Liknande kommuner, övergripande, Arboga, 2024      <span style="color: #949494;">&lt;df [7 × 2]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> G37329  Liknande kommuner, övergripande, Arboga, 2025      <span style="color: #949494;">&lt;df [7 × 2]&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> G39502  Liknande kommuner LSS, Arboga, 2024                <span style="color: #949494;">&lt;df [7 × 2]&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> G85463  Liknande kommuner fritidshem, Arboga, 2024         <span style="color: #949494;">&lt;df [7 × 2]&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> G85755  Liknande kommuner förskola, Arboga, 2024           <span style="color: #949494;">&lt;df [7 × 2]&gt;</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> G85755  Liknande kommuner förskola, Arboga, 2024           <span style="color: #949494;">&lt;df [7 × 2]&gt;</span></span></span></code></pre>
 <p>Another important family of exploration functions is the
 <code>describe</code> family of functions. These functions take a
 metadata table and print a human-readable summary of the most important
@@ -461,7 +277,7 @@ console. But by specifying <code>format = "md"</code> you can make the
 <code>describe</code> functions create markdown-ready output which can
 be added directly to a R markdown file by setting the chunk option
 <code>results='asis'</code>. The output then looks as follows:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">kpi_filter</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/kpi_describe.html">kpi_describe</a></span><span class="op">(</span>max_n <span class="op">=</span> <span class="fl">2</span>, format <span class="op">=</span> <span class="st">"md"</span>, heading_level <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="n00022-kostnadsutjämningsnetto-förskola-och-skolbarnsomsorg-krinv-1-nov-fg-år">N00022: Kostnadsutjämningsnetto förskola och skolbarnsomsorg, kr/inv
@@ -531,7 +347,7 @@ metadata. To further assist in exploring KPI metadata the function
 <code><a href="../reference/kpi_bind_keywords.html">kpi_bind_keywords()</a></code> can be used to tag data with keywords
 (these are inferred from the KPI title) to classify KPIs and make them
 more searchable.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Add keywords to a KPI table</span></span>
 <span><span class="va">kpis_with_keywords</span> <span class="op">&lt;-</span> <span class="va">kpi_filter</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/kpi_bind_keywords.html">kpi_bind_keywords</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
 <span></span>
@@ -539,20 +355,20 @@ more searchable.</p>
 <span><span class="va">kpis_with_keywords</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html" class="external-link">pivot_longer</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"keyword"</span><span class="op">)</span>, values_to <span class="op">=</span> <span class="st">"keyword"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">keyword</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 383 × 2</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 358 × 2</span></span></span>
 <span><span class="co">#&gt;    keyword            n</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> elever           160</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> grundskola       150</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> pedagogisk       113</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> gymnasieelever   106</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> gymnasieskola    103</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> grundskola       147</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> elever           143</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> pedagogisk       109</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> gymnasieskola    103</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> gymnasieelever    98</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> förskola          91</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> personal          91</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> åk                91</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> kommunal          71</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> år                69</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 373 more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> åk                89</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> personal          87</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> kommunal          72</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> år                68</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 348 more rows</span></span></span></code></pre></div>
 <p>Some KPIs can be very similar-looking and it can sometimes be hard to
 discern which of the KPIs to use. To make sifting through data easier,
 <code><a href="../reference/kpi_minimize.html">kpi_minimize()</a></code> can be used to remove all redundant columns
@@ -560,7 +376,7 @@ from a KPI table. (In this case, “redundant” means “containing no
 information that helps in differentiating KPIs from one another”,
 i.e. columns containing only one single value for all observations in
 the table):</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Top 10 rows of the table</span></span>
 <span><span class="va">kpi_filter</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 10 × 12</span></span></span>
@@ -617,10 +433,10 @@ tables, however, is that group metadata comes in the form of a <a href="https://
 Typically you might want to <em>unnest</em> the groups in a group
 metadata table once yo hae found the relevant group(s) for your query.
 To do this, use the <code>unnest</code> functions to create a table
-containing unnested entities, e.g. running
+containing unnested entities. For example, running
 <code>kpi_grp_unnest(kpi_grp_df)</code> using a KPI group metadata table
 as argument creates a <code>kpi_df</code> that can be further processed
-using the <code>kpi_</code> functios described in previous sections of
+using the <code>kpi_</code> functions described in previous sections of
 this vignette.</p>
 <p>In other words: a group table has one row per <em>group</em>, with
 members nested inside. <code>unnest</code> expands it so you get one row
@@ -633,16 +449,16 @@ per <em>member</em>, which you can then pipe into
 </h2>
 <p>An alternative approach to downloading data using known IDs is to use
 metadata tables to construct arguments to <code><a href="../reference/get_values.html">get_values()</a></code>.
-<code>rKolada</code> provides a <code>extract_ids</code> family of
+<code>rKolada</code> provides a <code>*_extract_ids()</code> family of
 functions for passing a metadata table as an argument to
-<code>get_values</code>. A typical workflow would be to download
+<code><a href="../reference/get_values.html">get_values()</a></code>. A typical workflow would be to download
 metadata for (groups of) KPIs and/or municipalities, use functions like
 <code><a href="../reference/kpi_search.html">kpi_search()</a></code> to filter down the tables to a few rows, and
 then call <code><a href="../reference/get_values.html">get_values()</a></code> to fetch data.</p>
 <p>As an example, let’s say we want to download all KPIs describing
 Gross Regional Product for all municipalities that are socioeconomically
 similar to Arboga, a small municipality in central Sweden:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Get KPIs describing Gross Regional Product of municipalities</span></span>
 <span><span class="va">kpi_filter</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_kpi.html">get_kpi</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/kpi_search.html">kpi_search</a></span><span class="op">(</span><span class="st">"bruttoregionprodukt"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -665,7 +481,9 @@ similar to Arboga, a small municipality in central Sweden:</p>
 <span>    <span class="fu"><a href="../reference/municipality_extract_ids.html">municipality_extract_ids</a></span><span class="op">(</span><span class="va">arboga</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<p>To explore results we can plot the resulting data using ggplot2 and
+add legends to keep track of what data we are visualizing:</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Visualize results</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">"ggplot2"</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">grp_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">year</span>, <span class="va">value</span>, color <span class="op">=</span> <span class="va">municipality</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -680,97 +498,7 @@ similar to Arboga, a small municipality in central Sweden:</p>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># Colour-blind-friendly palette</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html" class="external-link">scale_color_viridis_d</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="va"><a href="https://scales.r-lib.org/reference/comma.html" class="external-link">comma</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Removed 952 rows containing missing values or values outside the scale range</span></span>
-<span><span class="co">#&gt; (`geom_line()`).</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
-<span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="va"><a href="https://scales.r-lib.org/reference/comma.html" class="external-link">comma</a></span><span class="op">)</span></span></code></pre></div>
 <p><img src="introduction-to-rkolada_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" alt="" width="700"></p>
 <blockquote>
 <p><strong>More on ggplot2?</strong> See <a href="https://ggplot2-book.org/" class="external-link uri">https://ggplot2-book.org/</a>.</p>
@@ -780,8 +508,8 @@ similar to Arboga, a small municipality in central Sweden:</p>
 <h2 id="related-packages">Related packages<a class="anchor" aria-label="anchor" href="#related-packages"></a>
 </h2>
 <p>If you work with data from PX-Web APIs (Statistics Sweden, Statistics
-Norway, Statistics Finland, etc.), see <a href="https://lchansson.github.io/rpx/" class="external-link">rpx</a> — a sibling package that
-follows the same design principles as rKolada.</p>
+Norway, Statistics Finland, etc.), see <a href="https://lchansson.github.io/pixieweb/" class="external-link">pixieweb</a> — a sibling
+package that follows the same design principles as rKolada.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
