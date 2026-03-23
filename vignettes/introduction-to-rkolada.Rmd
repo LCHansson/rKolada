@@ -3,8 +3,10 @@ title: "Introduction to rKolada"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Introduction to rKolada}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r opts, include = FALSE}
@@ -30,7 +32,7 @@ install.packages("rKolada")
 
 The Swedish Municipalities and Regions Database [Kolada](https://kolada.se/) is a openly accessible, comprehensive database containing over 4,000 Key Performance Indicators (KPIs) for a vast number of aspects of municipal and regional organisations, politics and economic life. The `rKolada` R package provides an interface to R users to directly download, explore, and simplify metadata and data from Kolada.
 
-To get started with Kolada you might want to visit its homepage (Swedish-only) or read through the [REST API documentation on Github](https://github.com/Hypergene/kolada). However, you can also use the `rKolada` package to explore data without prior knowledge of the database.
+To get started with Kolada you might want to visit its homepage (Swedish-only) or read through the [Kolada API Swagger documentation](https://api.kolada.se/v3/docs) (English-only). However, you can also use the `rKolada` package to explore data without prior knowledge of the database.
 
 ```{r setup}
 library("rKolada")
@@ -42,30 +44,35 @@ Data in Kolada are stored along three basic _dimensions_:
 
 - A KPI ID
 - A point in time (year)
-- A municipality/region/ ID
+- A municipality/region ID
 
 When downloading data, the user needs to specify search parameters for at least two of these three basic dimensions. (The Kolada API documentation also specifies a fourth basic dimension: _gender_. However, data for all genders is always automatically downloaded when available.) The parameters can be a single, atomic value or a vector of values.
 
-Also, the Kolada database proves useful groupings of municipalities and KPIs that can be used for further exploration, or to create unweighted averages. Lastly, some KPIs are also available for _Organizational units_ (OUs) within municipalities, e.g. a school, an administrative subdivision or an elderly home.
+Also, the Kolada database proves useful _groupings_ of municipalities and KPIs that can be used for further exploration, or to create unweighted averages.
+
+Lastly, some KPIs are also available for _Organizational units_ (OUs) within municipalities, e.g. a school, an administrative subdivision or an elderly home.
 
 
 ### Downloading data
 
-If the user already has knowledge of the IDs of the KPIs and/or municipalities they want to download, this can be done using the function `get_values()`. For instance, if you want to download all values for the KPI `N00945` ("Tillfälliga föräldrapenningdagar (VAB) som tas ut av män, andel av antal dagar (%)") for Sweden's three most populous cities; Stockholm (id `"0180"`), Gothenburg (Swedish: _Göteborg_; `"1480"`) and Malmö (`"1280"`):
-
-```{r datapoint, echo = FALSE}
-(n00945 <- rKolada:::n00945)
-```
+If the user already has knowledge of the IDs of the KPIs and/or municipalities they want to download, this can be done using the function `get_values()`. For instance, if you want to download all values for the KPI `N00945` ("Tillfälliga föräldrapenningdagar (VAB) som tas ut av män, andel av antal dagar (%)") for Sweden's three most populous cities; Stockholm (id `"0180"`), Gothenburg (Swedish: _Göteborg_; `"1480"`) and Malmö (`"1280"`) between the years 2000 and 2020:
 
 ```{r datapoint_mock, eval = FALSE}
 n00945 <- get_values(
   kpi = "N00945",
   municipality = c("0180", "1480", "1280"),
-  period = 1970:2020
+  period = 2000:2020
 )
 
-n00945
+head(n00945)
 ```
+
+```{r datapoint, echo = FALSE}
+n00945 <- rKolada:::n00945
+tibble::tibble(head(n00945))
+```
+
+The relevant data points are stored in the `value` column of the resulting data.
 
 In many cases, however, you will not know in advance exactly what KPIs to be looking for, or you might not know the IDs of Sweden's municipalities.
 
@@ -81,17 +88,16 @@ Kolada has five different kinds of metadata entities Each one of these can be do
 
 Each function returns a `tibble` with all available data for the specified metadata entity.
 
-```{r kpi_df, echo = FALSE}
-kpi_df <- rKolada:::kpi_df
-head(kpi_df, n = 10)
-```
-
-
 ```{r kpi_df_mock, eval = FALSE}
 # Download all KPI metadata as a tibble (kpi_df)
 kpi_df <- get_kpi()
 
 head(kpi_df, n = 10)
+```
+
+```{r kpi_df, echo = FALSE}
+kpi_df <- rKolada:::kpi_df
+tibble::tibble(head(kpi_df, n = 10))
 ```
 
 All `get` functions are thin wrappers around the more general function `get_metadata()`. If you are familiar with the terminology used in the Kolada API for accessing metadata you might want to use this function instead.
@@ -109,19 +115,19 @@ The most important family of metadata convenience functions is the `search` fami
 ```{r kpi_filter}
 # Search for KPIs with the term "skola" in their description or title
 kpi_filter <- kpi_df |> kpi_search("skola", column = c("description", "title"))
-kpi_filter
-```
-
-```{r munic_g, echo = FALSE}
-(munic_g <- rKolada:::munic_g)
+tibble::tibble(head(kpi_filter))
 ```
 
 ```{r munic_g_mock, eval = FALSE}
 # Search for municipality groups containing the name "Arboga"
 munic_g <- get_municipality_groups()
+
+arboga_groups <- munic_g |> municipality_grp_search("Arboga")
+arboga_groups
 ```
 
-```{r arboga_groups}
+```{r munic_g, echo = FALSE}
+munic_g <- rKolada:::munic_g
 arboga_groups <- munic_g |> municipality_grp_search("Arboga")
 arboga_groups
 ```
@@ -164,7 +170,7 @@ Kolada provides pre-defined _groups_ of KPIs and municipalities/regions. Explori
 
 To `get`, `search` or `describe` group metadata, use the same techniques as described above for regular metadata (relevant prefixes are `kpi_grp_` and `municipality_grp_`).
 
-A crucial difference between group metadata and other metadata tables, however, is that group metadata comes in the form of a [nested](https://tidyr.tidyverse.org/articles/nest.html) table. Typically you might want to _unnest_ the groups in a group metadata table once yo hae found the relevant group(s) for your query. To do this, use the `unnest` functions to create a table containing unnested entities, e.g. running `kpi_grp_unnest(kpi_grp_df)` using a KPI group metadata table as argument creates a `kpi_df` that can be further processed using the `kpi_` functios described in previous sections of this vignette.
+A crucial difference between group metadata and other metadata tables, however, is that group metadata comes in the form of a [nested](https://tidyr.tidyverse.org/articles/nest.html) table. Typically you might want to _unnest_ the groups in a group metadata table once yo hae found the relevant group(s) for your query. To do this, use the `unnest` functions to create a table containing unnested entities. For example, running `kpi_grp_unnest(kpi_grp_df)` using a KPI group metadata table as argument creates a `kpi_df` that can be further processed using the `kpi_` functions described in previous sections of this vignette.
 
 In other words: a group table has one row per *group*, with members
 nested inside. `unnest` expands it so you get one row per *member*,
@@ -173,7 +179,7 @@ which you can then pipe into `kpi_search()`, `kpi_describe()`, etc.
 
 ## Downloading data using metadata
 
-An alternative approach to downloading data using known IDs is to use metadata tables to construct arguments to `get_values()`. `rKolada` provides a `extract_ids` family of functions for passing a metadata table as an argument to `get_values`. A typical workflow would be to download metadata for (groups of) KPIs and/or municipalities, use functions like `kpi_search()` to filter down the tables to a few rows, and then call `get_values()` to fetch data.
+An alternative approach to downloading data using known IDs is to use metadata tables to construct arguments to `get_values()`. `rKolada` provides a `*_extract_ids()` family of functions for passing a metadata table as an argument to `get_values()`. A typical workflow would be to download metadata for (groups of) KPIs and/or municipalities, use functions like `kpi_search()` to filter down the tables to a few rows, and then call `get_values()` to fetch data.
 
 As an example, let's say we want to download all KPIs describing Gross Regional Product for all municipalities that are socioeconomically similar to Arboga, a small municipality in central Sweden:
 
@@ -210,6 +216,8 @@ grp_data <- get_values(
 )
 ```
 
+To explore results we can plot the resulting data using ggplot2 and add legends to keep track of what data we are visualizing:
+
 ```{r}
 # Visualize results
 library("ggplot2")
@@ -234,5 +242,5 @@ ggplot(grp_data, aes(year, value, color = municipality)) +
 
 If you work with data from PX-Web APIs (Statistics Sweden, Statistics
 Norway, Statistics Finland, etc.), see
-[rpx](https://lchansson.github.io/rpx/) — a sibling package that
-follows the same design principles as rKolada.
+[pixieweb](https://lchansson.github.io/pixieweb/) — a sibling package
+that follows the same design principles as rKolada.

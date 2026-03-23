@@ -76,7 +76,7 @@ kpi_res <- kpis |>
 dplyr::glimpse(kpi_res)
 ```
 
-Let's say we are interested in retrieving data for three Swedish municipalities. We thus want to create a table containing metadata about these four municipalities:
+Let's say we are interested in retrieving data for three Swedish municipalities. We thus want to create a table containing metadata about these municipalities:
 
 ```{r}
 munic_res <- munic |>
@@ -166,6 +166,6 @@ Note the use of the helper function `values_legend()` to produce a legend contai
 
 If you work with data from PX-Web APIs (Statistics Sweden, Statistics
 Norway, Statistics Finland, etc.), see
-[rpx](https://lchansson.github.io/rpx/) — a sibling package that
-follows the same design principles as rKolada.
+[pixieweb](https://lchansson.github.io/pixieweb/) — a sibling package
+that follows the same design principles as rKolada.
 
