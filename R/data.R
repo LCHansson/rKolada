@@ -346,31 +346,102 @@ values_minimize <- function(values_df) {
 
 #' Create KPI long-form descriptions to add to a plot
 #'
-#' In a Kolada values table, only KPI ID names are preserved. But in plots you
-#' often want to add a legend to explain what each KPI ID represents. But since
-#' KPI explanations are mostly relatively wordy, ggplot2 legends are
-#' under-dimensioned for this task. `values_legend` returns a string which
-#' can conveniently be used as caption to a plot instead.
+#' In a Kolada values table, only KPI ID codes are preserved. But in plots
+#' you often want a legend that explains what each KPI ID represents. Since
+#' KPI descriptions are typically wordy, ggplot2 legends are
+#' under-dimensioned for this task. `values_legend()` returns a caption
+#' string that can be passed directly to `ggplot2::labs(caption = ...)`
+#' instead.
 #'
-#' @param values_df A Kolada value table, as created by
-#' [get_values()].
-#' @param kpi_df A KPI table, e.g. as created by [get_kpi()].
+#' By default the caption shows both the title and the code for every KPI
+#' included in the data, prefixed by a source line, e.g.
 #'
-#' @return A string which should be used as caption in a plot.
+#' \preformatted{
+#' Källa: Kolada
+#' N01951: Bruttoregionprodukt per capita
+#' N01952: Sysselsättningsgrad
+#' }
+#'
+#' Use `omit_varname` to drop the codes, `omit_desc` to drop the titles,
+#' and `lang` to switch the source prefix between Swedish and English.
+#' Kolada KPI titles are returned by the API in Swedish regardless of
+#' the `lang` setting.
+#'
+#' @param values_df A Kolada value table, as created by [get_values()].
+#' @param kpi_df A KPI table, as created by [get_kpi()]. If `NULL`, only
+#'   KPI codes (no titles) will be shown.
+#' @param lang Language for the caption prefix: `"SV"` (Swedish, default)
+#'   or `"EN"` (English). Defaults to `getOption("rKolada.lang", "SV")`.
+#' @param omit_varname Logical. If `TRUE`, omit the KPI codes (e.g.
+#'   `"N01951: "`) and show only the titles.
+#' @param omit_desc Logical. If `TRUE`, omit the KPI titles and show only
+#'   the codes.
+#'
+#' @return A single character string suitable for plot captions.
 #'
 #' @export
-values_legend <- function(values_df, kpi_df) {
+#' @examples
+#' if (kolada_available()) {
+#'   kpis <- get_kpi() |> kpi_search("bruttoregionprodukt")
+#'   d <- get_values(
+#'     kpi = kpi_extract_ids(kpis),
+#'     municipality = "0180",
+#'     period = 2018:2020
+#'   )
+#'   values_legend(d, kpis)
+#'   values_legend(d, kpis, lang = "EN")
+#'   values_legend(d, kpis, omit_varname = TRUE)
+#'   values_legend(d, kpis, omit_desc = TRUE)
+#' }
+values_legend <- function(values_df,
+                          kpi_df = NULL,
+                          lang = NULL,
+                          omit_varname = FALSE,
+                          omit_desc = FALSE) {
 
-  if (is.null(values_df) || is.null(kpi_df)) {
+  if (is.null(values_df)) {
     cli::cli_warn("An empty object was used as input to {.fn values_legend}.")
     return(NULL)
   }
 
-  kpis <- unique(values_df$kpi)
-  desc <- kpi_df |>
-    dplyr::select("id", "title") |>
-    dplyr::filter(.data$id %in% .env$kpis)
+  lang <- resolve_lang(lang)
+  s <- legend_strings(lang)
 
-  paste(paste0(desc$id, ": ", desc$title), collapse = "\n")
+  kpi_codes <- unique(values_df$kpi)
+
+  titles <- if (!is.null(kpi_df)) {
+    lookup <- kpi_df |>
+      dplyr::select("id", "title") |>
+      dplyr::filter(.data$id %in% .env$kpi_codes)
+    stats::setNames(lookup$title, lookup$id)
+  } else {
+    character(0)
+  }
+
+  kpi_lines <- vapply(kpi_codes, function(code) {
+    format_legend_field(titles[code], code, omit_varname, omit_desc)
+  }, character(1))
+
+  paste(
+    c(paste0(s$source, ": Kolada"), kpi_lines),
+    collapse = "\n"
+  )
+}
+
+# Localized strings for values_legend
+legend_strings <- function(lang) {
+  switch(lang,
+    SV = list(source = "K\u00e4lla"),
+    EN = list(source = "Source")
+  )
+}
+
+# Format one KPI line in a values_legend
+format_legend_field <- function(title, code, omit_varname, omit_desc) {
+  has_title <- !is.null(title) && !is.na(title) && nzchar(title)
+
+  if (omit_varname) return(if (has_title) unname(title) else code)
+  if (omit_desc || !has_title) return(code)
+  paste0(code, ": ", unname(title))
 }
 

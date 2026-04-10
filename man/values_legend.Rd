@@ -4,21 +4,66 @@
 \alias{values_legend}
 \title{Create KPI long-form descriptions to add to a plot}
 \usage{
-values_legend(values_df, kpi_df)
+values_legend(
+  values_df,
+  kpi_df = NULL,
+  lang = NULL,
+  omit_varname = FALSE,
+  omit_desc = FALSE
+)
 }
 \arguments{
-\item{values_df}{A Kolada value table, as created by
-\code{\link[=get_values]{get_values()}}.}
+\item{values_df}{A Kolada value table, as created by \code{\link[=get_values]{get_values()}}.}
 
-\item{kpi_df}{A KPI table, e.g. as created by \code{\link[=get_kpi]{get_kpi()}}.}
+\item{kpi_df}{A KPI table, as created by \code{\link[=get_kpi]{get_kpi()}}. If \code{NULL}, only
+KPI codes (no titles) will be shown.}
+
+\item{lang}{Language for the caption prefix: \code{"SV"} (Swedish, default)
+or \code{"EN"} (English). Defaults to \code{getOption("rKolada.lang", "SV")}.}
+
+\item{omit_varname}{Logical. If \code{TRUE}, omit the KPI codes (e.g.
+\code{"N01951: "}) and show only the titles.}
+
+\item{omit_desc}{Logical. If \code{TRUE}, omit the KPI titles and show only
+the codes.}
 }
 \value{
-A string which should be used as caption in a plot.
+A single character string suitable for plot captions.
 }
 \description{
-In a Kolada values table, only KPI ID names are preserved. But in plots you
-often want to add a legend to explain what each KPI ID represents. But since
-KPI explanations are mostly relatively wordy, ggplot2 legends are
-under-dimensioned for this task. \code{values_legend} returns a string which
-can conveniently be used as caption to a plot instead.
+In a Kolada values table, only KPI ID codes are preserved. But in plots
+you often want a legend that explains what each KPI ID represents. Since
+KPI descriptions are typically wordy, ggplot2 legends are
+under-dimensioned for this task. \code{values_legend()} returns a caption
+string that can be passed directly to \code{ggplot2::labs(caption = ...)}
+instead.
+}
+\details{
+By default the caption shows both the title and the code for every KPI
+included in the data, prefixed by a source line, e.g.
+
+\preformatted{
+Källa: Kolada
+N01951: Bruttoregionprodukt per capita
+N01952: Sysselsättningsgrad
+}
+
+Use \code{omit_varname} to drop the codes, \code{omit_desc} to drop the titles,
+and \code{lang} to switch the source prefix between Swedish and English.
+Kolada KPI titles are returned by the API in Swedish regardless of
+the \code{lang} setting.
+}
+\examples{
+if (kolada_available()) {
+  kpis <- get_kpi() |> kpi_search("bruttoregionprodukt")
+  d <- get_values(
+    kpi = kpi_extract_ids(kpis),
+    municipality = "0180",
+    period = 2018:2020
+  )
+  values_legend(d, kpis)
+  values_legend(d, kpis, lang = "EN")
+  values_legend(d, kpis, omit_varname = TRUE)
+  values_legend(d, kpis, omit_desc = TRUE)
+}
 }

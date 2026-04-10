@@ -1,6 +1,18 @@
 # Global variables
 utils::globalVariables(c("."))
 
+# Resolve lang parameter, falling back to option. Returns "SV" or "EN".
+resolve_lang <- function(lang = NULL) {
+  lang <- lang %||% getOption("rKolada.lang", "SV")
+  lang <- toupper(lang)
+  if (!lang %in% c("SV", "EN")) {
+    cli::cli_abort('{.arg lang} must be {.val SV} or {.val EN}.')
+  }
+  lang
+}
+
+`%||%` <- function(a, b) if (is.null(a)) b else a
+
 # Append query parameters to a URL string, replacing urltools::param_set().
 # Drops any params whose value is NA or NULL.
 append_query_params <- function(url, ...) {
