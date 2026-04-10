@@ -131,17 +131,22 @@ only used internally.
 
 ### 5. Inspect and visualise results
 
-Finally, time to inspect our data:
+Finally, time to inspect our data. Note that we convert the `year` column to a proper `Date` before plotting: Kolada returns `year` as an integer, and plotting it directly can give awkward `ggplot2` breaks like `2020, 2022.5, 2025`. Wrapping it in `as.Date(paste0(year, "-01-01"))` lets `scale_x_date()` place tick marks on whole years — a pattern worth reusing for any time-series analysis.
 
 ```{r}
 # Visualise results
 library("ggplot2")
 
-ggplot(kld_data, aes(x = year, y = value)) +
+kld_plot <- kld_data |>
+  dplyr::mutate(year_date = as.Date(paste0(year, "-01-01")))
+
+ggplot(kld_plot, aes(x = year_date, y = value)) +
   # One line per municipality, coloured by name
   geom_line(aes(color = municipality)) +
   # Separate panel per KPI (stacked vertically)
   facet_grid(kpi ~ .) +
+  # Years as dates, whole-year breaks
+  scale_x_date(date_breaks = "5 years", date_labels = "%Y") +
   # Thousand separators for readability
   scale_y_continuous(labels = scales::comma) +
   labs(
@@ -164,8 +169,12 @@ Note the use of the helper function `values_legend()` to produce a legend contai
 
 ## Related packages
 
-If you work with data from PX-Web APIs (Statistics Sweden, Statistics
-Norway, Statistics Finland, etc.), see
-[pixieweb](https://lchansson.github.io/pixieweb/) — a sibling package
-that follows the same design principles as rKolada.
+`rKolada` is part of a family of R packages for Swedish and Nordic
+open statistics that share the same design philosophy:
+
+- [pixieweb](https://lchansson.github.io/pixieweb/) — R client for
+  PX-Web APIs (Statistics Sweden, Statistics Norway, Statistics Finland,
+  and more)
+- [rTrafa](https://lchansson.github.io/rTrafa/) — R client for the
+  [Trafa](https://api.trafa.se/) API of Swedish transport statistics
 
