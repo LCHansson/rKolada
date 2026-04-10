@@ -1,3 +1,29 @@
+# rKolada (development version)
+
+## New features
+
+- **`values_legend()` gains `lang`, `omit_varname` and `omit_desc`
+  arguments**, mirroring the same API in the sibling package `rTrafa`.
+  `lang` (default `"SV"`, settable via `getOption("rKolada.lang", "SV")`)
+  toggles the source prefix between `"Källa: Kolada"` and `"Source:
+  Kolada"`. `omit_varname` drops the `"N01951: "` KPI code prefix;
+  `omit_desc` shows only the codes.
+- **`values_legend()`'s `kpi_df` argument is now optional.** When
+  omitted, the legend falls back to a codes-only listing.
+- **Source prefix in plot captions**: `values_legend()` now prepends a
+  `"Källa: Kolada"` / `"Source: Kolada"` line to the caption by default.
+  This is a minor change to the rendered caption for existing users.
+
+## Documentation
+
+- Vignette plots now convert `year` to `Date` before plotting and use
+  `scale_x_date(date_breaks = "…", date_labels = "%Y")`, so axis breaks
+  land on whole years rather than on decimal years like `2020, 2022.5,
+  2025`. This pattern is explained inline in both vignettes and is
+  consistent across the sibling packages `pixieweb` and `rTrafa`.
+- README and vignettes now cross-link to the sibling packages `pixieweb`
+  (PX-Web APIs) and `rTrafa` (Trafa transport statistics).
+
 # rKolada 0.3.1
 
 ## Breaking changes

@@ -37,7 +37,10 @@ You are welcome to contribute to the further development of the rKolada package 
 
 ## Related packages
 
-- [pixieweb](https://lchansson.github.io/pixieweb/) — R client for PX-Web APIs (SCB, SSB, Statistics Finland, and more). Follows the same design principles as rKolada.
+`rKolada` is part of a family of R packages for Swedish and Nordic open statistics that share the same design philosophy — tibble-based, pipe-friendly, and offline-safe:
+
+- [pixieweb](https://lchansson.github.io/pixieweb/) — R client for PX-Web APIs (Statistics Sweden, Statistics Norway, Statistics Finland, and more)
+- [rTrafa](https://lchansson.github.io/rTrafa/) — R client for the [Trafa](https://api.trafa.se/) API of Swedish transport statistics
 
 ### Code of Conduct
 
