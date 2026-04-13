@@ -13,7 +13,7 @@
 - `values_legend()` gains `lang`, `omit_varname`, `omit_desc` arguments
   and an optional `kpi_df` parameter.
 - Optional SQLite-backed caching via nordstatExtras (in Suggests, available
-  on GitHub at https://github.com/LoveHansson/nordstatExtras). All
+  on GitHub at https://github.com/LCHansson/nordstatExtras). All
   integration points use `requireNamespace("nordstatExtras", quietly = TRUE)`
   with graceful fallback to standard `.rds` file caching. No functionality
   is lost without it.

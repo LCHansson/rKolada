@@ -16,7 +16,7 @@
 - **Optional SQLite-backed caching via nordstatExtras.** `get_values()`
   and `get_metadata()` now accept `cache = TRUE` with a `.sqlite`
   `cache_location` for shared, multi-process cache backed by the
-  [nordstatExtras](https://github.com/LoveHansson/nordstatExtras) package.
+  [nordstatExtras](https://github.com/LCHansson/nordstatExtras) package.
   Cell-level deduplication, cross-query freshness, and FTS5-powered
   typeahead search. Falls back to the existing `.rds` cache when
   nordstatExtras is not installed.
