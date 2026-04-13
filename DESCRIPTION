@@ -14,6 +14,7 @@ Encoding: UTF-8
 Suggests:
     testthat (>= 3.0.0),
     knitr,
+    nordstatExtras,
     rmarkdown,
     stringi,
     ggplot2,

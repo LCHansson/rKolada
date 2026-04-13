@@ -27,6 +27,37 @@ library("remotes")
 remotes::install_github("LCHansson/rKolada")
 ```
 
+## Enhanced caching with nordstatExtras
+
+For multi-user web applications or workflows that benefit from a shared,
+persistent cache, rKolada integrates with the
+[nordstatExtras](https://github.com/LoveHansson/nordstatExtras) package.
+When installed, `get_values()`, `get_kpi()`, and other functions can
+write to a shared SQLite file instead of per-session `.rds` files:
+
+```r
+# install.packages("devtools")
+devtools::install_github("LoveHansson/nordstatExtras")
+
+library(nordstatExtras)
+handle <- nxt_open("cache.sqlite")
+
+# Data and metadata are cached in the same SQLite file
+kpis <- get_kpi(cache = TRUE, cache_location = handle)
+vals <- get_values(
+  kpi = "N03700", municipality = c("0180", "1480"),
+  cache = TRUE, cache_location = handle
+)
+
+nxt_close(handle)
+```
+
+Features include cell-level deduplication across overlapping queries,
+cross-query freshness propagation, and FTS5-powered typeahead search
+via `nxt_search()`. See the
+[nordstatExtras README](https://github.com/LoveHansson/nordstatExtras)
+for details.
+
 ## Contributing
 
 You are welcome to contribute to the further development of the rKolada package in any of the following ways:
