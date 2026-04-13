@@ -1,14 +1,6 @@
-## Resubmission
+## R CMD check results
 
-In this version (0.3.1) I have:
-
-* Removed `magrittr` pipe re-export — uses native `|>` throughout
-* Added `kolada_cache_dir()` and `kolada_clear_cache()` for cache management
-* Replaced `glue` with `cli` for all user-facing messages
-* Made `kolada_available()` faster (single lightweight HTTP check)
-* Added HTTP retry with exponential backoff for rate limiting
-* Improved vignettes with pedagogical explanations and inline code comments
-* All examples and vignettes remain guarded by `kolada_available()` / `eval = FALSE`
+0 errors | 0 warnings | 0 notes
 
 ## Test environments
 
@@ -16,11 +8,15 @@ In this version (0.3.1) I have:
 - GitHub Actions: ubuntu-latest (R-release, R-devel, R-oldrel-1),
   macOS-latest (R-release), windows-latest (R-release)
 
-## R CMD check results
+## Changes since 0.3.1
 
-0 ERRORs | 0 WARNINGs | 1 NOTE
-
-The NOTE is the standard "CRAN incoming feasibility" note for updated packages.
+- `values_legend()` gains `lang`, `omit_varname`, `omit_desc` arguments
+  and an optional `kpi_df` parameter.
+- Optional SQLite-backed caching via nordstatExtras (in Suggests, available
+  on GitHub at https://github.com/LoveHansson/nordstatExtras). All
+  integration points use `requireNamespace("nordstatExtras", quietly = TRUE)`
+  with graceful fallback to standard `.rds` file caching. No functionality
+  is lost without it.
 
 ## Downstream dependencies
 

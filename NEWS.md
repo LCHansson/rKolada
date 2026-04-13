@@ -1,4 +1,4 @@
-# rKolada (development version)
+# rKolada 0.3.2
 
 ## New features
 
@@ -13,6 +13,13 @@
 - **Source prefix in plot captions**: `values_legend()` now prepends a
   `"Källa: Kolada"` / `"Source: Kolada"` line to the caption by default.
   This is a minor change to the rendered caption for existing users.
+- **Optional SQLite-backed caching via nordstatExtras.** `get_values()`
+  and `get_metadata()` now accept `cache = TRUE` with a `.sqlite`
+  `cache_location` for shared, multi-process cache backed by the
+  [nordstatExtras](https://github.com/LoveHansson/nordstatExtras) package.
+  Cell-level deduplication, cross-query freshness, and FTS5-powered
+  typeahead search. Falls back to the existing `.rds` cache when
+  nordstatExtras is not installed.
 
 ## Documentation
 
@@ -23,6 +30,7 @@
   consistent across the sibling packages `pixieweb` and `rTrafa`.
 - README and vignettes now cross-link to the sibling packages `pixieweb`
   (PX-Web APIs) and `rTrafa` (Trafa transport statistics).
+- README now includes a section on enhanced caching with nordstatExtras.
 
 # rKolada 0.3.1
 
