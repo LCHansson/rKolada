@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">rKolada</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -80,6 +80,27 @@
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"LCHansson/rKolada"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
+<h2 id="enhanced-caching-with-nordstatextras">Enhanced caching with nordstatExtras<a class="anchor" aria-label="anchor" href="#enhanced-caching-with-nordstatextras"></a>
+</h2>
+<p>For multi-user web applications or workflows that benefit from a shared, persistent cache, rKolada integrates with the <a href="https://github.com/LCHansson/nordstatExtras" class="external-link">nordstatExtras</a> package. When installed, <code><a href="reference/get_values.html">get_values()</a></code>, <code><a href="reference/get_kpi.html">get_kpi()</a></code>, and other functions can write to a shared SQLite file instead of per-session <code>.rds</code> files:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"LCHansson/nordstatExtras"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/LCHansson/nordstatExtras" class="external-link">nordstatExtras</a></span><span class="op">)</span></span>
+<span><span class="va">handle</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/nordstatExtras/man/nxt_open.html" class="external-link">nxt_open</a></span><span class="op">(</span><span class="st">"cache.sqlite"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Data and metadata are cached in the same SQLite file</span></span>
+<span><span class="va">kpis</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_kpi.html">get_kpi</a></span><span class="op">(</span>cache <span class="op">=</span> <span class="cn">TRUE</span>, cache_location <span class="op">=</span> <span class="va">handle</span><span class="op">)</span></span>
+<span><span class="va">vals</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_values.html">get_values</a></span><span class="op">(</span></span>
+<span>  kpi <span class="op">=</span> <span class="st">"N03700"</span>, municipality <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0180"</span>, <span class="st">"1480"</span><span class="op">)</span>,</span>
+<span>  cache <span class="op">=</span> <span class="cn">TRUE</span>, cache_location <span class="op">=</span> <span class="va">handle</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/nordstatExtras/man/nxt_close.html" class="external-link">nxt_close</a></span><span class="op">(</span><span class="va">handle</span><span class="op">)</span></span></code></pre></div>
+<p>Features include cell-level deduplication across overlapping queries, cross-query freshness propagation, and FTS5-powered typeahead search via <code><a href="https://rdrr.io/pkg/nordstatExtras/man/nxt_search.html" class="external-link">nxt_search()</a></code>. See the <a href="https://github.com/LCHansson/nordstatExtras" class="external-link">nordstatExtras README</a> for details.</p>
+</div>
+<div class="section level2">
 <h2 id="contributing">Contributing<a class="anchor" aria-label="anchor" href="#contributing"></a>
 </h2>
 <p>You are welcome to contribute to the further development of the rKolada package in any of the following ways:</p>
@@ -93,9 +114,12 @@
 <div class="section level2">
 <h2 id="related-packages">Related packages<a class="anchor" aria-label="anchor" href="#related-packages"></a>
 </h2>
+<p><code>rKolada</code> is part of a family of R packages for Swedish and Nordic open statistics that share the same design philosophy — tibble-based, pipe-friendly, and offline-safe:</p>
 <ul>
 <li>
-<a href="https://lchansson.github.io/pixieweb/" class="external-link">pixieweb</a> — R client for PX-Web APIs (SCB, SSB, Statistics Finland, and more). Follows the same design principles as rKolada.</li>
+<a href="https://lchansson.github.io/pixieweb/" class="external-link">pixieweb</a> — R client for PX-Web APIs (Statistics Sweden, Statistics Norway, Statistics Finland, and more)</li>
+<li>
+<a href="https://lchansson.github.io/rTrafa/" class="external-link">rTrafa</a> — R client for the <a href="https://api.trafa.se/" class="external-link">Trafa</a> API of Swedish transport statistics</li>
 </ul>
 <div class="section level3">
 <h3 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>

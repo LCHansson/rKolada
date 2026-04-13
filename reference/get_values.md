@@ -19,6 +19,8 @@ get_values(
   from_date = NULL,
   keep_deleted = FALSE,
   simplify = TRUE,
+  cache = FALSE,
+  cache_location = NULL,
   verbose = FALSE
 )
 ```
@@ -68,6 +70,23 @@ get_values(
 - simplify:
 
   Whether to make results more human readable.
+
+- cache:
+
+  Logical. If `TRUE` and `cache_location` points at a SQLite file (or an
+  `nxt_handle` from the nordstatExtras package), values are cached at
+  cell granularity in that database. Unlike the per-entity `.rds` caches
+  used by
+  [`get_kpi()`](https://lchansson.github.io/rKolada/reference/get_kpi.md)
+  and friends, this path supports concurrent multi-process reads/writes
+  and cross-query cell reuse. Requires the `nordstatExtras` package to
+  be installed.
+
+- cache_location:
+
+  Either a path to a `.sqlite` file or an `nxt_handle` returned by
+  [`nordstatExtras::nxt_open()`](https://rdrr.io/pkg/nordstatExtras/man/nxt_open.html).
+  Ignored unless `cache = TRUE`.
 
 - verbose:
 

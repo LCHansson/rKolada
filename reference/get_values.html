@@ -13,7 +13,7 @@ is omitted, all available data for that dimension will be downloaded."></head><b
 
     <a class="navbar-brand me-2" href="../index.html">rKolada</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,6 +63,8 @@ is omitted, all available data for that dimension will be downloaded.</p>
 <span>  from_date <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  keep_deleted <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  simplify <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  cache <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  cache_location <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -113,6 +115,20 @@ Format: <code>"YYYY-MM-DD"</code>.</p></dd>
 
 <dt id="arg-simplify">simplify<a class="anchor" aria-label="anchor" href="#arg-simplify"></a></dt>
 <dd><p>Whether to make results more human readable.</p></dd>
+
+
+<dt id="arg-cache">cache<a class="anchor" aria-label="anchor" href="#arg-cache"></a></dt>
+<dd><p>Logical. If <code>TRUE</code> and <code>cache_location</code> points at a SQLite
+file (or an <code>nxt_handle</code> from the nordstatExtras package), values are
+cached at cell granularity in that database. Unlike the per-entity
+<code>.rds</code> caches used by <code><a href="get_kpi.html">get_kpi()</a></code> and friends, this path supports
+concurrent multi-process reads/writes and cross-query cell reuse.
+Requires the <code>nordstatExtras</code> package to be installed.</p></dd>
+
+
+<dt id="arg-cache-location">cache_location<a class="anchor" aria-label="anchor" href="#arg-cache-location"></a></dt>
+<dd><p>Either a path to a <code>.sqlite</code> file or an <code>nxt_handle</code>
+returned by <code><a href="https://rdrr.io/pkg/nordstatExtras/man/nxt_open.html" class="external-link">nordstatExtras::nxt_open()</a></code>. Ignored unless <code>cache = TRUE</code>.</p></dd>
 
 
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>

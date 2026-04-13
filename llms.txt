@@ -43,6 +43,40 @@ library("remotes")
 remotes::install_github("LCHansson/rKolada")
 ```
 
+## Enhanced caching with nordstatExtras
+
+For multi-user web applications or workflows that benefit from a shared,
+persistent cache, rKolada integrates with the
+[nordstatExtras](https://github.com/LCHansson/nordstatExtras) package.
+When installed,
+[`get_values()`](https://lchansson.github.io/rKolada/reference/get_values.md),
+[`get_kpi()`](https://lchansson.github.io/rKolada/reference/get_kpi.md),
+and other functions can write to a shared SQLite file instead of
+per-session `.rds` files:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("LCHansson/nordstatExtras")
+
+library(nordstatExtras)
+handle <- nxt_open("cache.sqlite")
+
+# Data and metadata are cached in the same SQLite file
+kpis <- get_kpi(cache = TRUE, cache_location = handle)
+vals <- get_values(
+  kpi = "N03700", municipality = c("0180", "1480"),
+  cache = TRUE, cache_location = handle
+)
+
+nxt_close(handle)
+```
+
+Features include cell-level deduplication across overlapping queries,
+cross-query freshness propagation, and FTS5-powered typeahead search via
+[`nxt_search()`](https://rdrr.io/pkg/nordstatExtras/man/nxt_search.html).
+See the [nordstatExtras
+README](https://github.com/LCHansson/nordstatExtras) for details.
+
 ## Contributing
 
 You are welcome to contribute to the further development of the rKolada
@@ -54,9 +88,15 @@ package in any of the following ways:
 
 ## Related packages
 
+`rKolada` is part of a family of R packages for Swedish and Nordic open
+statistics that share the same design philosophy — tibble-based,
+pipe-friendly, and offline-safe:
+
 - [pixieweb](https://lchansson.github.io/pixieweb/) — R client for
-  PX-Web APIs (SCB, SSB, Statistics Finland, and more). Follows the same
-  design principles as rKolada.
+  PX-Web APIs (Statistics Sweden, Statistics Norway, Statistics Finland,
+  and more)
+- [rTrafa](https://lchansson.github.io/rTrafa/) — R client for the
+  [Trafa](https://api.trafa.se/) API of Swedish transport statistics
 
 ### Code of Conduct
 

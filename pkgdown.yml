@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   a-quickstart-rkolada: a-quickstart-rkolada.html
   introduction-to-rkolada: introduction-to-rkolada.html
-last_built: 2026-03-23T10:45Z
+last_built: 2026-04-13T12:14Z
 urls:
   reference: https://lchansson.github.io/rKolada/reference
   article: https://lchansson.github.io/rKolada/articles

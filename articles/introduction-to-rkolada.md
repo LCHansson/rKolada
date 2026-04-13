@@ -451,12 +451,24 @@ grp_data <- get_values(
 ```
 
 To explore results we can plot the resulting data using ggplot2 and add
-legends to keep track of what data we are visualizing:
+legends to keep track of what data we are visualizing. Note that we
+convert the `year` column to a proper `Date` before plotting: Kolada
+returns `year` as an integer, and plotting it directly can give awkward
+`ggplot2` breaks like `2020, 2022.5, 2025`. Wrapping it in
+`as.Date(paste0(year, "-01-01"))` lets
+[`scale_x_date()`](https://ggplot2.tidyverse.org/reference/scale_date.html)
+place tick marks on whole years — a pattern worth reusing for any
+time-series analysis, both in `rKolada` and in the sibling packages
+`pixieweb` and `rTrafa`:
 
 ``` r
 # Visualize results
 library("ggplot2")
-ggplot(grp_data, aes(year, value, color = municipality)) +
+
+grp_plot <- grp_data |>
+  dplyr::mutate(year_date = as.Date(paste0(year, "-01-01")))
+
+ggplot(grp_plot, aes(year_date, value, color = municipality)) +
   # One line per municipality; linetype adds distinction in B/W print
   geom_line(aes(linetype = municipality)) +
   # Separate panel per KPI; free y-scales since units differ
@@ -464,8 +476,11 @@ ggplot(grp_data, aes(year, value, color = municipality)) +
   labs(
     title = "Gross Regional Product per capita 2012-2018",
     subtitle = "Swedish municipalities similar to Arboga",
+    x = "Year",
     caption = values_legend(grp_data, kpi_filter)  # Auto-generated legend
   ) +
+  # Years as dates, one tick every two years
+  scale_x_date(date_breaks = "2 years", date_labels = "%Y") +
   # Colour-blind-friendly palette
   scale_color_viridis_d(option = "B") +
   scale_y_continuous(labels = scales::comma)
@@ -477,7 +492,11 @@ ggplot(grp_data, aes(year, value, color = municipality)) +
 
 ## Related packages
 
-If you work with data from PX-Web APIs (Statistics Sweden, Statistics
-Norway, Statistics Finland, etc.), see
-[pixieweb](https://lchansson.github.io/pixieweb/) — a sibling package
-that follows the same design principles as rKolada.
+`rKolada` is part of a family of R packages for Swedish and Nordic open
+statistics that share the same design philosophy:
+
+- [pixieweb](https://lchansson.github.io/pixieweb/) — R client for
+  PX-Web APIs (Statistics Sweden, Statistics Norway, Statistics Finland,
+  and more)
+- [rTrafa](https://lchansson.github.io/rTrafa/) — R client for the
+  [Trafa](https://api.trafa.se/) API of Swedish transport statistics

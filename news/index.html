@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">rKolada</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,7 +38,27 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.3.1" id="rkolada-031">rKolada 0.3.1<a class="anchor" aria-label="anchor" href="#rkolada-031"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.3.2" id="rkolada-032">rKolada 0.3.2<a class="anchor" aria-label="anchor" href="#rkolada-032"></a></h2>
+<div class="section level3">
+<h3 id="new-features-0-3-2">New features<a class="anchor" aria-label="anchor" href="#new-features-0-3-2"></a></h3>
+<ul><li>
+<strong><code><a href="../reference/values_legend.html">values_legend()</a></code> gains <code>lang</code>, <code>omit_varname</code> and <code>omit_desc</code> arguments</strong>, mirroring the same API in the sibling package <code>rTrafa</code>. <code>lang</code> (default <code>"SV"</code>, settable via <code>getOption("rKolada.lang", "SV")</code>) toggles the source prefix between <code>"Källa: Kolada"</code> and <code>"Source:   Kolada"</code>. <code>omit_varname</code> drops the <code>"N01951: "</code> KPI code prefix; <code>omit_desc</code> shows only the codes.</li>
+<li>
+<strong><code><a href="../reference/values_legend.html">values_legend()</a></code>’s <code>kpi_df</code> argument is now optional.</strong> When omitted, the legend falls back to a codes-only listing.</li>
+<li>
+<strong>Source prefix in plot captions</strong>: <code><a href="../reference/values_legend.html">values_legend()</a></code> now prepends a <code>"Källa: Kolada"</code> / <code>"Source: Kolada"</code> line to the caption by default. This is a minor change to the rendered caption for existing users.</li>
+<li>
+<strong>Optional SQLite-backed caching via nordstatExtras.</strong> <code><a href="../reference/get_values.html">get_values()</a></code> and <code><a href="../reference/get_metadata.html">get_metadata()</a></code> now accept <code>cache = TRUE</code> with a <code>.sqlite</code> <code>cache_location</code> for shared, multi-process cache backed by the <a href="https://github.com/LCHansson/nordstatExtras" class="external-link">nordstatExtras</a> package. Cell-level deduplication, cross-query freshness, and FTS5-powered typeahead search. Falls back to the existing <code>.rds</code> cache when nordstatExtras is not installed.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="documentation-0-3-2">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-3-2"></a></h3>
+<ul><li>Vignette plots now convert <code>year</code> to <code>Date</code> before plotting and use <code>scale_x_date(date_breaks = "…", date_labels = "%Y")</code>, so axis breaks land on whole years rather than on decimal years like <code>2020, 2022.5,   2025</code>. This pattern is explained inline in both vignettes and is consistent across the sibling packages <code>pixieweb</code> and <code>rTrafa</code>.</li>
+<li>README and vignettes now cross-link to the sibling packages <code>pixieweb</code> (PX-Web APIs) and <code>rTrafa</code> (Trafa transport statistics).</li>
+<li>README now includes a section on enhanced caching with nordstatExtras.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.3.1" id="rkolada-031">rKolada 0.3.1<a class="anchor" aria-label="anchor" href="#rkolada-031"></a></h2><p class="text-muted">CRAN release: 2026-03-23</p>
 <div class="section level3">
 <h3 id="breaking-changes-0-3-1">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-3-1"></a></h3>
 <ul><li>
