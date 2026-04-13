@@ -134,10 +134,30 @@ get_metadata <- function(
   cache_location = tempdir,
   verbose = FALSE
 ) {
-  ch <- cache_handler(entity, cache, cache_location)
+  # SQLite-backed metadata cache via nordstatExtras. Opt-in: only activated
+  # when the caller passes a sqlite-backed cache_location. Otherwise falls
+  # through to the legacy .rds cache_handler path untouched.
+  nxt_ch <- NULL
+  ch <- NULL
 
-  if (ch("discover"))
-    return(ch("load"))
+  if (isTRUE(cache) && !is.null(cache_location) &&
+      requireNamespace("nordstatExtras", quietly = TRUE) &&
+      nordstatExtras::nxt_is_backend(cache_location)) {
+    nxt_ch <- nordstatExtras::nxt_cache_handler(
+      source = "kolada", entity = entity, cache = TRUE,
+      cache_location = cache_location,
+      kind = "metadata",
+      key_params = list(
+        entity = entity, title = title, id = id,
+        municipality = municipality, region_type = region_type,
+        max_results = max_results
+      )
+    )
+    if (nxt_ch("discover")) return(nxt_ch("load"))
+  } else {
+    ch <- cache_handler(entity, cache, cache_location)
+    if (ch("discover")) return(ch("load"))
+  }
 
   if (isTRUE(verbose))
     cli::cli_inform("Downloading Kolada metadata using URL(s):")
@@ -205,7 +225,11 @@ get_metadata <- function(
   if (!is.null(max_results) && nrow(vals) > max_results)
     vals <- utils::head(vals, max_results)
 
-  vals <- ch("store", vals)
+  if (!is.null(nxt_ch)) {
+    nxt_ch("store", vals)
+  } else if (!is.null(ch)) {
+    vals <- ch("store", vals)
+  }
 
   vals
 }

@@ -111,6 +111,14 @@ compose_data_query <- function(
 #' @param keep_deleted Logical. If `FALSE` (default), rows where
 #' `isdeleted` is `TRUE` are removed from the result.
 #' @param simplify Whether to make results more human readable.
+#' @param cache Logical. If `TRUE` and `cache_location` points at a SQLite
+#'   file (or an `nxt_handle` from the nordstatExtras package), values are
+#'   cached at cell granularity in that database. Unlike the per-entity
+#'   `.rds` caches used by `get_kpi()` and friends, this path supports
+#'   concurrent multi-process reads/writes and cross-query cell reuse.
+#'   Requires the `nordstatExtras` package to be installed.
+#' @param cache_location Either a path to a `.sqlite` file or an `nxt_handle`
+#'   returned by `nordstatExtras::nxt_open()`. Ignored unless `cache = TRUE`.
 #' @param verbose Whether to print the call to the Kolada API as a message to
 #' the R console.
 #'
@@ -150,8 +158,37 @@ get_values <- function(
   from_date = NULL,
   keep_deleted = FALSE,
   simplify = TRUE,
+  cache = FALSE,
+  cache_location = NULL,
   verbose = FALSE
 ) {
+
+  # SQLite-backed cell cache via nordstatExtras. We only activate it when
+  # the caller explicitly opted in AND points at a sqlite target; otherwise
+  # the existing uncached behavior is preserved byte-for-byte.
+  nxt_ch <- NULL
+  if (isTRUE(cache) && !is.null(cache_location) &&
+      requireNamespace("nordstatExtras", quietly = TRUE) &&
+      nordstatExtras::nxt_is_backend(cache_location)) {
+    nxt_ch <- nordstatExtras::nxt_cache_handler(
+      source         = "kolada",
+      entity         = "values",
+      cache          = TRUE,
+      cache_location = cache_location,
+      key_params     = list(
+        kpi          = kpi,
+        municipality = municipality,
+        period       = period,
+        ou           = ou,
+        unit_type    = unit_type,
+        from_date    = from_date,
+        keep_deleted = keep_deleted,
+        simplify     = simplify
+      ),
+      normalize_extra = list(lang = "sv")
+    )
+    if (nxt_ch("discover")) return(nxt_ch("load"))
+  }
 
   if (isTRUE(verbose))
     cli::cli_inform("Downloading Kolada data using URL(s):")
@@ -303,6 +340,10 @@ get_values <- function(
         by = "ou_id"
       ) |>
       dplyr::rename(year = "period")
+  }
+
+  if (!is.null(nxt_ch) && !is.null(ret) && nrow(ret) > 0) {
+    nxt_ch("store", ret)
   }
 
   ret

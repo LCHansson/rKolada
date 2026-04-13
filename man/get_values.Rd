@@ -14,6 +14,8 @@ get_values(
   from_date = NULL,
   keep_deleted = FALSE,
   simplify = TRUE,
+  cache = FALSE,
+  cache_location = NULL,
   verbose = FALSE
 )
 }
@@ -43,6 +45,16 @@ Format: \code{"YYYY-MM-DD"}.}
 \code{isdeleted} is \code{TRUE} are removed from the result.}
 
 \item{simplify}{Whether to make results more human readable.}
+
+\item{cache}{Logical. If \code{TRUE} and \code{cache_location} points at a SQLite
+file (or an \code{nxt_handle} from the nordstatExtras package), values are
+cached at cell granularity in that database. Unlike the per-entity
+\code{.rds} caches used by \code{get_kpi()} and friends, this path supports
+concurrent multi-process reads/writes and cross-query cell reuse.
+Requires the \code{nordstatExtras} package to be installed.}
+
+\item{cache_location}{Either a path to a \code{.sqlite} file or an \code{nxt_handle}
+returned by \code{nordstatExtras::nxt_open()}. Ignored unless \code{cache = TRUE}.}
 
 \item{verbose}{Whether to print the call to the Kolada API as a message to
 the R console.}
