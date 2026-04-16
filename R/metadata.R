@@ -225,6 +225,20 @@ get_metadata <- function(
   if (!is.null(max_results) && nrow(vals) > max_results)
     vals <- utils::head(vals, max_results)
 
+  # Warn when explicit ids were requested but none (or only some) were found.
+  # Otherwise the caller receives an empty tibble with no indication whether
+  # the ids were invalid, mistyped or simply missing from Kolada.
+  if (!is.null(id) && length(id) > 0 && nrow(vals) < length(id)) {
+    found <- if (nrow(vals) > 0 && "id" %in% names(vals)) vals$id else character()
+    missing_ids <- setdiff(id, found)
+    if (length(missing_ids) > 0) {
+      cli::cli_warn(c(
+        "No {entity} found for id{?s}: {.val {missing_ids}}.",
+        i = "Kolada returned {nrow(vals)} row{?s} for the {length(id)} id{?s} requested."
+      ))
+    }
+  }
+
   if (!is.null(nxt_ch)) {
     nxt_ch("store", vals)
   } else if (!is.null(ch)) {

@@ -8,6 +8,30 @@ mock_json_response <- function(values, next_url = NULL) {
   jsonlite::toJSON(body, auto_unbox = TRUE)
 }
 
+test_that("get_metadata() warns when requested id is not returned", {
+  local_mocked_bindings(
+    req_perform = function(req, ...) {
+      structure(list(
+        status_code = 200L,
+        body = charToRaw(mock_json_response(
+          data.frame(
+            id = character(),
+            title = character(),
+            stringsAsFactors = FALSE
+          )
+        ))
+      ), class = "httr2_response")
+    },
+    resp_body_string = function(resp, ...) rawToChar(resp$body),
+    .package = "httr2"
+  )
+
+  expect_warning(
+    get_metadata("kpi", id = "N99999"),
+    "No kpi found for id"
+  )
+})
+
 test_that("get_kpi() returns tibble from mocked response", {
   local_mocked_bindings(
     req_perform = function(req, ...) {
@@ -167,7 +191,10 @@ test_that("get_metadata() chunks >25 IDs into separate requests", {
   )
 
   ids <- paste0("N", sprintf("%05d", 1:30))
-  result <- get_metadata("kpi", id = ids)
+  # The mocked API returns only 2 rows even though 30 ids were requested —
+  # this is the chunking-across-pages scenario, so expect the new
+  # missing-ids warning to fire.
+  result <- suppressWarnings(get_metadata("kpi", id = ids))
 
   expect_s3_class(result, "tbl_df")
   expect_equal(call_count, 2L)

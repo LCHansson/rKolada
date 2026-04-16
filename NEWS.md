@@ -1,3 +1,16 @@
+# rKolada 0.3.2.9001
+
+## Bug fixes
+
+- **`get_kpi(id = X)` (and friends) now warns when requested ids are
+  not found.** Previously, `get_kpi(id = "N00001")` silently returned
+  an empty tibble — the user could not tell whether the id was
+  mistyped, retired, or simply absent from Kolada. The warning now
+  lists the missing ids and notes how many were expected vs. found.
+  Applies to all `get_*` wrappers around `get_metadata()`
+  (`get_kpi`, `get_kpi_groups`, `get_municipality`,
+  `get_municipality_groups`, `get_ou`).
+
 # rKolada 0.3.2
 
 ## New features

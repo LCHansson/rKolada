@@ -1,7 +1,7 @@
 Package: rKolada
 Type: Package
 Title: Access Data from the 'Kolada' Database
-Version: 0.3.2
+Version: 0.3.2.9001
 Authors@R: person("Love", "Hansson", email =
  "love.hansson@gmail.com", role = c("aut", "cre", "cph"))
 Maintainer: Love Hansson <love.hansson@gmail.com>
