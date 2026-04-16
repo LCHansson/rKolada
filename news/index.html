@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">rKolada</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.2.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,6 +37,14 @@
       <small>Source: <a href="https://github.com/lchansson/rKolada/blob/master/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.3.2.9001" id="rkolada-0329001">rKolada 0.3.2.9001<a class="anchor" aria-label="anchor" href="#rkolada-0329001"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-0-3-2-9001">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-3-2-9001"></a></h3>
+<ul><li>
+<strong><code>get_kpi(id = X)</code> (and friends) now warns when requested ids are not found.</strong> Previously, <code>get_kpi(id = "N00001")</code> silently returned an empty tibble — the user could not tell whether the id was mistyped, retired, or simply absent from Kolada. The warning now lists the missing ids and notes how many were expected vs. found. Applies to all <code>get_*</code> wrappers around <code><a href="../reference/get_metadata.html">get_metadata()</a></code> (<code>get_kpi</code>, <code>get_kpi_groups</code>, <code>get_municipality</code>, <code>get_municipality_groups</code>, <code>get_ou</code>).</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3.2" id="rkolada-032">rKolada 0.3.2<a class="anchor" aria-label="anchor" href="#rkolada-032"></a></h2>
 <div class="section level3">
