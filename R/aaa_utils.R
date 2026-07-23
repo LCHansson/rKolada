@@ -191,6 +191,23 @@ cache_handler <- function(entity, cache, cache_location) {
   if(is.function(cache_location))
     cache_location <- cache_location()
 
+  # Robustness guard: this legacy .rds branch only handles a single path
+  # string. Anything else (e.g. an nxt_handle list reaching here because the
+  # SQLite delegation didn't trigger) previously vectorized paste0() below
+  # and crashed with a cryptic "condition has length > 1". Fail clearly, or
+  # fall back to no-cache when caching wasn't requested.
+  if (isTRUE(cache) &&
+      !(is.character(cache_location) && length(cache_location) == 1)) {
+    stop(
+      "`cache_location` must be a single directory path (or a function ",
+      "returning one) for the legacy file cache. Got ",
+      class(cache_location)[1], " of length ", length(cache_location), ". ",
+      "For the SQLite backend, pass an nxt_handle from nordstatExtras ",
+      "(requires rKolada >= 0.3.2).",
+      call. = FALSE
+    )
+  }
+
   storage <- switch(
     as.character(isTRUE(cache)),
     "FALSE" = "",

@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git:*)",
+      "WebFetch(domain:api.kolada.se)",
+      "WebFetch(domain:www.kolada.se)",
+      "Bash(curl:*)",
+      "WebFetch(domain:lchansson.github.io)"
+    ]
+  }
+}
