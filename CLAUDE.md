@@ -38,6 +38,7 @@ Rscript data-raw/vignette-data.R
 From an R session with devtools:
 
 ``` r
+
 devtools::check()       # Full package check
 devtools::test()        # Run tests only
 devtools::document()    # Rebuild docs from roxygen2 comments

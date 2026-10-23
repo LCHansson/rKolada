@@ -32,6 +32,7 @@ information.
 rKolada is on CRAN. To install it, run the following code in R:
 
 ``` r
+
 install.packages("rKolada")
 ```
 
@@ -39,6 +40,7 @@ To install the latest development version from GitHub, use the `remotes`
 package:
 
 ``` r
+
 library("remotes")
 remotes::install_github("LCHansson/rKolada")
 ```
@@ -55,6 +57,7 @@ and other functions can write to a shared SQLite file instead of
 per-session `.rds` files:
 
 ``` r
+
 # install.packages("devtools")
 devtools::install_github("LCHansson/nordstatExtras")
 

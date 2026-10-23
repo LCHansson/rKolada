@@ -55,6 +55,7 @@ A single character string suitable for plot captions.
 By default the caption shows both the title and the code for every KPI
 included in the data, prefixed by a source line, e.g.
 
+
     Källa: Kolada
     N01951: Bruttoregionprodukt per capita
     N01952: Sysselsättningsgrad
@@ -79,5 +80,5 @@ if (kolada_available()) {
   values_legend(d, kpis, omit_varname = TRUE)
   values_legend(d, kpis, omit_desc = TRUE)
 }
-#> [1] "Källa: Kolada\nN03700\nN03701\nN03702\nN03703"
+#> [1] "Källa: Kolada\nN03700\nN03701\nN03702\nN03703\nN03705"
 ```

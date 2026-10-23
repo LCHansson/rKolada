@@ -1,5 +1,14 @@
 # Changelog
 
+## rKolada 0.3.2.9002
+
+### Bug fixes
+
+- `cache_handler()` now fails with a clear message when `cache_location`
+  is not a single path string (e.g. an `nxt_handle` reaching the legacy
+  branch on an outdated install), instead of the cryptic vectorized
+  “condition has length \> 1” error (AE dev-backlog 2026-06-21).
+
 ## rKolada 0.3.2.9001
 
 ### Bug fixes

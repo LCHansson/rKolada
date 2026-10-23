@@ -23,6 +23,7 @@ use `dplyr`, `tidyr`, and `ggplot2` for data wrangling and
 visualisation:
 
 ``` r
+
 install.packages("rKolada")
 ```
 
@@ -43,6 +44,7 @@ you can also use the `rKolada` package to explore data without prior
 knowledge of the database.
 
 ``` r
+
 library("rKolada")
 ```
 
@@ -82,6 +84,7 @@ antal dagar (%)”) for Sweden’s three most populous cities; Stockholm (id
 (`"1280"`) between the years 2000 and 2020:
 
 ``` r
+
 n00945 <- get_values(
   kpi = "N00945",
   municipality = c("0180", "1480", "1280"),
@@ -131,6 +134,7 @@ Each function returns a `tibble` with all available data for the
 specified metadata entity.
 
 ``` r
+
 # Download all KPI metadata as a tibble (kpi_df)
 kpi_df <- get_kpi()
 
@@ -183,6 +187,7 @@ they can be used to search for one or several search terms in the entire
 table or in a subset of named columns:
 
 ``` r
+
 # Search for KPIs with the term "skola" in their description or title
 kpi_filter <- kpi_df |> kpi_search("skola", column = c("description", "title"))
 tibble::tibble(head(kpi_filter))
@@ -201,6 +206,7 @@ tibble::tibble(head(kpi_filter))
 ```
 
 ``` r
+
 # Search for municipality groups containing the name "Arboga"
 munic_g <- get_municipality_groups()
 
@@ -234,6 +240,7 @@ be added directly to a R markdown file by setting the chunk option
 `results='asis'`. The output then looks as follows:
 
 ``` r
+
 kpi_filter |> kpi_describe(max_n = 2, format = "md", heading_level = 4)
 ```
 
@@ -302,6 +309,7 @@ can be used to tag data with keywords (these are inferred from the KPI
 title) to classify KPIs and make them more searchable.
 
 ``` r
+
 # Add keywords to a KPI table
 kpis_with_keywords <- kpi_filter |> kpi_bind_keywords(n = 4)
 
@@ -334,6 +342,7 @@ differentiating KPIs from one another”, i.e. columns containing only one
 single value for all observations in the table):
 
 ``` r
+
 # Top 10 rows of the table
 kpi_filter |> dplyr::slice(1:10)
 #> # A tibble: 10 × 12
@@ -426,6 +435,7 @@ Regional Product for all municipalities that are socioeconomically
 similar to Arboga, a small municipality in central Sweden:
 
 ``` r
+
 # Get KPIs describing Gross Regional Product of municipalities
 kpi_filter <- get_kpi() |> 
   kpi_search("bruttoregionprodukt") |>
@@ -462,6 +472,7 @@ time-series analysis, both in `rKolada` and in the sibling packages
 `pixieweb` and `rTrafa`:
 
 ``` r
+
 # Visualize results
 library("ggplot2")
 

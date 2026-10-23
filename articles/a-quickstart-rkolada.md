@@ -6,6 +6,7 @@ the rKolada package, see [Introduction to
 rKolada](https://lchansson.github.io/rKolada/articles/introduction-to-rkolada.md).
 
 ``` r
+
 library("rKolada")
 ```
 
@@ -40,6 +41,7 @@ allows you to temporarily store results on disk to avoid repeated calls
 to the API in case you need to re-run your code:
 
 ``` r
+
 kpis <- get_kpi(cache = FALSE)
 munic <- get_municipality(cache = FALSE)
 ```
@@ -57,6 +59,7 @@ inspecting them by simply viewing them in RStudio. For example, the KPI
 metadata we downloaded looks like this:
 
 ``` r
+
 dplyr::glimpse(kpis)
 #> Rows: 6,099
 #> Columns: 12
@@ -83,6 +86,7 @@ can be used to clean the KPI metadata table from columns that don’t
 contain any information that distinguish KPIs from each other:
 
 ``` r
+
 # Get a list KPIs matching a search for "bruttoregionprodukt" (Gross regional product)
 kpi_res <- kpis |>
   kpi_search("bruttoregionprodukt") |>
@@ -103,6 +107,7 @@ municipalities. We thus want to create a table containing metadata about
 these municipalities:
 
 ``` r
+
 munic_res <- munic |>
   # type "K" = municipality (kommun), vs "L" for region (län)
   municipality_search("K", column = "type") |>
@@ -131,6 +136,7 @@ table of KPIs. For instance, by setting the `knitr` chunk option
 automatically inluded as a part of the HTML that renders this web page:
 
 ``` r
+
 kpi_res |>
   kpi_bind_keywords(n = 4) |>
   kpi_describe(max_n = 1, format = "md", heading_level = 4, sub_heading_level = 5)
@@ -189,6 +195,7 @@ and
 [`municipality_extract_ids()`](https://lchansson.github.io/rKolada/reference/municipality_extract_ids.md):
 
 ``` r
+
 kld_data <- get_values(
   kpi = kpi_extract_ids(kpi_res),
   municipality = municipality_extract_ids(munic_res),
@@ -213,6 +220,7 @@ place tick marks on whole years — a pattern worth reusing for any
 time-series analysis.
 
 ``` r
+
 # Visualise results
 library("ggplot2")
 

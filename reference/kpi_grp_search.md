@@ -43,7 +43,7 @@ kpi_grp_df |>
   kpi_search("arbete") |>
   dplyr::count(group_title, sort = TRUE)
 }
-#> # A tibble: 29 × 2
+#> # A tibble: 30 × 2
 #>    group_title                                 n
 #>    <chr>                                   <int>
 #>  1 Medborgarundersökningen - Kommun            8
@@ -56,5 +56,5 @@ kpi_grp_df |>
 #>  8 Pedagogisk personal enkät - grundskola      7
 #>  9 Pedagogisk personal enkät gymnasieskola     7
 #> 10 Personal - Region                           6
-#> # ℹ 19 more rows
+#> # ℹ 20 more rows
 ```

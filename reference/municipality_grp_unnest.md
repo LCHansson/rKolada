@@ -43,13 +43,13 @@ munic_grp_df |>
   municipality_grp_unnest()
 }
 #> # A tibble: 7 × 4
-#>   id    title     group_id group_title                                       
-#>   <chr> <chr>     <chr>    <chr>                                             
-#> 1 0380  Uppsala   G175909  Liknande kommuner ekonomiskt bistånd, Arboga, 2023
-#> 2 1472  Tibro     G175909  Liknande kommuner ekonomiskt bistånd, Arboga, 2023
-#> 3 1473  Töreboda  G175909  Liknande kommuner ekonomiskt bistånd, Arboga, 2023
-#> 4 1490  Borås     G175909  Liknande kommuner ekonomiskt bistånd, Arboga, 2023
-#> 5 1499  Falköping G175909  Liknande kommuner ekonomiskt bistånd, Arboga, 2023
-#> 6 2034  Orsa      G175909  Liknande kommuner ekonomiskt bistånd, Arboga, 2023
-#> 7 2583  Haparanda G175909  Liknande kommuner ekonomiskt bistånd, Arboga, 2023
+#>   id    title      group_id group_title                                 
+#>   <chr> <chr>      <chr>    <chr>                                       
+#> 1 0319  Älvkarleby G176199  Liknande kommuner socioekonomi, Arboga, 2024
+#> 2 0562  Finspång   G176199  Liknande kommuner socioekonomi, Arboga, 2024
+#> 3 0687  Tranås     G176199  Liknande kommuner socioekonomi, Arboga, 2024
+#> 4 1082  Karlshamn  G176199  Liknande kommuner socioekonomi, Arboga, 2024
+#> 5 1083  Sölvesborg G176199  Liknande kommuner socioekonomi, Arboga, 2024
+#> 6 1885  Lindesberg G176199  Liknande kommuner socioekonomi, Arboga, 2024
+#> 7 2084  Avesta     G176199  Liknande kommuner socioekonomi, Arboga, 2024
 ```
