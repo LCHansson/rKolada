@@ -10,3 +10,6 @@ rKolada*.tar.gz
 rKolada*.tgz
 doc
 Meta
+
+# pkgdown copies CLAUDE.md into docs/; keep it off the website
+docs/CLAUDE.md
