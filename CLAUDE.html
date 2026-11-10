@@ -56,13 +56,13 @@
 <span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="ex">R</span> CMD INSTALL .</span>
 <span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a></span>
 <span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="co"># Run tests</span></span>
-<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="ex">Rscript</span> <span class="at">-e</span> <span class="st">"testthat::test_local()"</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="ex">Rscript</span> tools/test.R          <span class="co"># Rscript -e is blocked by a hook; commands live in .R files</span></span>
 <span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a></span>
 <span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="co"># Regenerate documentation (roxygen2)</span></span>
-<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="ex">Rscript</span> <span class="at">-e</span> <span class="st">"devtools::document()"</span></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="ex">Rscript</span> tools/document.R</span>
 <span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a></span>
 <span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="co"># Build pkgdown site</span></span>
-<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a><span class="ex">Rscript</span> <span class="at">-e</span> <span class="st">"pkgdown::build_site()"</span></span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a><span class="ex">Rscript</span> tools/site.R</span>
 <span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a></span>
 <span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a><span class="co"># Regenerate internal vignette data (sysdata.rda)</span></span>
 <span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a><span class="ex">Rscript</span> data-raw/vignette-data.R</span></code></pre></div>
